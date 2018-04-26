@@ -1,0 +1,182 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24-oct-2017, 10:37:02
+    Author     : desarrollo
+*/
+
+html, body {
+	margin: 0; 
+	padding: 0; 
+	overflow: auto;
+}
+body { 
+    background: #fff; 
+    font-family: Arial; 
+    font-size: 13px; 
+    line-height: 1.6; 
+    font-size: 12px;
+    font-weight:bold;
+    color:#000;
+} 
+#dina4 {
+    width: 215.9mm;
+    height: 259.4mm;
+    padding: 10px 30px; 
+    border: 1px solid #D2D2D2; 
+    background: #fff;
+    /*margin: 10px auto;*/
+}
+
+.div1{
+    width:370px;
+    float: left;
+}
+
+.div1 table{
+    width:370px;
+}
+
+.div2{
+    padding-top:10px;
+    width:180px;
+    float: right;
+    border:2px solid #000000;
+}
+
+.div2 table{
+    width:180px;
+}
+
+.div3 td{
+   border-bottom:1px solid #000000;
+}
+
+.div3 table{
+ width:800px;
+}
+
+.div6 table{
+ width:550px;
+border-collapse: collapse;
+float:left;
+}
+.div8{
+ width:216px;
+float:left;
+}
+.div6{
+ width:477px;
+float:left;
+}
+
+.div8 table{
+ width:250px;
+border-collapse: collapse;
+float:left;
+}
+
+.div7 table{
+ width:477px;
+border-collapse: collapse;
+}
+
+.div10{
+ width:800px;
+border-collapse: collapse;
+float:right;
+}
+
+
+.div8{
+ height:150px;
+ border:none;
+}
+
+.sin{
+padding-top:10px;
+border-top:1px solid #000000;
+border-bottom:0px;
+border-left:0px;
+border-right:0px;
+}
+
+.sin2{
+border-bottom:0px;
+border-left:0px;
+border-right:0px;
+border-top:0px;
+}
+
+.div5 table{
+ width:800px;
+border-collapse: collapse;
+text-align:center;
+}
+
+.alto{
+height:230px;
+}
+.alto2{
+height:140px;
+}
+.div1 td{
+    height:25px;
+}
+
+.div2 td{
+    height:25px;
+}
+
+h1{
+font-size:14px;
+font-weight:bold;
+color:#000;
+}
+
+.textos{
+font-size:11px;
+font-weight:bold;
+color:#000;
+}
+
+.center{
+text-align:center;
+}
+
+.separador{
+background-color:#fff;
+height:15px;
+}
+
+.separador2{
+background-color:#fff;
+height:10px;
+}
+
+.separador3{
+background-color:#fff;
+height:5px;
+}
+
+.separador4{
+background-color:#fff;
+height:35px;
+}
+.separador5{
+background-color:#fff;
+height:65px;
+}
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+  
+}

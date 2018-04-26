@@ -1,0 +1,73 @@
+.linea{
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+#titulo
+{
+    font-size: 24px;
+    font-weight: bold;
+    border: #000000;
+    border-style:  ridge; 
+    border-top-width: 0px; 
+    border-right-width: 0px; 
+    border-bottom-width: 1px; 
+    border-left-width: 0px;
+}
+#numero_de_costo
+{
+    width: 200px;
+    margin-left: 150px;
+    border: #000000;
+    border-style:  ridge; 
+    border-top-width: 0px; 
+    border-right-width: 0px; 
+    border-bottom-width: 1px; 
+    border-left-width: 0px;
+    
+}
+.separador_20
+{
+    height: 20px;
+}
+.izquierda
+{
+    text-align: left;
+}
+.derecha
+{
+    text-align: right;
+}
+/*
+Tabla
+*/
+#tabla {
+  display: table;
+  border-spacing: 5px;
+}
+#fila {
+  display: table-row;
+}
+
+#celda_1 {
+  display: table-cell;  
+  width: 10%;
+}
+
+#celda_2 {
+  display: table-cell;  
+  width: 30%;
+}
+#celda_3 {
+  display: table-cell;  
+  width: 20%;
+}
+#celda_4 {
+  display: table-cell;  
+  width: 10%;
+}
+#celda_5 {
+  display: table-cell;  
+  width: 30%;
+}

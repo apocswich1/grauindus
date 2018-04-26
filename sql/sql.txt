@@ -1,0 +1,395 @@
+ALTER TABLE `cotizacion_fotomecanica` ADD `folia1_proceso_seletec` INT(11) NOT NULL AFTER `procesos_especiales_folia_valor`;
+ALTER TABLE `cotizacion_fotomecanica` ADD `folia2_proceso_seletec` INT(11) NOT NULL AFTER `procesos_especiales_folia_2_valor`;
+ALTER TABLE `cotizacion_fotomecanica` ADD `folia3_proceso_seletec` INT(11) NOT NULL AFTER `procesos_especiales_folia_3_valor`;
+ALTER TABLE `cotizacion_fotomecanica` ADD `cuno1_proceso_seletec` INT(11) NOT NULL AFTER `procesos_especiales_cuno_valor`;
+ALTER TABLE `cotizacion_fotomecanica` ADD `cuno2_proceso_seletec` INT(11) NOT NULL AFTER `procesos_especiales_cuno_2_valor`;
+
+
+listo!!!
+
+==============================================================================================================================
+
+
+ALTER TABLE `cotizacion_ingenieria` ADD `lleva_mica` CHAR(2) NOT NULL DEFAULT 'NO' AFTER `nombre_molde`;
+ALTER TABLE `cotizacion_ingenieria` ADD `largo_mica` INT(11) NOT NULL DEFAULT '0' AFTER `lleva_mica`, ADD `ancho_mica` INT(11) NOT NULL DEFAULT '0' AFTER `largo_mica`;
+
+==============================================================================================================================
+
+ALTER TABLE `produccion_imprenta_programacion` ADD `id_proveedor_acabado_1` INT(11) NOT NULL AFTER `can_despacho_3`, ADD `id_proveedor_acabado_2` INT(11) NOT NULL AFTER `id_proveedor_acabado_1`, ADD `id_proveedor_acabado_3` INT(11) NOT NULL AFTER `id_proveedor_acabado_2`;
+ 
+
+==============================================================================================================================
+
+update piezas_adicionales set unidad_de_compra=5 where unidad_de_compra="Unidad";
+update piezas_adicionales set unidad_de_compra=1 where unidad_de_compra="Metro";
+update piezas_adicionales set unidad_de_medida=3 where unidad_de_medida="cm";
+
+==============================================================================================================================
+cambio esta tabla
+CREATE TABLE `unidades_de_compra` (
+  `id` int(11) NOT NULL,
+  `unidades_de_compra` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `unidad_venta` decimal(10,2) DEFAULT '0.00',
+  `factor_conv` decimal(10,2) DEFAULT '0.00',
+  `unidad_uso` decimal(10,2) DEFAULT '0.00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+==============================================================================================================================
+
+ALTER TABLE `piezas_adicionales` ADD `valor_compra` DECIMAL(10,2) NOT NULL AFTER `valor_venta`;
+
+==============================================================================================================================
+
+ALTER TABLE `piezas_adicionales`
+	CHANGE COLUMN `unidad_de_medida` `unidad_de_medida` INT(11) NULL DEFAULT NULL COLLATE 'utf8_spanish_ci' AFTER `piezas_adicionales`,
+	CHANGE COLUMN `unidad_de_uso` `unidad_de_uso` INT(11) NULL DEFAULT NULL COLLATE 'utf8_spanish_ci' AFTER `unidad_de_medida`;
+
+==============================================================================================================================
+
+ALTER TABLE `unidades_de_compra`
+	CHANGE COLUMN `unidad_uso` `unidad_uso` INT(11) NULL DEFAULT '0.00' AFTER `factor_conv`;
+==============================================================================================================================
+
+ALTER TABLE `piezas_adicionales`
+	ADD COLUMN `id_proveedor1` INT(11) NOT NULL AFTER `valor_compra`,
+	ADD COLUMN `id_proveedor2` INT(11) NOT NULL AFTER `id_proveedor1`,
+	ADD COLUMN `precio_venta` DECIMAL(10,2) NOT NULL AFTER `id_proveedor2`;
+
+ALTER TABLE `piezas_adicionales`
+	ADD COLUMN `fecha_modificacion` DATE NULL DEFAULT NULL AFTER `unidad_de_venta`,
+	ADD COLUMN `id_user` INT(11) NULL DEFAULT NULL AFTER `fecha_modificacion`;
+
+
+==============================================================================================================================
+
+
+SHOW CREATE TABLE `p7000190_grau`.`unidades_de_uso`;
+ALTER TABLE `unidades_de_uso`
+	CHANGE COLUMN `unidad_uso` `unidad_uso` VARCHAR(100) NULL DEFAULT '0' AFTER `factor_conv`;
+
+==============================================================================================================================
+
+
+13/05/2017
+ALTER TABLE `produccion_imprenta_programacion` ADD COLUMN `comentarios_imprenta` TEXT NOT NULL AFTER `id_proveedor_acabado_3`;
+ALTER TABLE `cotizaciones` CHANGE COLUMN `producto` `producto` TEXT NULL DEFAULT NULL COLLATE 'utf8_spanish_ci' AFTER `condicion_del_producto`;
+ALTER TABLE `produccion_imprenta_produccion` ADD COLUMN `comentarios_produccion` TEXT NOT NULL AFTER `can_parcial`;
+ALTER TABLE `produccion_imprenta_produccion` ADD COLUMN `largo_de_pinza_gato` VARCHAR(50) NOT NULL AFTER `can_parcial`;
+
+ALTER TABLE `produccion_imprenta_produccion`
+	ADD COLUMN `tiempo_de_arreglo` TEXT NOT NULL AFTER `comentarios_produccion`,
+	ADD COLUMN `tiempo_de_produccion` TEXT NOT NULL AFTER `tiempo_de_arreglo`,
+	ADD COLUMN `tiempo_de_preparacion` TEXT NOT NULL AFTER `tiempo_de_produccion`,
+	ADD COLUMN `tiempo_de_mantencion` TEXT NOT NULL AFTER `tiempo_de_preparacion`,
+	ADD COLUMN `formula_de_tinta` TEXT NOT NULL AFTER `tiempo_de_mantencion`,
+	ADD COLUMN `cuerpo1` TEXT NOT NULL AFTER `formula_de_tinta`,
+	ADD COLUMN `cuerpo2` TEXT NOT NULL AFTER `cuerpo2`,
+	ADD COLUMN `cuerpo3` TEXT NOT NULL AFTER `cuerpo3`,
+	ADD COLUMN `cuerpo4` TEXT NOT NULL AFTER `cuerpo4`,
+	ADD COLUMN `cuerpo5` TEXT NOT NULL AFTER `cuerpo5`,
+	ADD COLUMN `cuerpo6` TEXT NOT NULL AFTER `cuerpo6`;
+
+ALTER TABLE `produccion_imprenta_produccion`
+	ADD COLUMN `total_pliegos_malos` INT(11) NOT NULL AFTER `cuerpo6`;
+==============================================================================================================================
+
+20/05/2017
+
+crear campos tabla cotizaciones
+tiene_fondo char 2
+proceso_fondo char 2
+
+ALTER TABLE `cotizaciones`
+	ADD COLUMN `tiene_fondo` CHAR(2) NULL AFTER `cantidad_a_empaquetar_a_criterio`,
+	ADD COLUMN `proceso_fondo` CHAR(2) NULL AFTER `tiene_fondo`;
+
+
+ALTER TABLE `produccion_servicios_post_imprenta`
+	ADD COLUMN `id_proveedor_acabado_1` INT(11) NOT NULL AFTER `can_despacho_3`,
+	ADD COLUMN `id_proveedor_acabado_2` INT(11) NOT NULL AFTER `id_proveedor_acabado_1`,
+	ADD COLUMN `id_proveedor_acabado_3` INT(11) NOT NULL AFTER `id_proveedor_acabado_2`;
+
+
+ALTER TABLE `proveedores`
+	ADD COLUMN `id_forma_pago` INT(11) NULL AFTER `contacto`;
+
+ALTER TABLE `produccion_servicios_post_imprenta`
+	ADD COLUMN `comentarios_acabados_1` TEXT NOT NULL AFTER `id_proveedor_acabado_3`,
+	ADD COLUMN `comentarios_acabados_2` TEXT NOT NULL AFTER `comentarios_acabados_1`,
+	ADD COLUMN `comentarios_acabados_3` TEXT NOT NULL AFTER `comentarios_acabados_2`;
+===================================================================================================================
+27/05/2017 y 10/06/2017
+ALTER TABLE `cotizacion_ingenieria`
+	CHANGE COLUMN `lleva_fondo_negro` `lleva_fondo_negro` VARCHAR(10) NOT NULL AFTER `cotizaciones_grupales`,
+	ADD COLUMN `fondo_otro_color` VARCHAR(100) NOT NULL AFTER `lleva_fondo_negro`;
+ALTER TABLE `cotizacion_ingenieria`
+	ADD COLUMN `ccac_1` INT NOT NULL AFTER `fondo_otro_color`;
+ALTER TABLE `cotizacion_ingenieria`
+	ADD COLUMN `ccac_2` INT NOT NULL AFTER `ccac_1`;
+ALTER TABLE `cotizacion_ingenieria`
+	ADD COLUMN `imagen_impresion` INT(11) NOT NULL AFTER `ccac_2`;
+ALTER TABLE `hoja_de_costos_datos`
+	ADD COLUMN `valor_externo` VARCHAR(100) NULL AFTER `kilos_liner`,
+	ADD COLUMN `valor_pieza` VARCHAR(100) NULL AFTER `valor_externo`;
+ALTER TABLE `hoja_de_costos_datos`
+	ADD COLUMN `valor_extra` VARCHAR(100) NULL DEFAULT NULL AFTER `valor_piezas`,
+	ADD COLUMN `valor_bv_maquina` VARCHAR(100) NULL DEFAULT NULL AFTER `valor_extra`,
+	ADD COLUMN `valor_acepeta_exce` VARCHAR(100) NULL DEFAULT NULL AFTER `valor_bv_maquina`;
+ALTER TABLE `cotizaciones`
+	ADD COLUMN `cliente_entrega_6` VARCHAR(50) NULL DEFAULT NULL AFTER `cliente_entrega_5`;
+
+CREATE TABLE `clientes_viejos` (
+	`nombre` VARCHAR(250) NULL,
+	`rut` VARCHAR(250) NULL,
+	`codigo` VARCHAR(250) NULL
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+;
+
+ALTER TABLE `produccion_control_cartulina`
+	ADD COLUMN `total_metros` DECIMAL(10,2) NOT NULL AFTER `total_kilos2`;
+
+ALTER TABLE `produccion_control_cartulina`
+	ADD COLUMN `bobinar_ancho_cartulina1` DECIMAL(10,2) NOT NULL AFTER `total_metros`,
+	ADD COLUMN `bobinar_ancho_cartulina2` DECIMAL(10,2) NOT NULL AFTER `bobinar_ancho_cartulina1`,
+	ADD COLUMN `bobinar_ancho_cartulina3` DECIMAL(10,2) NOT NULL AFTER `bobinar_ancho_cartulina2`;
+
+ALTER TABLE `produccion_control_cartulina`
+	ADD COLUMN `kilos_bobina_seleccionada` INT(11) NOT NULL AFTER `bobinar_ancho_cartulina3`;
+
+ALTER TABLE `produccion_control_liner`
+	ADD COLUMN `total_metros` DECIMAL(10,2) NOT NULL AFTER `total_kilos2`,
+	ADD COLUMN `bobinar_ancho_cartulina1` INT(11) NOT NULL AFTER `total_metros`,
+	ADD COLUMN `bobinar_ancho_cartulina2` INT(11) NOT NULL AFTER `bobinar_ancho_cartulina1`,
+	ADD COLUMN `bobinar_ancho_cartulina3` INT(11) NOT NULL AFTER `bobinar_ancho_cartulina2`,
+	ADD COLUMN `kilos_bobina_seleccionada` INT(11) NOT NULL AFTER `bobinar_ancho_cartulina3`;
+
+ALTER TABLE `clientes`
+	ADD COLUMN `cod_antiguo` DATE NOT NULL AFTER `cuando`;
+sql para hacer update a cliente con codigo viejo
+UPDATE clientes p, cliente_viejos pp
+SET p.cod_antiguo = pp.codigo
+WHERE p.rut = pp.rut_nuevo;
+
+UPDATE clientes p, cliente_viejos pp
+SET p.cod_antiguo = pp.codigo
+WHERE p.razon_social=pp.nombre and p.cod_antiguo='0000-00-00';
+
+UPDATE clientes p, cliente_viejos pp
+SET p.rut = pp.rut_nuevo
+WHERE p.razon_social=pp.nombre and p.rut='92384000-1' and CHARACTER_LENGTH(trim(pp.rut_nuevo))>9;
+
+17/06/2017===========================================================================================
+
+ALTER TABLE `cotizacion_fotomecanica`
+	CHANGE COLUMN `input_kilos_externo_1` `input_variable_externo_1` INT(11) NULL DEFAULT NULL AFTER `acabado_impresion_1`,
+	CHANGE COLUMN `input_kilos_externo_2` `input_variable_externo_2` INT(11) NULL DEFAULT NULL AFTER `acabado_impresion_2`,
+	CHANGE COLUMN `input_kilos_externo_3` `input_variable_externo_3` INT(11) NULL DEFAULT NULL AFTER `acabado_impresion_3`,
+	CHANGE COLUMN `input_kilos_externo_4` `input_variable_externo_4` INT(11) NULL DEFAULT NULL AFTER `acabado_impresion_4`,
+	CHANGE COLUMN `input_kilos_externo_5` `input_variable_externo_5` INT(11) NULL DEFAULT NULL AFTER `acabado_impresion_5`,
+	CHANGE COLUMN `input_kilos_externo_6` `input_variable_externo_6` INT(11) NULL DEFAULT NULL AFTER `acabado_impresion_6`;
+
+ALTER TABLE `cotizacion_fotomecanica`
+	CHANGE COLUMN `input_variable_externo_1` `input_variable_externo_1` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_1`,
+	CHANGE COLUMN `input_variable_externo_2` `input_variable_externo_2` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_2`,
+	CHANGE COLUMN `input_variable_externo_3` `input_variable_externo_3` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_3`,
+	CHANGE COLUMN `input_variable_externo_4` `input_variable_externo_4` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_4`,
+	CHANGE COLUMN `input_variable_externo_5` `input_variable_externo_5` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_5`,
+	CHANGE COLUMN `input_variable_externo_6` `input_variable_externo_6` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_6`;
+
+ALTER TABLE `produccion_control_cartulina`
+	ADD COLUMN `kilos_orden_a_bobinar` INT(11) NOT NULL AFTER `kilos_bobina_seleccionada`;
+
+
+
+ALTER TABLE `ordenes_compras_trabajos_externos`
+	CHANGE COLUMN `cantidad` `cantidad_1` INT(11) NOT NULL AFTER `id_acabado_externo_3`,
+	ADD COLUMN `cantidad_2` INT(11) NOT NULL AFTER `cantidad_1`,
+	ADD COLUMN `cantidad_3` INT(11) NOT NULL AFTER `cantidad_2`;
+
+ALTER TABLE `ordenes_compras_trabajos_externos`
+	ADD COLUMN `fecha_entrega` DATE NOT NULL AFTER `tipo_seccion`;
+
+
+clientes faltantes///////
+INSERT INTO `clientes` (`id`, `rut`, `razon_social`, `nombre_fantasia`, `id_region`, `id_ciudad`, `id_comuna`, `direccion`, `correo`, `telefono`, `celular`, `id_forma_pago`, `direccion_despacho`, `id_region_despacho`, `id_ciudad_despacho`, `id_comuna_despacho`, `horario_despacho`, `observaciones`, `fecha_ingreso`, `fecha_ultima_compra`, `id_vendedor`, `deuda_vigente`, `deuda_total`, `estado`, `monto_inventario`, `fast`, `contacto`, `cupo_maximo`, `bloqueado`, `quien`, `cuando`, `cod_antiguo`) VALUES
+(6155, '92384000-1', 'VIÑA A&A                                         ', 'VIÑA A&A                                         ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6156, '92384000-1', 'LOOKID                                           ', 'LOOKID                                           ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6157, '92384000-1', 'AGENCIA KREA                                     ', 'AGENCIA KREA                                     ', 13, 44, 44, '', 'correo@correo.cl', '225021049', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6158, '92384000-1', 'VIÑA MÄNNLE                                      ', 'VIÑA MÄNNLE                                      ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6159, '92384000-1', 'JOSE ANTONIO BUSTAMANTE                          ', 'JOSE ANTONIO BUSTAMANTE                          ', 13, 44, 44, 'JBUSTAMANTE@MVRB.CL                             ', 'correo@correo.cl', '998209349', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6160, '92384000-1', 'A & M PROMOCIONALES                              ', 'A & M PROMOCIONALES                              ', 13, 44, 44, 'MARISOL.ANDRADES@AYMPROMOCIONALES.CL            ', 'correo@correo.cl', '226750014', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6161, '92384000-1', 'ACOL                                             ', 'ACOL                                             ', 13, 44, 44, 'ARTURO@ACOL.CL                                  ', 'correo@correo.cl', '0', NULL, 44, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6162, '77006430-9', 'CLUB DE AMANTES DEL VINO S. A.                   ', 'CLUB DE AMANTES DEL VINO S. A.                   ', 13, 44, 44, 'AV. LA MONTAÑA 776                              ', 'correo@correo.cl', '966579690', NULL, 27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6163, '76466178-8', 'VIÑA ETERNIDAD SPA                               ', 'VIÑA ETERNIDAD SPA                               ', 13, 44, 44, 'CERRO EL PLOMO 5420 OF. 1403                    ', 'correo@correo.cl', '228146875', NULL, 27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6164, '92384000-1', 'IGNACIO LIRA                                     ', 'IGNACIO LIRA                                     ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6165, '92384000-1', 'CAJAS DE MARKETING                               ', 'CAJAS DE MARKETING                               ', 13, 44, 44, 'GRANADA 2351 OF 503                             ', 'correo@correo.cl', '223430127', NULL, 44, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6166, '76376815-5', 'PERMAVID SPA                                     ', 'PERMAVID SPA                                     ', 13, 44, 44, 'AV. APOQUINDO 5583 OF 91                        ', 'correo@correo.cl', '991296653', NULL, 27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6167, '92384000-1', 'AJI MARKETING PROMOCIONAL                        ', 'AJI MARKETING PROMOCIONAL                        ', 13, 44, 44, 'ORQUIDEAS 979                                   ', 'correo@correo.cl', '223748305', NULL, 44, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6168, '77752250-7', 'ASISTENCIA PROFESIONAL DE SERVICIOS LTDA.        ', 'ASISTENCIA PROFESIONAL DE SERVICIOS LTDA.        ', 13, 44, 44, 'GRANADA 2351, DEPTO. 503                        ', 'correo@correo.cl', '223430127', NULL, 25, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6169, '92384000-1', 'MERCEDES CAMPUSANO                               ', 'MERCEDES CAMPUSANO                               ', 13, 44, 44, 'MERCEDES@PROVALLPROVEEDORES.CL                  ', 'correo@correo.cl', '988032933', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 48, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6170, '92384000-1', 'VIÑA LAS VELETAS                                 ', 'VIÑA LAS VELETAS                                 ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 48, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6171, '92384000-1', 'PIAMONTE S. A.                                   ', 'PIAMONTE S. A.                                   ', 13, 44, 44, 'ARTURO.CAMUS@PIAMONTE.CL                        ', 'correo@correo.cl', '0', NULL, 27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 48, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6172, '76118616-7', 'VIÑA PUNTI FERRER LTDA.                          ', 'VIÑA PUNTI FERRER LTDA.                          ', 13, 44, 44, 'LONGITUDINAL SUR KM 103                         ', 'correo@correo.cl', '0', NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6173, '92384000-1', 'ACTUAL PRODUCCIONES PUBLICITARIAS                ', 'ACTUAL PRODUCCIONES PUBLICITARIAS                ', 13, 44, 44, '', 'correo@correo.cl', '985977197', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6174, '92384000-1', 'JUAN GONZALEZ                                    ', 'JUAN GONZALEZ                                    ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6175, '92384000-1', 'PRO-GIFT                                         ', 'PRO-GIFT                                         ', 13, 44, 44, 'ROSARIO SUR 135 PISO 4                          ', 'correo@correo.cl', '222478162', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6176, '92384000-1', 'PABLO BEAS                                       ', 'PABLO BEAS                                       ', 13, 44, 44, 'PABLOBEAS@GMAIL.COM                             ', 'correo@correo.cl', '0', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6177, '92384000-1', 'BTL PRINT                                        ', 'BTL PRINT                                        ', 13, 44, 44, 'RAUL LABBE 12613 OF 310                         ', 'correo@correo.cl', '222161216', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6178, '92384000-1', 'PORTAL GRAFICO                                   ', 'PORTAL GRAFICO                                   ', 13, 44, 44, 'PORTALGRAFICOSPA@GMAIL.COM                      ', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6179, '92384000-1', 'INTERPRINT S. A.                                 ', 'INTERPRINT S. A.                                 ', 13, 44, 44, '', 'correo@correo.cl', '991595218', NULL, 44, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6180, '00      - ', 'AGRICOLA DOÑA JAVIERA DEL MONTE S. A.            ', 'AGRICOLA DOÑA JAVIERA DEL MONTE S. A.            ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6181, '92384000-1', 'SEBASTIAN SAAVEDRA PUGA                          ', 'SEBASTIAN SAAVEDRA PUGA                          ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6182, '79872770-2', 'MONTES S. A.                                     ', 'MONTES S. A.                                     ', 13, 44, 44, 'AV. DEL VALLE 945 OF. 2611                      ', 'correo@correo.cl', '722789021', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6183, '92384000-1', 'AM INVERSIONES                                   ', 'AM INVERSIONES                                   ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 46, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6184, '25346124-1', 'JOHAN GRATEROL                                   ', 'JOHAN GRATEROL                                   ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6185, '92384000-1', 'ARTURO CORREA                                    ', 'ARTURO CORREA                                    ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6186, '76877800-0', 'ARTURO EULOGIO CORREA LOSIER Y CIA. LTDA.        ', 'ARTURO EULOGIO CORREA LOSIER Y CIA. LTDA.        ', 13, 44, 44, 'ROBERTO ESPINOZA 1417                           ', 'correo@correo.cl', '225544265', NULL, 25, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6187, '92384000-1', 'OCTAVA TONER SUMINISTROS DE IMPRESION            ', 'OCTAVA TONER SUMINISTROS DE IMPRESION            ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6188, '76604466-2', 'SOC. COM. CLARMED LTDA.                          ', 'SOC. COM. CLARMED LTDA.                          ', 13, 44, 44, 'VICHUQUEN 10641                                 ', 'correo@correo.cl', '22891142', NULL, 50, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6189, '92384000-1', 'A Y B LOS INSACIABLES                            ', 'A Y B LOS INSACIABLES                            ', 13, 44, 44, 'AYB@LOSINSACIABLES.CL                           ', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6190, '86547900-K', 'VIÑA SANTA RITA                                  ', 'VIÑA SANTA RITA                                  ', 13, 44, 44, 'AV. APOQUINDO 3669 OF. 601                      ', 'correo@correo.cl', '223622000', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 48, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6191, '92384000-1', 'ICOMEX                                           ', 'ICOMEX                                           ', 13, 44, 44, '', 'correo@correo.cl', '224069167', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6192, '76326674-5', 'FRUSELVA AMERICA SPA                             ', 'FRUSELVA AMERICA SPA                             ', 13, 44, 44, 'RUTA 5 SUR KM 264                               ', 'correo@correo.cl', '712632228', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6193, '77805980-0', 'VIÑA MARTY SPA                                   ', 'VIÑA MARTY SPA                                   ', 13, 44, 44, 'ELIODORO YAÑEZ 1649 OF. 802                     ', 'correo@correo.cl', '222043689', NULL, 27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6194, '92384000-1', 'ESPACIO BTL                                      ', 'ESPACIO BTL                                      ', 13, 44, 44, 'J.MARTINEZ@ESPACIOBTL.CL                        ', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6195, '92384000-1', 'NICOLAS CONTRERAS                                ', 'NICOLAS CONTRERAS                                ', 13, 44, 44, 'ROSA O´HIGGINS 78 DEPTO 406                     ', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6196, '76192483-4', 'SOC. INVERSIONES PERLA AZUL LTDA.                ', 'SOC. INVERSIONES PERLA AZUL LTDA.                ', 13, 44, 44, 'SAN JUAN 2060                                   ', 'correo@correo.cl', '722411293', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6197, '92384000-1', 'LIOI LTDA.                                       ', 'LIOI LTDA.                                       ', 13, 44, 44, 'SANTA MARTA 2100                                ', 'correo@correo.cl', '225992000', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6198, '76107979-4', 'COMERCIALIZADORA KUBIKA S. A.                    ', 'COMERCIALIZADORA KUBIKA S. A.                    ', 13, 44, 44, 'MIGUEL CLARO 195 OF. 402                        ', 'correo@correo.cl', '958701681', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6199, '76671901-5', 'EN CUEROS SPA                                    ', 'EN CUEROS SPA                                    ', 13, 44, 44, 'ROSA O´HIGGINS 78 DEPTO 404                     ', 'correo@correo.cl', '952102811', NULL, 25, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6200, '92384000-1', 'VIÑA FUTALEUFU                                   ', 'VIÑA FUTALEUFU                                   ', 13, 44, 44, 'HDELABARRA@GROUP-EL.COM                         ', 'correo@correo.cl', '223265681', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6201, '92384000-1', 'CEA WINES SPA                                    ', 'CEA WINES SPA                                    ', 13, 44, 44, 'ALCANTARA 200                                   ', 'correo@correo.cl', '0', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6202, '92380000-k', 'ACSA S. A.                                       ', 'ACSA S. A.                                       ', 13, 44, 44, 'NUEVA DE MATTE 2549                             ', 'correo@correo.cl', '227370553', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6203, '76568353-K', 'TRUMATIC SPA                                     ', 'TRUMATIC SPA                                     ', 13, 44, 44, 'AV. DEL VALLE SUR 524 OF 301, CIUDAD EMPRESARIAL', 'correo@correo.cl', '223070070', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6204, '92384000-1', 'CONTRA LUZ DISEÑO                                ', 'CONTRA LUZ DISEÑO                                ', 13, 44, 44, 'AGUSTIN DEL CASTILLO 2465                       ', 'correo@correo.cl', '222456780', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6205, '92384000-1', 'CRISTIAN TOLEDO                                  ', 'CRISTIAN TOLEDO                                  ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 21, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6206, '92384000-1', 'EXPORTADORA BALAGU S. A.                         ', 'EXPORTADORA BALAGU S. A.                         ', 13, 44, 44, 'JOSE ALCALDE DELADO 10545 OF. 506               ', 'correo@correo.cl', '232242140', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6207, '92384000-1', 'HIRAM MIZANDJIAN                                 ', 'HIRAM MIZANDJIAN                                 ', 13, 44, 44, 'HIRAM.MIZANDJIAN@GMAIL.COM                      ', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6208, '92384000-1', 'LABORATORIO C Y S                                ', 'LABORATORIO C Y S                                ', 13, 44, 44, 'LABCYS@LABCYS.CL                                ', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6209, '78735300-2', 'SOCIEDAD DE PROFESIONALES CONTRERAS Y SEITZ LTDA.', 'SOCIEDAD DE PROFESIONALES CONTRERAS Y SEITZ LTDA.', 13, 44, 44, 'PADRE MARIANO 10 OFICINA 309                    ', 'correo@correo.cl', '232026129', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6210, '76527060-K', 'COM. E INV. CERVECERA DEL PUERTO SPA             ', 'COM. E INV. CERVECERA DEL PUERTO SPA             ', 13, 44, 44, 'BLANCO 1136                                     ', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6211, '92384000-1', 'TAMARA DIAZ                                      ', 'TAMARA DIAZ                                      ', 13, 44, 44, '', 'correo@correo.cl', '0', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6212, '92893000-9', 'PRODUCTOS QUIMICOS TANAX                         ', 'PRODUCTOS QUIMICOS TANAX                         ', 13, 44, 44, '', 'correo@correo.cl', '227391442', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6213, '92384000-1', 'PIZZERIA DALESSANDRO                             ', 'PIZZERIA DALESSANDRO                             ', 13, 44, 44, '', 'correo@correo.cl', '992337223', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', ''),
+(6214, '92384000-1', 'PUNTO DESIGN                                     ', 'PUNTO DESIGN                                     ', 13, 44, 44, 'F.LAGOS@PUNTODESIGN.CL                          ', 'correo@correo.cl', '0', NULL, 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50, NULL, NULL, 0, NULL, 0, '', 0, '', 0, '0000-00-00', '');
+
+
+
+ALTER TABLE `cotizaciones`
+	ADD COLUMN `imagen_impresion` INT(11) NULL DEFAULT NULL AFTER `margen_migrado`;
+
+ALTER TABLE `cotizaciones`
+	CHANGE COLUMN `imagen_impresion` `imagen_impresion` VARCHAR(50) NULL DEFAULT NULL AFTER `margen_migrado`;
+	
+ALTER TABLE `cotizacion_ingenieria`
+	ALTER `imagen_impresion` DROP DEFAULT;
+	
+ALTER TABLE `cotizacion_ingenieria`
+	CHANGE COLUMN `imagen_impresion` `imagen_impresion` VARCHAR(50) NOT NULL AFTER `ccac_2`;
+
+ALTER TABLE `moldes_grau`
+	ADD COLUMN `fecha_creacion` DATE NOT NULL AFTER `tipo`;
+
+ALTER TABLE `produccion_control_cartulina`
+	ADD COLUMN `kilos_orden_a_bobinar` INT(11) NOT NULL AFTER `kilos_bobina_seleccionada`;
+
+
+ALTER TABLE `produccion_control_cartulina`
+	ADD COLUMN `segunda_bobina_adicional_ancho` INT(11) NOT NULL AFTER `kilos_orden_a_bobinar`,
+	ADD COLUMN `segunda_bobina_adicional_kilos` INT(11) NOT NULL AFTER `segunda_bobina_adicional_ancho`,
+	ADD COLUMN `tercera_bobina_adicional_ancho` INT(11) NOT NULL AFTER `segunda_bobina_adicional_kilos`,
+	ADD COLUMN `tercera_bobina_adicional_kilos` INT(11) NOT NULL AFTER `tercera_bobina_adicional_ancho`,
+	ADD COLUMN `cuarta_bobina_adicional_ancho` INT(11) NOT NULL AFTER `tercera_bobina_adicional_kilos`,
+	ADD COLUMN `cuarta_bobina_adicional_kilos` INT(11) NOT NULL AFTER `cuarta_bobina_adicional_ancho`;
+
+SHOW CREATE VIEW `p7000190_grau2`.`productos_genericos_clientes`;
+
+
+SELECT
+distinct
+c.id,
+c.razon_social,
+p.codigo codigo_prod_antiguo,
+CONCAT(c.id, 'G', SUBSTRING_INDEX(SUBSTRING(p.codigo,LENGTH(SUBSTRING_INDEX(p.codigo, 'G', 1)) + 2), 'G', 1)) cod_nuevo,
+SUBSTRING_INDEX(p.codigo, 'G', 1) id_cliente_antiguo,
+SUBSTRING_INDEX(SUBSTRING(p.codigo,LENGTH(SUBSTRING_INDEX(p.codigo, 'G', 1)) + 2), 'G', 1) producto 
+FROM productos p, clientes c where SUBSTRING_INDEX(p.codigo, 'G', 1)=c.cod_antiguo order by c.id,SUBSTRING_INDEX(SUBSTRING(p.codigo,LENGTH(SUBSTRING_INDEX(p.codigo, 'G', 1)) + 2), 'G', 1) asc
+
+ALTER TABLE `cotizaciones` ADD `comentarios_montaje_pieza_especial` TEXT NOT NULL AFTER `montaje_pieza_especial`;
+
+CREATE ALGORITHM = UNDEFINED VIEW `rut_repetidos` AS SELECT count(rut) as numero, rut
+  FROM clientes group by rut HAVING count(rut) >1 ; ;
+
+
+
+cliente_cotizacion
+select a.id from clientes a, cotizaciones b where a.id=b.id_cliente; 
+
+
+
+clientes_a_borrar
+select rut from clientes a where a.id not in (select c.id from cliente_cotizacion c);
+
+
+update clientes, clientes_a_actualizar
+set clientes.estado=4
+where clientes.id = clientes_a_actualizar.id;
+select * from clientes where estado=4;
+
+
+ALTER TABLE `cotizacion_ingenieria`
+	ADD COLUMN `procesos_especiales_folia` VARCHAR(250) NULL AFTER `imagen_impresion`,
+	ADD COLUMN `procesos_especiales_folia_valor` VARCHAR(250) NULL AFTER `procesos_especiales_folia`,
+	ADD COLUMN `procesos_especiales_cuno` VARCHAR(250) NULL AFTER `procesos_especiales_folia_valor`,
+	ADD COLUMN `procesos_especiales_cuno_valor` VARCHAR(250) NULL AFTER `procesos_especiales_cuno`,
+	ADD COLUMN `procesos_especiales_folia_2` VARCHAR(250) NULL AFTER `procesos_especiales_cuno_valor`,
+	ADD COLUMN `procesos_especiales_folia_2_valor` VARCHAR(250) NULL AFTER `procesos_especiales_folia_2`,
+	ADD COLUMN `procesos_especiales_folia_3` VARCHAR(250) NULL AFTER `procesos_especiales_folia_2_valor`,
+	ADD COLUMN `procesos_especiales_folia_3_valor` VARCHAR(250) NULL AFTER `procesos_especiales_folia_3`,
+	ADD COLUMN `procesos_especiales_cuno_2` VARCHAR(250) NULL AFTER `procesos_especiales_folia_3_valor`,
+	ADD COLUMN `procesos_especiales_cuno_2_valor` VARCHAR(250) NULL AFTER `procesos_especiales_cuno_2`;
+
+
+
+========================================================================================
+09-08-2017
+========================================================================================
+ALTER TABLE `cotizacion_ingenieria`
+	ADD COLUMN `acabado_impresion_1` VARCHAR(100) NULL DEFAULT NULL AFTER `procesos_especiales_cuno_2_valor`,
+	ADD COLUMN `input_variable_externo_1` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_1`,
+	ADD COLUMN `acabado_impresion_2` VARCHAR(100) NULL DEFAULT NULL AFTER `input_variable_externo_1`,
+	ADD COLUMN `input_variable_externo_2` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_2`,
+	ADD COLUMN `acabado_impresion_3` VARCHAR(100) NULL DEFAULT NULL AFTER `input_variable_externo_2`,
+	ADD COLUMN `input_variable_externo_3` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_3`,
+	ADD COLUMN `acabado_impresion_4` VARCHAR(100) NULL DEFAULT NULL AFTER `input_variable_externo_3`,
+	ADD COLUMN `input_variable_externo_4` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_4`,
+	ADD COLUMN `acabado_impresion_5` VARCHAR(100) NULL DEFAULT NULL AFTER `input_variable_externo_4`,
+	ADD COLUMN `input_variable_externo_5` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_5`,
+	ADD COLUMN `acabado_impresion_6` VARCHAR(100) NULL DEFAULT NULL AFTER `input_variable_externo_5`,
+	ADD COLUMN `input_variable_externo_6` VARCHAR(50) NULL DEFAULT NULL AFTER `acabado_impresion_6`,
+	DROP COLUMN `acabado_impresion_1`,
+	DROP COLUMN `Columna 94`;
+
+
+ALTER TABLE `migracion_microonda`
+	ADD COLUMN `liner_sn` INT(11) NULL DEFAULT NULL AFTER `ANCHO_MICRO`,
+	ADD COLUMN `onda_sn` INT(11) NULL DEFAULT NULL AFTER `liner_sn`;
+
+Subir la tabla migracion_microonda
+
+
+ALTER TABLE `cotizacion_fotomecanica`
+	ADD COLUMN `piezas_adicionales` VARCHAR(50) NOT NULL AFTER `guardar_con_comentarios`,
+	ADD COLUMN `piezas_adicionales2` VARCHAR(50) NOT NULL AFTER `piezas_adicionales`,
+	ADD COLUMN `piezas_adicionales3` VARCHAR(50) NOT NULL AFTER `piezas_adicionales2`;
+
+ALTER TABLE `cotizacion_fotomecanica`
+	ADD COLUMN `detalle_piezas_adicionales` TEXT NOT NULL AFTER `piezas_adicionales3`,
+	ADD COLUMN `comentario_piezas_adicionales` TEXT NOT NULL AFTER `detalle_piezas_adicionales`;
+
+14/08/2017
+
+ALTER TABLE `cotizaciones`
+	ADD COLUMN `varios_migrado` INT(11) NULL DEFAULT NULL AFTER `ot_migrada`;

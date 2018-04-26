@@ -1,0 +1,992 @@
+[2017-04-05 12:20:12] Executing bootstrap tasks
+[2017-04-05 12:20:12] Java(TM) SE Runtime Environment 1.8.0_121-b13
+[2017-04-05 12:20:12] Product org.eclipse.products.epp.package.php.neon
+[2017-04-05 12:20:12] Bundle org.eclipse.oomph.setup 1.6.0.v20161125-0947, build=2790, branch=33010448bcf5775ec23e485876cbb07a0340b9b5
+[2017-04-05 12:20:12] Bundle org.eclipse.oomph.setup.core 1.6.0.v20161128-0928, build=2790, branch=33010448bcf5775ec23e485876cbb07a0340b9b5
+[2017-04-05 12:20:12] Bundle org.eclipse.oomph.setup.p2 1.6.0.v20161019-0656, build=2790, branch=33010448bcf5775ec23e485876cbb07a0340b9b5
+[2017-04-05 12:20:12] Performing P2 Director (Eclipse IDE for PHP Developers (Neon))
+[2017-04-05 12:20:12] Offline = false
+[2017-04-05 12:20:12] Mirrors = true
+[2017-04-05 12:20:12] Resolving 20 requirements from 3 repositories to C:\AppServ\www\trabajo\eclipse
+[2017-04-05 12:20:12] Requirement epp.package.php [4.6.0,4.7.0)
+[2017-04-05 12:20:12] Requirement org.eclipse.platform.feature.group [4.6.0,4.7.0)
+[2017-04-05 12:20:12] Requirement org.eclipse.rcp.feature.group [4.6.0,4.7.0)
+[2017-04-05 12:20:12] Requirement org.eclipse.egit.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.egit.gitflow.feature.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.egit.mylyn.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.mylyn.bugzilla_feature.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.mylyn.context_feature.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.mylyn.github.feature.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.mylyn.ide_feature.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.mylyn.wikitext_feature.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.mylyn_feature.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.php.composer.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.php.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.php.importer.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.php.mylyn.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.tm.terminal.feature.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.wst.jsdt.feature.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.wst.xml_ui.feature.feature.group
+[2017-04-05 12:20:12] Requirement org.eclipse.oomph.setup.feature.group
+[2017-04-05 12:20:12] Repository http://download.eclipse.org/technology/epp/packages/neon
+[2017-04-05 12:20:12] Repository http://download.eclipse.org/releases/neon/201703231000
+[2017-04-05 12:20:12] Repository http://download.eclipse.org/oomph/updates/milestone/latest
+[2017-04-05 12:20:32] Calculating requirements and dependencies.
+[2017-04-05 12:20:38] Computing prerequisite plan
+[2017-04-05 12:20:49] Fetching artifacts.jar from http://download.eclipse.org/technology/epp/packages/neon/ (12,84kB)
+[2017-04-05 12:20:50] Fetching artifacts.xml.xz from http://download.eclipse.org/releases/neon/201703231000/
+[2017-04-05 12:20:59] Fetching compositeArtifacts.jar from http://download.eclipse.org/oomph/updates/milestone/latest/ (444B)
+[2017-04-05 12:21:01] Fetching artifacts.jar from http://download.eclipse.org/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ (6,12kB)
+[2017-04-05 12:21:01] Collecting 41 artifacts from http://download.eclipse.org/oomph/updates/milestone/latest
+[2017-04-05 12:21:02] Downloading org.eclipse.oomph.extractor.lib
+[2017-04-05 12:21:02] Downloading org.eclipse.oomph.base.edit
+[2017-04-05 12:21:02] Downloading org.eclipse.oomph.jreinfo.win32.x86_64
+[2017-04-05 12:21:02] Downloading org.eclipse.oomph.workingsets
+[2017-04-05 12:21:02] Downloading org.eclipse.oomph.predicates.edit
+[2017-04-05 12:21:02] Downloading org.eclipse.oomph.jreinfo
+[2017-04-05 12:21:02] Downloading org.eclipse.oomph.workingsets.edit
+[2017-04-05 12:21:02] Downloading org.eclipse.oomph.resources.edit
+[2017-04-05 12:21:02] Downloading org.eclipse.oomph.setup.p2.edit
+[2017-04-05 12:21:02] Downloading org.eclipse.oomph.p2.edit
+[2017-04-05 12:21:03] Fetching org.eclipse.oomph.jreinfo.win32.x86_64_1.2.0.v20160426-0508.jar from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (23,67kB)
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.extractor.lib_1.3.0.v20161116-0647.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (13,02kB)
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.workingsets_1.7.0.v20170104-1401.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (21,33kB)
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.extractor.lib_1.3.0.v20161116-0647.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (13,02kB)
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.workingsets_1.7.0.v20170104-1401.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (21,33kB)
+[2017-04-05 12:21:04] Downloading org.eclipse.oomph.jreinfo.ui
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.base.edit_1.7.0.v20170104-1401.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (23,93kB)
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.jreinfo_1.7.0.v20170201-1645.jar.pack.gz from http://mirror.csclub.uwaterloo.ca/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (17,5kB)
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.setup.p2.edit_1.7.0.v20161230-1057.jar.pack.gz from http://mirror.math.princeton.edu/pub/eclipse//oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (13,13kB)
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.predicates.edit_1.7.0.v20170104-1401.jar.pack.gz from http://mirrors.xmission.com/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (19,84kB)
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.setup.p2.edit_1.7.0.v20161230-1057.jar.pack.gz from http://mirror.math.princeton.edu/pub/eclipse//oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (13,13kB)
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.jreinfo_1.7.0.v20170201-1645.jar.pack.gz from http://mirror.csclub.uwaterloo.ca/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (17,5kB)
+[2017-04-05 12:21:04] Fetching org.eclipse.oomph.workingsets.edit_1.7.0.v20170104-1401.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (16,29kB)
+[2017-04-05 12:21:05] Fetching org.eclipse.oomph.predicates.edit_1.7.0.v20170104-1401.jar.pack.gz from http://mirrors.xmission.com/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (19,84kB)
+[2017-04-05 12:21:05] Fetching org.eclipse.oomph.workingsets.edit_1.7.0.v20170104-1401.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (16,29kB)
+[2017-04-05 12:21:05] Fetching org.eclipse.oomph.resources.edit_1.7.0.v20170103-0924.jar.pack.gz from http://eclipse.mirror.wearetriple.com//oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (14,21kB)
+[2017-04-05 12:21:05] Downloading org.eclipse.oomph.p2
+[2017-04-05 12:21:05] Fetching org.eclipse.oomph.resources.edit_1.7.0.v20170103-0924.jar.pack.gz from http://eclipse.mirror.wearetriple.com//oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (14,21kB)
+[2017-04-05 12:21:05] Fetching org.eclipse.oomph.jreinfo.ui_1.7.0.v20161220-1444.jar.pack.gz from http://mirror.dkm.cz/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (27,13kB)
+[2017-04-05 12:21:06] Downloading org.eclipse.oomph.setup
+[2017-04-05 12:21:07] Downloading org.eclipse.oomph.setup.core
+[2017-04-05 12:21:07] Downloading org.eclipse.oomph.p2
+[2017-04-05 12:21:07] Fetching org.eclipse.oomph.p2_1.7.0.v20170228-1751.jar from http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/features/ (28,5kB)
+[2017-04-05 12:21:08] Downloading org.eclipse.oomph.preferences
+[2017-04-05 12:21:08] Fetching org.eclipse.oomph.setup.core_1.7.0.v20170301-0747.jar from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/features/ (28,86kB)
+[2017-04-05 12:21:08] Fetching org.eclipse.oomph.p2_1.7.0.v20170104-1401.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (33,45kB)
+[2017-04-05 12:21:08] Downloading org.apache.commons.logging
+[2017-04-05 12:21:08] Fetching org.eclipse.oomph.setup.core_1.7.0.v20170301-0747.jar from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/features/ (28,86kB)
+[2017-04-05 12:21:08] Fetching org.eclipse.oomph.p2_1.7.0.v20170104-1401.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (33,45kB)
+[2017-04-05 12:21:08] Downloading org.eclipse.nebula.widgets.tablecombo
+[2017-04-05 12:21:08] Downloading org.eclipse.oomph.setup.p2
+[2017-04-05 12:21:09] Downloading org.eclipse.userstorage
+[2017-04-05 12:21:09] Fetching org.eclipse.oomph.preferences_1.7.0.v20170104-1401.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (34,43kB)
+[2017-04-05 12:21:10] Fetching org.eclipse.oomph.setup.p2_1.7.0.v20170217-1051.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (20,49kB)
+[2017-04-05 12:21:10] Fetching org.eclipse.nebula.widgets.tablecombo_1.0.0.201702281340.jar from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (36,75kB)
+[2017-04-05 12:21:10] Fetching org.eclipse.userstorage_1.0.1.v20170201-1648.jar.pack.gz from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (44,58kB)
+[2017-04-05 12:21:10] Fetching org.eclipse.oomph.setup_1.7.0.v20170305-1123.jar from http://mirror.ibcp.fr/pub/eclipse//oomph/drops/milestone/S20170307-122318-1.7.0-M4/features/ (28,55kB)
+[2017-04-05 12:21:10] Fetching org.eclipse.oomph.setup.p2_1.7.0.v20170217-1051.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (20,49kB)
+[2017-04-05 12:21:10] Fetching org.eclipse.userstorage_1.0.1.v20170201-1648.jar.pack.gz from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (44,58kB)
+[2017-04-05 12:21:10] Fetching org.eclipse.nebula.widgets.tablecombo_1.0.0.201702281340.jar from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (36,75kB)
+[2017-04-05 12:21:10] Fetching org.eclipse.oomph.setup_1.7.0.v20170305-1123.jar from http://mirror.ibcp.fr/pub/eclipse//oomph/drops/milestone/S20170307-122318-1.7.0-M4/features/ (28,55kB)
+[2017-04-05 12:21:10] Downloading org.eclipse.oomph.setup.doc
+[2017-04-05 12:21:10] Downloading org.apache.httpcomponents.httpclient
+[2017-04-05 12:21:11] Fetching org.apache.commons.logging_1.1.1.v201101211721.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (36,22kB)
+[2017-04-05 12:21:11] Downloading org.eclipse.oomph.setup.ui
+[2017-04-05 12:21:11] Downloading org.eclipse.oomph.ui
+[2017-04-05 12:21:11] Downloading org.eclipse.oomph.setup.editor
+[2017-04-05 12:21:12] Downloading org.eclipse.oomph.p2.doc
+[2017-04-05 12:21:12] Downloading org.eclipse.oomph.p2.ui
+[2017-04-05 12:21:12] Fetching org.eclipse.oomph.p2.doc_1.7.0.v20170104-1401.jar from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (313,08kB)
+[2017-04-05 12:21:13] Fetching org.eclipse.oomph.setup.doc_1.7.0.v20170104-1401.jar from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (2,49MB)
+[2017-04-05 12:21:13] Fetching org.eclipse.oomph.p2.doc_1.7.0.v20170104-1401.jar from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (313,08kB)
+[2017-04-05 12:21:13] Fetching org.eclipse.oomph.setup.doc_1.7.0.v20170104-1401.jar from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (2,49MB)
+[2017-04-05 12:21:13] Fetching org.eclipse.oomph.setup.ui_1.7.0.v20170305-1123.jar.pack.gz from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (208,3kB)
+[2017-04-05 12:21:13] Fetching org.eclipse.oomph.setup.editor_1.7.0.v20170104-1401.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (120,77kB)
+[2017-04-05 12:21:13] Fetching org.eclipse.oomph.ui_1.7.0.v20170222-1350.jar.pack.gz from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (113,51kB)
+[2017-04-05 12:21:13] Downloading org.eclipse.oomph.setup.ui.questionnaire
+[2017-04-05 12:21:13] Fetching org.eclipse.oomph.setup.editor_1.7.0.v20170104-1401.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (120,77kB)
+[2017-04-05 12:21:13] Fetching org.eclipse.oomph.ui_1.7.0.v20170222-1350.jar.pack.gz from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (113,51kB)
+[2017-04-05 12:21:13] Fetching org.eclipse.oomph.p2.ui_1.7.0.v20161231-0937.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (98,18kB)
+[2017-04-05 12:21:14] Fetching org.eclipse.oomph.setup.ui.questionnaire_1.7.0.v20170104-1401.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (287,21kB)
+[2017-04-05 12:21:14] Downloading org.eclipse.oomph.setup.core
+[2017-04-05 12:21:14] Fetching org.apache.httpcomponents.httpclient_4.3.6.v201511171540.jar.pack.gz from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (253,65kB)
+[2017-04-05 12:21:14] Fetching org.eclipse.oomph.setup.ui.questionnaire_1.7.0.v20170104-1401.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (287,21kB)
+[2017-04-05 12:21:14] Fetching org.apache.httpcomponents.httpclient_4.3.6.v201511171540.jar.pack.gz from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (253,65kB)
+[2017-04-05 12:21:14] Fetching org.eclipse.oomph.setup.doc_1.7.0.v20170104-1401.jar from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (2,49MB)
+[2017-04-05 12:21:14] Fetching org.eclipse.oomph.setup.ui_1.7.0.v20170305-1123.jar.pack.gz from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/
+[2017-04-05 12:21:14] Fetching org.eclipse.oomph.setup.doc_1.7.0.v20170104-1401.jar from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (2,49MB)
+[2017-04-05 12:21:14] Downloading org.eclipse.oomph.p2.core
+[2017-04-05 12:21:15] Fetching org.apache.httpcomponents.httpclient_4.3.6.v201511171540.jar.pack.gz from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/
+[2017-04-05 12:21:17] Downloading org.eclipse.oomph.util
+[2017-04-05 12:21:17] Fetching org.eclipse.oomph.setup.core_1.7.0.v20170301-0747.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (92,75kB)
+[2017-04-05 12:21:18] Downloading org.eclipse.oomph.setup.edit
+[2017-04-05 12:21:19] Downloading org.eclipse.oomph.setup
+[2017-04-05 12:21:20] Fetching org.eclipse.oomph.p2.core_1.7.0.v20170228-1751.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (72,16kB)
+[2017-04-05 12:21:20] Fetching org.eclipse.oomph.setup.edit_1.7.0.v20170104-1401.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (46,94kB)
+[2017-04-05 12:21:20] Downloading org.eclipse.oomph.resources
+[2017-04-05 12:21:20] Fetching org.eclipse.oomph.p2.core_1.7.0.v20170228-1751.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (72,16kB)
+[2017-04-05 12:21:20] Fetching org.eclipse.oomph.setup.edit_1.7.0.v20170104-1401.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (46,94kB)
+[2017-04-05 12:21:21] Fetching org.eclipse.oomph.setup_1.7.0.v20170224-1311.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (129,43kB)
+[2017-04-05 12:21:21] Fetching org.eclipse.oomph.util_1.7.0.v20170303-0927.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (74,97kB)
+[2017-04-05 12:21:21] Fetching org.eclipse.oomph.setup_1.7.0.v20170224-1311.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (129,43kB)
+[2017-04-05 12:21:21] Fetching org.eclipse.oomph.util_1.7.0.v20170303-0927.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (74,97kB)
+[2017-04-05 12:21:22] Fetching org.eclipse.oomph.p2.edit_1.7.0.v20170104-1401.jar.pack.gz from http://mirrors.nic.cz/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (20,35kB)
+[2017-04-05 12:21:22] Downloading org.eclipse.oomph.workingsets.editor
+[2017-04-05 12:21:22] Downloading org.apache.httpcomponents.httpcore
+[2017-04-05 12:21:22] Fetching org.eclipse.oomph.resources_1.7.0.v20170217-1028.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (41,21kB)
+[2017-04-05 12:21:23] Downloading org.apache.commons.codec
+[2017-04-05 12:21:23] Downloading org.eclipse.oomph.base
+[2017-04-05 12:21:23] Downloading org.eclipse.userstorage.ui
+[2017-04-05 12:21:24] Downloading org.eclipse.oomph.predicates
+[2017-04-05 12:21:24] Fetching org.apache.httpcomponents.httpcore_4.3.3.v201411290715.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (102,03kB)
+[2017-04-05 12:21:24] Fetching org.eclipse.oomph.workingsets.editor_1.7.0.v20161230-1057.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (41,82kB)
+[2017-04-05 12:21:24] Fetching org.apache.httpcomponents.httpcore_4.3.3.v201411290715.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (102,03kB)
+[2017-04-05 12:21:24] Fetching org.eclipse.oomph.workingsets.editor_1.7.0.v20161230-1057.jar.pack.gz from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (41,82kB)
+[2017-04-05 12:21:24] Fetching org.eclipse.oomph.base_1.7.0.v20170201-1645.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (33,8kB)
+[2017-04-05 12:21:24] Fetching org.eclipse.userstorage.ui_1.0.1.v20170201-1648.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (33,29kB)
+[2017-04-05 12:21:24] Fetching org.eclipse.oomph.base_1.7.0.v20170201-1645.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (33,8kB)
+[2017-04-05 12:21:24] Fetching org.eclipse.userstorage.ui_1.0.1.v20170201-1648.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (33,29kB)
+[2017-04-05 12:21:24] Fetching org.eclipse.oomph.predicates_1.7.0.v20170104-1401.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (25,49kB)
+[2017-04-05 12:21:25] Fetching org.apache.commons.codec_1.6.0.v201305230611.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (92,04kB)
+[2017-04-05 12:21:26] Downloading org.eclipse.oomph.setup.sync
+[2017-04-05 12:21:27] Fetching org.eclipse.oomph.setup.sync_1.7.0.v20170201-1631.jar.pack.gz from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/plugins/ (45,95kB)
+[2017-04-05 12:21:31] Mirrored 12 artifacts from http://eclipse.mirror.rafal.ca/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 122kb/s
+[2017-04-05 12:21:31] Mirrored 7 artifacts from http://eclipse.c3sl.ufpr.br/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 38kb/s with 1 failures
+[2017-04-05 12:21:31] Mirrored 13 artifacts from http://mirror.cc.columbia.edu/pub/software/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 29kb/s
+[2017-04-05 12:21:31] Mirrored 1 artifacts from http://mirror.dkm.cz/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 14kb/s
+[2017-04-05 12:21:31] Mirrored 1 artifacts from http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 11kb/s
+[2017-04-05 12:21:31] Mirrored 1 artifacts from http://ftp.osuosl.org/pub/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 10kb/s
+[2017-04-05 12:21:31] Mirrored 1 artifacts from http://mirrors.xmission.com/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 9kb/s
+[2017-04-05 12:21:31] Mirrored 1 artifacts from http://mirror.csclub.uwaterloo.ca/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 9kb/s
+[2017-04-05 12:21:31] Mirrored 1 artifacts from http://mirror.math.princeton.edu/pub/eclipse//oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 7kb/s
+[2017-04-05 12:21:31] Mirrored 1 artifacts from http://eclipse.mirror.wearetriple.com//oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 6kb/s
+[2017-04-05 12:21:31] Mirrored 1 artifacts from http://ftp.ussg.iu.edu/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 6kb/s
+[2017-04-05 12:21:31] Mirrored 1 artifacts from http://mirror.ibcp.fr/pub/eclipse//oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 6kb/s
+[2017-04-05 12:21:31] Mirrored 1 artifacts from http://mirrors.nic.cz/eclipse/oomph/drops/milestone/S20170307-122318-1.7.0-M4/ at 1kb/s
+[2017-04-05 12:21:31] Collected 41 artifacts for http://download.eclipse.org/oomph/updates/milestone/latest in 29.898s
+[2017-04-05 12:21:31] Collecting 4 artifacts from http://download.eclipse.org/technology/epp/packages/neon
+[2017-04-05 12:21:32] Downloading org.eclipse.epp.package.common.feature
+[2017-04-05 12:21:32] Downloading org.eclipse.epp.package.php.feature
+[2017-04-05 12:21:32] Downloading epp.package.php.executable.win32.win32.x86_64
+[2017-04-05 12:21:32] Downloading org.eclipse.epp.package.php
+[2017-04-05 12:21:32] Fetching epp.package.php.executable.win32.win32.x86_64_4.6.3.20170314-1500 from http://mirror.csclub.uwaterloo.ca/eclipse/technology/epp/packages/neon/binary/ (34,38kB)
+[2017-04-05 12:21:32] Fetching org.eclipse.epp.package.php_4.6.3.20170314-1500.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/technology/epp/packages/neon/plugins/ (61,87kB)
+[2017-04-05 12:21:32] Fetching org.eclipse.epp.package.php.feature_4.6.3.20170314-1500.jar from http://ftp.osuosl.org/pub/eclipse/technology/epp/packages/neon/features/ (18,5kB)
+[2017-04-05 12:21:32] Fetching org.eclipse.epp.package.common.feature_4.6.3.20170314-1500.jar from http://eclipse.c3sl.ufpr.br/technology/epp/packages/neon/features/ (17,89kB)
+[2017-04-05 12:21:33] Fetching org.eclipse.epp.package.php.feature_4.6.3.20170314-1500.jar from http://ftp.osuosl.org/pub/eclipse/technology/epp/packages/neon/features/ (18,5kB)
+[2017-04-05 12:21:33] Fetching org.eclipse.epp.package.common.feature_4.6.3.20170314-1500.jar from http://eclipse.c3sl.ufpr.br/technology/epp/packages/neon/features/ (17,89kB)
+[2017-04-05 12:21:35] Mirrored 1 artifacts from http://mirror.cc.columbia.edu/pub/software/eclipse/technology/epp/packages/neon/ at 69kb/s
+[2017-04-05 12:21:35] Mirrored 1 artifacts from http://mirror.csclub.uwaterloo.ca/eclipse/technology/epp/packages/neon/ at 46kb/s
+[2017-04-05 12:21:35] Mirrored 1 artifacts from http://ftp.osuosl.org/pub/eclipse/technology/epp/packages/neon/ at 28kb/s
+[2017-04-05 12:21:35] Mirrored 1 artifacts from http://eclipse.c3sl.ufpr.br/technology/epp/packages/neon/ at 18kb/s
+[2017-04-05 12:21:35] Collected 4 artifacts for http://download.eclipse.org/technology/epp/packages/neon in 4.452s
+[2017-04-05 12:21:35] Collecting 508 artifacts from http://download.eclipse.org/releases/neon/201703231000
+[2017-04-05 12:21:36] Downloading org.eclipse.platform_root
+[2017-04-05 12:21:36] Downloading org.eclipse.dltk.core_root
+[2017-04-05 12:21:36] Downloading org.eclipse.wst.json.npm.core
+[2017-04-05 12:21:36] Downloading org.eclipse.equinox.jsp.jasper.registry
+[2017-04-05 12:21:36] Downloading org.eclipse.wst.common.infopop
+[2017-04-05 12:21:36] Downloading org.eclipse.e4.ui.workbench3
+[2017-04-05 12:21:37] Downloading org.eclipse.mylyn.wikitext.tracwiki.ui
+[2017-04-05 12:21:37] Downloading org.eclipse.mylyn.wikitext.twiki.ui
+[2017-04-05 12:21:37] Downloading org.eclipse.dltk.mylyn_root
+[2017-04-05 12:21:37] Downloading org.eclipse.wst.web.ui.infopop
+[2017-04-05 12:21:37] Fetching org.eclipse.dltk.core_root_5.7.1.201703020501 from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/binary/ (7,54kB)
+[2017-04-05 12:21:37] Fetching org.eclipse.wst.json.npm.core_1.0.0.v201605150457.jar.pack.gz from http://mirror.csclub.uwaterloo.ca/eclipse/releases/neon/201703231000/plugins/ (8,09kB)
+[2017-04-05 12:21:37] Fetching org.eclipse.mylyn.wikitext.twiki.ui_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (7,63kB)
+[2017-04-05 12:21:37] Fetching org.eclipse.equinox.jsp.jasper.registry_1.0.300.v20130327-1442.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (8,05kB)
+[2017-04-05 12:21:37] Fetching org.eclipse.mylyn.wikitext.twiki.ui_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (7,63kB)
+[2017-04-05 12:21:37] Downloading org.eclipse.wst.json.jshint.core
+[2017-04-05 12:21:37] Fetching org.eclipse.e4.ui.workbench3_0.13.100.v20160506-0759.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (7,92kB)
+[2017-04-05 12:21:37] Fetching org.eclipse.wst.json.npm.core_1.0.0.v201605150457.jar.pack.gz from http://mirror.csclub.uwaterloo.ca/eclipse/releases/neon/201703231000/plugins/ (8,09kB)
+[2017-04-05 12:21:37] Fetching org.eclipse.equinox.jsp.jasper.registry_1.0.300.v20130327-1442.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (8,05kB)
+[2017-04-05 12:21:37] Fetching org.eclipse.e4.ui.workbench3_0.13.100.v20160506-0759.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (7,92kB)
+[2017-04-05 12:21:38] Fetching org.eclipse.mylyn.wikitext.tracwiki.ui_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (7,75kB)
+[2017-04-05 12:21:38] Fetching org.eclipse.wst.common.infopop_1.0.300.v201309101952.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (7,99kB)
+[2017-04-05 12:21:38] Fetching org.eclipse.wst.web.ui.infopop_1.0.300.v200805140206.jar.pack.gz from http://mirror.ibcp.fr/pub/eclipse//releases/neon/201703231000/plugins/ (7,55kB)
+[2017-04-05 12:21:38] Fetching org.eclipse.dltk.mylyn_root_5.7.1.201703020501 from http://mirrors.nic.cz/eclipse/releases/neon/201703231000/binary/ (7,54kB)
+[2017-04-05 12:21:38] Fetching org.eclipse.wst.web.ui.infopop_1.0.300.v200805140206.jar.pack.gz from http://mirror.ibcp.fr/pub/eclipse//releases/neon/201703231000/plugins/ (7,55kB)
+[2017-04-05 12:21:38] Fetching org.eclipse.dltk.mylyn_root_5.7.1.201703020501 from http://mirrors.nic.cz/eclipse/releases/neon/201703231000/binary/ (7,54kB)
+[2017-04-05 12:21:39] Fetching org.eclipse.platform_root_4.6.3.v20170301-0400 from http://mirror.math.princeton.edu/pub/eclipse//releases/neon/201703231000/binary/ (195B)
+[2017-04-05 12:21:39] Fetching org.eclipse.wst.json.jshint.core_1.0.0.v201605150457.jar.pack.gz from http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/releases/neon/201703231000/plugins/ (8,11kB)
+[2017-04-05 12:21:39] Downloading org.eclipse.mylyn.wikitext.mediawiki.ui
+[2017-04-05 12:21:39] Fetching org.eclipse.wst.json.jshint.core_1.0.0.v201605150457.jar.pack.gz from http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/releases/neon/201703231000/plugins/ (8,11kB)
+[2017-04-05 12:21:39] Downloading org.eclipse.wst.sse.ui.infopop
+[2017-04-05 12:21:40] Downloading org.eclipse.mylyn.wikitext.markdown.ui
+[2017-04-05 12:21:40] Downloading org.eclipse.wst.validation.infopop
+[2017-04-05 12:21:40] Downloading org.eclipse.wst.jsdt.chromium.wip.eclipse
+[2017-04-05 12:21:40] Downloading org.eclipse.mylyn.wikitext.asciidoc.ui
+[2017-04-05 12:21:40] Downloading org.eclipse.wst.html.ui.infopop
+[2017-04-05 12:21:40] Downloading org.eclipse.mylyn.wikitext.textile.ui
+[2017-04-05 12:21:40] Downloading org.eclipse.wst.json.eslint.ui
+[2017-04-05 12:21:40] Fetching org.eclipse.mylyn.wikitext.asciidoc.ui_2.10.1.v20161129-1925.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (8,74kB)
+[2017-04-05 12:21:40] Fetching org.eclipse.mylyn.wikitext.markdown.ui_2.10.1.v20161129-1925.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (8,36kB)
+[2017-04-05 12:21:41] Fetching org.eclipse.mylyn.wikitext.asciidoc.ui_2.10.1.v20161129-1925.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (8,74kB)
+[2017-04-05 12:21:41] Fetching org.eclipse.mylyn.wikitext.markdown.ui_2.10.1.v20161129-1925.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (8,36kB)
+[2017-04-05 12:21:41] Fetching org.eclipse.wst.jsdt.chromium.wip.eclipse_0.5.200.v201610212001.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (8,63kB)
+[2017-04-05 12:21:41] Fetching org.eclipse.wst.html.ui.infopop_1.0.201.v201409111852.jar.pack.gz from http://mirror.csclub.uwaterloo.ca/eclipse/releases/neon/201703231000/plugins/ (9,13kB)
+[2017-04-05 12:21:41] Fetching org.eclipse.wst.validation.infopop_1.0.300.v201309101952.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (8,59kB)
+[2017-04-05 12:21:41] Fetching org.eclipse.wst.html.ui.infopop_1.0.201.v201409111852.jar.pack.gz from http://mirror.csclub.uwaterloo.ca/eclipse/releases/neon/201703231000/plugins/ (9,13kB)
+[2017-04-05 12:21:41] Downloading org.eclipse.wst.json.jshint.ui
+[2017-04-05 12:21:41] Fetching org.eclipse.mylyn.wikitext.mediawiki.ui_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.fau.de/eclipse/releases/neon/201703231000/plugins/ (8,23kB)
+[2017-04-05 12:21:42] Fetching org.eclipse.wst.sse.ui.infopop_1.0.300.v201309112106.jar.pack.gz from http://mirror.tspu.ru/eclipse/releases/neon/201703231000/plugins/ (8,28kB)
+[2017-04-05 12:21:42] Fetching org.eclipse.wst.json.jshint.ui_1.0.0.v201605201503.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (9,38kB)
+[2017-04-05 12:21:42] Fetching org.eclipse.wst.sse.ui.infopop_1.0.300.v201309112106.jar.pack.gz from http://mirror.tspu.ru/eclipse/releases/neon/201703231000/plugins/ (8,28kB)
+[2017-04-05 12:21:42] Fetching org.eclipse.mylyn.wikitext.textile.ui_2.10.1.v20161129-1925.jar.pack.gz from http://mirror.csclub.uwaterloo.ca/eclipse/releases/neon/201703231000/plugins/ (9,13kB)
+[2017-04-05 12:21:42] Fetching org.eclipse.wst.json.jshint.ui_1.0.0.v201605201503.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (9,38kB)
+[2017-04-05 12:21:42] Fetching org.eclipse.wst.json.eslint.ui_1.0.0.v201605201503.jar.pack.gz from http://mirror.csclub.uwaterloo.ca/eclipse/releases/neon/201703231000/plugins/ (9,37kB)
+[2017-04-05 12:21:43] Downloading org.eclipse.rcp
+[2017-04-05 12:21:43] Downloading org.eclipse.e4.ui.di
+[2017-04-05 12:21:43] Downloading org.eclipse.egit
+[2017-04-05 12:21:43] Downloading org.eclipse.ecf.ssl
+[2017-04-05 12:21:43] Downloading org.eclipse.e4.ui.widgets
+[2017-04-05 12:21:43] Fetching org.eclipse.rcp_4.6.3.v20170301-0400.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (9,46kB)
+[2017-04-05 12:21:44] Fetching org.eclipse.e4.ui.di_1.1.100.v20160506-0759.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (9,57kB)
+[2017-04-05 12:21:44] Fetching org.eclipse.ecf.ssl_1.2.0.v20160823-2221.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (9,61kB)
+[2017-04-05 12:21:44] Fetching org.eclipse.egit_4.6.1.201703071140-r.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (9,6kB)
+[2017-04-05 12:21:44] Fetching org.eclipse.ecf.ssl_1.2.0.v20160823-2221.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (9,61kB)
+[2017-04-05 12:21:44] Fetching org.eclipse.egit_4.6.1.201703071140-r.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (9,6kB)
+[2017-04-05 12:21:44] Downloading org.eclipse.ecf.provider.filetransfer.ssl
+[2017-04-05 12:21:44] Downloading org.eclipse.mylyn.commons.notifications.core
+[2017-04-05 12:21:44] Fetching org.eclipse.e4.ui.widgets_1.1.100.v20160506-0759.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (9,84kB)
+[2017-04-05 12:21:44] Downloading org.eclipse.mylyn.wikitext.confluence.ui
+[2017-04-05 12:21:44] Downloading org.eclipse.e4.core.di.annotations
+[2017-04-05 12:21:45] Downloading org.eclipse.wst.json.npm.ui
+[2017-04-05 12:21:45] Fetching org.eclipse.ecf.provider.filetransfer.ssl_1.0.0.v20160823-2221.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (7,42kB)
+[2017-04-05 12:21:45] Fetching org.eclipse.mylyn.commons.notifications.core_1.13.0.v20160630-1702.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (10,2kB)
+[2017-04-05 12:21:45] Fetching org.eclipse.mylyn.wikitext.confluence.ui_2.10.1.v20161129-1925.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (8,52kB)
+[2017-04-05 12:21:46] Fetching org.eclipse.e4.core.di.annotations_1.5.0.v20151127-1241.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (7,59kB)
+[2017-04-05 12:21:46] Fetching org.eclipse.wst.json.npm.ui_1.0.0.v201605201503.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (11,48kB)
+[2017-04-05 12:21:46] Fetching org.eclipse.e4.core.di.annotations_1.5.0.v20151127-1241.jar.pack.gz from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/plugins/ (7,59kB)
+[2017-04-05 12:21:46] Downloading org.eclipse.dltk.annotations
+[2017-04-05 12:21:46] Downloading org.eclipse.wst.dtd.ui.infopop
+[2017-04-05 12:21:47] Fetching org.eclipse.wst.json.npm.ui_1.0.0.v201605201503.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (11,48kB)
+[2017-04-05 12:21:47] Downloading org.eclipse.wst.jsdt.js.node.common
+[2017-04-05 12:21:47] Downloading org.eclipse.wst.json.bower.core
+[2017-04-05 12:21:47] Downloading org.eclipse.wst.json.eslint.core
+[2017-04-05 12:21:47] Fetching org.eclipse.dltk.annotations_5.7.1.201703020501.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (7,8kB)
+[2017-04-05 12:21:47] Fetching org.eclipse.wst.dtd.ui.infopop_1.0.400.v201309112106.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (8,33kB)
+[2017-04-05 12:21:47] Fetching org.eclipse.dltk.annotations_5.7.1.201703020501.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (7,8kB)
+[2017-04-05 12:21:47] Fetching org.eclipse.wst.dtd.ui.infopop_1.0.400.v201309112106.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (8,33kB)
+[2017-04-05 12:21:47] Downloading org.eclipse.wst.jsdt.chromium.debug
+[2017-04-05 12:21:47] Fetching org.eclipse.wst.jsdt.js.node.common_1.0.0.v201605131737.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (11,68kB)
+[2017-04-05 12:21:47] Fetching org.eclipse.wst.json.bower.core_1.0.0.v201605150457.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (8,13kB)
+[2017-04-05 12:21:47] Fetching org.eclipse.wst.json.eslint.core_1.0.0.v201605150457.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (8,11kB)
+[2017-04-05 12:21:47] Fetching org.eclipse.wst.json.bower.core_1.0.0.v201605150457.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (8,13kB)
+[2017-04-05 12:21:47] Downloading org.eclipse.dltk.core.index
+[2017-04-05 12:21:47] Downloading org.eclipse.cdt.core.win32
+[2017-04-05 12:21:48] Fetching org.eclipse.wst.jsdt.chromium.debug_0.4.0.v201605131737.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (10,33kB)
+[2017-04-05 12:21:48] Fetching org.eclipse.cdt.core.win32_5.4.1.201703062208.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (9,1kB)
+[2017-04-05 12:21:49] Fetching org.eclipse.dltk.core.index_5.7.1.201703020501.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (12,92kB)
+[2017-04-05 12:21:49] Downloading org.eclipse.wst.xml.ui.infopop
+[2017-04-05 12:21:49] Fetching org.eclipse.dltk.core.index_5.7.1.201703020501.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (12,92kB)
+[2017-04-05 12:21:49] Downloading org.eclipse.mylyn.wikitext.core.osgi
+[2017-04-05 12:21:49] Fetching org.eclipse.wst.xml.ui.infopop_1.0.400.v201309112106.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (13,21kB)
+[2017-04-05 12:21:50] Fetching org.eclipse.mylyn.wikitext.core.osgi_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (9,97kB)
+[2017-04-05 12:21:50] Downloading org.eclipse.wst.json.schemaprocessor
+[2017-04-05 12:21:50] Downloading org.eclipse.php.ui.importer
+[2017-04-05 12:21:50] Downloading org.eclipse.equinox.jsp.jasper
+[2017-04-05 12:21:50] Downloading org.eclipse.equinox.p2.garbagecollector
+[2017-04-05 12:21:50] Downloading org.eclipse.e4.core.di.extensions
+[2017-04-05 12:21:50] Downloading org.eclipse.wst.json.bower.ui
+[2017-04-05 12:21:51] Fetching org.eclipse.equinox.p2.garbagecollector_1.0.300.v20160504-1450.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (13,84kB)
+[2017-04-05 12:21:51] Downloading org.eclipse.ecf.provider.filetransfer.httpclient4.ssl
+[2017-04-05 12:21:51] Fetching org.eclipse.equinox.p2.garbagecollector_1.0.300.v20160504-1450.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (13,84kB)
+[2017-04-05 12:21:51] Fetching org.eclipse.equinox.jsp.jasper_1.0.500.v20150119-1358.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (13,34kB)
+[2017-04-05 12:21:51] Fetching org.eclipse.php.ui.importer_4.3.0.201703131616.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (9,26kB)
+[2017-04-05 12:21:51] Fetching org.eclipse.wst.json.schemaprocessor_1.0.100.v201612232230.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (8,92kB)
+[2017-04-05 12:21:51] Fetching org.eclipse.wst.json.bower.ui_1.0.0.v201605201503.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (13,9kB)
+[2017-04-05 12:21:51] Fetching org.eclipse.equinox.jsp.jasper_1.0.500.v20150119-1358.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (13,34kB)
+[2017-04-05 12:21:51] Fetching org.eclipse.wst.json.bower.ui_1.0.0.v201605201503.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (13,9kB)
+[2017-04-05 12:21:51] Fetching org.eclipse.php.ui.importer_4.3.0.201703131616.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (9,26kB)
+[2017-04-05 12:21:51] Downloading org.eclipse.ui.win32
+[2017-04-05 12:21:51] Fetching org.eclipse.e4.core.di.extensions_0.14.0.v20160211-1614.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (13,88kB)
+[2017-04-05 12:21:51] Downloading org.eclipse.ui.intro.quicklinks
+[2017-04-05 12:21:52] Fetching org.eclipse.ecf.provider.filetransfer.httpclient4.ssl_1.1.0.v20160823-2221.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (11,7kB)
+[2017-04-05 12:21:52] Downloading org.eclipse.jgit
+[2017-04-05 12:21:52] Fetching org.eclipse.ui.win32_3.3.0.v20160505-1310.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (14,12kB)
+[2017-04-05 12:21:53] Fetching org.eclipse.ui.intro.quicklinks_1.0.0.v20160515-0255.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (14,27kB)
+[2017-04-05 12:21:53] Fetching org.eclipse.ui.win32_3.3.0.v20160505-1310.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (14,12kB)
+[2017-04-05 12:21:53] Fetching org.eclipse.jgit_4.6.1.201703071140-r.jar from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/features/ (14,42kB)
+[2017-04-05 12:21:53] Fetching org.eclipse.ui.intro.quicklinks_1.0.0.v20160515-0255.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (14,27kB)
+[2017-04-05 12:21:53] Fetching org.eclipse.jgit_4.6.1.201703071140-r.jar from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/features/ (14,42kB)
+[2017-04-05 12:21:53] Downloading org.eclipse.wst.jsdt.debug.transport
+[2017-04-05 12:21:53] Downloading org.eclipse.egit.mylyn.ui
+[2017-04-05 12:21:53] Downloading org.eclipse.wst.jsdt.nashorn.extension
+[2017-04-05 12:21:54] Downloading org.w3c.dom.smil
+[2017-04-05 12:21:54] Downloading org.eclipse.dltk
+[2017-04-05 12:21:54] Downloading org.eclipse.wst.server.ui.infopop
+[2017-04-05 12:21:54] Fetching org.eclipse.wst.jsdt.debug.transport_1.0.300.v201502261613.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (14,6kB)
+[2017-04-05 12:21:54] Downloading org.eclipse.equinox.simpleconfigurator.manipulator
+[2017-04-05 12:21:54] Fetching org.eclipse.wst.jsdt.debug.transport_1.0.300.v201502261613.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (14,6kB)
+[2017-04-05 12:21:54] Downloading org.eclipse.mylyn.bugzilla.ide
+[2017-04-05 12:21:54] Downloading org.slf4j.impl.log4j12
+[2017-04-05 12:21:54] Downloading org.eclipse.equinox.p2.discovery
+[2017-04-05 12:21:55] Fetching org.slf4j.impl.log4j12_1.7.2.v20131105-2200.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (10,37kB)
+[2017-04-05 12:21:55] Fetching org.eclipse.dltk_5.7.1.201703020501.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (12,89kB)
+[2017-04-05 12:21:55] Fetching org.slf4j.impl.log4j12_1.7.2.v20131105-2200.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (10,37kB)
+[2017-04-05 12:21:56] Fetching org.eclipse.mylyn.bugzilla.ide_3.21.0.v20160912-1820.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (14,59kB)
+[2017-04-05 12:21:56] Fetching org.eclipse.equinox.simpleconfigurator.manipulator_2.0.200.v20160504-1450.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (15,76kB)
+[2017-04-05 12:21:56] Fetching org.eclipse.wst.server.ui.infopop_1.1.200.v201309182117.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (11,92kB)
+[2017-04-05 12:21:56] Fetching org.w3c.dom.smil_1.0.1.v200903091627.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (14,95kB)
+[2017-04-05 12:21:56] Fetching org.eclipse.dltk_5.7.1.201703020501.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (12,89kB)
+[2017-04-05 12:21:56] Fetching org.eclipse.egit.mylyn.ui_4.6.1.201703071140-r.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (14,76kB)
+[2017-04-05 12:21:56] Fetching org.eclipse.equinox.p2.discovery_1.0.400.v20160504-1450.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (16,32kB)
+[2017-04-05 12:21:56] Fetching org.eclipse.mylyn.bugzilla.ide_3.21.0.v20160912-1820.jar.pack.gz from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/plugins/ (14,59kB)
+[2017-04-05 12:21:56] Fetching org.eclipse.egit.mylyn.ui_4.6.1.201703071140-r.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (14,76kB)
+[2017-04-05 12:21:57] Fetching org.eclipse.wst.jsdt.nashorn.extension_1.0.2.v201610280128.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (9,28kB)
+[2017-04-05 12:21:57] Fetching org.w3c.dom.smil_1.0.1.v200903091627.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (14,95kB)
+[2017-04-05 12:21:57] Fetching org.eclipse.wst.jsdt.nashorn.extension_1.0.2.v201610280128.jar.pack.gz from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/plugins/ (9,28kB)
+[2017-04-05 12:21:58] Downloading javax.inject
+[2017-04-05 12:21:58] Downloading org.eclipse.jetty.continuation
+[2017-04-05 12:21:58] Downloading org.eclipse.cdt.core.native
+[2017-04-05 12:21:58] Downloading org.slf4j.api
+[2017-04-05 12:21:59] Downloading org.eclipse.osgi.util
+[2017-04-05 12:21:59] Downloading org.eclipse.equinox.p2.console
+[2017-04-05 12:21:59] Downloading org.eclipse.epp.logging.aeri.feature
+[2017-04-05 12:22:00] Fetching org.eclipse.epp.logging.aeri.feature_2.0.4.v20170307-1435.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,49kB)
+[2017-04-05 12:22:00] Fetching javax.inject_1.0.0.v20091030.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (16,6kB)
+[2017-04-05 12:22:00] Fetching org.eclipse.equinox.p2.console_1.0.500.v20160504-1450.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (17,42kB)
+[2017-04-05 12:22:00] Fetching org.eclipse.epp.logging.aeri.feature_2.0.4.v20170307-1435.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,49kB)
+[2017-04-05 12:22:00] Fetching org.eclipse.equinox.p2.console_1.0.500.v20160504-1450.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (17,42kB)
+[2017-04-05 12:22:00] Fetching org.slf4j.api_1.7.2.v20121108-1250.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (16,96kB)
+[2017-04-05 12:22:01] Fetching org.eclipse.jetty.continuation_9.3.9.v20160517.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (16,6kB)
+[2017-04-05 12:22:01] Fetching org.eclipse.osgi.util_3.3.100.v20150423-1351.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (17,34kB)
+[2017-04-05 12:22:01] Fetching org.eclipse.cdt.core.native_5.10.0.201703062208.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (16,92kB)
+[2017-04-05 12:22:01] Fetching org.slf4j.api_1.7.2.v20121108-1250.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (16,96kB)
+[2017-04-05 12:22:01] Fetching org.eclipse.jetty.continuation_9.3.9.v20160517.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (16,6kB)
+[2017-04-05 12:22:01] Downloading org.eclipse.egit.mylyn
+[2017-04-05 12:22:01] Downloading org.eclipse.egit.gitflow.feature
+[2017-04-05 12:22:01] Downloading org.eclipse.equinox.p2.user.ui
+[2017-04-05 12:22:01] Downloading org.eclipse.mylyn.commons.identity
+[2017-04-05 12:22:02] Fetching org.eclipse.egit.mylyn_4.6.1.201703071140-r.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,63kB)
+[2017-04-05 12:22:02] Fetching org.eclipse.mylyn.commons.identity_1.13.0.v20160630-1702.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,72kB)
+[2017-04-05 12:22:02] Fetching org.eclipse.egit.gitflow.feature_4.6.1.201703071140-r.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,64kB)
+[2017-04-05 12:22:02] Fetching org.eclipse.egit.mylyn_4.6.1.201703071140-r.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,63kB)
+[2017-04-05 12:22:02] Fetching org.eclipse.egit.gitflow.feature_4.6.1.201703071140-r.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,64kB)
+[2017-04-05 12:22:02] Fetching org.eclipse.equinox.p2.user.ui_2.2.203.v20170131-1444.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,69kB)
+[2017-04-05 12:22:03] Downloading org.eclipse.mylyn.monitor
+[2017-04-05 12:22:03] Downloading org.eclipse.mylyn.discovery
+[2017-04-05 12:22:03] Downloading org.eclipse.mylyn.team_feature
+[2017-04-05 12:22:03] Downloading org.eclipse.mylyn.commons
+[2017-04-05 12:22:04] Downloading org.eclipse.mylyn.commons.repositories
+[2017-04-05 12:22:04] Downloading org.eclipse.mylyn.tasks.ide
+[2017-04-05 12:22:04] Downloading org.w3c.dom.events
+[2017-04-05 12:22:04] Downloading org.eclipse.mylyn.commons.notifications
+[2017-04-05 12:22:04] Fetching org.eclipse.mylyn.team_feature_3.21.0.v20160701-1337.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,77kB)
+[2017-04-05 12:22:04] Downloading org.eclipse.emf.common
+[2017-04-05 12:22:04] Fetching org.eclipse.mylyn.team_feature_3.21.0.v20160701-1337.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,77kB)
+[2017-04-05 12:22:05] Fetching org.eclipse.mylyn.commons_3.21.0.v20160707-1856.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,77kB)
+[2017-04-05 12:22:05] Fetching org.eclipse.mylyn.discovery_3.21.0.v20160729-1739.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,75kB)
+[2017-04-05 12:22:05] Fetching org.eclipse.mylyn.monitor_3.21.0.v20160630-1702.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,73kB)
+[2017-04-05 12:22:05] Fetching org.eclipse.mylyn.commons.repositories_1.13.0.v20160630-1702.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,77kB)
+[2017-04-05 12:22:05] Fetching org.eclipse.mylyn.discovery_3.21.0.v20160729-1739.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,75kB)
+[2017-04-05 12:22:05] Fetching org.eclipse.mylyn.commons.repositories_1.13.0.v20160630-1702.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,77kB)
+[2017-04-05 12:22:05] Fetching org.eclipse.mylyn.monitor_3.21.0.v20160630-1702.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,73kB)
+[2017-04-05 12:22:05] Fetching org.w3c.dom.events_3.0.0.draft20060413_v201105210656.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (17,78kB)
+[2017-04-05 12:22:05] Downloading org.eclipse.equinox.p2.discovery.feature
+[2017-04-05 12:22:05] Fetching org.eclipse.mylyn.commons.notifications_1.13.0.v20160721-2347.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,8kB)
+[2017-04-05 12:22:05] Fetching org.eclipse.emf.common_2.12.0.v20160420-0247.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (17,8kB)
+[2017-04-05 12:22:05] Fetching org.eclipse.mylyn.commons.notifications_1.13.0.v20160721-2347.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,8kB)
+[2017-04-05 12:22:06] Fetching org.eclipse.mylyn.tasks.ide_3.21.0.v20160929-1805.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,78kB)
+[2017-04-05 12:22:06] Fetching org.eclipse.emf.common_2.12.0.v20160420-0247.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (17,8kB)
+[2017-04-05 12:22:06] Fetching org.eclipse.mylyn.tasks.ide_3.21.0.v20160929-1805.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,78kB)
+[2017-04-05 12:22:06] Downloading org.eclipse.equinox.p2.rcp.feature
+[2017-04-05 12:22:07] Downloading org.eclipse.mylyn.context_feature
+[2017-04-05 12:22:07] Fetching org.eclipse.equinox.p2.discovery.feature_1.0.401.v20160901-1335.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (17,8kB)
+[2017-04-05 12:22:08] Downloading org.eclipse.egit
+[2017-04-05 12:22:08] Downloading org.eclipse.emf.ecore
+[2017-04-05 12:22:08] Fetching org.eclipse.equinox.p2.rcp.feature_1.2.203.v20170131-1444.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (17,81kB)
+[2017-04-05 12:22:08] Downloading org.eclipse.mylyn.ide_feature
+[2017-04-05 12:22:08] Downloading org.eclipse.mylyn.bugzilla_feature
+[2017-04-05 12:22:08] Downloading org.eclipse.rcp
+[2017-04-05 12:22:08] Downloading org.eclipse.equinox.p2.extras.feature
+[2017-04-05 12:22:08] Downloading org.eclipse.equinox.p2.updatechecker
+[2017-04-05 12:22:08] Fetching org.eclipse.mylyn.context_feature_3.21.0.v20160815-2336.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (17,82kB)
+[2017-04-05 12:22:08] Fetching org.eclipse.emf.ecore_2.12.0.v20160420-0247.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (17,84kB)
+[2017-04-05 12:22:09] Fetching org.eclipse.egit_4.6.1.201703071140-r.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (17,82kB)
+[2017-04-05 12:22:09] Fetching org.eclipse.emf.ecore_2.12.0.v20160420-0247.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (17,84kB)
+[2017-04-05 12:22:09] Fetching org.eclipse.egit_4.6.1.201703071140-r.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (17,82kB)
+[2017-04-05 12:22:09] Downloading org.eclipse.mylyn.wikitext_feature
+[2017-04-05 12:22:09] Fetching org.eclipse.equinox.p2.updatechecker_1.1.300.v20161124-1529.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (10,85kB)
+[2017-04-05 12:22:09] Fetching org.eclipse.equinox.p2.extras.feature_1.2.203.v20170131-1444.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,88kB)
+[2017-04-05 12:22:09] Fetching org.eclipse.equinox.p2.updatechecker_1.1.300.v20161124-1529.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (10,85kB)
+[2017-04-05 12:22:09] Downloading org.eclipse.help
+[2017-04-05 12:22:10] Fetching org.eclipse.rcp_4.6.3.v20170301-0400.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,88kB)
+[2017-04-05 12:22:10] Fetching org.eclipse.mylyn.bugzilla_feature_3.21.0.v20160909-1813.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,87kB)
+[2017-04-05 12:22:10] Fetching org.eclipse.mylyn.ide_feature_3.21.0.v20160912-1820.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,84kB)
+[2017-04-05 12:22:10] Fetching org.eclipse.mylyn.bugzilla_feature_3.21.0.v20160909-1813.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,87kB)
+[2017-04-05 12:22:10] Fetching org.eclipse.mylyn.ide_feature_3.21.0.v20160912-1820.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (17,84kB)
+[2017-04-05 12:22:10] Fetching org.eclipse.mylyn.wikitext_feature_2.10.1.v20161129-1925.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (18,1kB)
+[2017-04-05 12:22:10] Downloading org.eclipse.equinox.p2.core.feature
+[2017-04-05 12:22:10] Fetching org.eclipse.help_2.2.2.v20170301-0400.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (18,28kB)
+[2017-04-05 12:22:11] Downloading org.eclipse.mylyn_feature
+[2017-04-05 12:22:11] Downloading org.eclipse.equinox.http.registry
+[2017-04-05 12:22:11] Downloading org.eclipse.php.importer
+[2017-04-05 12:22:11] Downloading org.eclipse.epp.mpc
+[2017-04-05 12:22:11] Downloading org.eclipse.ecf.core.ssl.feature
+[2017-04-05 12:22:12] Fetching org.eclipse.php.importer_4.3.0.201703131616.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (18,69kB)
+[2017-04-05 12:22:12] Fetching org.eclipse.mylyn_feature_3.21.0.v20160914-0252.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (18,37kB)
+[2017-04-05 12:22:12] Fetching org.eclipse.equinox.http.registry_1.1.400.v20150715-1528.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (18,46kB)
+[2017-04-05 12:22:12] Downloading org.eclipse.php.mylyn
+[2017-04-05 12:22:12] Fetching org.eclipse.ecf.core.ssl.feature_1.1.0.v20160823-2221.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (18,77kB)
+[2017-04-05 12:22:12] Downloading org.eclipse.ecf.core.feature
+[2017-04-05 12:22:12] Fetching org.eclipse.equinox.p2.core.feature_1.3.203.v20170131-1444.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (18,35kB)
+[2017-04-05 12:22:12] Downloading org.eclipse.php.composer
+[2017-04-05 12:22:13] Fetching org.eclipse.epp.mpc_1.5.4.v20170222-1941.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (18,74kB)
+[2017-04-05 12:22:13] Downloading org.eclipse.php
+[2017-04-05 12:22:13] Fetching org.eclipse.php.mylyn_4.3.0.201703131616.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (18,77kB)
+[2017-04-05 12:22:13] Downloading org.eclipse.swt
+[2017-04-05 12:22:13] Fetching org.eclipse.php.mylyn_4.3.0.201703131616.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (18,77kB)
+[2017-04-05 12:22:13] Downloading org.eclipse.platform
+[2017-04-05 12:22:13] Downloading org.eclipse.mylyn.commons.notifications.feed
+[2017-04-05 12:22:13] Downloading org.eclipse.tm.terminal.view.feature
+[2017-04-05 12:22:14] Fetching org.eclipse.platform_4.6.3.v20170301-0400.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (19,31kB)
+[2017-04-05 12:22:14] Downloading org.eclipse.e4.rcp
+[2017-04-05 12:22:14] Fetching org.eclipse.php.composer_4.3.0.201703131616.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (18,98kB)
+[2017-04-05 12:22:14] Fetching org.eclipse.php_4.3.0.201703131616.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (19,01kB)
+[2017-04-05 12:22:15] Fetching org.eclipse.swt_3.105.3.v20170228-0512.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (18,2kB)
+[2017-04-05 12:22:15] Fetching org.eclipse.php_4.3.0.201703131616.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (19,01kB)
+[2017-04-05 12:22:15] Fetching org.eclipse.swt_3.105.3.v20170228-0512.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (18,2kB)
+[2017-04-05 12:22:15] Downloading org.eclipse.tm.terminal.feature
+[2017-04-05 12:22:15] Downloading org.eclipse.tm.terminal.control.feature
+[2017-04-05 12:22:15] Fetching org.eclipse.mylyn.commons.notifications.feed_1.13.0.v20160721-2347.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (19,42kB)
+[2017-04-05 12:22:15] Fetching org.eclipse.tm.terminal.view.feature_4.2.0.201611281915.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (19,76kB)
+[2017-04-05 12:22:15] Downloading org.eclipse.tm.terminal.connector.local.feature
+[2017-04-05 12:22:16] Fetching org.eclipse.ecf.core.feature_1.3.0.v20160823-2221.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (18,79kB)
+[2017-04-05 12:22:16] Downloading org.eclipse.tm.terminal.connector.telnet.feature
+[2017-04-05 12:22:16] Downloading org.eclipse.tm.terminal.connector.serial.feature
+[2017-04-05 12:22:17] Downloading org.eclipse.tm.terminal.connector.ssh.feature
+[2017-04-05 12:22:17] Fetching org.eclipse.tm.terminal.feature_4.2.0.201611281915.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (19,92kB)
+[2017-04-05 12:22:17] Fetching org.eclipse.tm.terminal.control.feature_4.2.0.201611281915.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (19,96kB)
+[2017-04-05 12:22:17] Downloading org.eclipse.wst.jsdt.js.common
+[2017-04-05 12:22:17] Downloading org.eclipse.wst.web_ui.feature
+[2017-04-05 12:22:17] Fetching org.eclipse.tm.terminal.connector.local.feature_4.2.0.201611281915.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (20,01kB)
+[2017-04-05 12:22:17] Downloading org.eclipse.wst.jsdt.feature
+[2017-04-05 12:22:18] Fetching org.eclipse.tm.terminal.connector.local.feature_4.2.0.201611281915.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (20,01kB)
+[2017-04-05 12:22:18] Fetching org.eclipse.tm.terminal.connector.serial.feature_4.2.0.201611281915.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (20,07kB)
+[2017-04-05 12:22:18] Fetching org.eclipse.tm.terminal.connector.telnet.feature_4.2.0.201611281915.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (20,05kB)
+[2017-04-05 12:22:18] Fetching org.eclipse.e4.rcp_1.5.3.v20170228-0512.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (19,83kB)
+[2017-04-05 12:22:18] Fetching org.eclipse.wst.jsdt.js.common_1.0.200.v201610211901.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (20,18kB)
+[2017-04-05 12:22:18] Fetching org.eclipse.tm.terminal.connector.ssh.feature_4.2.0.201611281915.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (20,08kB)
+[2017-04-05 12:22:18] Downloading org.eclipse.mylyn.github.feature
+[2017-04-05 12:22:18] Fetching org.eclipse.wst.jsdt.js.common_1.0.200.v201610211901.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (20,18kB)
+[2017-04-05 12:22:18] Downloading org.eclipse.dltk.logconsole.ui
+[2017-04-05 12:22:19] Downloading org.eclipse.core.externaltools
+[2017-04-05 12:22:19] Downloading org.eclipse.wst.jsdt.nodejs.feature
+[2017-04-05 12:22:19] Downloading org.eclipse.ui.net
+[2017-04-05 12:22:19] Downloading org.eclipse.php.debug.daemon
+[2017-04-05 12:22:19] Downloading javax.annotation
+[2017-04-05 12:22:20] Fetching org.eclipse.wst.jsdt.feature_2.0.200.v201612211424.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (20,25kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.wst.jsdt.nodejs.feature_1.0.200.v201610220243.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (20,59kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.wst.jsdt.feature_2.0.200.v201612211424.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (20,25kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.ui.net_1.3.0.v20160426-1633.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (20,79kB)
+[2017-04-05 12:22:20] Fetching javax.annotation_1.2.0.v201602091430.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (21,32kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.ui.net_1.3.0.v20160426-1633.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (20,79kB)
+[2017-04-05 12:22:20] Downloading org.eclipse.compare.win32
+[2017-04-05 12:22:20] Fetching org.eclipse.mylyn.github.feature_4.6.0.201612231935-r.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (20,29kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.dltk.logconsole.ui_5.7.1.201703020501.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (11,65kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.mylyn.github.feature_4.6.0.201612231935-r.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (20,29kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.php.debug.daemon_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (11,97kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.wst.web_ui.feature_3.8.2.v201702270442.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (20,21kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.core.externaltools_1.0.400.v20160509-1057.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (20,48kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.php.debug.daemon_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (11,97kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.dltk.logconsole.ui_5.7.1.201703020501.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (11,65kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.wst.web_ui.feature_3.8.2.v201702270442.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (20,21kB)
+[2017-04-05 12:22:20] Fetching org.eclipse.core.externaltools_1.0.400.v20160509-1057.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (20,48kB)
+[2017-04-05 12:22:21] Fetching org.eclipse.compare.win32_1.1.0.v20160418-1534.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (21,35kB)
+[2017-04-05 12:22:22] Downloading org.eclipse.egit.gitflow
+[2017-04-05 12:22:23] Fetching org.eclipse.egit.gitflow_4.6.1.201703071140-r.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (21,4kB)
+[2017-04-05 12:22:24] Downloading org.eclipse.wst.jsdt.manipulation
+[2017-04-05 12:22:24] Downloading org.eclipse.wst.common.core
+[2017-04-05 12:22:24] Downloading org.eclipse.mylyn.wikitext.context.ui
+[2017-04-05 12:22:24] Downloading org.eclipse.equinox.simpleconfigurator
+[2017-04-05 12:22:24] Downloading org.eclipse.ecf.filetransfer.ssl.feature
+[2017-04-05 12:22:25] Downloading org.eclipse.mylyn.commons.xmlrpc
+[2017-04-05 12:22:25] Downloading org.eclipse.e4.core.services
+[2017-04-05 12:22:25] Downloading org.eclipse.dltk.logconsole
+[2017-04-05 12:22:25] Downloading org.eclipse.php.server.core
+[2017-04-05 12:22:26] Fetching org.eclipse.php.server.core_4.3.0.201703131616.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (23,91kB)
+[2017-04-05 12:22:26] Downloading org.eclipse.jgit.archive
+[2017-04-05 12:22:26] Fetching org.eclipse.php.server.core_4.3.0.201703131616.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (23,91kB)
+[2017-04-05 12:22:26] Fetching org.eclipse.ecf.filetransfer.ssl.feature_1.1.0.v20160823-2221.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (22,8kB)
+[2017-04-05 12:22:26] Fetching org.eclipse.wst.jsdt.manipulation_1.0.601.v201602241911.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (21,41kB)
+[2017-04-05 12:22:26] Fetching org.eclipse.mylyn.wikitext.context.ui_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (22,37kB)
+[2017-04-05 12:22:26] Fetching org.eclipse.e4.core.services_2.0.100.v20160509-1032.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (23,39kB)
+[2017-04-05 12:22:26] Fetching org.eclipse.wst.jsdt.manipulation_1.0.601.v201602241911.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (21,41kB)
+[2017-04-05 12:22:26] Fetching org.eclipse.e4.core.services_2.0.100.v20160509-1032.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (23,39kB)
+[2017-04-05 12:22:27] Fetching org.eclipse.equinox.simpleconfigurator_1.1.200.v20160504-1450.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (22,71kB)
+[2017-04-05 12:22:27] Fetching org.eclipse.ecf.filetransfer.ssl.feature_1.1.0.v20160823-2221.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (22,8kB)
+[2017-04-05 12:22:27] Fetching org.eclipse.dltk.logconsole_5.7.1.201703020501.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (11,99kB)
+[2017-04-05 12:22:27] Fetching org.eclipse.mylyn.commons.xmlrpc_3.21.0.v20160630-1702.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (22,92kB)
+[2017-04-05 12:22:27] Fetching org.eclipse.equinox.simpleconfigurator_1.1.200.v20160504-1450.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (22,71kB)
+[2017-04-05 12:22:27] Fetching org.eclipse.wst.common.core_1.2.0.v200908251833.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (21,59kB)
+[2017-04-05 12:22:27] Fetching org.eclipse.dltk.logconsole_5.7.1.201703020501.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (11,99kB)
+[2017-04-05 12:22:27] Fetching org.eclipse.jgit.archive_4.6.1.201703071140-r.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (24,62kB)
+[2017-04-05 12:22:27] Fetching org.eclipse.wst.common.core_1.2.0.v200908251833.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (21,59kB)
+[2017-04-05 12:22:27] Fetching org.eclipse.jgit.archive_4.6.1.201703071140-r.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (24,62kB)
+[2017-04-05 12:22:27] Downloading org.eclipse.equinox.concurrent
+[2017-04-05 12:22:28] Downloading org.eclipse.e4.core.commands
+[2017-04-05 12:22:28] Fetching org.eclipse.equinox.concurrent_1.1.0.v20130327-1442.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (11,04kB)
+[2017-04-05 12:22:28] Downloading org.eclipse.mylyn.monitor.core
+[2017-04-05 12:22:28] Fetching org.eclipse.e4.core.commands_0.11.100.v20160506-0804.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (13,72kB)
+[2017-04-05 12:22:28] Fetching org.eclipse.mylyn.monitor.core_3.21.0.v20160630-1702.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (25,71kB)
+[2017-04-05 12:22:29] Downloading org.eclipse.wst.jsdt.support.firefox
+[2017-04-05 12:22:29] Downloading org.eclipse.core.resources.win32.x86_64
+[2017-04-05 12:22:30] Downloading org.eclipse.mylyn.commons.identity.core
+[2017-04-05 12:22:30] Downloading org.eclipse.php.mylyn.ui
+[2017-04-05 12:22:30] Downloading org.eclipse.mylyn.tasks.index.core
+[2017-04-05 12:22:30] Downloading org.eclipse.equinox.p2.reconciler.dropins
+[2017-04-05 12:22:31] Downloading org.eclipse.mylyn.wikitext.tasks.ui
+[2017-04-05 12:22:31] Fetching org.eclipse.equinox.p2.reconciler.dropins_1.1.400.v20160504-1450.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (26,68kB)
+[2017-04-05 12:22:31] Fetching org.eclipse.mylyn.commons.identity.core_1.13.0.v20160630-1702.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (26,06kB)
+[2017-04-05 12:22:31] Downloading org.eclipse.ecf.filetransfer.httpclient4.ssl.feature
+[2017-04-05 12:22:31] Fetching org.eclipse.mylyn.tasks.index.core_3.21.0.v20160630-2019.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (26,23kB)
+[2017-04-05 12:22:31] Fetching org.eclipse.php.mylyn.ui_4.3.0.201703131616.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (16,98kB)
+[2017-04-05 12:22:31] Fetching org.eclipse.core.resources.win32.x86_64_3.5.0.v20140124-1940.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (25,91kB)
+[2017-04-05 12:22:31] Fetching org.eclipse.wst.jsdt.support.firefox_1.0.501.v201602241911.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (25,79kB)
+[2017-04-05 12:22:31] Fetching org.eclipse.php.mylyn.ui_4.3.0.201703131616.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (16,98kB)
+[2017-04-05 12:22:31] Fetching org.eclipse.wst.jsdt.support.firefox_1.0.501.v201602241911.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (25,79kB)
+[2017-04-05 12:22:31] Downloading org.eclipse.e4.ui.css.swt.theme
+[2017-04-05 12:22:31] Fetching org.eclipse.core.resources.win32.x86_64_3.5.0.v20140124-1940.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (25,91kB)
+[2017-04-05 12:22:31] Fetching org.eclipse.mylyn.wikitext.tasks.ui_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (26,68kB)
+[2017-04-05 12:22:32] Downloading org.eclipse.ecf.filetransfer.httpclient4.feature
+[2017-04-05 12:22:32] Fetching org.eclipse.e4.ui.css.swt.theme_0.10.100.v20160523-0836.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (16,11kB)
+[2017-04-05 12:22:32] Fetching org.eclipse.ecf.filetransfer.httpclient4.feature_3.13.2.v20160823-2221.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (26,86kB)
+[2017-04-05 12:22:32] Fetching org.eclipse.e4.ui.css.swt.theme_0.10.100.v20160523-0836.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (16,11kB)
+[2017-04-05 12:22:32] Fetching org.eclipse.ecf.filetransfer.httpclient4.ssl.feature_1.1.0.v20160823-2221.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (26,77kB)
+[2017-04-05 12:22:32] Fetching org.eclipse.ecf.filetransfer.httpclient4.feature_3.13.2.v20160823-2221.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (26,86kB)
+[2017-04-05 12:22:32] Fetching org.eclipse.ecf.filetransfer.httpclient4.ssl.feature_1.1.0.v20160823-2221.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (26,77kB)
+[2017-04-05 12:22:33] Downloading org.eclipse.ecf.filetransfer.feature
+[2017-04-05 12:22:33] Downloading org.eclipse.tm.terminal.connector.local
+[2017-04-05 12:22:34] Fetching org.eclipse.ecf.filetransfer.feature_3.13.2.v20160823-2221.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (26,87kB)
+[2017-04-05 12:22:34] Fetching org.eclipse.tm.terminal.connector.local_4.2.0.201609191434.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (27,04kB)
+[2017-04-05 12:22:34] Downloading org.eclipse.rcp_root
+[2017-04-05 12:22:34] Downloading org.eclipse.wst.internet.monitor.core
+[2017-04-05 12:22:35] Downloading org.eclipse.e4.ui.services
+[2017-04-05 12:22:35] Downloading org.eclipse.core.filesystem
+[2017-04-05 12:22:35] Downloading org.eclipse.emf.databinding
+[2017-04-05 12:22:35] Downloading org.eclipse.mylyn.wikitext.html.core
+[2017-04-05 12:22:35] Downloading org.eclipse.dltk.validators.externalchecker
+[2017-04-05 12:22:35] Downloading org.apache.commons.exec
+[2017-04-05 12:22:36] Fetching org.eclipse.dltk.validators.externalchecker_5.7.1.201703020501.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (28,32kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.emf.databinding_1.3.0.v20160526-0356.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (27,57kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.dltk.validators.externalchecker_5.7.1.201703020501.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (28,32kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.emf.databinding_1.3.0.v20160526-0356.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (27,57kB)
+[2017-04-05 12:22:36] Downloading org.eclipse.ui.themes
+[2017-04-05 12:22:36] Fetching org.apache.commons.exec_1.1.0.v201301240602.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (28,37kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.core.filesystem_1.6.1.v20161113-2349.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (27,54kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.e4.ui.services_1.2.100.v20160506-0759.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (14,13kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.core.filesystem_1.6.1.v20161113-2349.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (27,54kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.rcp_root_4.6.3.v20170301-0400 from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/binary/ (27,05kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.e4.ui.services_1.2.100.v20160506-0759.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (14,13kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.mylyn.wikitext.html.core_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (28,23kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.rcp_root_4.6.3.v20170301-0400 from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/binary/ (27,05kB)
+[2017-04-05 12:22:36] Fetching org.eclipse.wst.internet.monitor.core_1.0.600.v201309182039.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (27,44kB)
+[2017-04-05 12:22:36] Downloading org.eclipse.wst.jsdt.js.cli
+[2017-04-05 12:22:36] Fetching org.eclipse.ui.themes_1.1.300.v20161107-1827.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (28,68kB)
+[2017-04-05 12:22:36] Downloading org.eclipse.equinox.launcher
+[2017-04-05 12:22:37] Fetching org.eclipse.ui.themes_1.1.300.v20161107-1827.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (28,68kB)
+[2017-04-05 12:22:37] Fetching org.eclipse.wst.jsdt.js.cli_1.0.0.v201605192332.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (15,25kB)
+[2017-04-05 12:22:37] Fetching org.eclipse.equinox.launcher_1.3.201.v20161025-1711.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (29,01kB)
+[2017-04-05 12:22:39] Downloading org.eclipse.core.net.win32.x86_64
+[2017-04-05 12:22:39] Downloading org.eclipse.equinox.http.jetty
+[2017-04-05 12:22:39] Downloading org.eclipse.mylyn.tasks.index.ui
+[2017-04-05 12:22:39] Fetching org.eclipse.core.net.win32.x86_64_1.1.0.v20160323-1650.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (27,76kB)
+[2017-04-05 12:22:39] Fetching org.eclipse.equinox.http.jetty_3.3.0.v20160324-1850.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (16,36kB)
+[2017-04-05 12:22:39] Fetching org.eclipse.mylyn.tasks.index.ui_3.21.0.v20160630-2019.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (18,68kB)
+[2017-04-05 12:22:40] Fetching org.eclipse.core.net.win32.x86_64_1.1.0.v20160323-1650.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (27,76kB)
+[2017-04-05 12:22:40] Fetching org.eclipse.equinox.http.jetty_3.3.0.v20160324-1850.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (16,36kB)
+[2017-04-05 12:22:40] Downloading org.eclipse.mylyn.github.core
+[2017-04-05 12:22:40] Downloading org.eclipse.equinox.launcher.win32.win32.x86_64
+[2017-04-05 12:22:40] Downloading org.eclipse.mylyn.wikitext.tracwiki.core
+[2017-04-05 12:22:40] Downloading org.eclipse.mylyn.monitor.ui
+[2017-04-05 12:22:41] Downloading org.eclipse.mylyn.commons.repositories.core
+[2017-04-05 12:22:41] Fetching org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.401.v20161122-1740.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (29,07kB)
+[2017-04-05 12:22:41] Fetching org.eclipse.mylyn.github.core_4.6.0.201612231935-r.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (29,69kB)
+[2017-04-05 12:22:41] Fetching org.eclipse.mylyn.monitor.ui_3.21.0.v20160630-1702.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (29,95kB)
+[2017-04-05 12:22:42] Fetching org.eclipse.mylyn.github.core_4.6.0.201612231935-r.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (29,69kB)
+[2017-04-05 12:22:42] Fetching org.eclipse.mylyn.commons.repositories.core_1.13.0.v20160630-1702.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (30,33kB)
+[2017-04-05 12:22:42] Fetching org.eclipse.mylyn.monitor.ui_3.21.0.v20160630-1702.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (29,95kB)
+[2017-04-05 12:22:42] Fetching org.eclipse.mylyn.wikitext.tracwiki.core_2.10.1.v20161129-1925.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (29,81kB)
+[2017-04-05 12:22:42] Downloading org.eclipse.tm.terminal.connector.process
+[2017-04-05 12:22:42] Fetching org.eclipse.mylyn.commons.repositories.core_1.13.0.v20160630-1702.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (30,33kB)
+[2017-04-05 12:22:42] Fetching org.eclipse.mylyn.wikitext.tracwiki.core_2.10.1.v20161129-1925.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (29,81kB)
+[2017-04-05 12:22:43] Downloading org.eclipse.dltk.console
+[2017-04-05 12:22:43] Fetching org.eclipse.tm.terminal.connector.process_4.2.0.201609191434.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (30,46kB)
+[2017-04-05 12:22:43] Downloading org.eclipse.mylyn.wikitext.asciidoc.core
+[2017-04-05 12:22:43] Downloading org.eclipse.dltk.mylyn
+[2017-04-05 12:22:43] Fetching org.eclipse.dltk.console_5.7.1.201703020501.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (15,7kB)
+[2017-04-05 12:22:44] Fetching org.eclipse.mylyn.wikitext.asciidoc.core_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (30,94kB)
+[2017-04-05 12:22:44] Downloading org.eclipse.dltk.core.index.lucene
+[2017-04-05 12:22:44] Fetching org.eclipse.mylyn.wikitext.asciidoc.core_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (30,94kB)
+[2017-04-05 12:22:44] Downloading org.eclipse.core.filesystem.win32.x86_64
+[2017-04-05 12:22:44] Downloading org.eclipse.dltk.core
+[2017-04-05 12:22:45] Fetching org.eclipse.core.filesystem.win32.x86_64_1.4.0.v20140124-1940.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (30,19kB)
+[2017-04-05 12:22:45] Fetching org.eclipse.dltk.core_5.7.1.201703020501.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (31,37kB)
+[2017-04-05 12:22:45] Fetching org.eclipse.dltk.core.index.lucene_5.7.1.201703020501.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (31,11kB)
+[2017-04-05 12:22:45] Fetching org.eclipse.dltk.mylyn_5.7.1.201703020501.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (31,03kB)
+[2017-04-05 12:22:45] Fetching org.eclipse.dltk.core.index.lucene_5.7.1.201703020501.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (31,11kB)
+[2017-04-05 12:22:45] Fetching org.eclipse.dltk.mylyn_5.7.1.201703020501.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (31,03kB)
+[2017-04-05 12:22:45] Downloading org.eclipse.wst.server_userdoc.feature
+[2017-04-05 12:22:46] Downloading org.eclipse.equinox.p2.directorywatcher
+[2017-04-05 12:22:46] Downloading org.eclipse.wst.xml_userdoc.feature
+[2017-04-05 12:22:46] Downloading org.eclipse.mylyn.wikitext.core.ant
+[2017-04-05 12:22:46] Downloading org.eclipse.ecf.provider.filetransfer.httpclient4
+[2017-04-05 12:22:46] Downloading org.eclipse.wst.web_userdoc.feature
+[2017-04-05 12:22:46] Downloading org.eclipse.wst.json_ui.feature
+[2017-04-05 12:22:46] Downloading org.eclipse.wst.json_core.feature
+[2017-04-05 12:22:47] Fetching org.eclipse.wst.json_core.feature_1.0.2.v201612232230.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (32,53kB)
+[2017-04-05 12:22:47] Fetching org.eclipse.wst.web_userdoc.feature_3.8.2.v201610032207.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (32,4kB)
+[2017-04-05 12:22:47] Fetching org.eclipse.wst.json_ui.feature_1.0.2.v201612232230.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (32,47kB)
+[2017-04-05 12:22:47] Fetching org.eclipse.wst.web_userdoc.feature_3.8.2.v201610032207.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (32,4kB)
+[2017-04-05 12:22:47] Fetching org.eclipse.wst.json_core.feature_1.0.2.v201612232230.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (32,53kB)
+[2017-04-05 12:22:47] Fetching org.eclipse.ecf.provider.filetransfer.httpclient4_1.1.100.v20160823-2221.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (32,36kB)
+[2017-04-05 12:22:47] Downloading org.eclipse.wst.server_core.feature
+[2017-04-05 12:22:47] Fetching org.eclipse.wst.xml_userdoc.feature_3.8.2.v201610032207.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (32,31kB)
+[2017-04-05 12:22:47] Downloading org.eclipse.wst.web_core.feature
+[2017-04-05 12:22:47] Fetching org.eclipse.wst.server_userdoc.feature_3.3.300.v201405011426.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/features/ (31,86kB)
+[2017-04-05 12:22:47] Fetching org.eclipse.mylyn.wikitext.core.ant_2.10.1.v20161129-1925.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (32,32kB)
+[2017-04-05 12:22:47] Fetching org.eclipse.equinox.p2.directorywatcher_1.1.100.v20150423-1455.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (16,3kB)
+[2017-04-05 12:22:48] Fetching org.eclipse.wst.server_core.feature_3.3.601.v201610211907.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (32,53kB)
+[2017-04-05 12:22:48] Fetching org.eclipse.wst.web_core.feature_3.8.2.v201702270442.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (32,62kB)
+[2017-04-05 12:22:48] Fetching org.eclipse.wst.server_core.feature_3.3.601.v201610211907.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (32,53kB)
+[2017-04-05 12:22:48] Fetching org.eclipse.wst.web_core.feature_3.8.2.v201702270442.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (32,62kB)
+[2017-04-05 12:22:48] Downloading org.eclipse.wst.server_ui.feature
+[2017-04-05 12:22:49] Downloading org.eclipse.wst.common_ui.feature
+[2017-04-05 12:22:49] Downloading org.eclipse.wst.xml_core.feature
+[2017-04-05 12:22:50] Downloading org.eclipse.wst.common_core.feature
+[2017-04-05 12:22:50] Downloading org.eclipse.wst.xml_ui.feature
+[2017-04-05 12:22:50] Fetching org.eclipse.wst.server_ui.feature_3.3.655.v201611072017.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (32,62kB)
+[2017-04-05 12:22:50] Fetching org.eclipse.wst.common_ui.feature_3.8.0.v201701191735.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (32,64kB)
+[2017-04-05 12:22:50] Fetching org.eclipse.wst.xml_core.feature_3.8.2.v201702270442.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (32,64kB)
+[2017-04-05 12:22:50] Fetching org.eclipse.wst.common_core.feature_3.8.2.v201701191735.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (32,68kB)
+[2017-04-05 12:22:51] Fetching org.eclipse.wst.xml_ui.feature_3.8.2.v201702270442.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (32,71kB)
+[2017-04-05 12:22:51] Fetching org.eclipse.wst.xml_core.feature_3.8.2.v201702270442.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (32,64kB)
+[2017-04-05 12:22:51] Fetching org.eclipse.wst.common_core.feature_3.8.2.v201701191735.jar from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/features/ (32,68kB)
+[2017-04-05 12:22:51] Downloading org.eclipse.dltk.validators.ui
+[2017-04-05 12:22:51] Fetching org.eclipse.wst.xml_ui.feature_3.8.2.v201702270442.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/features/ (32,71kB)
+[2017-04-05 12:22:51] Downloading org.eclipse.dltk.validators.core
+[2017-04-05 12:22:52] Downloading org.eclipse.mylyn.ide.ui
+[2017-04-05 12:22:52] Downloading org.eclipse.equinox.event
+[2017-04-05 12:22:53] Downloading org.eclipse.wst.web
+[2017-04-05 12:22:53] Downloading org.apache.felix.gogo.runtime
+[2017-04-05 12:22:53] Downloading org.eclipse.dltk.console.ui
+[2017-04-05 12:22:53] Fetching org.eclipse.dltk.validators.ui_5.7.1.201703020501.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (32,9kB)
+[2017-04-05 12:22:54] Fetching org.eclipse.dltk.validators.core_5.7.1.201703020501.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (32,92kB)
+[2017-04-05 12:22:54] Fetching org.eclipse.wst.web_1.1.800.v201312041437.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (33,56kB)
+[2017-04-05 12:22:54] Fetching org.eclipse.mylyn.ide.ui_3.21.0.v20160701-1337.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (20,76kB)
+[2017-04-05 12:22:54] Fetching org.eclipse.wst.web_1.1.800.v201312041437.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (33,56kB)
+[2017-04-05 12:22:54] Fetching org.eclipse.dltk.validators.core_5.7.1.201703020501.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (32,92kB)
+[2017-04-05 12:22:54] Fetching org.eclipse.mylyn.ide.ui_3.21.0.v20160701-1337.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (20,76kB)
+[2017-04-05 12:22:55] Fetching org.eclipse.equinox.event_1.3.200.v20160324-1850.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (16,25kB)
+[2017-04-05 12:22:55] Fetching org.eclipse.dltk.console.ui_5.7.1.201703020501.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (34,14kB)
+[2017-04-05 12:22:55] Fetching org.apache.felix.gogo.runtime_0.10.0.v201209301036.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (33,64kB)
+[2017-04-05 12:22:55] Fetching org.eclipse.equinox.event_1.3.200.v20160324-1850.jar.pack.gz from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/plugins/ (16,25kB)
+[2017-04-05 12:22:55] Fetching org.eclipse.dltk.console.ui_5.7.1.201703020501.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (34,14kB)
+[2017-04-05 12:22:55] Fetching org.apache.felix.gogo.runtime_0.10.0.v201209301036.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (33,64kB)
+[2017-04-05 12:22:56] Downloading org.eclipse.platform.ide.executable.win32.win32.x86_64
+[2017-04-05 12:22:56] Downloading org.eclipse.equinox.security.win32.x86_64
+[2017-04-05 12:22:57] Downloading org.eclipse.core.variables
+[2017-04-05 12:22:57] Downloading org.eclipse.core.runtime
+[2017-04-05 12:22:57] Downloading org.eclipse.equinox.p2.extensionlocation
+[2017-04-05 12:22:57] Downloading org.eclipse.jsch.ui
+[2017-04-05 12:22:57] Fetching org.eclipse.platform.ide.executable.win32.win32.x86_64_4.6.3.M20170301-0400 from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/binary/ (34,39kB)
+[2017-04-05 12:22:57] Fetching org.eclipse.equinox.security.win32.x86_64_1.0.100.v20130327-1442.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (30,78kB)
+[2017-04-05 12:22:57] Downloading org.tukaani.xz
+[2017-04-05 12:22:57] Fetching org.eclipse.equinox.security.win32.x86_64_1.0.100.v20130327-1442.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (30,78kB)
+[2017-04-05 12:22:58] Fetching org.eclipse.equinox.p2.extensionlocation_1.2.300.v20160419-0834.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (17,14kB)
+[2017-04-05 12:22:58] Fetching org.eclipse.jsch.ui_1.3.0.v20160323-1650.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (35,81kB)
+[2017-04-05 12:22:58] Fetching org.eclipse.core.runtime_3.12.0.v20160606-1342.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (35,25kB)
+[2017-04-05 12:22:58] Fetching org.eclipse.core.variables_3.3.0.v20160419-1720.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (17,99kB)
+[2017-04-05 12:22:58] Fetching org.eclipse.core.runtime_3.12.0.v20160606-1342.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (35,25kB)
+[2017-04-05 12:22:58] Fetching org.tukaani.xz_1.3.0.v201308270617.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (36,04kB)
+[2017-04-05 12:22:58] Downloading org.eclipse.emf.ecore.change
+[2017-04-05 12:22:58] Downloading org.eclipse.wst.jsdt.js.gulp
+[2017-04-05 12:22:58] Downloading org.eclipse.egit.gitflow.ui
+[2017-04-05 12:22:59] Fetching org.eclipse.egit.gitflow.ui_4.6.1.201703071140-r.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (36,41kB)
+[2017-04-05 12:22:59] Fetching org.eclipse.emf.ecore.change_2.11.0.v20160420-0247.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (36,05kB)
+[2017-04-05 12:22:59] Fetching org.eclipse.wst.jsdt.js.gulp_1.0.200.v201610211901.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (19,06kB)
+[2017-04-05 12:23:00] Downloading org.eclipse.mylyn.commons.notifications.ui
+[2017-04-05 12:23:00] Downloading org.eclipse.equinox.frameworkadmin
+[2017-04-05 12:23:00] Downloading org.eclipse.equinox.p2.director.app
+[2017-04-05 12:23:01] Downloading org.eclipse.wst.jsdt.js.grunt
+[2017-04-05 12:23:01] Fetching org.eclipse.equinox.p2.director.app_1.0.500.v20160419-0834.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (36,59kB)
+[2017-04-05 12:23:01] Fetching org.eclipse.mylyn.commons.notifications.ui_1.13.0.v20160630-1702.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (36,51kB)
+[2017-04-05 12:23:01] Fetching org.eclipse.equinox.p2.director.app_1.0.500.v20160419-0834.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (36,59kB)
+[2017-04-05 12:23:01] Fetching org.eclipse.mylyn.commons.notifications.ui_1.13.0.v20160630-1702.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (36,51kB)
+[2017-04-05 12:23:01] Downloading org.w3c.css.sac
+[2017-04-05 12:23:01] Fetching org.eclipse.equinox.frameworkadmin_2.0.300.v20160504-1450.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (19,03kB)
+[2017-04-05 12:23:01] Fetching org.eclipse.wst.jsdt.js.grunt_1.0.200.v201610211901.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (19,3kB)
+[2017-04-05 12:23:02] Fetching org.eclipse.equinox.frameworkadmin_2.0.300.v20160504-1450.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (19,03kB)
+[2017-04-05 12:23:02] Fetching org.eclipse.wst.jsdt.js.grunt_1.0.200.v201610211901.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (19,3kB)
+[2017-04-05 12:23:02] Downloading org.eclipse.equinox.p2.jarprocessor
+[2017-04-05 12:23:02] Fetching org.w3c.css.sac_1.3.1.v200903091627.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (37,68kB)
+[2017-04-05 12:23:02] Downloading org.eclipse.ui.views.properties.tabbed
+[2017-04-05 12:23:02] Downloading org.eclipse.mylyn.wikitext.markdown.core
+[2017-04-05 12:23:02] Fetching org.eclipse.equinox.p2.jarprocessor_1.0.500.v20160504-1450.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (37,96kB)
+[2017-04-05 12:23:03] Fetching org.eclipse.mylyn.wikitext.markdown.core_2.10.1.v20161129-1925.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (39,41kB)
+[2017-04-05 12:23:03] Fetching org.eclipse.ui.views.properties.tabbed_3.7.0.v20160310-0903.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (39,29kB)
+[2017-04-05 12:23:03] Fetching org.eclipse.mylyn.wikitext.markdown.core_2.10.1.v20161129-1925.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (39,41kB)
+[2017-04-05 12:23:03] Fetching org.eclipse.ui.views.properties.tabbed_3.7.0.v20160310-0903.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (39,29kB)
+[2017-04-05 12:23:03] Downloading org.eclipse.core.contenttype
+[2017-04-05 12:23:03] Downloading org.eclipse.osgi.services
+[2017-04-05 12:23:04] Downloading org.eclipse.wst.common.frameworks
+[2017-04-05 12:23:04] Downloading org.eclipse.wst.dtdeditor.doc.user
+[2017-04-05 12:23:04] Downloading org.eclipse.tm.terminal.view.core
+[2017-04-05 12:23:04] Downloading org.eclipse.jsch.core
+[2017-04-05 12:23:04] Downloading org.eclipse.ecf
+[2017-04-05 12:23:04] Downloading org.eclipse.equinox.p2.updatesite
+[2017-04-05 12:23:05] Fetching org.eclipse.jsch.core_1.3.0.v20160422-1917.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (20,72kB)
+[2017-04-05 12:23:05] Fetching org.eclipse.tm.terminal.view.core_4.2.0.201609191434.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (40,94kB)
+[2017-04-05 12:23:05] Fetching org.eclipse.wst.common.frameworks_1.2.200.v201304241450.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (40,27kB)
+[2017-04-05 12:23:05] Fetching org.eclipse.equinox.p2.updatesite_1.0.600.v20160504-1450.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (41,75kB)
+[2017-04-05 12:23:05] Fetching org.eclipse.ecf_3.8.0.v20160823-2221.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (41,32kB)
+[2017-04-05 12:23:05] Fetching org.eclipse.core.contenttype_3.5.100.v20160418-1621.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (39,58kB)
+[2017-04-05 12:23:05] Fetching org.eclipse.wst.dtdeditor.doc.user_1.0.700.v201208081537.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (24,59kB)
+[2017-04-05 12:23:05] Fetching org.eclipse.wst.common.frameworks_1.2.200.v201304241450.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (40,27kB)
+[2017-04-05 12:23:05] Fetching org.eclipse.osgi.services_3.5.100.v20160504-1419.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (40,14kB)
+[2017-04-05 12:23:05] Downloading org.eclipse.wst.web.ui
+[2017-04-05 12:23:06] Fetching org.eclipse.wst.web.ui_1.1.601.v201602221748.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (42,17kB)
+[2017-04-05 12:23:06] Downloading org.eclipse.equinox.security
+[2017-04-05 12:23:06] Fetching org.eclipse.wst.web.ui_1.1.601.v201602221748.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (42,17kB)
+[2017-04-05 12:23:06] Downloading org.eclipse.equinox.p2.transport.ecf
+[2017-04-05 12:23:07] Fetching org.eclipse.equinox.security_1.2.200.v20150715-1528.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (42,22kB)
+[2017-04-05 12:23:07] Fetching org.eclipse.equinox.p2.transport.ecf_1.1.201.v20161115-1927.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (21,51kB)
+[2017-04-05 12:23:07] Fetching org.eclipse.equinox.security_1.2.200.v20150715-1528.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (42,22kB)
+[2017-04-05 12:23:07] Downloading org.eclipse.core.filebuffers
+[2017-04-05 12:23:08] Downloading org.apache.ws.commons.util
+[2017-04-05 12:23:08] Fetching org.eclipse.core.filebuffers_3.6.0.v20160503-1849.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (42,91kB)
+[2017-04-05 12:23:08] Fetching org.apache.ws.commons.util_1.0.1.v20100518-1140.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (22,24kB)
+[2017-04-05 12:23:08] Fetching org.eclipse.core.filebuffers_3.6.0.v20160503-1849.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (42,91kB)
+[2017-04-05 12:23:09] Downloading org.eclipse.wst.validation.ui
+[2017-04-05 12:23:09] Downloading org.eclipse.equinox.p2.touchpoint.eclipse
+[2017-04-05 12:23:09] Downloading org.eclipse.mylyn.tasks.search
+[2017-04-05 12:23:09] Downloading org.eclipse.mylyn.wikitext.confluence.core
+[2017-04-05 12:23:10] Downloading org.eclipse.wst.common.uriresolver
+[2017-04-05 12:23:10] Downloading org.eclipse.update.configurator
+[2017-04-05 12:23:10] Downloading org.eclipse.php.composer.core
+[2017-04-05 12:23:11] Fetching org.eclipse.wst.validation.ui_1.2.500.v201310231452.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (43,57kB)
+[2017-04-05 12:23:11] Fetching org.eclipse.php.composer.core_4.3.0.201703131616.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (45,02kB)
+[2017-04-05 12:23:11] Fetching org.eclipse.wst.validation.ui_1.2.500.v201310231452.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (43,57kB)
+[2017-04-05 12:23:11] Fetching org.eclipse.wst.common.uriresolver_1.2.200.v201505132009.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (24,76kB)
+[2017-04-05 12:23:11] Fetching org.eclipse.mylyn.tasks.search_3.21.0.v20160630-2019.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (44,23kB)
+[2017-04-05 12:23:11] Fetching org.eclipse.update.configurator_3.3.400.v20160506-0750.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (44,89kB)
+[2017-04-05 12:23:11] Fetching org.eclipse.equinox.p2.touchpoint.eclipse_2.1.400.v20160419-0834.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (44,19kB)
+[2017-04-05 12:23:11] Fetching org.eclipse.mylyn.wikitext.confluence.core_2.10.1.v20161129-1925.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (44,52kB)
+[2017-04-05 12:23:11] Downloading org.eclipse.jem.util
+[2017-04-05 12:23:11] Fetching org.eclipse.mylyn.tasks.search_3.21.0.v20160630-2019.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (44,23kB)
+[2017-04-05 12:23:11] Downloading org.eclipse.wst.internet.monitor.ui
+[2017-04-05 12:23:12] Fetching org.eclipse.jem.util_2.1.200.v201404021757.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (45,03kB)
+[2017-04-05 12:23:12] Fetching org.eclipse.wst.internet.monitor.ui_1.0.700.v201309182039.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (45,8kB)
+[2017-04-05 12:23:13] Downloading org.eclipse.wst.common.environment
+[2017-04-05 12:23:13] Downloading org.eclipse.wst.internet.cache
+[2017-04-05 12:23:13] Downloading org.eclipse.core.jobs
+[2017-04-05 12:23:13] Downloading org.eclipse.e4.ui.dialogs
+[2017-04-05 12:23:14] Downloading org.eclipse.mylyn.wikitext.mediawiki.core.ant
+[2017-04-05 12:23:14] Fetching org.eclipse.e4.ui.dialogs_1.1.0.v20151127-1218.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (22,36kB)
+[2017-04-05 12:23:14] Fetching org.eclipse.core.jobs_3.8.0.v20160509-0411.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (46,37kB)
+[2017-04-05 12:23:14] Fetching org.eclipse.e4.ui.dialogs_1.1.0.v20151127-1218.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (22,36kB)
+[2017-04-05 12:23:14] Fetching org.eclipse.core.jobs_3.8.0.v20160509-0411.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (46,37kB)
+[2017-04-05 12:23:14] Fetching org.eclipse.wst.internet.cache_1.0.701.v201510130022.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (21,58kB)
+[2017-04-05 12:23:14] Fetching org.eclipse.wst.common.environment_1.0.400.v200912181831.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (18,6kB)
+[2017-04-05 12:23:14] Fetching org.eclipse.mylyn.wikitext.mediawiki.core.ant_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (33,46kB)
+[2017-04-05 12:23:14] Downloading org.eclipse.mylyn.wikitext.twiki.core
+[2017-04-05 12:23:15] Downloading org.eclipse.e4.core.contexts
+[2017-04-05 12:23:15] Fetching org.eclipse.mylyn.wikitext.twiki.core_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (25,45kB)
+[2017-04-05 12:23:15] Fetching org.eclipse.e4.core.contexts_1.5.1.v20170203-1100.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (22,44kB)
+[2017-04-05 12:23:16] Fetching org.eclipse.mylyn.wikitext.twiki.core_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (25,45kB)
+[2017-04-05 12:23:16] Fetching org.eclipse.e4.core.contexts_1.5.1.v20170203-1100.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (22,44kB)
+[2017-04-05 12:23:16] Downloading org.eclipse.equinox.p2.ui.sdk
+[2017-04-05 12:23:16] Downloading org.eclipse.equinox.p2.metadata.repository
+[2017-04-05 12:23:16] Downloading org.eclipse.ui.ide.application
+[2017-04-05 12:23:17] Downloading org.eclipse.equinox.bidi
+[2017-04-05 12:23:17] Fetching org.eclipse.equinox.p2.ui.sdk_1.0.400.v20150423-1455.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (20,97kB)
+[2017-04-05 12:23:17] Fetching org.eclipse.ui.ide.application_1.1.101.v20160829-0827.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (48,51kB)
+[2017-04-05 12:23:17] Fetching org.eclipse.equinox.p2.metadata.repository_1.2.300.v20160419-0834.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (47,43kB)
+[2017-04-05 12:23:17] Fetching org.eclipse.ui.ide.application_1.1.101.v20160829-0827.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (48,51kB)
+[2017-04-05 12:23:17] Fetching org.eclipse.equinox.p2.metadata.repository_1.2.300.v20160419-0834.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (47,43kB)
+[2017-04-05 12:23:17] Downloading org.eclipse.e4.emf.xpath
+[2017-04-05 12:23:17] Downloading org.eclipse.equinox.console
+[2017-04-05 12:23:18] Downloading org.eclipse.zest.layouts
+[2017-04-05 12:23:18] Downloading org.eclipse.dltk.mylyn
+[2017-04-05 12:23:18] Downloading com.ibm.icu
+[2017-04-05 12:23:18] Fetching org.eclipse.equinox.bidi_1.0.0.v20160307-1318.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (23,14kB)
+[2017-04-05 12:23:18] Fetching org.eclipse.e4.emf.xpath_0.1.200.v20160506-0804.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (21,67kB)
+[2017-04-05 12:23:18] Fetching org.eclipse.equinox.console_1.1.200.v20150929-1405.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (48,93kB)
+[2017-04-05 12:23:19] Fetching org.eclipse.dltk.mylyn_5.7.1.201703020501.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (49,29kB)
+[2017-04-05 12:23:19] Fetching org.eclipse.zest.layouts_1.1.300.201606061308.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (48,96kB)
+[2017-04-05 12:23:19] Fetching com.ibm.icu_56.1.0.v201601250100.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (8,22MB)
+[2017-04-05 12:23:21] Fetching com.ibm.icu_56.1.0.v201601250100.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:23:21] Downloading org.eclipse.wst.jsdt.doc
+[2017-04-05 12:23:21] Downloading org.eclipse.platform.doc.user
+[2017-04-05 12:23:21] Downloading org.eclipse.php.core
+[2017-04-05 12:23:22] Downloading org.eclipse.dltk.ui
+[2017-04-05 12:23:22] Downloading org.eclipse.egit.doc
+[2017-04-05 12:23:24] Downloading org.eclipse.ui.workbench
+[2017-04-05 12:23:25] Fetching org.eclipse.platform.doc.user_4.6.1.v20160727-2009.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (7,97MB)
+[2017-04-05 12:23:25] Fetching org.eclipse.php.core_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (3,5MB)
+[2017-04-05 12:23:25] Fetching org.eclipse.ui.workbench_3.108.3.v20170216-1539.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (1,03MB)
+[2017-04-05 12:23:26] Downloading org.eclipse.dltk.core.index.lucene
+[2017-04-05 12:23:26] Downloading org.eclipse.wst.jsdt.core
+[2017-04-05 12:23:26] Fetching org.eclipse.platform.doc.user_4.6.1.v20160727-2009.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:23:26] Fetching org.eclipse.php.core_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:23:27] Fetching org.eclipse.egit.doc_4.6.1.201703071140-r.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (4,25MB)
+[2017-04-05 12:23:28] Downloading org.eclipse.debug.ui
+[2017-04-05 12:23:28] Fetching org.eclipse.egit.doc_4.6.1.201703071140-r.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:23:30] Fetching org.eclipse.dltk.ui_5.7.1.201703020501.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (1,95MB)
+[2017-04-05 12:23:31] Fetching org.eclipse.dltk.ui_5.7.1.201703020501.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:23:31] Fetching org.eclipse.wst.jsdt.doc_2.0.200.v201610220243.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (3,5MB)
+[2017-04-05 12:23:32] Fetching org.eclipse.wst.jsdt.doc_2.0.200.v201610220243.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:23:34] Fetching org.eclipse.debug.ui_3.11.202.v20161114-0338.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (1MB)
+[2017-04-05 12:23:35] Fetching org.eclipse.debug.ui_3.11.202.v20161114-0338.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:23:36] Fetching org.eclipse.wst.jsdt.core_2.0.200.v201612211424.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (1,26MB)
+[2017-04-05 12:23:38] Fetching org.eclipse.wst.jsdt.core_2.0.200.v201612211424.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:23:39] Fetching org.eclipse.dltk.core.index.lucene_5.7.1.201703020501.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (3,76MB)
+[2017-04-05 12:23:41] Fetching org.eclipse.dltk.core.index.lucene_5.7.1.201703020501.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:24:00] Downloading org.eclipse.php.help
+[2017-04-05 12:24:01] Downloading org.eclipse.swt.win32.win32.x86_64
+[2017-04-05 12:24:05] Downloading org.eclipse.php.ui
+[2017-04-05 12:24:05] Fetching org.eclipse.php.help_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (2,64MB)
+[2017-04-05 12:24:06] Fetching org.eclipse.php.help_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:24:09] Fetching org.eclipse.swt.win32.win32.x86_64_3.105.3.v20170228-0512.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (1,17MB)
+[2017-04-05 12:24:09] Fetching org.eclipse.php.ui_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (884,02kB)
+[2017-04-05 12:24:09] Fetching org.eclipse.swt.win32.win32.x86_64_3.105.3.v20170228-0512.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (1,17MB)
+[2017-04-05 12:24:09] Fetching org.eclipse.php.ui_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (884,02kB)
+[2017-04-05 12:24:10] Fetching org.eclipse.swt.win32.win32.x86_64_3.105.3.v20170228-0512.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:24:10] Fetching org.eclipse.php.ui_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:24:16] Downloading org.apache.ant
+[2017-04-05 12:24:17] Downloading org.apache.jasper.glassfish
+[2017-04-05 12:24:18] Fetching org.apache.ant_1.9.6.v201510161327.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (2,19MB)
+[2017-04-05 12:24:18] Fetching org.apache.jasper.glassfish_2.2.2.v201501141630.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (2,32MB)
+[2017-04-05 12:24:18] Fetching org.apache.ant_1.9.6.v201510161327.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (2,19MB)
+[2017-04-05 12:24:18] Fetching org.apache.jasper.glassfish_2.2.2.v201501141630.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (2,32MB)
+[2017-04-05 12:24:19] Fetching org.apache.ant_1.9.6.v201510161327.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:24:20] Downloading org.eclipse.wst.jsdt.ui
+[2017-04-05 12:24:21] Fetching org.eclipse.wst.jsdt.ui_2.0.200.v201612151739.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (2,32MB)
+[2017-04-05 12:24:27] Downloading org.eclipse.jgit
+[2017-04-05 12:24:28] Fetching org.eclipse.jgit_4.6.1.201703071140-r.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (2,3MB)
+[2017-04-05 12:24:30] Downloading com.google.guava
+[2017-04-05 12:24:34] Fetching com.google.guava_15.0.0.v201403281430.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (1,26MB)
+[2017-04-05 12:24:36] Fetching com.google.guava_15.0.0.v201403281430.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:25:02] Downloading org.eclipse.ui.intro.universal
+[2017-04-05 12:25:04] Downloading org.apache.lucene.core
+[2017-04-05 12:25:08] Downloading org.eclipse.team.ui
+[2017-04-05 12:25:09] Fetching org.eclipse.ui.intro.universal_3.3.1.v20160829-1558.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (1,71MB)
+[2017-04-05 12:25:10] Fetching org.eclipse.ui.intro.universal_3.3.1.v20160829-1558.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:25:12] Fetching org.apache.lucene.core_3.5.0.v20120725-1805.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (1,48MB)
+[2017-04-05 12:25:13] Fetching org.eclipse.team.ui_3.8.0.v20160518-1906.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (431,71kB)
+[2017-04-05 12:25:13] Fetching org.apache.lucene.core_3.5.0.v20120725-1805.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (1,48MB)
+[2017-04-05 12:25:14] Fetching org.apache.lucene.core_3.5.0.v20120725-1805.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:25:44] Downloading org.eclipse.osgi
+[2017-04-05 12:25:44] Fetching org.eclipse.osgi_3.11.3.v20170209-1843.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (431,77kB)
+[2017-04-05 12:25:53] Downloading org.apache.xerces
+[2017-04-05 12:25:56] Fetching org.apache.xerces_2.9.0.v201101211617.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (1,25MB)
+[2017-04-05 12:25:57] Fetching org.apache.xerces_2.9.0.v201101211617.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:25:59] Downloading org.eclipse.mylyn.wikitext.help.ui
+[2017-04-05 12:26:00] Downloading org.eclipse.mylyn.help.ui
+[2017-04-05 12:26:00] Downloading org.eclipse.mylyn.tasks.ui
+[2017-04-05 12:26:03] Downloading org.eclipse.emf.ecore
+[2017-04-05 12:26:05] Downloading org.mozilla.javascript
+[2017-04-05 12:26:06] Downloading org.eclipse.wst.sse.ui
+[2017-04-05 12:26:09] Fetching org.eclipse.emf.ecore_2.12.0.v20160420-0247.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (366,46kB)
+[2017-04-05 12:26:10] Fetching org.eclipse.mylyn.tasks.ui_3.21.0.v20160913-2131.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (1,14MB)
+[2017-04-05 12:26:10] Fetching org.eclipse.mylyn.help.ui_3.21.0.v20160913-2013.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (1,16MB)
+[2017-04-05 12:26:11] Fetching org.eclipse.mylyn.wikitext.help.ui_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (1,2MB)
+[2017-04-05 12:26:11] Fetching org.eclipse.wst.sse.ui_1.3.500.v201605120129.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (295,87kB)
+[2017-04-05 12:26:12] Fetching org.eclipse.mylyn.tasks.ui_3.21.0.v20160913-2131.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:26:12] Fetching org.mozilla.javascript_1.7.5.v201504281450.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (430,37kB)
+[2017-04-05 12:26:12] Fetching org.eclipse.mylyn.help.ui_3.21.0.v20160913-2013.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:26:12] Fetching org.eclipse.mylyn.wikitext.help.ui_2.10.1.v20161129-1925.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:26:13] Fetching org.eclipse.wst.sse.ui_1.3.500.v201605120129.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (295,87kB)
+[2017-04-05 12:26:13] Fetching org.mozilla.javascript_1.7.5.v201504281450.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (430,37kB)
+[2017-04-05 12:26:14] Fetching org.mozilla.javascript_1.7.5.v201504281450.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:26:29] Downloading org.eclipse.gef
+[2017-04-05 12:26:30] Fetching org.eclipse.gef_3.11.0.201606061308.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (366,65kB)
+[2017-04-05 12:26:31] Fetching org.eclipse.gef_3.11.0.201606061308.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:26:45] Downloading org.eclipse.wst.xml.ui
+[2017-04-05 12:26:46] Downloading org.apache.lucene.analysis
+[2017-04-05 12:26:47] Fetching org.apache.lucene.analysis_3.5.0.v20120725-1805.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (887,38kB)
+[2017-04-05 12:26:47] Fetching org.eclipse.wst.xml.ui_1.1.700.v201604272318.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (318,45kB)
+[2017-04-05 12:26:47] Fetching org.apache.lucene.analysis_3.5.0.v20120725-1805.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (887,38kB)
+[2017-04-05 12:26:48] Downloading org.eclipse.core.resources
+[2017-04-05 12:26:49] Fetching org.eclipse.core.resources_3.11.1.v20161107-2032.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (862,01kB)
+[2017-04-05 12:26:51] Fetching org.eclipse.core.resources_3.11.1.v20161107-2032.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:26:54] Downloading org.eclipse.egit.ui
+[2017-04-05 12:26:55] Downloading org.eclipse.php.debug.core
+[2017-04-05 12:26:58] Fetching org.eclipse.php.debug.core_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (229,09kB)
+[2017-04-05 12:26:58] Fetching org.eclipse.egit.ui_4.6.1.201703071140-r.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (824,42kB)
+[2017-04-05 12:26:58] Fetching org.eclipse.php.debug.core_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (229,09kB)
+[2017-04-05 12:26:58] Fetching org.eclipse.egit.ui_4.6.1.201703071140-r.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (824,42kB)
+[2017-04-05 12:26:59] Fetching org.eclipse.egit.ui_4.6.1.201703071140-r.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/
+[2017-04-05 12:27:00] Downloading org.eclipse.ui.ide
+[2017-04-05 12:27:00] Downloading org.eclipse.wst.doc.user
+[2017-04-05 12:27:01] Downloading org.eclipse.epp.mpc.help.ui
+[2017-04-05 12:27:01] Fetching org.eclipse.ui.ide_3.12.3.v20170119-0935.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (793,87kB)
+[2017-04-05 12:27:02] Fetching org.eclipse.epp.mpc.help.ui_1.5.4.v20170201-1845.jar from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (749,69kB)
+[2017-04-05 12:27:02] Fetching org.eclipse.wst.doc.user_1.2.0.v201309112106.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (756,66kB)
+[2017-04-05 12:27:02] Downloading org.eclipse.wst.jsdt.chromium
+[2017-04-05 12:27:03] Downloading org.eclipse.php.debug.ui
+[2017-04-05 12:27:05] Downloading org.eclipse.ui.workbench.texteditor
+[2017-04-05 12:27:06] Fetching org.eclipse.wst.jsdt.chromium_0.5.200.v201610211901.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (189,52kB)
+[2017-04-05 12:27:09] Downloading org.eclipse.wst.jsdt.chromium.debug.ui
+[2017-04-05 12:27:10] Fetching org.eclipse.ui.workbench.texteditor_3.10.1.v20160818-1626.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (228,35kB)
+[2017-04-05 12:27:12] Fetching org.eclipse.php.debug.ui_4.3.0.201703131616.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (212,65kB)
+[2017-04-05 12:27:14] Downloading org.eclipse.help.webapp
+[2017-04-05 12:27:15] Downloading org.eclipse.draw2d
+[2017-04-05 12:27:16] Fetching org.eclipse.wst.jsdt.chromium.debug.ui_0.6.200.v201701261810.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (155,75kB)
+[2017-04-05 12:27:17] Downloading org.eclipse.ui.editors
+[2017-04-05 12:27:18] Fetching org.eclipse.ui.editors_3.10.1.v20161106-1856.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (178,45kB)
+[2017-04-05 12:27:18] Fetching org.eclipse.help.webapp_3.8.0.v20160504-0839.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (239,5kB)
+[2017-04-05 12:27:18] Fetching org.eclipse.draw2d_3.10.100.201606061308.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (215,67kB)
+[2017-04-05 12:27:18] Fetching org.eclipse.help.webapp_3.8.0.v20160504-0839.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (239,5kB)
+[2017-04-05 12:27:18] Fetching org.eclipse.draw2d_3.10.100.201606061308.jar.pack.gz from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/plugins/ (215,67kB)
+[2017-04-05 12:27:19] Fetching org.eclipse.ui.editors_3.10.1.v20161106-1856.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:27:20] Downloading org.eclipse.equinox.p2.ui
+[2017-04-05 12:27:22] Downloading org.eclipse.xsd
+[2017-04-05 12:27:23] Fetching org.eclipse.equinox.p2.ui_2.4.100.v20160419-0834.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (189,14kB)
+[2017-04-05 12:27:23] Fetching org.eclipse.xsd_2.12.0.v20160526-0356.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (548,17kB)
+[2017-04-05 12:27:23] Fetching org.eclipse.equinox.p2.ui_2.4.100.v20160419-0834.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (189,14kB)
+[2017-04-05 12:27:23] Fetching org.eclipse.xsd_2.12.0.v20160526-0356.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (548,17kB)
+[2017-04-05 12:27:25] Fetching org.eclipse.equinox.p2.ui_2.4.100.v20160419-0834.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:27:34] Downloading org.eclipse.wst.jsdt.support.ie
+[2017-04-05 12:27:34] Downloading org.eclipse.dltk.core
+[2017-04-05 12:27:41] Fetching org.eclipse.wst.jsdt.support.ie_1.0.601.v201602241911.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (348,87kB)
+[2017-04-05 12:27:41] Fetching org.eclipse.dltk.core_5.7.1.201703020501.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (517,64kB)
+[2017-04-05 12:27:41] Fetching org.eclipse.wst.jsdt.support.ie_1.0.601.v201602241911.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (348,87kB)
+[2017-04-05 12:27:42] Fetching org.eclipse.dltk.core_5.7.1.201703020501.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (517,64kB)
+[2017-04-05 12:27:43] Fetching org.eclipse.dltk.core_5.7.1.201703020501.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:27:50] Downloading org.eclipse.epp.mpc.ui
+[2017-04-05 12:27:51] Downloading org.eclipse.jetty.server
+[2017-04-05 12:27:53] Fetching org.eclipse.epp.mpc.ui_1.5.4.v20170222-1941.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (512,97kB)
+[2017-04-05 12:27:54] Fetching org.eclipse.epp.mpc.ui_1.5.4.v20170222-1941.jar from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:27:55] Fetching org.eclipse.jetty.server_9.3.9.v20160517.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (381,53kB)
+[2017-04-05 12:27:55] Downloading org.eclipse.ltk.ui.refactoring
+[2017-04-05 12:27:57] Fetching org.eclipse.ltk.ui.refactoring_3.8.0.v20160518-1817.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (176,66kB)
+[2017-04-05 12:27:57] Downloading org.eclipse.platform
+[2017-04-05 12:27:57] Fetching org.eclipse.ltk.ui.refactoring_3.8.0.v20160518-1817.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (176,66kB)
+[2017-04-05 12:27:58] Fetching org.eclipse.platform_4.6.3.v20170301-0400.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (450,15kB)
+[2017-04-05 12:27:58] Fetching org.eclipse.ltk.ui.refactoring_3.8.0.v20160518-1817.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:27:58] Fetching org.eclipse.platform_4.6.3.v20170301-0400.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (450,15kB)
+[2017-04-05 12:28:00] Fetching org.eclipse.platform_4.6.3.v20170301-0400.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/
+[2017-04-05 12:28:01] Downloading org.eclipse.help.base
+[2017-04-05 12:28:04] Downloading org.eclipse.team.core
+[2017-04-05 12:28:06] Fetching org.eclipse.help.base_4.1.2.v20170301-0400.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (161,76kB)
+[2017-04-05 12:28:06] Fetching org.eclipse.team.core_3.8.0.v20160418-1534.jar.pack.gz from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/plugins/ (127,51kB)
+[2017-04-05 12:28:12] Mirrored 120 artifacts from http://eclipse.mirror.rafal.ca/releases/neon/201703231000/ at 130kb/s
+[2017-04-05 12:28:12] Mirrored 89 artifacts from http://ftp.ussg.iu.edu/eclipse/releases/neon/201703231000/ at 103kb/s with 2 failures
+[2017-04-05 12:28:12] Mirrored 47 artifacts from http://mirrors.xmission.com/eclipse/releases/neon/201703231000/ at 14kb/s
+[2017-04-05 12:28:12] Mirrored 14 artifacts from http://mirror.cc.columbia.edu/pub/software/eclipse/releases/neon/201703231000/ at 9kb/s
+[2017-04-05 12:28:12] Mirrored 18 artifacts from http://ftp.osuosl.org/pub/eclipse/releases/neon/201703231000/ at 8kb/s
+[2017-04-05 12:28:12] Mirrored 11 artifacts from http://eclipse.c3sl.ufpr.br/releases/neon/201703231000/ at 7kb/s
+[2017-04-05 12:28:12] Mirrored 4 artifacts from http://mirror.csclub.uwaterloo.ca/eclipse/releases/neon/201703231000/ at 6kb/s
+[2017-04-05 12:28:12] Mirrored 1 artifacts from http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/releases/neon/201703231000/ at 5kb/s
+[2017-04-05 12:28:12] Mirrored 1 artifacts from http://mirror.ibcp.fr/pub/eclipse//releases/neon/201703231000/ at 4kb/s
+[2017-04-05 12:28:12] Mirrored 1 artifacts from http://mirrors.nic.cz/eclipse/releases/neon/201703231000/ at 4kb/s
+[2017-04-05 12:28:12] Mirrored 1 artifacts from http://ftp.fau.de/eclipse/releases/neon/201703231000/ at 3kb/s
+[2017-04-05 12:28:12] Mirrored 1 artifacts from http://mirror.tspu.ru/eclipse/releases/neon/201703231000/ at 2kb/s
+[2017-04-05 12:28:12] Mirrored 1 artifacts from http://mirror.math.princeton.edu/pub/eclipse//releases/neon/201703231000/ at 0kb/s
+[2017-04-05 12:28:12] Collected 508 artifacts for http://download.eclipse.org/releases/neon/201703231000 in 397.01s
+[2017-04-05 12:28:12] The engine operation was cancelled and the changes are being rolled back.
+[2017-04-05 12:28:12] 

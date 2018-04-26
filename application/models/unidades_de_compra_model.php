@@ -1,0 +1,53 @@
+<?php
+
+class unidades_de_compra_model extends CI_Model{
+
+	
+
+	function __construct()
+	{
+		// Llamando al contructor del Modelo
+		parent::__construct();
+	}
+   public function getUnidadesDeCompra()
+    {
+         $query=$this->db
+                ->select("id,unidades_de_compra,unidad_venta,factor_conv,unidad_uso")
+                ->from("unidades_de_compra")
+                ->order_by("id","desc")
+                ->get();
+                return $query->result();
+    }
+    
+    
+    public function getUnidadesDeCompraPorId($id)
+    {
+           $query=$this->db
+                ->select("id,unidades_de_compra,unidad_venta,factor_conv,unidad_uso")
+                ->from("unidades_de_compra")
+                ->where(array("id"=>$id))
+                ->get();
+                return $query->row();
+    }
+   
+     public function insertar($data=array())
+    {
+         $this->db->insert("unidades_de_compra",$data);
+        return true;
+        
+    }
+    public function update($data=array(),$id)
+    {
+         $this->db->where('id', $id);
+         $this->db->update("unidades_de_compra",$data);
+        return true;
+    }
+    public function delete($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('unidades_de_compra');
+        return true;
+    }
+    
+    
+}

@@ -1,0 +1,127 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24-oct-2017, 10:37:02
+    Author     : desarrollo
+*/
+
+.divp{
+    width:500px;
+    height: 142px;
+    float: left;
+    border: 1px solid #D2D2D2; 
+    padding-top: 14px;
+    padding-bottom: 14px;    
+}
+
+.imagen{
+   float: left;
+   margin-top: 5px;
+   margin-left: 5px;
+   /*background-color: #000000;*/
+   height: 40px;
+   width: 140px;
+}
+.ot{
+   float: left;
+   background-color: #ccc;
+   width: 130px;
+}
+
+.ot div{
+    text-align: center;
+    font-size: 15px;
+    border-bottom:  1px solid #333333; 
+}
+.codigo div{
+    text-align: center;
+    font-size: 15px;
+    border-bottom:  1px solid #333333; 
+}
+.codigo{
+   float: left;    
+   background-color: #eee;
+       width: 210px;
+}
+.titulo{
+   font-weight: bold;
+   padding-top: 10px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 410px;
+   vertical-align: center;
+}
+.cliente{
+   padding-top: 1px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height:  15px;
+   width: 90px;
+   vertical-align: center;
+}
+.nombre_cliente{
+   font-weight: normal;
+   padding-top: 1px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 320px;
+   vertical-align: center;
+}
+.articulo{
+   padding-top: 1px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 90px;
+   vertical-align: center;
+}
+.nombre_articulo{
+   font-weight: normal;
+   padding-top: 1px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 320px;
+   vertical-align: center;
+}
+.paquete{
+   font-size: 15px;
+   padding-top: 20px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 120px;
+   vertical-align: center;
+}
+.cantidad{
+   font-size: 15px;
+   padding-top: 18px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 264px;
+   text-align: left;
+}
+.fecha{
+    padding-top: 12px;
+    float: left;
+    background-color: #eee;
+    height: 15px;
+    width: 100px;
+    text-align: center;
+    padding: 3px;
+}
+
+

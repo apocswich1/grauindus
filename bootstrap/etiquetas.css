@@ -1,0 +1,122 @@
+.fuente
+{
+    font-size: 12px;
+}
+
+  .fuente2
+{
+    font-size: 9px;
+}
+
+.text-left {
+  text-align: left;
+}
+	
+.bordes_externos {
+  border: 5px;
+}
+
+table{
+	font-size: 12px;
+	text-align: left;
+	
+	}
+	
+th{	
+	text-align: left;
+}
+	
+.linea{
+    border: 0                    ;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+	
+}
+.borde{border: #000000; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px}
+#titulo
+{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+body {
+  margin: 0;
+  text-align: left;
+}
+
+.linea_negra
+{
+     width: 900px;
+     height: 30px;
+     background-color: #000000;
+}
+.separador_20
+{
+    height: 20px;
+}
+.separador_10
+{
+    height: 10px;
+}
+.separador_50
+{
+    height: 50px;
+}
+.separador_100
+{
+    height: 100px;
+}
+/*tabla*/
+#tabla_detalle
+{
+    width: 800px;
+}
+.celda_25
+{
+    width: 25%;
+}
+.celda_15
+{
+    width: 15%;
+}
+.celda_40
+{
+    width: 40%;
+}
+.celda_33
+{
+    width: 33%;
+}
+.celda_50
+{
+    width: 50%;
+}
+.celda_35
+{
+    width: 35%;
+}
+.celda_20
+{
+    width: 20%;
+}
+.celda_60
+{
+    width: 60%;
+}
+.negra
+{
+    font-weight: bold;
+}
+.izquierda
+{
+    text-align: left;
+}
+.derecha
+{
+    text-align: right;
+}
+.centro
+{
+    text-align: center;
+}

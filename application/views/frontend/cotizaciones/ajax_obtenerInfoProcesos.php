@@ -1,0 +1,1 @@
+<?php if($datos->valor_venta < 1){echo "<span style='color:red'>No puede ser seleccionada porque el valor de su precio no es permitido</span>";}else{echo $datos->unidades_de_venta." $".$datos->valor_venta;} ?>

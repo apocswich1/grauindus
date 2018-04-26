@@ -1,0 +1,157 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24-oct-2017, 10:37:02
+    Author     : desarrollo
+*/
+
+html, body {
+	margin: 0; 
+	padding: 0; 
+	overflow: auto;
+}
+body { 
+    background: #fff; 
+    font-family: Arial; 
+    font-size: 13px; 
+    line-height: 1.6; 
+    font-size: 12px;
+    font-weight:bold;
+    color:#000;
+} 
+#dina4 {
+    width: 268.9mm;
+    height: 289.4mm; 
+    /*border: 1px solid #D2D2D2;*/ 
+    background: #fff;
+    /*margin: 10px auto;*/
+}
+
+.divp{
+    margin-left:5px;
+    margin-bottom:10px;
+    width:500px;
+    height: 178px;
+    float: left;
+    border: 1px solid #D2D2D2; 
+}
+
+.imagen{
+   float: left;
+   margin-top: 5px;
+   margin-left: 5px;
+   /*background-color: #000000;*/
+   height: 40px;
+   width: 140px;
+}
+.ot{
+   float: left;
+   background-color: #ccc;
+   height: 50px;
+   width: 130px;
+}
+
+.ot div{
+    text-align: center;
+    font-size: 15px;
+    border-bottom:  1px solid #333333; 
+}
+.codigo div{
+    text-align: center;
+    font-size: 15px;
+    border-bottom:  1px solid #333333; 
+}
+.codigo{
+   float: left;    
+   background-color: #eee;
+   height: 50px;
+   width: 210px;
+}
+.titulo{
+   font-size: 15px;
+   padding-top: 1px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 410px;
+   vertical-align: center;
+}
+.cliente{
+   font-size: 15px;
+   padding-top: 1px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height:  15px;
+   width: 90px;
+   vertical-align: center;
+}
+.nombre_cliente{
+   font-weight: normal;
+   font-size: 15px;
+   padding-top: 1px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 320px;
+   vertical-align: center;
+}
+.articulo{
+   font-size: 15px;
+   padding-top: 1px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 90px;
+   vertical-align: center;
+}
+.nombre_articulo{
+   font-weight: normal;
+   font-size: 15px;
+   padding-top: 1px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 320px;
+   vertical-align: center;
+}
+.paquete{
+   font-size: 15px;
+   padding-top: 20px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 120px;
+   vertical-align: center;
+}
+.cantidad{
+   font-size: 15px;
+   padding-top: 1px;
+   padding-left: 5px;
+   float: left;    
+   /*background-color: #eee;*/
+   height: 15px;
+   width: 264px;
+   text-align: center;
+}
+.fecha{
+   font-size: 15px;
+   padding-top: 20px;
+   padding-left: 5px;
+   float: left;    
+   background-color: #eee;
+   height: 15px;
+   width: 100px;
+   vertical-align: center;
+   text-align: center;
+}
+
+

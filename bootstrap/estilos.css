@@ -1,0 +1,146 @@
+.fuente
+{
+    font-size: 9px;
+}
+
+
+table{font-size: 9px;}
+.linea{
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+#titulo
+{
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 3px dashed grey;
+}
+
+/*
+#numero_de_costo
+{
+    width: 200px;
+    margin-left: 150px;
+    border: #000000;
+    border-style:  ridge; 
+    border-top-width: 0px; 
+    border-right-width: 0px; 
+    border-bottom-width: 1px; 
+    border-left-width: 0px;
+    
+}
+*/
+#numero_de_costo
+{
+    width: 200px;
+    margin-left: 150px;
+    border-bottom: 1px dashed grey;
+    
+}
+.hr_punteada {border: 1px dashed grey; height: 0; width: 100%;}
+.hr_punteada_corto {border: 1px dashed grey; height: 0; width: 300px;}
+.subrayado{border-bottom: 1px dashed grey; height: 0; width: 100%;}
+.subrayado_top{border-top: 1px dashed grey; height: 0; width: 100%;}
+.valign_top
+{
+    vertical-align: text-top;
+}
+.padding_left_10
+{
+    padding-left: 20px;
+}
+.separador_20
+{
+    height: 20px;
+}
+.separador_10
+{
+    height: 10px;
+}
+.espacio_300
+{
+    width: 300px;
+}
+.izquierda
+{
+    text-align: left;
+}
+.derecha
+{
+    text-align: right;
+}
+.centro
+{
+    text-align: center;
+}
+#maquina
+{
+    margin-left: 150px;
+	 
+	 
+}
+#cantidad
+{
+    margin-left: 60%;
+}
+/*tabla*/
+#tabla_detalle
+{
+    width: 800px;
+}
+
+#tabla_produccion
+{
+    width: 450px;
+}
+.celda_1 {
+  width: 10%;
+}
+
+.celda_2 {
+  width: 30%;
+}
+.celda_3 {
+  width: 20%;
+}
+.celda_4 {
+  width: 10%;
+}
+.celda_5 {
+  width: 30%;
+}
+.celda_66 {
+  width: 250px;
+}
+.celda_40
+{
+    width: 40%;
+}
+.celda_60
+{
+    width: 60%;
+}
+.celda_33
+{
+    width: 33%;
+}
+#menuhorizontal {
+  margin:0;
+  padding:0;
+  list-style-type:none;
+}
+#menuhorizontal li {
+  float:right;
+}
+.img_16
+{
+    width: 16px;
+    height: 16px;
+}
+.img_64
+{
+    width: 64px;
+    height: 64px;
+}
