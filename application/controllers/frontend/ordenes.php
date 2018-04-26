@@ -602,9 +602,9 @@ class Ordenes extends CI_Controller {
             $producto=$this->productos_model->getProductosPorId($orden->producto_id);
             $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
             //print_r($hoja);exit();
-            $tapa = $this->materiales_model->getMaterialesPorNombre($fotomecanica->id_mat_placa1);
-            $monda = $this->materiales_model->getMaterialesPorNombre($fotomecanica->id_mat_onda2);
-            $mliner = $this->materiales_model->getMaterialesPorNombre($fotomecanica->id_mat_liner3);
+            $tapa = $this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_placa1);
+            $monda = $this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_onda2);
+            $mliner = $this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_liner3);
             
             $orden_fotomecanica = $this->produccion_model->getFotomecanicaPorTipo(1,$id);
             $orden_ultimas = $this->orden_model->getUltimasOrdenes($orden->producto_id,$id);
@@ -623,9 +623,9 @@ class Ordenes extends CI_Controller {
                 }
             }
             
-            $materialidad_1=$this->materiales_model->getMaterialesPorNombre($fotomecanica->id_mat_placa1);
-            $materialidad_2=$this->materiales_model->getMaterialesPorNombre($fotomecanica->id_mat_onda2);
-            $materialidad_3=$this->materiales_model->getMaterialesPorNombre($fotomecanica->id_mat_liner3);
+            $materialidad_1=$this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_placa1);
+            $materialidad_2=$this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_onda2);
+            $materialidad_3=$this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_liner3);
             $molde=$this->moldes_model->getMoldesPorId($fotomecanica->numero_molde);
             $ordenesAnterioresClienteMolde=$this->orden_model->getOrdenesAnterioresMoldeCliente($datos->id_cliente,$fotomecanica->numero_molde);
             $ordenesAnterioresCliente=$this->orden_model->getOrdenesAnterioresCliente($datos->id_cliente);
