@@ -8363,7 +8363,36 @@ class Produccion extends CI_Controller {
              
             foreach ($datos as $dato) {
                             $valores = $this->orden_model->getOndaCotizacion($dato->id_cotizacion);
-                            $onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
+                            //$onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
+                            //$liner     = $dato->tipo.' - ('.$valores->gramaje.' '.$valores->reverso.")";
+
+                            $datos_cotizacion = $this->cotizaciones_model->getCotizacionPorId($dato->id_cotizacion);
+                            echo '<pre>';
+
+                            if (strcasecmp($dato->tipo, 'Cartulina-cartulina') != 0){
+                                $onda =$this->cotizaciones_model->getOndaCompleto($datos_cotizacion->materialidad_2);
+                                $linder =$this->cotizaciones_model->getOndaCompleto($datos_cotizacion->materialidad_3);
+
+                            }else{
+                                //$onda =$this->cotizaciones_model->getOndaCompletoCartulina($datos_cotizacion->id_mat_placa1);
+                                //$linder =$this->cotizaciones_model->getOndaCompletoCartulina($datos_cotizacion->id_mat_placa1);
+
+                                $tapa = $this->materiales_model->getMaterialesPorNombre($datos_cotizacion->id_mat_placa1);
+                                $monda = $this->materiales_model->getMaterialesPorNombre($datos_cotizacion->id_mat_onda2);
+                                $mliner = $this->materiales_model->getMaterialesPorNombre($datos_cotizacion->id_mat_liner3);
+                                //$onda = $tapa->materiales_tipo.''.$tapa->gramaje;
+                                
+//                              $hoja   = $this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($dato->id_cotizacion);
+                                //$placakilo = $hoja->placa_kilo.' '.$hoja->kilos_placa;
+                                // $placakilos = $hoja->kilos_placa;
+
+                                $onda   = $monda->materiales_tipo.' '.$monda->gramaje.' ('.$monda->reverso.')';
+                                $linder = $tapa->materiales_tipo.'-'.$mliner->materiales_tipo.' '.$mliner->gramaje.' ('.$monda->reverso.')';
+                                //print_r($tapa);
+                                //exit();
+                            }                                                
+                            //print_r($onda);
+                            //exit();
 
                             //Cantidad de Despacho
                             $despacho = $this->despachos_model->getDespachosUltimoRegistro($dato->id_cotizacion);
@@ -8376,7 +8405,7 @@ class Produccion extends CI_Controller {
                                 <td>'.$dato->largo.'</td>
                                 <td>'.$dato->tamano_cuchillo_1.'</td>
                                 <td>'.$dato->tamano_cuchillo_2.'</td>                                
-                                <td>'.$dato->liner.'</td>
+                                <td>'.$linder.'</td>
                                 <td>'.(($valores->nombre)? $onda : '').'</td>
                                 <td>'.$dato->tipo.'</td>
                                 <td align="right">'.$dato->cantidad.'</td>

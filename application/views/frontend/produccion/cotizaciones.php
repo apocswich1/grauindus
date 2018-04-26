@@ -114,7 +114,7 @@
         print_r($molde->nombre);
         exit();
         */
-	$archivo_cliente=$this->cotizaciones_model->getArchivoClientePorCotizacion($dato->id);
+	    $archivo_cliente=$this->cotizaciones_model->getArchivoClientePorCotizacion($dato->id);
         $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($dato->id);
         $orden=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($dato->id);
         $orden_produccion=$this->orden_model->getOrdenesPorCotizacion($dato->id);   
@@ -131,7 +131,9 @@
         <td><?php echo fecha($dato->fecha)?></td>
         <td><?php echo $cliente?>
             <br/>
-            <b>Moldes:</b> <?php echo $molde->id." - ".$molde->nombre ?>
+            <b>Moldes: </b> <?php echo $molde->id." - ".$molde->nombre ?>
+            <br/>
+            <b>Colores: </b> <?php echo $fotomecanica2->colores ?>            
         </td>
         <!--<td><?php// echo $dato->producto;?></td>-->
         <td><?php if($fotomecanica2->producto != ""){echo $fotomecanica2->producto.'<br /><b>Cantidad:</b> '.$orden->cantidad_de_cajas.'<br /><b>Precio:</b> '.$orden->precio;}else{echo $dato->producto.'<br />Cantidad: '.$orden->cantidad_de_cajas.'<br />Precio: '.$orden->precio;}?></td>
@@ -566,12 +568,12 @@
   <?php if ($fotomecanica->pdf_imagen!=""){ ?>
         <a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Cliente" title="PDF imagen a imprimir"></a>
             <?php } else { ?>    
-        <img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de  Cliente" title="No existe PDF de imagen a imprimir">
+        <img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No" title="No">
             <?php } ?>                <br />
   <?php if ($archivo_cliente->archivo!=""){ ?>
         <a href='<?php echo base_url().$this->config->item('direccion_pdf').$archivo_cliente->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Cliente" title="PDF Cliente"></a>
             <?php } else { ?>    
-        <img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de  Cliente" title="No existe PDF de  Cliente">
+        <img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No" title="No">
             <?php } ?>                <br />
             <?php if ($ing->archivo!=""){ ?>
         <a href='<?php echo base_url().$this->config->item('direccion_pdf').$ing->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Revisión Ingenieria" title="PDF Revisión Ingenieria"></a>

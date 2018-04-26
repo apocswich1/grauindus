@@ -883,7 +883,7 @@ echo $query->num_rows();
                             op.fecha AS fecha,
                             i.tamano_a_imprimir_1 AS ancho,
                             i.tamano_a_imprimir_2 AS largo,
-                            mt.materiales_tipo as liner,
+                            m.nombre as liner,
                             i.unidades_por_pliego as unidad_pliego,
                             op.id_cotizacion as id_cotizacion,
 
@@ -899,7 +899,6 @@ echo $query->num_rows();
                 ->join("cotizacion_ingenieria as i","i.id_cotizacion = op.id_cotizacion","left")                
                 ->join("hoja_de_costos_datos as h","h.id_cotizacion=op.id_cotizacion","left")                
                 ->join("materiales as m","m.id= c.id_mat_liner3","left")      
-                ->join("materiales_tipo as mt","mt.id= m.tipo","left")                      
 
                 ->where("op.estado <> 2 AND op.estado <> 0 AND op.estado <> '3' AND op.estado <> '4' AND op.fecha>'2017-12-12'")
                 ->order_by("oc.id","asc")
