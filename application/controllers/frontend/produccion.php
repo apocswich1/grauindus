@@ -8445,26 +8445,73 @@ class Produccion extends CI_Controller {
                             <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
                         </head>
                         <body>
-                        <h3><p class="text-center">PROGRAMA DE EMPLACADO</p></h3>
+                        <h3><p class="text-center">PROGRAMA DE FOTOMECANICA</p></h3>
                     <p class="text-right">Fecha: '.date('d-m-Y').'</p>
 
                          <table border="1" width="100%">
                             <tr>
                                 <td>OT</td>
+                                <td>Fecha OT</td>
+                                <td>Fecha Liberacion</td>                                                                
                                 <td>Cliente</td>
                                 <td>Trabajo</td>
+                                <td>Condicion</td>
+                                <td>Terminacion</td>                                
+                                <td>Reserva</td>                                
+                                <td>Trab.Externos</td>
+                                <td>Molde o Trazado</td>
+                                <td>Colores</td>
                                 <td>Ancho</td>
                                 <td>Largo</td>                                
-                                <td>Liner</td>
-                                <td>Onda</td>
                                 <td>Tipo</td>
                                 <td>Cantidad</td>
-                                <td>Despachos</td>
-                                <td>Total a Frabricar</td>
+                                <td>Estado</td>
                             </tr>';
              
             foreach ($datos as $dato) {
                             $valores = $this->orden_model->getOndaCotizacion($dato->id_cotizacion);
+
+/////
+                            $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($dato->id_cotizacion);
+                            //echo '<pre>';
+                            //print_r($fotomecanica);
+                            //exit();
+                            $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
+
+                                if ($ing->archivo==""){
+                                    $trazado='NO';    
+                                }else{
+                                    $trazado='SI';
+                                }
+
+                                if(($fotomecanica->acabado_impresion_4=="17") || ($fotomecanica->acabado_impresion_4==""))
+                                {
+                                    $hayAcabados = 'NO';
+                                    $lugarAcabado = 'No Aplica';
+                                }else{
+                                    $hayAcabados = 'SI';
+                                    $lugarAcabado = 'Externo';
+                                }
+                                //if(($fotomecanica->acabado_impresion_5=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_5==""))
+                                if(($fotomecanica->acabado_impresion_5=="17") || ($fotomecanica->acabado_impresion_5==""))
+                                {
+                                    $hayAcabados = 'NO';
+                                    $lugarAcabado = 'No Aplica';
+                                }else{
+                                    $hayAcabados = 'SI';
+                                    $lugarAcabado = 'Externo';
+                                }
+                                //if(($fotomecanica->acabado_impresion_6=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_6==""))
+                                if(($fotomecanica->acabado_impresion_6=="17") || ($fotomecanica->acabado_impresion_6==""))
+                                {
+                                    $hayAcabados = 'NO';
+                                    $lugarAcabado = 'No Aplica';
+                                }else{
+                                    $hayAcabados = 'SI';
+                                    $lugarAcabado = 'Externo';
+                                }                            
+/////
+
                             $onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
 
                             //Cantidad de Despacho
@@ -8472,16 +8519,21 @@ class Produccion extends CI_Controller {
 
                             $cuerpo .='<tr>
                                 <td>'.$dato->ot.'</td>
+                                <td>'.fecha_con_slash($dato->fecha).'</td>                                
+                                <td>'.fecha_con_slash($dato->fecha_liberada).'</td>                                
                                 <td>'.$dato->razon_social.'</td>
                                 <td>'.$dato->producto.'</td>
+                                <td>'.$dato->condicion.'</td>
+                                <td>terminacion</td>
+                                <td>'.$fotomecanica->fot_reserva_barniz.'</td>
+                                <td>'.$hayAcabados.'</td>
+                                <td>'.$trazado.'</td>
+                                <td>'.$dato->colores.'</td>
                                 <td>'.$dato->ancho.'</td>
                                 <td>'.$dato->largo.'</td>
-                                <td>'.$dato->liner.'</td>
-                                <td>'.(($valores->nombre)? $onda : '').'</td>
                                 <td>'.$dato->tipo.'</td>
                                 <td align="right">'.$dato->cantidad.'</td>
-                                <td align="right">'.$despacho->cantidad_faltante.'</td>
-                                <td align="right">'.($dato->cantidad - $despacho->cantidad_faltante).'</td>
+                                <td></td>
                             </tr>';
             }
             $cuerpo .='</table></body>
