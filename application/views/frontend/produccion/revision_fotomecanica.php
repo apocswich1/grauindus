@@ -260,7 +260,7 @@
     <div class="control-group">
     <label class="control-label" for="usuario">Recepcion OT</label>
     <div class="controls">
-      <select name="recepcion_ot">
+      <select name="recepcion_ot" id="recepcion_ot">
                 <option value="">Seleccione</option>
                 <option value="Por Revisar" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot  ,'Por Revisar');?>>Por Revisar</option>        
                 <option value="Aprobada" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot ,'Aprobada');?>>Aprobada</option>
@@ -268,6 +268,16 @@
             </select>            
     </div>
   </div>
+
+    <div class="control-group coment">
+
+    <label class="control-label" for="usuario">Observacion <strong style="color: red;">(*)</strong></label>
+    <div class="controls">
+        <textarea id="coment1" name="coment1" style="width: 350px" name="coment"></textarea>
+        <input type="button" value="Guardar" class="btn btn-warning" onclick="guardarFormularioAdd('0');" />
+    </div>
+    </div>
+
 
     <div class="control-group">
 		<label class="control-label" for="usuario">Revisión Trazado</label>
@@ -495,6 +505,16 @@
         {
             document.form.reset();
         //document.form.cliente.focus();
+
+        $('.coment').hide();  
+        $('#recepcion_ot').change(function() {                
+            if($('#recepcion_ot option:selected').val() != 'Rechazada') {
+              $('.coment').hide();
+            }else{
+              $('.coment').show();                  
+            }
+        });
+
         }
     );
     
