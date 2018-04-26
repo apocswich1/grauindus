@@ -64,24 +64,24 @@
 <div class="page-header"><h3>Órdenes de Producción ( <?php echo $cuantos?> en total)</h3></div>
 <div class="container-fluid">
 <table class="table table-bordered table-striped indice" id="datatable">
-	<thead>
-		<tr>
+    <thead>
+        <tr>
              <th>OT</th>
              <th>Cotización</th>
              <th>OP</th>
              <th>Fecha solicitud</th>
-	     <th>Cliente</th>
+         <th>Cliente</th>
              <th>Producto</th>
              <th>Revisión</th>
              <th>Pdf</th>
              <th>Fotomecánica</th>
              <th>Status</th>
              <th>Acción</th>
-		</tr>
-	</thead>
-	<tbody>
+        </tr>
+    </thead>
+    <tbody>
     <?php
-	
+    
     foreach($datos as $dato)
     {
         $fotomecanica=$this->produccion_model->getFotomecanicaPorTipo(1,$dato->id);
@@ -108,20 +108,20 @@
         $bobinado_cartulina=$this->produccion_model->getBobinadoCartulinaPorTipo(1,$dato->id); 
         $bobinado_onda=$this->produccion_model->getBobinadoCartulinaOndaPorTipo(1,$dato->id); 
         $bobinado_liner=$this->produccion_model->getBobinadoCartulinaLinerPorTipo(1,$dato->id); 
-				
+                
         $molde=$this->cotizaciones_model->getMolde($dato->id_molde);
         /*echo '<pre>';
         print_r($molde->nombre);
         exit();
         */
-	    $archivo_cliente=$this->cotizaciones_model->getArchivoClientePorCotizacion($dato->id);
+        $archivo_cliente=$this->cotizaciones_model->getArchivoClientePorCotizacion($dato->id);
         $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($dato->id);
         $orden=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($dato->id);
         $orden_produccion=$this->orden_model->getOrdenesPorCotizacion($dato->id);   
         $not=$this->orden_model->getNumeroOt($dato->id);            
         //print_r($orden);
         if($bodega->estado != '4')
-		{
+        {
                     
     ?>
     <tr>
@@ -138,7 +138,7 @@
         <!--<td><?php// echo $dato->producto;?></td>-->
         <td><?php if($fotomecanica2->producto != ""){echo $fotomecanica2->producto.'<br /><b>Cantidad:</b> '.$orden->cantidad_de_cajas.'<br /><b>Precio:</b> '.$orden->precio;}else{echo $dato->producto.'<br />Cantidad: '.$orden->cantidad_de_cajas.'<br />Precio: '.$orden->precio;}?></td>
         
-	   
+       
         <td style="text-align: right; width: 200px;">
             <?php
             if($dato->estado==3){echo "Cerrada";}else{
@@ -185,7 +185,7 @@
             }
             ?>
                 <!--<h1><?php // echo $fotomecanica->situacion; ?></h1>-->
-			
+            
             <?php 
             if(sizeof($control_cartulina)==0 )
             {
@@ -203,8 +203,8 @@
                 } 
             }
             ?>
-			
-			   <?php 
+            
+               <?php 
             //if($control_cartulina->situacion == 'Guardar')
            // {
                 ?>
@@ -212,8 +212,8 @@
                 <?php
            // }           
                 ?>
-			
-			
+            
+            
             <?php 
             if(sizeof($control_cartulina) > 0 and $control_cartulina->hay_que_bobinar == 'SI' and $bobinado_cartulina->estado == 0)
             {
@@ -223,15 +223,15 @@
             }elseif($bobinado_cartulina->estado > 0 and $control_cartulina->hay_que_bobinar =='SI')
                 
             {
-            ?>	
-               <a href="<?php echo base_url()?>produccion/bobinado_cartulina/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Bobinado Cartulina"><span style="font-size: 10px;color:green; font-weight: bold;">Bobinado Cartulina</span><i class="icon-film"></i></a><br />		
+            ?>  
+               <a href="<?php echo base_url()?>produccion/bobinado_cartulina/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Bobinado Cartulina"><span style="font-size: 10px;color:green; font-weight: bold;">Bobinado Cartulina</span><i class="icon-film"></i></a><br />      
             <?php
             }
             ?>
            
-			   <?php
-	if($fotomecanica2->materialidad_datos_tecnicos == 'Cartulina-cartulina')
-	{	   
+               <?php
+    if($fotomecanica2->materialidad_datos_tecnicos == 'Cartulina-cartulina')
+    {      
             if(sizeof($control_liner)==0)
             { ?>
                <a href="<?php echo base_url()?>produccion/control_cartulina2/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Control Cartulina 2"><span style="font-size: 10px;color:red; font-weight: bold;">Control Cartulina Respaldo</span><i class="icon-film"></i></a><br />
@@ -271,7 +271,7 @@
                    <a href="<?php echo base_url()?>produccion/control_onda/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Control Onda"><span style="font-size: 10px;color:green; font-weight: bold;">Control Onda</span><i class="icon-film"></i></a><br />
                 <?php
                 }
-            }}	
+            }}  
             ?>
             <?php 
             if($fotomecanica2->materialidad_datos_tecnicos != 'Sólo Cartulina')
@@ -288,7 +288,7 @@
                              <a href="<?php echo base_url()?>produccion/bobinado_onda/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Bobinado Onda"><span style="font-size: 10px;color:green; font-weight: bold;">Bobinado Onda</span><i class="icon-film"></i></a><br />
                             <?php
                     }
-            }	
+            }   
             if($fotomecanica2->materialidad_datos_tecnicos != 'Sólo Cartulina')
             {
 
@@ -317,17 +317,17 @@
                              <a href="<?php echo base_url()?>produccion/bobinado_liner/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Bobinado Liner"><span style="font-size: 10px;color:green; font-weight: bold;">Bobinado Liner</span><i class="icon-film"></i></a><br />
                             <?php
                     }
-            }	
+            }   
             if($fotomecanica2->materialidad_datos_tecnicos == 'Sólo Cartulina')
             {  ?>
                        <a href="<?php echo base_url()?>produccion/control_onda/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Control Onda"><span style="font-size: 10px;color:black; font-weight: bold;">Control Onda</span><i class="icon-film"></i></a><br />
                        <a href="<?php echo base_url()?>produccion/control_liner/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Control Liner"><span style="font-size: 10px;color:black; font-weight: bold;">Control Liner</span><i class="icon-film"></i></a><br />
                             <?php
             }            
-	}// control cartlina
-	?>
-			
-			
+    }// control cartlina
+    ?>
+            
+            
              <?php 
             if(sizeof($confeccion_molde_troquel)==0)
             {
@@ -357,7 +357,7 @@
                 <?php
             }
             ?>
-			  <?php 
+              <?php 
             if(sizeof($imprenta_programacion)==0)
             {
                 if ($fotomecanica2->colores>0) { ?>
@@ -374,8 +374,8 @@
                 <?php }   
               }
             ?>
-			
-			
+            
+            
             <?php 
             if(sizeof($imprenta_produccion)==0)
             {
@@ -393,9 +393,9 @@
                 <?php }                     
             }
             ?>
-			
-			
-			  <?php 
+            
+            
+              <?php 
             if(sizeof($servicios)==0)
             {
                 if ($fotomecanica2->colores>0) { ?>
@@ -412,8 +412,8 @@
                 <?php }                           
             }
             ?>
-			
-			
+            
+            
             <?php
               if($fotomecanica2->materialidad_datos_tecnicos == 'Cartulina-cartulina')
               {?>
@@ -444,7 +444,7 @@
                         }
                     }                
                 }
-		?>	   
+        ?>     
              
            
              <?php 
@@ -489,8 +489,8 @@
                 <?php
             }
             ?>
-			
-			 <?php 
+            
+             <?php 
             if(sizeof($desgajado)==0)
             {
                 ?>
@@ -504,7 +504,7 @@
                 <?php
             }
             ?>
-			
+            
             <?php 
             if(sizeof($talleres_externos)==0)
             {
@@ -565,15 +565,16 @@
         </td>
         <td style="text-align: center;">
            
-  <?php if ($fotomecanica->pdf_imagen!=""){ ?>
+  <!-- ?php if ($fotomecanica->pdf_imagen!=""){ ?-->
+  <?php if ($fotomecanica2->colores > 0){ ?>  
         <a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Cliente" title="PDF imagen a imprimir"></a>
             <?php } else { ?>    
-        <img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No" title="No">
+        <!-- img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No se Imprime el PDF" title="No se Imprime el PDF"-->        
             <?php } ?>                <br />
   <?php if ($archivo_cliente->archivo!=""){ ?>
         <a href='<?php echo base_url().$this->config->item('direccion_pdf').$archivo_cliente->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Cliente" title="PDF Cliente"></a>
             <?php } else { ?>    
-        <img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No" title="No">
+        <!-- img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No se Imprime el PDF" title="No se Imprime el PDF" -->
             <?php } ?>                <br />
             <?php if ($ing->archivo!=""){ ?>
         <a href='<?php echo base_url().$this->config->item('direccion_pdf').$ing->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Revisión Ingenieria" title="PDF Revisión Ingenieria"></a>
@@ -597,24 +598,24 @@
             <?php } ?>                           
             </td>
              <td style="text-align: center;">
-            <a href="<?php echo base_url()?>produccion/pendientes_fotomecanica/<?php echo $dato->id?>" title="Pendientes Fotomecánica" class="fancybox fancybox.ajax">Pendientes Fotomecánica</a>	
+            <a href="<?php echo base_url()?>produccion/pendientes_fotomecanica/<?php echo $dato->id?>" title="Pendientes Fotomecánica" class="fancybox fancybox.ajax">Pendientes Fotomecánica</a>   
             </td>
              <td style="text-align: center;">
                  <?php
                   if($dato->vigencia==0){
-                  echo '<label style="background:red;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Nula</label>';	 
+                  echo '<label style="background:red;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Nula</label>';    
                   }
                   if($dato->vigencia==1){
-                  echo '<label style="background:green;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Activa</label>';	 
+                  echo '<label style="background:green;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Activa</label>';    
                   }
                   if($dato->vigencia==2){
-                  echo '<label style="background:orange;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Caduca</label>';	 
+                  echo '<label style="background:orange;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Caduca</label>';   
                   }
                   if($dato->vigencia==3){
-                  echo '<label style="background:blue;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Prueba</label>';	 
+                  echo '<label style="background:blue;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Prueba</label>';     
                   }
                   if($dato->vigencia==4){
-                  echo '<label style="background:black;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Cerrada por PT</label>';	 
+                  echo '<label style="background:black;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Cerrada por PT</label>';    
                   }
                   ?>
             </td>
@@ -625,11 +626,11 @@
                  <button type="button" class="" style="background-color: #ffcc33; border-radius: 5px; border-style: none" data-toggle="modal" data-target="#myModal" onclick="reversar(<?php echo $dato->id ?>)">Rev</button>
            <?php } ?>
              </td>
-		</tr>
+        </tr>
             <?php 
-		}
+        }
     }
-	
+    
             ?>
         </tbody>
 </table></div>
@@ -684,25 +685,22 @@
     </div>
   </div>
 
-
 <!--     <tr>
         <td colspan="10" style="text-align: right;">
         <?php// echo $this->layout->element('admin_paginador');
-		//echo 'Hola'.$fotomecanica->materialidad_datos_tecnicos;		?>
+        //echo 'Hola'.$fotomecanica->materialidad_datos_tecnicos;       ?>
         </td>
     </tr>-->
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$(".fancybox").fancybox({
-		openEffect	: 'none',
-		closeEffect	: 'none'
-	});
+    $(".fancybox").fancybox({
+        openEffect  : 'none',
+        closeEffect : 'none'
+    });
         
         $("#datatable").DataTable({
             
         });
-    
 });
 </script>
-

@@ -260,12 +260,24 @@
     <div class="control-group">
     <label class="control-label" for="usuario">Recepcion OT</label>
     <div class="controls">
-      <select name="recepcion_ot">
-                <option value="Rechazada" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->preparacion_de_archivos,'Rechazada');?>>Rechazada</option>
-                <option value="Aprobada" <?php echo set_value_select($fotomecanica,'recepcion_ot*  0',$fotomecanica->preparacion_de_archivos,'Aprobada');?>>Aprobada</option>
+      <select name="recepcion_ot" id="recepcion_ot">
+                <option value="">Seleccione</option>
+                <option value="Por Revisar" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot  ,'Por Revisar');?>>Por Revisar</option>        
+                <option value="Aprobada" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot ,'Aprobada');?>>Aprobada</option>
+                <option value="Rechazada" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot  ,'Rechazada');?>>Rechazada</option>
             </select>            
     </div>
   </div>
+
+    <div class="control-group coment">
+
+    <label class="control-label" for="usuario">Observacion <strong style="color: red;">(*)</strong></label>
+    <div class="controls">
+        <textarea id="coment1" name="coment1" style="width: 350px" name="coment"></textarea>
+        <input type="button" value="Guardar" class="btn btn-warning" onclick="guardarFormularioAdd('0');" />
+    </div>
+    </div>
+
 
     <div class="control-group">
 		<label class="control-label" for="usuario">Revisión Trazado</label>
@@ -274,6 +286,7 @@
           <?php
           
           ?>
+          <option value="">Seleccione</option>          
           <option value="Modificando" <?php echo set_value_select($fotomecanica,'revision_trazado',$fotomecanica->revision_trazado,'Modificando');?>>Modificando</option>
           <option value="Aprobada" <?php echo set_value_select($fotomecanica,'revision_trazado',$fotomecanica->revision_trazado,'Aprobada');?>>Aprobada</option>
       </select>
@@ -287,6 +300,7 @@
           <?php
           
           ?>
+          <option value="">Seleccione</option>          
           <option value="En Espera" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'En Espera');?>>En Espera</option>
           <option value="Confeccion o Fabricacion" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Confeccion o Fabricacion');?>>Confeccion o Fabricacion</option>
           <option value="Recepcionado Con Observaciones Del Cliente" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Recepcionado Con Observaciones Del Cliente');?>>Recepcionado Con Observaciones Del Cliente</option>
@@ -304,9 +318,10 @@
 		<label class="control-label" for="usuario">Revisión de Imagen</label>
 		<div class="controls">
 			<select name="revision_de_imagen">
-          <option value="En Espera de Informacion" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_de_imagen,'En Espera de Informacion');?>>En Espera de Informacion</option>
-          <option value="En Consulta del Cliente" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_de_imagen,'En Consulta del Cliente');?>>En Consulta del Cliente</option>
-          <option value="Aprobado" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_de_imagen,'Aprobado');?>>Aprobado</option>
+          <option value="">Seleccione</option>                  
+          <option value="En Espera de Informacion" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_imagen,'En Espera de Informacion');?>>En Espera de Informacion</option>
+          <option value="En Consulta del Cliente" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_imagen,'En Consulta del Cliente');?>>En Consulta del Cliente</option>
+          <option value="Aprobado" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_imagen,'Aprobado');?>>Aprobado</option>
       </select>            
 		</div>
 	  </div>
@@ -315,6 +330,7 @@
     <label class="control-label" for="usuario">Montaje Digital</label>
     <div class="controls">
       <select name="montaje_digital">
+          <option value="">Seleccione</option>                  
           <option value="En Proceso" <?php echo set_value_select($fotomecanica,'montaje_digital',$fotomecanica->montaje_digital,'En Proceso');?>>En Proceso</option>
           <option value="Aprobado" <?php echo set_value_select($fotomecanica,'montaje_digital',$fotomecanica->montaje_digital,'Aprobado');?>>Aprobado</option>
       </select>            
@@ -325,6 +341,7 @@
     <label class="control-label" for="usuario">Prueba de Color</label>
     <div class="controls">
       <select name="prueba_color">
+          <option value="">Seleccione</option>                  
           <option value="En Proceso" <?php echo set_value_select($fotomecanica,'prueba_color',$fotomecanica->prueba_color,'En Proceso');?>>En Proceso</option>
           <option value="Enviado (Visto Bueno)" <?php echo set_value_select($fotomecanica,'prueba_color',$fotomecanica->prueba_color,'Enviado (Visto Bueno)');?>>Enviado (Visto Bueno)</option>
           <option value="En Espera de Prueba de Color Fisica" <?php echo set_value_select($fotomecanica,'prueba_color',$fotomecanica->prueba_color,'En Espera de Prueba de Color Fisica');?>>En Espera de Prueba de Color Fisica</option>
@@ -337,6 +354,7 @@
 		<label class="control-label" for="usuario">Arte y Diseño</label>
 		<div class="controls">
 			<select name="arte_diseno">
+                <option value="">Seleccione</option>                  
                 <option value="En Proceso" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Proceso');?>>En Proceso</option>
                 <option value="En Espera" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Espera');?>>En Espera</option>
                 <option value="En Espera de Prueba de Color Fisica" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Espera de Prueba de Color Fisica');?>>En Espera de Prueba de Color Fisica</option>
@@ -349,6 +367,7 @@
     <label class="control-label" for="usuario">Confeccion Salida de Pelicula</label>
     <div class="controls">
       <select name="conf_sal_pel">
+          <option value="">Seleccione</option>                  
                 <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
                 <option value="En Proceso" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Proceso');?>>En Proceso</option>
                 <option value="Entregado" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'Entregado');?>>Entregado</option>
@@ -360,6 +379,7 @@
     <label class="control-label" for="usuario">Sobre de Desarrollo</label>
     <div class="controls">
       <select name="sobre_desarrollo">
+          <option value="">Seleccione</option>                  
                 <option value="Montaje" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'Montaje');?>>Montaje</option>
                 <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
                 <option value="Entregado" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'Entregado');?>>Entregado</option>
@@ -485,6 +505,16 @@
         {
             document.form.reset();
         //document.form.cliente.focus();
+
+        $('.coment').hide();  
+        $('#recepcion_ot').change(function() {                
+            if($('#recepcion_ot option:selected').val() != 'Rechazada') {
+              $('.coment').hide();
+            }else{
+              $('.coment').show();                  
+            }
+        });
+
         }
     );
     

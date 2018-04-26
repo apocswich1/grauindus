@@ -925,26 +925,26 @@ echo $query->num_rows();
     public function getListadoProgramaFotomecanica(){
         //$id = $id=6;
         $query=$this->db
-                ->select("i.id,
-                            cl.razon_social,
-                            oc.id AS ot,
-                            c.producto, 
-                            op.fecha AS fecha,
+                ->select("oc.id AS ot, oc.fecha, cc.fecha_liberada,
+                            cl.razon_social,c.producto,
+                            c.condicion_del_producto as condicion, 
+                            c.impresion_colores as colores,
                             i.tamano_a_imprimir_1 AS ancho,
                             i.tamano_a_imprimir_2 AS largo,
                             m.nombre as liner,
                             i.unidades_por_pliego as unidad_pliego,
-                            op.id_cotizacion as id_cotizacion,
-
-                            op.cantidad_pedida AS cantidad,
                             i.materialidad_datos_tecnicos AS tipo,
-                            m.gramaje, m.reverso
+                            op.cantidad_pedida AS cantidad,
+                            m.gramaje, m.reverso,
+                            c.id as id_cotizacion
                             ")
+
                 ->from("orden_de_produccion op")
                 ->join("cotizaciones as c","c.id = op.id_cotizacion","left")                
+                ->join("produccion_fotomecanica as cc","op.id_cotizacion=cc.id_nodo","left")                                
                 ->join("clientes as cl","cl.id=c.id_cliente","left")                
                 ->join("cotizaciones_orden_de_compra as oc","oc.id_cotizacion=op.id_cotizacion","left")                
-                ->join("cotizacion_fotomecanica as i","i.id_cotizacion = op.id_cotizacion","left")                
+                ->join("cotizacion_ingenieria as i","i.id_cotizacion = op.id_cotizacion","left")                
                 ->join("hoja_de_costos_datos as h","h.id_cotizacion=op.id_cotizacion","left")                
                 ->join("materiales as m","m.id= c.id_mat_liner3","left")                
 
@@ -953,9 +953,9 @@ echo $query->num_rows();
 
                 ->get();
 
-                echo '<pre>';
-                print_r($query->last_result());
-                exit;
+                //echo '<pre>';
+                //print_r($query->last_result());
+                //exit;
                 return $query->result();
     }            
 }
