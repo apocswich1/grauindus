@@ -3859,13 +3859,14 @@ function crear_grupo_cotizacion()
    var ruta=webroot+'cotizaciones/ajax_crear_grupo';
    $.post(ruta,{arreglo:arreglo},function(resp)
    {
-        if(resp=='<span id="span" hidden="true" style="margin-left: 10px;padding-right: 20px; padding-left: 20px; color:white; background-color:green">Grupo creado con exito!!</span>'){
+        if(resp==='<span id="span" hidden="true" style="margin-left: 10px;padding-right: 20px; padding-left: 20px; color:white; background-color:green">Grupo creado con exito!!</span>'){
+        //alert();
         $("#crear").text("Actualizar");
         $("#crear").removeClass("btn-primary");
         $("#crear").addClass("btn-success");
         $("#link_grupo").text("Visualizar Grupo");
         }else{
-        $("#crear").text("Crear");    
+        $("#crear").text("Crear2");    
         }
         $("#span").remove();
         $("#mensaje_grupo").append(resp);

@@ -6895,13 +6895,10 @@ $cuerpo2.='<table class="tabla">';
                                                 "colores"=>$datos_fotomecanica->colores,
                                                 "condicion_del_producto"=>"Repetición Sin Cambios",
                                                 "estan_las_peliculas"=>$datos_fotomecanica->estan_las_peliculas,
-                                                
 //                                                "estan_los_moldes"=>$datos_fotomecanica->estan_los_moldes,
 //                                                "numero_molde"=>$datos_fotomecanica->numero_molde,
                                                 "estan_los_moldes"=>$estanlosmoldes,
                                                 "numero_molde"=>$numeroMolde,                                                
-                                                
-                                                
                                                 "colores"=>$datos_fotomecanica->colores,
                                                 "guardar_con_comentarios"=>$datos_fotomecanica->guardar_con_comentarios,                                                 
                                                 "colores_metalicos"=>$datos_fotomecanica->colores_metalicos,
@@ -9430,14 +9427,19 @@ $cuerpo2.='<table class="tabla">';
             {
 //               echo $datos->numero_molde."<br />";
 //               echo $this->input->post('nm',true)."<br />";
-//               echo $condicion=$datos->condicion_del_producto."<br />";
+               
                 if($this->input->post("nm",true)!=11 && $this->input->post("nm",true)!=12 && $this->input->post("nm",true)!=13 && $this->input->post("nm",true)!=14 && $this->input->post("nm",true)!=15){
                 if($datos->numero_molde!=$this->input->post("nm",true) && $datos->condicion_del_producto=='Nuevo'){
                     $condicion_del_producto='Repetición Con Cambios';
+                    
                 }else{
                     $condicion_del_producto=$datos->condicion_del_producto;
-                }}
-            //   echo $condicion_del_producto;
+                    
+                }}else{
+                $condicion_del_producto=$datos->condicion_del_producto;
+                }
+//               echo $condicion_del_producto;
+//                       exit();
               //  exit();
                 $arreglo_archivo_cliente=$this->cotizaciones_model->getCampoArchivoClientePorId($id);
                 $archivo_a_borrar_trazado=$ing->archivo;
@@ -11348,11 +11350,14 @@ $cuerpo2.='<table class="tabla">';
             $datos->cantidad_2 = $cantidad2;
             $datos->cantidad_3 = $cantidad3;
             $datos->cantidad_4 = $cantidad4;
+            $datos->fecha_registro = date('Y-m-d');
             
             unset($ing->id);
             $ing->id_cotizacion = $idnuevo;
             unset($fotomecanica->id);
             $fotomecanica->id_cotizacion = $idnuevo;
+                    //echo print_r($hoja);
+            if(sizeof($hoja)){
             unset($hoja->id);
             $hoja->id_cotizacion = $idnuevo;
             $hoja->valor_empresa = "";
@@ -11362,7 +11367,8 @@ $cuerpo2.='<table class="tabla">';
             $hoja->codigo_duplicado = "";
             $hoja->impreso = "";
             
-            
+            $this->db->insert("hoja_de_costos_datos",$hoja);
+            }
             //Creacion de registros en cotizacion;
             $guardar=$this->cotizaciones_model->insertar($datos);
             //Creacion de registros en ingenieria;
@@ -11370,7 +11376,6 @@ $cuerpo2.='<table class="tabla">';
             //Creacion de registros en fotomecanica;
             $this->cotizaciones_model->insertarFotomecanica($fotomecanica);
             //Creacion de registros en hoja de costos;
-            $this->db->insert("hoja_de_costos_datos",$hoja);
                        
             echo "Se ha creado la cotizacion ". $idnuevo." con exito!!!";
                 }
@@ -11410,8 +11415,7 @@ $cuerpo2.='<table class="tabla">';
             $hoja->valor_empresa_4 = "";
             $hoja->codigo_duplicado = "";
             $hoja->impreso = "";
-            
-            
+           
             //Creacion de registros en cotizacion;
             $guardar=$this->cotizaciones_model->insertar($datos);
             //Creacion de registros en ingenieria;
@@ -11423,6 +11427,52 @@ $cuerpo2.='<table class="tabla">';
                        
             echo "Se ha creado la cotizacion ". $idnuevo." con exito!!!";
                 }
+                }else{
+                    if($ing->materialidad_datos_tecnicos=="Sólo Cartulina"){
+                $m1=$ing->materialidad_1;$m2=$ing->materialidad_2;$m3=$ing->materialidad_3;
+                $p1=$ing->id_mat_placa1;$o2=$ing->id_mat_onda2;$l3=$ing->id_mat_liner3;
+
+                if($p1==""){
+                   
+                    if($p1=="" || $p1==0){$p1=",Placa";}else{$p1="";}
+                    
+                    echo "No se ha creado la cotizacion, por favor verifique las materialidades para la condicion de ".$ing->materialidad_datos_tecnicos."!!!";
+                    echo " Verifique (".$p1.")";
+                }else{
+                    /********************************************************************/
+            
+            //Reasignacion de id para la recotizacion;
+            $datos->id = $idnuevo;
+            $datos->cantidad_1 = $cantidad1;
+            $datos->cantidad_2 = $cantidad2;
+            $datos->cantidad_3 = $cantidad3;
+            $datos->cantidad_4 = $cantidad4;
+            
+            unset($ing->id);
+            $ing->id_cotizacion = $idnuevo;
+            unset($fotomecanica->id);
+            $fotomecanica->id_cotizacion = $idnuevo;
+            unset($hoja->id);
+            $hoja->id_cotizacion = $idnuevo;
+            $hoja->valor_empresa = "";
+            $hoja->valor_empresa_2 = "";
+            $hoja->valor_empresa_3 = "";
+            $hoja->valor_empresa_4 = "";
+            $hoja->codigo_duplicado = "";
+            $hoja->impreso = "";
+           
+            //Creacion de registros en cotizacion;
+            $guardar=$this->cotizaciones_model->insertar($datos);
+            //Creacion de registros en ingenieria;
+            $this->cotizaciones_model->insertarIngenieria($ing);
+            //Creacion de registros en fotomecanica;
+            $this->cotizaciones_model->insertarFotomecanica($fotomecanica);
+            //Creacion de registros en hoja de costos;
+            $this->db->insert("hoja_de_costos_datos",$hoja);
+                       
+            echo "Se ha creado la cotizacion ". $idnuevo." con exito!!!";
+                    }}
+                    
                 }
             }
             

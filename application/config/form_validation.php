@@ -266,6 +266,7 @@ $config = array(
            array('field' => 'datos_tecnicos','label' => 'Datos Técnicos','rules' => 'required|trim|xss_clean|validaSelect'),
            array('field' => 'can1','label' => 'Cantidad 1','rules' => 'required|trim|xss_clean|max_length[100]'),
            array('field' => 'forma_pago','label' => 'Forma de Pago','rules' => 'required|trim|xss_clean'),
+           array('field' => 'condicion_del_producto','label' => 'Condicion del producto','rules' => 'required|trim|xss_clean'),
             ),
             /**
 	 * ad_cotizacion2
@@ -279,6 +280,7 @@ $config = array(
            array('field' => 'datos_tecnicos','label' => 'Datos Técnicos','rules' => 'required|trim|xss_clean|validaSelect'),
            array('field' => 'can1','label' => 'Cantidad 1','rules' => 'required|trim|xss_clean|max_length[100]'),
            array('field' => 'forma_pago','label' => 'Forma de Pago','rules' => 'required|trim|xss_clean'),
+           array('field' => 'condicion_del_producto','label' => 'Condicion del producto','rules' => 'required|trim|xss_clean'),
             ),
           /**
 	 * ad_cotizacion_ingenieria
