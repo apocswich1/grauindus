@@ -8452,7 +8452,6 @@ class Produccion extends CI_Controller {
                             <tr>
                                 <td>OT</td>
                                 <td>Fecha OT</td>
-                                <td>Fecha Liberacion</td>                                                                
                                 <td>Cliente</td>
                                 <td>Trabajo</td>
                                 <td>Condicion</td>
@@ -8469,13 +8468,10 @@ class Produccion extends CI_Controller {
                             </tr>';
              
             foreach ($datos as $dato) {
-                            $valores = $this->orden_model->getOndaCotizacion($dato->id_cotizacion);
+                            //$valores = $this->orden_model->getOndaCotizacion($dato->id_cotizacion);
 
 /////
                             $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($dato->id_cotizacion);
-                            //echo '<pre>';
-                            //print_r($fotomecanica);
-                            //exit();
                             $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
 
                                 if ($ing->archivo==""){
@@ -8509,7 +8505,9 @@ class Produccion extends CI_Controller {
                                 }else{
                                     $hayAcabados = 'SI';
                                     $lugarAcabado = 'Externo';
-                                }                            
+                                }      
+
+                                $estado=$this->produccion_model->getFotomecanicaPorTipo(1,$dato->id_cotizacion);
 /////
 
                             $onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
@@ -8520,11 +8518,10 @@ class Produccion extends CI_Controller {
                             $cuerpo .='<tr>
                                 <td>'.$dato->ot.'</td>
                                 <td>'.fecha_con_slash($dato->fecha).'</td>                                
-                                <td>'.fecha_con_slash($dato->fecha_liberada).'</td>                                
                                 <td>'.$dato->razon_social.'</td>
                                 <td>'.$dato->producto.'</td>
                                 <td>'.$dato->condicion.'</td>
-                                <td>terminacion</td>
+                                <td>'.$fotomecanica->fot_lleva_barniz.'</td>
                                 <td>'.$fotomecanica->fot_reserva_barniz.'</td>
                                 <td>'.$hayAcabados.'</td>
                                 <td>'.$trazado.'</td>
@@ -8533,7 +8530,7 @@ class Produccion extends CI_Controller {
                                 <td>'.$dato->largo.'</td>
                                 <td>'.$dato->tipo.'</td>
                                 <td align="right">'.$dato->cantidad.'</td>
-                                <td></td>
+                                <td>'.(($estado->situacion=='Liberada') ? $estado->situacion : '').'</td>
                             </tr>';
             }
             $cuerpo .='</table></body>

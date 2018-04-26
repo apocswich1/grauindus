@@ -2617,5 +2617,33 @@ class cotizaciones_model extends CI_Model{
                 return $query->row();
     }         
 	
-	
+
+
+    public function getOndaCompleto($nombre)
+    {        
+       $query=$this->db
+                ->select("mt.materiales_tipo as tipo, m.nombre, m.reverso, m.gramaje")
+                ->from("materiales as m")
+                ->join("materiales_tipo mt","mt.id = m.tipo","left")
+                ->where(array("m.nombre"=>$nombre))
+                ->get();
+                //echo $this->db->last_query();exit;
+                $datos = $query->row();
+                $dat = $datos->nombre.' '.$datos->tipo.' '.$datos->reverso.' '.$datos->gramaje;
+                return $dat;  
+    }   
+
+    public function getOndaCompletoCartulina($id)
+    {        
+       $query=$this->db
+                ->select("mt.materiales_tipo as tipo, m.nombre, m.reverso, m.gramaje")
+                ->from("materiales as m")
+                ->join("materiales_tipo mt","mt.id = m.tipo","left")
+                ->where(array("m.id"=>$id))
+                ->get();
+                //echo $this->db->last_query();exit;
+                $datos = $query->row();
+                $dat = $datos->nombre.' '.$datos->tipo.' '.$datos->reverso.' '.$datos->gramaje;
+                return $dat;  
+    }       	
 }
