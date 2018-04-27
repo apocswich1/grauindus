@@ -96,7 +96,7 @@ and open the template in the editor.
 }
 .paquete{
    font-size: 15px;
-   padding-top: 20px;
+   padding-top: 30px;
    padding-left: 5px;
    float: left;    
    /*background-color: #eee;*/
@@ -106,7 +106,7 @@ and open the template in the editor.
 }
 .cantidad{
    font-size: 15px;
-   padding-top: 18px;
+   padding-top: 27px;
    padding-left: 5px;
    float: left;    
    /*background-color: #eee;*/

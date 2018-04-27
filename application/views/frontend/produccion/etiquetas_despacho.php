@@ -14,7 +14,7 @@ $fecha = date("Y-m-d");
 
     <body>
         <div id="dina4">
-            <?php for($i=1;$i<=8;$i++){?>
+            <?php for($i=1;$i<=6;$i++){?>
             <div class="divp">  
                 <div class="imagen">    
                     <img width="110px" src="<?php echo $logo; ?>" />
