@@ -185,6 +185,17 @@ function carga_ajax(ruta,valor1,valor2,div)
                 $("#"+div+"").html(resp);
            });
         }
+
+function carga_ajax_revision_fotomecanica(ruta,valor1,valor2) 
+        {
+//           alert(ruta );
+           $.post(ruta,{valor1:valor1,valor2:valor2},function(resp)
+           {
+                ///$("#"+div+"").html(resp);
+                $('.mensaje').show();
+           });
+        }
+        
 function rechazoCotizacion(ruta,valor1,valor2,valor3) 
         {
          //  alert(ruta+' id:'+valor1+' Nro:'+valor2+' Glosa:'+valor3 );

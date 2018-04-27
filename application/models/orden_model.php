@@ -921,7 +921,7 @@ echo $query->num_rows();
 
                 return $query->row();
     }    
-
+    
     public function getListadoProgramaFotomecanica(){
         //$id = $id=6;
         $query=$this->db
@@ -936,7 +936,7 @@ echo $query->num_rows();
                             i.materialidad_datos_tecnicos AS tipo,
                             op.cantidad_pedida AS cantidad,
                             m.gramaje, m.reverso,
-                            c.id as id_cotizacion
+                            c.id as id_cotizacion, cc.*
                             ")
 
                 ->from("orden_de_produccion op")
