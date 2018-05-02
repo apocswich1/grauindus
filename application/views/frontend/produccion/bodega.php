@@ -20,7 +20,10 @@
 
 <?php
 function cuantas_etiquetas($cant_caja, $paquetes){
-    return $cant_caja / $paquetes;
+    $dato = $cant_caja / $paquetes;
+    $pag = $dato / 6 ;
+    $cu = $dato ." ($pag Paginas)";
+    return $dato;
 }
 
 function pintar_etiqueta($id,$ordenDeCompra,$datos,$producto,$cliente){
@@ -138,7 +141,9 @@ de <?php echo $ordenDeCompra->cantidad_de_cajas?>
                     <tr>
                         <td><li>Cantidad de Cajas Solicitadas: <b><?php echo $ordenDeCompra->cantidad_de_cajas?></b></li></td>
                         <td><li>¿Cuantas Etiquetas ?</li></td>
-                <td><input type="text" style="" name="cuantoetiqueta" value="<?php echo cuantas_etiquetas($ordenDeCompra->cantidad_de_cajas, 25) ?>" id="cuantoetiqueta" readonly="true"/></td>
+                        <td><input type="text" style="" name="cuantoetiqueta" value="<?php echo cuantas_etiquetas($ordenDeCompra->cantidad_de_cajas, 25) ?>" id="cuantoetiqueta" readonly="true"/>
+    <span class="pagina"></span>
+                        </td>
                     </tr>
                     <tr>
                         <td><li>Fecha Orden de Compra : <strong><?php echo fecha($ordenDeCompra->fecha)?></strong></li></td>
@@ -438,7 +443,10 @@ de <?php echo $ordenDeCompra->cantidad_de_cajas?>
            function cuantaetiquetas(){
             var paquetede1 = $('#paquetede1').val();   //7200
             var paquetede = $('#paquetede').val();   //25
-              $('#cuantoetiqueta').val(Math.round(paquetede1 / paquetede));  
+            var etiqueta = Math.round(paquetede1 / paquetede);
+            var pagina = Math.round(etiqueta / 6)+" Paginas";
+            $('.pagina').html(pagina);
+            $('#cuantoetiqueta').val(Math.round(paquetede1 / paquetede));  
         }
         
             document.form.reset();
