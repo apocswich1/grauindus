@@ -861,35 +861,8 @@ class Produccion extends CI_Controller {
                             redirect(base_url().'produccion/revision_fotomecanica/'.$this->input->post('tipo',true)."/".$this->input->post('id',true)."/".$this->input->post('pagina',true),  301);    
                         }
                     }
-                    
-                    //die($this->input->post('estado',true));
-                   /* if(empty($_FILES["file"]["name"]))
-                                    {
-                                        $file_name="";
-                                    }else
-                                    {
-                                    $error=NULL;
-                                   //valido la foto
-                                    $config['upload_path'] = './public/uploads/produccion/fotomecanica/';
-                                     $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif';
-                                    $config['max_size'] = '51200'; //550 x 138
-                                    $config['encrypt_name'] = true; 
-                                     $this->load->library('upload', $config);
-                                     if ( ! $this->upload->do_upload('file'))
-                                        {
-                                            $error = array('error' => $this->upload->display_errors());
-                                            $file_name="";
-                                            
-                                        }
-                                        
-                                            $ima = $this->upload->data();
-                                            $file_name = $ima['file_name'];
-                                     } 
-									 */
-                    
+                                       
                                     $pf=$this->produccion_model->getFotomecanicaPorTipo($tipo,$id);
-                                    //print_r($pf);
-                                    //echo $id; exit();                                     
 				    //if(empty($pf->pdf_imagen))
 				    if(empty($_FILES["file"]["name"]))
                                     {//exit();
@@ -1127,6 +1100,7 @@ class Produccion extends CI_Controller {
 						
                      }
                    }
+
                  //  echo $situacion;
                    $data=array
                    (
@@ -1238,6 +1212,7 @@ class Produccion extends CI_Controller {
 
 //ALTER TABLE `p7000190_grau`.`produccion_fotomecanica` ADD COLUMN `recepcion_ot` VARCHAR(45) NULL  AFTER `comentario_fotomecanica` , ADD COLUMN `recepcion_trazado` VARCHAR(100) NULL  AFTER `recepcion_ot` , ADD COLUMN `revision_imagen` VARCHAR(100) NULL  AFTER `recepcion_trazado` , ADD COLUMN `montaje_digital` VARCHAR(45) NULL  AFTER `revision_imagen` , ADD COLUMN `prueba_color` VARCHAR(45) NULL  AFTER `montaje_digital` , ADD COLUMN `arte_diseno` VARCHAR(100) NULL  AFTER `prueba_color` , ADD COLUMN `conf_sal_pel` VARCHAR(100) NULL  AFTER `arte_diseno` , ADD COLUMN `sobre_desarrollo` VARCHAR(100) NULL  AFTER `conf_sal_pel` ;
 //ALTER TABLE `p7000190_grau`.`produccion_fotomecanica` ADD COLUMN `recepcion_maqueta` VARCHAR(100) NULL  AFTER `sobre_desarrollo` ;
+//ALTER TABLE `p7000190_grau`.`produccion_fotomecanica` ADD COLUMN `comentario_rechazo` VARCHAR(1000) NULL  AFTER `sobre_desarrollo` ;            
             
 // echo '<pre>';
 // print_r($data);
@@ -1302,7 +1277,7 @@ class Produccion extends CI_Controller {
 
                     $arch=array('archivo'=>$file_name, );			
                     if(sizeof($fotomecanica)==0){
-                        $this->db->insert("produccion_fotomecanica",$data);                    
+                        $this->db->insert("produccion_fotomecanica",$data);
                     }else{
                         $this->db->update('produccion_fotomecanica', $data, array('tipo' => $this->input->post('tipo',true),'id_nodo'=>$this->input->post('id',true)));                       
                     }    
@@ -8432,6 +8407,32 @@ class Produccion extends CI_Controller {
         }
     }    
 
+    public function ajaxguardar(){
+       $data = array(
+            'comentario_rechazo' => $this->input->post("valor1",true),
+       );
+
+        $this->db->where('id_nodo', $this->input->post('valor2', true));
+        $this->db->update("produccion_fotomecanica", $data);
+
+/*
+       //$vendedor=$this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
+       $config['mailtype'] = 'html';
+       $this->email->initialize($config);
+       //$this->email->from("contacto@grauindus.cl", 'Cartonajes Grau');
+       $this->email->from("jesuslobaton@gmail.com", 'Cartonajes Grau');
+       $this->email->to("jesuslobaton@gmail.com", 'Cartonajes Grau');
+       //$this->email->to($vendedor->correo); 
+      // $this->email->bcc('respaldocorreos@grauindus.cl');
+       $this->email->subject('Mensaje de Cartonajes Grau');
+       $html='<h2>Nuevo Mensaje:</h2>';
+//       $html.='La cotización N°'.$this->input->post('id',true).' ha recibido el VB del vendedor '.$vendedor->nombre.', con la glosa:<br/>'.$this->input->post("glosa",true);
+       $this->email->message($html);   
+       $this->email->send();
+       */
+        ///return ".";
+    }
+
     public function listado_programa_fotomecanica()
     {
         if($this->session->userdata('id'))
@@ -8509,6 +8510,42 @@ class Produccion extends CI_Controller {
 
                                 $estado=$this->produccion_model->getFotomecanicaPorTipo(1,$dato->id_cotizacion);
 /////
+                   /////////////// CALCULAR EL ESTADO ///////////////
+                   $estados_pendiente = '';
+     //              echo "<pre>";
+       //            print_r($dato);
+         //          exit($dato->recepcion_ot);
+                   if ( $dato->recepcion_ot== ''){                    
+                        $estados_pendiente = 'Recepcion OT';
+                       
+                   }elseif ( $dato->recepcion_ot!= 'Aprobada'){                    
+                        $estados_pendiente = 'Revisión Trazado';
+
+                   }elseif ( $dato->revision_trazado != 'Aprobada'){ 
+                        $estados_pendiente = 'Recepcion de Maqueta';
+
+                   }elseif ( $dato->recepcion_maqueta != 'Recepcion Aprobada'){ 
+                        $estados_pendiente = 'Revisión de Imagen';                    
+
+                   }elseif ( $dato->revision_imagen != 'Aprobado'){ 
+                        $estados_pendiente = 'Montaje Digital';                    
+
+                   }elseif ( $dato->montaje_digital != 'Aprobado'){ 
+                        $estados_pendiente = 'Prueba de Color';                    
+
+                   }elseif ( $dato->prueba_color != 'Aprobado'){ 
+                        $estados_pendiente = 'Arte y Diseño';                    
+
+                   }elseif ( $dato->arte_diseno != 'Aprobada'){ 
+                        $estados_pendiente = 'Confeccion Salida de Pelicula';                    
+
+                   }elseif ( $dato->conf_sal_pel != 'Entregado'){ 
+                        $estados_pendiente = 'Sobre de Desarrollo';
+
+                   }elseif ( $dato->sobre_desarrollo != 'Entregado'){ 
+
+                   }                    
+                   //////////////////////////////////////////////////                                
 
                             $onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
 
@@ -8530,7 +8567,7 @@ class Produccion extends CI_Controller {
                                 <td>'.$dato->largo.'</td>
                                 <td>'.$dato->tipo.'</td>
                                 <td align="right">'.$dato->cantidad.'</td>
-                                <td>'.(($estado->situacion=='Liberada') ? $estado->situacion : '').'</td>
+                                <td>'.$estados_pendiente.'</td>                                
                             </tr>';
             }
             $cuerpo .='</table></body>
@@ -8551,5 +8588,162 @@ class Produccion extends CI_Controller {
             redirect(base_url().'usuarios/login',  301);
         }
     }        
+
+    public function listado_programa_troquelado()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoProgramaFotomecanica();
+
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">PROGRAMA DE TROQUELADO</p></h3>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td>OT</td>
+                                <td>Fecha OT</td>
+                                <td>Cliente</td>
+                                <td>Trabajo</td>
+                                <td>Condicion</td>
+                                <td>Terminacion</td>                                
+                                <td>Reserva</td>                                
+                                <td>Trab.Externos</td>
+                                <td>Molde o Trazado</td>
+                                <td>Colores</td>
+                                <td>Ancho</td>
+                                <td>Largo</td>                                
+                                <td>Tipo</td>
+                                <td>Cantidad</td>
+                                <td>Estado</td>
+                            </tr>';
+             
+            foreach ($datos as $dato) {
+                            //$valores = $this->orden_model->getOndaCotizacion($dato->id_cotizacion);
+
+/////
+                            $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($dato->id_cotizacion);
+                            $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
+
+                                if ($ing->archivo==""){
+                                    $trazado='NO';    
+                                }else{
+                                    $trazado='SI';
+                                }
+
+                                if(($fotomecanica->acabado_impresion_4=="17") || ($fotomecanica->acabado_impresion_4==""))
+                                {
+                                    $hayAcabados = 'NO';
+                                    $lugarAcabado = 'No Aplica';
+                                }else{
+                                    $hayAcabados = 'SI';
+                                    $lugarAcabado = 'Externo';
+                                }
+                                //if(($fotomecanica->acabado_impresion_5=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_5==""))
+                                if(($fotomecanica->acabado_impresion_5=="17") || ($fotomecanica->acabado_impresion_5==""))
+                                {
+                                    $hayAcabados = 'NO';
+                                    $lugarAcabado = 'No Aplica';
+                                }else{
+                                    $hayAcabados = 'SI';
+                                    $lugarAcabado = 'Externo';
+                                }
+                                //if(($fotomecanica->acabado_impresion_6=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_6==""))
+                                if(($fotomecanica->acabado_impresion_6=="17") || ($fotomecanica->acabado_impresion_6==""))
+                                {
+                                    $hayAcabados = 'NO';
+                                    $lugarAcabado = 'No Aplica';
+                                }else{
+                                    $hayAcabados = 'SI';
+                                    $lugarAcabado = 'Externo';
+                                }      
+
+                                $estado=$this->produccion_model->getFotomecanicaPorTipo(1,$dato->id_cotizacion);
+/////
+                   /////////////// CALCULAR EL ESTADO ///////////////
+                   $estados_pendiente = '';
+     //              echo "<pre>";
+       //            print_r($dato);
+         //          exit($dato->recepcion_ot);
+                   if ( $dato->recepcion_ot== ''){                    
+                        $estados_pendiente = 'Recepcion OT';
+                       
+                   }elseif ( $dato->recepcion_ot!= 'Aprobada'){                    
+                        $estados_pendiente = 'Revisión Trazado';
+
+                   }elseif ( $dato->revision_trazado != 'Aprobada'){ 
+                        $estados_pendiente = 'Recepcion de Maqueta';
+
+                   }elseif ( $dato->recepcion_maqueta != 'Recepcion Aprobada'){ 
+                        $estados_pendiente = 'Revisión de Imagen';                    
+
+                   }elseif ( $dato->revision_imagen != 'Aprobado'){ 
+                        $estados_pendiente = 'Montaje Digital';                    
+
+                   }elseif ( $dato->montaje_digital != 'Aprobado'){ 
+                        $estados_pendiente = 'Prueba de Color';                    
+
+                   }elseif ( $dato->prueba_color != 'Aprobado'){ 
+                        $estados_pendiente = 'Arte y Diseño';                    
+
+                   }elseif ( $dato->arte_diseno != 'Aprobada'){ 
+                        $estados_pendiente = 'Confeccion Salida de Pelicula';                    
+
+                   }elseif ( $dato->conf_sal_pel != 'Entregado'){ 
+                        $estados_pendiente = 'Sobre de Desarrollo';
+
+                   }elseif ( $dato->sobre_desarrollo != 'Entregado'){ 
+
+                   }                    
+                   //////////////////////////////////////////////////                                
+
+                            $onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
+
+                            //Cantidad de Despacho
+                            $despacho = $this->despachos_model->getDespachosUltimoRegistro($dato->id_cotizacion);
+
+                            $cuerpo .='<tr>
+                                <td>'.$dato->ot.'</td>
+                                <td>'.fecha_con_slash($dato->fecha).'</td>                                
+                                <td>'.$dato->razon_social.'</td>
+                                <td>'.$dato->producto.'</td>
+                                <td>'.$dato->condicion.'</td>
+                                <td>'.$fotomecanica->fot_lleva_barniz.'</td>
+                                <td>'.$fotomecanica->fot_reserva_barniz.'</td>
+                                <td>'.$hayAcabados.'</td>
+                                <td>'.$trazado.'</td>
+                                <td>'.$dato->colores.'</td>
+                                <td>'.$dato->ancho.'</td>
+                                <td>'.$dato->largo.'</td>
+                                <td>'.$dato->tipo.'</td>
+                                <td align="right">'.$dato->cantidad.'</td>
+                                <td>'.$estados_pendiente.'</td>                                
+                            </tr>';
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+        
+            $this->mpdf->SetDisplayMode('fullpage');
+            $this->mpdf->AddPage('L');
+            $css1 = file_get_contents('public/frontend/css/despacho.css');
+            $css2 = file_get_contents('bootstrap/bootstrap.css');
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+            $this->mpdf->WriteHTML($cuerpo);
+            $this->mpdf->Output();
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    }    
+
 }
 

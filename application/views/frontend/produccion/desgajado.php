@@ -10,13 +10,13 @@
         case '1':
             ?>
             <li><a href="<?php echo base_url()?>produccion/cotizaciones/<?php echo $pagina?>">Órdenes de Producción &gt;&gt;</a></li>
-            <li>Desgajado - Orden de Producción N° <?php echo $id?></li>
+            <li>Desgajado - Orden de Producción N° <?php echo $ordenDeCompra->id?></li>
             <?php
         break;
         case '2':
             ?>
             <li><a href="<?php echo base_url()?>produccion/fast/<?php echo $pagina?>">Fast Track &gt;&gt;</a></li>
-            <li>Desgajado - Fast Track N° <?php echo $id?></li>
+            <li>Desgajado - Fast Track N° <?php echo $ordenDeCompra->id?></li>
             <?php
         break;
       }
@@ -30,7 +30,7 @@
       {
         case '1':
             ?>
-            <div class="page-header"><h3>Desgajado - Orden de Producción N° <?php echo $id?></h3></div>
+            <div class="page-header"><h3>Desgajado - Orden de Producción N° <?php echo $ordenDeCompra->id?></h3></div>
             <ul>
                 <?php
                 

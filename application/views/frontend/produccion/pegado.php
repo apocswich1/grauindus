@@ -10,7 +10,10 @@
 
 <?php
 function cuantas_etiquetas($cant_caja, $paquetes){
-    return $cant_caja / $paquetes;
+    $dato = $cant_caja / $paquetes;
+    $pag = $dato / 6 ;
+    $cu = $dato ." ($pag Paginas)";
+    return $dato;
 }
 
 function pintar_etiqueta($id,$ordenDeCompra,$datos,$producto,$cliente){
@@ -71,13 +74,13 @@ return $valor;
         case '1':
             ?>
             <li><a href="<?php echo base_url()?>produccion/cotizaciones/<?php echo $pagina?>">Órdenes de Producción &gt;&gt;</a></li>
-            <li>Pegado - Orden de Producción N° <?php echo $id?></li>
+            <li>Pegado - Orden de Producción N° <?php echo $ordenDeCompra->id?></li>
             <?php
         break;
         case '2':
             ?>
             <li><a href="<?php echo base_url()?>produccion/fast/<?php echo $pagina?>">Fast Track &gt;&gt;</a></li>
-            <li>Pegado - Fast Track N° <?php echo $id?></li>
+            <li>Pegado - Fast Track N° <?php echo $ordenDeCompra->id?></li>
             <?php
         break;
       }
@@ -91,7 +94,7 @@ return $valor;
       {
         case '1':
             ?>
-            <div class="page-header"><h3>Pegado - Orden de Producción N° <?php echo $id?></h3></div>
+            <div class="page-header"><h3>Pegado - Orden de Producción N° <?php echo $ordenDeCompra->id?></h3></div>
             <ul>
                 <?php
                 $cli=$this->clientes_model->getClientePorId($datos->id_cliente);
@@ -132,7 +135,9 @@ de <?php echo $ordenDeCompra->cantidad_de_cajas?>
                     <tr>
                         <td><li>Fecha Orden de Compra : <strong><?php echo fecha($ordenDeCompra->fecha)?></strong></li></td>
                         <td><li>¿Cuantas Etiquetas ?</li></td>
-                <td><input type="text" style="" name="cuantoetiqueta" value="<?php echo cuantas_etiquetas($ordenDeCompra->cantidad_de_cajas, 25) ?>" id="cuantoetiqueta" readonly="true"/></td>
+                <td><input type="text" style="" name="cuantoetiqueta" value="<?php echo cuantas_etiquetas($ordenDeCompra->cantidad_de_cajas, 25) ?>" id="cuantoetiqueta" readonly="true"/>
+                        <span class="pagina"></span>
+                </td>
                     </tr>
                     <tr>
                         <td><li>Fecha Orden de Producción : <strong><?php echo fecha($orden->fecha)?></strong></li></td>
@@ -430,15 +435,17 @@ de <?php echo $ordenDeCompra->cantidad_de_cajas?>
            function cuantaetiquetas(){
             var paquetede1 = $('#paquetede1').val();   //7200
             var paquetede = $('#paquetede').val();   //25
-              $('#cuantoetiqueta').val(Math.round(paquetede1 / paquetede));  
-            }
-                
+            var etiqueta = Math.round(paquetede1 / paquetede);
+            var pagina = Math.round(etiqueta / 6)+" Paginas";
+            $('.pagina').html(pagina);
+            $('#cuantoetiqueta').val(Math.round(paquetede1 / paquetede));  
+        }
         
             document.form.reset();
       
         //imprimir etiquetas
             $(".ver-etiqueta").click(function() {                   
-                var cantidad = Math.round($('#cuantoetiqueta').val() / 8);
+                var cantidad = Math.round($('#cuantoetiqueta').val() / 6);
                 url = '<?php echo base_url()?>produccion/etiquetas_despacho/<?php echo $id ?>/'+$('#paquetede').val()+'/'+$('#codigoproducto').val()+'/'+cantidad+'/'+$('#empresa option:selected').val();
                 window.open(url, '_blank');
                 return false;                

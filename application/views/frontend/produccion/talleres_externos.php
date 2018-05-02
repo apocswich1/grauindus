@@ -457,7 +457,7 @@ return $valor;
           
         //imprimir etiquetas
             $(".ver-etiqueta").click(function() {                   
-                var cantidad = Math.round($('#cuantoetiqueta').val() / 8);
+                var cantidad = Math.round($('#cuantoetiqueta').val() / 6);
                 url = '<?php echo base_url()?>produccion/etiquetas_despacho/<?php echo $id ?>/'+$('#paquetede').val()+'/'+$('#codigoproducto').val()+'/'+cantidad+'/'+$('#empresa option:selected').val();
                 window.open(url, '_blank');
                 return false;                

@@ -272,9 +272,14 @@
     <div class="control-group coment">
 
     <label class="control-label" for="usuario">Observacion <strong style="color: red;">(*)</strong></label>
-    <div class="controls">
-        <textarea id="coment1" name="coment1" style="width: 350px" name="coment"></textarea>
-        <input type="button" value="Guardar" class="btn btn-warning" onclick="guardarFormularioAdd('0');" />
+    <div class="controls">             
+        <textarea id="coment1" name="coment1" style="width: 350px" name="coment"><?php echo set_value_input($fotomecanica,'comentario_rechazo',$fotomecanica->comentario_rechazo);?></textarea>
+        <input type="button" value="Guardar" class="btn btn-warning" onclick="carga_ajax_revision_fotomecanica('<?php echo base_url();?>produccion/ajaxguardar',$('#coment1').val(),'<?php echo $id;?>','mensaje')" />
+    <div class="mensaje" id="mensaje"  style="color: white;
+            background-color: blue;
+            padding: 5px;
+            padding-left: 20px;
+            width: 97px;" >Guardado ...</div>
     </div>
     </div>
 
@@ -504,17 +509,22 @@
         function ()
         {
             document.form.reset();
-        //document.form.cliente.focus();
+            
+            $('.mensaje').hide();
 
-        $('.coment').hide();  
-        $('#recepcion_ot').change(function() {                
-            if($('#recepcion_ot option:selected').val() != 'Rechazada') {
-              $('.coment').hide();
-            }else{
+            if($('#recepcion_ot option:selected').val() == 'Rechazada') {
               $('.coment').show();                  
+            }else{
+              $('.coment').hide();  
             }
-        });
 
+            $('#recepcion_ot').change(function() {                
+                if($('#recepcion_ot option:selected').val() != 'Rechazada') {
+                  $('.coment').hide();
+                }else{
+                  $('.coment').show();
+                }
+            });
         }
     );
     

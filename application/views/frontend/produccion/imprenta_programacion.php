@@ -11,13 +11,13 @@
         case '1':
             ?>
             <li><a href="<?php echo base_url()?>produccion/cotizaciones/<?php echo $pagina?>">Órdenes de Producción &gt;&gt;</a></li>
-            <li>Imprenta Programación - Orden de Producción N° <?php echo $id?></li>
+            <li>Imprenta Programación - Orden de Producción N° <?php echo $ordenDeCompra->id?></li>
             <?php
         break;
         case '2':
             ?>
             <li><a href="<?php echo base_url()?>produccion/fast/<?php echo $pagina?>">Fast Track &gt;&gt;</a></li>
-            <li>Imprenta Programación - Fast Track N° <?php echo $id?></li>
+            <li>Imprenta Programación - Fast Track N° <?php echo $ordenDeCompra->id?></li>
             <?php
         break;
       }
@@ -31,7 +31,7 @@
       {
         case '1':
             ?>
-            <div onclick="ver_informacion('informacion')"  class="page-header"><h3>Imprenta Programación - Orden de Producción N° <?php echo $id?></h3></div>
+            <div onclick="ver_informacion('informacion')"  class="page-header"><h3>Imprenta Programación - Orden de Producción N° <?php echo $ordenDeCompra->id?></h3></div>
             <div id="informacion" style="margin-left: 0px;width:100%;float:left;height: 480px;">
                 <div class="controls" style="margin-left: 0px;width:40%;float:left;">                   
             <ul>
