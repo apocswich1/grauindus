@@ -133,7 +133,7 @@ if( $this->session->userdata('perfil')==1)
           <li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_cartulina_liberar" id="dropdown_ususarios" title="Listado de Control de Cartulina por Liberar">Listado de Control de Cartulina por Liberar</a></li>
           <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" id="dropdown_ususarios" title="Listado de Programa de Corrugado">Listado de Programa de Corrugado</a></li>
           <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" id="dropdown_ususarios" title="Listado de Programa de Emplacado">Listado de Programa de Emplacado</a></li>
-          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" id="dropdown_ususarios" title="Listado de Programa de Troquelado">Listado de Programa de Troquelado</a></li>
+          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_troquelado" id="dropdown_ususarios" title="Listado de Programa de Troquelado">Listado de Programa de Troquelado</a></li>
 				</ul>
 			</li>
             <?php

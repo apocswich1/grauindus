@@ -8588,5 +8588,162 @@ class Produccion extends CI_Controller {
             redirect(base_url().'usuarios/login',  301);
         }
     }        
+
+    public function listado_programa_troquelado()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoProgramaFotomecanica();
+
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">PROGRAMA DE TROQUELADO</p></h3>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td>OT</td>
+                                <td>Fecha OT</td>
+                                <td>Cliente</td>
+                                <td>Trabajo</td>
+                                <td>Condicion</td>
+                                <td>Terminacion</td>                                
+                                <td>Reserva</td>                                
+                                <td>Trab.Externos</td>
+                                <td>Molde o Trazado</td>
+                                <td>Colores</td>
+                                <td>Ancho</td>
+                                <td>Largo</td>                                
+                                <td>Tipo</td>
+                                <td>Cantidad</td>
+                                <td>Estado</td>
+                            </tr>';
+             
+            foreach ($datos as $dato) {
+                            //$valores = $this->orden_model->getOndaCotizacion($dato->id_cotizacion);
+
+/////
+                            $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($dato->id_cotizacion);
+                            $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
+
+                                if ($ing->archivo==""){
+                                    $trazado='NO';    
+                                }else{
+                                    $trazado='SI';
+                                }
+
+                                if(($fotomecanica->acabado_impresion_4=="17") || ($fotomecanica->acabado_impresion_4==""))
+                                {
+                                    $hayAcabados = 'NO';
+                                    $lugarAcabado = 'No Aplica';
+                                }else{
+                                    $hayAcabados = 'SI';
+                                    $lugarAcabado = 'Externo';
+                                }
+                                //if(($fotomecanica->acabado_impresion_5=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_5==""))
+                                if(($fotomecanica->acabado_impresion_5=="17") || ($fotomecanica->acabado_impresion_5==""))
+                                {
+                                    $hayAcabados = 'NO';
+                                    $lugarAcabado = 'No Aplica';
+                                }else{
+                                    $hayAcabados = 'SI';
+                                    $lugarAcabado = 'Externo';
+                                }
+                                //if(($fotomecanica->acabado_impresion_6=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_6==""))
+                                if(($fotomecanica->acabado_impresion_6=="17") || ($fotomecanica->acabado_impresion_6==""))
+                                {
+                                    $hayAcabados = 'NO';
+                                    $lugarAcabado = 'No Aplica';
+                                }else{
+                                    $hayAcabados = 'SI';
+                                    $lugarAcabado = 'Externo';
+                                }      
+
+                                $estado=$this->produccion_model->getFotomecanicaPorTipo(1,$dato->id_cotizacion);
+/////
+                   /////////////// CALCULAR EL ESTADO ///////////////
+                   $estados_pendiente = '';
+     //              echo "<pre>";
+       //            print_r($dato);
+         //          exit($dato->recepcion_ot);
+                   if ( $dato->recepcion_ot== ''){                    
+                        $estados_pendiente = 'Recepcion OT';
+                       
+                   }elseif ( $dato->recepcion_ot!= 'Aprobada'){                    
+                        $estados_pendiente = 'Revisión Trazado';
+
+                   }elseif ( $dato->revision_trazado != 'Aprobada'){ 
+                        $estados_pendiente = 'Recepcion de Maqueta';
+
+                   }elseif ( $dato->recepcion_maqueta != 'Recepcion Aprobada'){ 
+                        $estados_pendiente = 'Revisión de Imagen';                    
+
+                   }elseif ( $dato->revision_imagen != 'Aprobado'){ 
+                        $estados_pendiente = 'Montaje Digital';                    
+
+                   }elseif ( $dato->montaje_digital != 'Aprobado'){ 
+                        $estados_pendiente = 'Prueba de Color';                    
+
+                   }elseif ( $dato->prueba_color != 'Aprobado'){ 
+                        $estados_pendiente = 'Arte y Diseño';                    
+
+                   }elseif ( $dato->arte_diseno != 'Aprobada'){ 
+                        $estados_pendiente = 'Confeccion Salida de Pelicula';                    
+
+                   }elseif ( $dato->conf_sal_pel != 'Entregado'){ 
+                        $estados_pendiente = 'Sobre de Desarrollo';
+
+                   }elseif ( $dato->sobre_desarrollo != 'Entregado'){ 
+
+                   }                    
+                   //////////////////////////////////////////////////                                
+
+                            $onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
+
+                            //Cantidad de Despacho
+                            $despacho = $this->despachos_model->getDespachosUltimoRegistro($dato->id_cotizacion);
+
+                            $cuerpo .='<tr>
+                                <td>'.$dato->ot.'</td>
+                                <td>'.fecha_con_slash($dato->fecha).'</td>                                
+                                <td>'.$dato->razon_social.'</td>
+                                <td>'.$dato->producto.'</td>
+                                <td>'.$dato->condicion.'</td>
+                                <td>'.$fotomecanica->fot_lleva_barniz.'</td>
+                                <td>'.$fotomecanica->fot_reserva_barniz.'</td>
+                                <td>'.$hayAcabados.'</td>
+                                <td>'.$trazado.'</td>
+                                <td>'.$dato->colores.'</td>
+                                <td>'.$dato->ancho.'</td>
+                                <td>'.$dato->largo.'</td>
+                                <td>'.$dato->tipo.'</td>
+                                <td align="right">'.$dato->cantidad.'</td>
+                                <td>'.$estados_pendiente.'</td>                                
+                            </tr>';
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+        
+            $this->mpdf->SetDisplayMode('fullpage');
+            $this->mpdf->AddPage('L');
+            $css1 = file_get_contents('public/frontend/css/despacho.css');
+            $css2 = file_get_contents('bootstrap/bootstrap.css');
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+            $this->mpdf->WriteHTML($cuerpo);
+            $this->mpdf->Output();
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    }    
+
 }
 
