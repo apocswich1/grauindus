@@ -562,7 +562,7 @@ th {
 <!--    <br /><br /><br /><br /><br /><br /><br />
 <br /><br /><br /><br /><br />-->
 <div  class="control-group">
-        <label class="control-label" for="usuario" data-toggle="modal" data-target="#comparativa_molde"><a href="#" id="link_grupo">Comparativa</a></label>
+        <label class="control-label" for="usuario" data-toggle="modal" data-target="#comparativa_molde"><a href="#" id="link_grupo2">Comparativa</a></label>
     </div>
 <div id="comparativa_molde" class="modal fade" style="width: 1200px;left: 500px;">
     <div class="modal-dialog modal-sm">
@@ -1224,7 +1224,7 @@ th {
     $estan="NO";
     if(sizeof($ing)>0)
     {
-        if(($ing->estan_los_moldes=="NO") or ($ing->estan_los_moldes=="NO LLEVA"))
+        if(($ing->estan_los_moldes=="NO") || ($ing->estan_los_moldes=="NO LLEVA"))
         {
             $estan_los_moldes="NO"; 
         }            
@@ -1242,7 +1242,7 @@ th {
     }
     else
     {
-        if(($datos->estan_los_moldes=="NO") or ($datos->estan_los_moldes=="NO LLEVA"))
+        if(($datos->estan_los_moldes=="NO") || ($datos->estan_los_moldes=="NO LLEVA"))
         {
             $estan_los_moldes="NO"; 
             $estan="NO";
@@ -1341,7 +1341,7 @@ th {
                     </select> 
 		</div>
 	</div>
-	<?php  //print_r($moldes); //my code is here ?>
+	<?php //print_r($moldes); //my code is here ?>
 	<div class="control-group" id="div_estan_los_moldes_generico" <?php if(($estan_los_moldes=="MOLDE GENERICO")) { echo 'style="display: block;"'; } else { echo 'style="display: none;"';} ?>>
 		<label class="control-label" for="usuario">Moldes Genéricos</label>
 		<div class="controls">
@@ -1351,7 +1351,7 @@ th {
                     </select> 
                     <div id="molde_select">
                         <select name="molde_generico" class="chosen-select" id="molde_generico" style="width: 400px;" onchange="carga_ajax5('<?php echo base_url();?>moldes/detalle_ajax',this.value,'div_moldes');carga_ajax_cambio_molde('<?php echo base_url();?>moldes/detalle_ajax_cambio_molde',this.value,'div_moldes')";>
-                              <?php
+                            <?php
                               foreach($moldes as $molde)
                               {
                                   ?>
@@ -1448,7 +1448,7 @@ th {
     }
     elseif(sizeof($ing)>=0)
     {
-        if($ing->estan_los_moldes=="NO" and $datos->condicion_del_producto=="Nuevo"){?>        
+        if($ing->estan_los_moldes=="NO" && $datos->condicion_del_producto=="Nuevo"){?>        
         <div class="control-group" id="crea_molde">
 		<label class="control-label" for="usuario"><strong>Nombre Molde sugerido;</strong><strong style="color: red;">(*)</strong></label>
 		<div class="controls">
@@ -2938,7 +2938,7 @@ th {
 	if( $this->session->userdata('perfil')!=2) { ?>
 	
 	
-    <?php
+    <?php //echo "<h1>" . $datos->lleva_troquel . "</h1>";
     $orden=$this->orden_model->getOrdenesPorCotizacion($id);
     $ordenDeCompra=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($id);
     

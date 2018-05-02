@@ -9425,8 +9425,8 @@ $cuerpo2.='<table class="tabla">';
            // exit();
             if($this->input->post())
             {
-//               echo $datos->numero_molde."<br />";
-//               echo $this->input->post('nm',true)."<br />";
+               //echo $datos->numero_molde."<br />";
+             //  echo $this->input->post('nombre_molde',true)."<br />";exit();
                
                 if($this->input->post("nm",true)!=11 && $this->input->post("nm",true)!=12 && $this->input->post("nm",true)!=13 && $this->input->post("nm",true)!=14 && $this->input->post("nm",true)!=15){
                 if($datos->numero_molde!=$this->input->post("nm",true) && $datos->condicion_del_producto=='Nuevo'){
@@ -9439,7 +9439,7 @@ $cuerpo2.='<table class="tabla">';
                 $condicion_del_producto=$datos->condicion_del_producto;
                 }
 //               echo $condicion_del_producto;
-//                       exit();
+  
               //  exit();
                 $arreglo_archivo_cliente=$this->cotizaciones_model->getCampoArchivoClientePorId($id);
                 $archivo_a_borrar_trazado=$ing->archivo;
@@ -9569,11 +9569,11 @@ $cuerpo2.='<table class="tabla">';
                               $quien=$this->session->userdata('id');
                               $cuando=date("Y-m-d");
 
-							   
+						   
 			       //Verificar tipo de molde seleccionado
                                $estanlosmoldes = 'NO';
                                $hacer_troquel="";
-                               $lleva_troquelado="";     
+                               $lleva_troquelado="";   
                                if($this->input->post("select_estan_los_moldes",true)=='SI')
                                {
                                     $numeroMolde = 1;
@@ -9584,6 +9584,8 @@ $cuerpo2.='<table class="tabla">';
                                
                                if($this->input->post("select_estan_los_moldes",true)=='NO LLEVA')
                                {
+                             //  echo $this->input->post("molde_generico",true);
+                               //echo $this->input->post("select_estan_los_moldes",true);exit();
                                     $numeroMolde = $this->input->post("molde_generico",true);
                                     $estanlosmoldes = 'NO LLEVA';
                                     $hacer_troquel="NO";

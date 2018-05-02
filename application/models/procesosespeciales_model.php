@@ -90,7 +90,7 @@ class procesosespeciales_model extends CI_Model{
                 ->join("proveedores s","s.id = p.proveedor_2","left")
                 ->where(array("p.id"=>$id))
                 ->get();
-               // echo $this->db->last_query();
+                //echo $this->db->last_query();
                 return $query->row();
     }
     

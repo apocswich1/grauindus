@@ -2399,7 +2399,7 @@ page[size="A4"][layout="portrait"] {
                     <td class="celda_3">&nbsp;<?php  echo $folia1->valor_venta; ?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  if(str_replace("�", "ñ", ucwords(strtolower($folia1->caracteristicas)))=="Folia (golpe)"){echo $folia1->valor_venta/$ing->unidades_por_pliego; }else{echo $folia1->valor_venta; } ?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  if($folia1->unidad_de_venta==5){$costo1=($folia1->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{$costo1=$folia1->valor_venta*$datoscantidad1;} echo number_format($costo1,0,'','.');  ?>&nbsp;</td></tr>
+                    <td class="celda_3">&nbsp;<?php  if($folia1->unidad_de_venta==5){if($folia1->unv=='')$costo1=($folia1->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{$costo1=$folia1->valor_venta*$datoscantidad1;} echo number_format($costo1,0,'','.');  ?>&nbsp;</td></tr>
                 
                <?php } ?>        
                <?php if($procesosespeciales>0 && $tesp2 != 0){ ?>

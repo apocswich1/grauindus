@@ -3864,9 +3864,9 @@ function crear_grupo_cotizacion()
         $("#crear").text("Actualizar");
         $("#crear").removeClass("btn-primary");
         $("#crear").addClass("btn-success");
-        $("#link_grupo").text("Visualizar Grupo");
         }else{
-        $("#crear").text("Crear2");    
+        $("#link_grupo").text("Visualizar Grupo");
+        $("#crear").text("Actualizar");    
         }
         $("#span").remove();
         $("#mensaje_grupo").append(resp);
