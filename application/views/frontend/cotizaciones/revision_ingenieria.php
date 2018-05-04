@@ -58,6 +58,26 @@
     height: 100%;
     background: url('chosen-sprite.png') no-repeat 0px 2px;
 }
+
+#grupos{
+    width: 800px;
+    z-index: 9000;
+    margin-top:50px;
+    position: absolute;
+    margin-left: 920px;
+}
+#grupos table{
+    font-size: 11px;
+    width: 580px;
+}
+
+#grupos table tr td{
+    padding: 3px;
+}
+
+#grupos .title{
+    text-align:center; color:white; font-weight: bold; background-color: #004c68;
+}
 </style>
 
     <script type="text/javascript">
@@ -414,9 +434,183 @@ function getField($campo,$datos,$ing)
             </td>
         </tr>
     </table>
+     <div  class="control-group">
+        <label class="control-label" for="usuario" data-toggle="modal" data-target="#asociar_grupo"><a href="#" id="link_grupo">Crear Grupo a partir de cotizaciones</a></label>
+    </div>
+    <!-------------Logica de Grupos------------------------ >
+     <?php 
+        $existegrupo=$this->grupos_model->getExisteGrupo($id);
+        $numero_en_grupo = 0;
+        if(sizeof($existegrupo)>0){
+            if($existegrupo->idc_01!="" || $existegrupo->idc_01!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo1=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_01);
+                if(sizeof($cotgrupo1)>0){
+                    $detallecotgrupo1 = "<tr>";
+                    $detallecotgrupo1.= "<td align='center'>$cotgrupo1->id_cotizacion</td>";
+                    $detallecotgrupo1.= "<td>$cotgrupo1->producto | C1:$cotgrupo1->cantidad_1,P1:$cotgrupo1->valor_empresa | C2:$cotgrupo1->cantidad_2,P2:$cotgrupo1->valor_empresa_2 | C3:$cotgrupo1->cantidad_3,P3:$cotgrupo1->valor_empresa_3 | C4:$cotgrupo1->cantidad_4,P4:$cotgrupo1->valor_empresa_4</td>";
+                    $detallecotgrupo1.= "<td>$cotgrupo1->fecha</td>";
+                    $detallecotgrupo1.= "<tr>";
+                }else{
+                    $detallecotgrupo1.= "<tr><td align='center'>$existegrupo->idc_01 </td><td colspan='2' align='center' align='center'>La cotizacion Nro: $existegrupo->idc_01 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            
+            if($existegrupo->idc_02!="" || $existegrupo->idc_02!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo2=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_02);
+                if(sizeof($cotgrupo2)>0){
+                    $detallecotgrupo2 = "<tr>";
+                    $detallecotgrupo2.= "<td align='center'>$cotgrupo2->id_cotizacion</td>";
+                    $detallecotgrupo2.= "<td>$cotgrupo2->producto | C1:$cotgrupo2->cantidad_1,P1:$cotgrupo2->valor_empresa | C2:$cotgrupo2->cantidad_2,P2:$cotgrupo2->valor_empresa_2 | C3:$cotgrupo2->cantidad_3,P3:$cotgrupo2->valor_empresa_3 | C4:$cotgrupo2->cantidad_4,P4:$cotgrupo2->valor_empresa_4</td>";
+                    $detallecotgrupo2.= "<td>$cotgrupo2->fecha</td>";
+                    $detallecotgrupo2.= "<tr>";
+                }else{
+                    $detallecotgrupo2.= "<tr><td align='center'>$existegrupo->idc_02 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_02 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_03!="" || $existegrupo->idc_03!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo3=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_03);
+                if(sizeof($cotgrupo3)>0){
+                    $detallecotgrupo3 = "<tr>";
+                    $detallecotgrupo3.= "<td align='center'>$cotgrupo3->id_cotizacion</td>";
+                    $detallecotgrupo3.= "<td>$cotgrupo3->producto | C1:$cotgrupo3->cantidad_1,P1:$cotgrupo3->valor_empresa | C2:$cotgrupo3->cantidad_2,P2:$cotgrupo3->valor_empresa_2 | C3:$cotgrupo3->cantidad_3,P3:$cotgrupo3->valor_empresa_3 | C4:$cotgrupo3->cantidad_4,P4:$cotgrupo3->valor_empresa_4</td>";
+                    $detallecotgrupo3.= "<td>$cotgrupo3->fecha</td>";
+                    $detallecotgrupo3.= "<tr>";
+                }else{
+                    $detallecotgrupo3.= "<tr><td align='center'>$existegrupo->idc_03 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_03 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_04!="" || $existegrupo->idc_04!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo4=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_04);
+                if(sizeof($cotgrupo4)>0){
+                    $detallecotgrupo4 = "<tr>";
+                    $detallecotgrupo4.= "<td align='center'>$cotgrupo4->id_cotizacion</td>";
+                    $detallecotgrupo4.= "<td>$cotgrupo4->producto | C1:$cotgrupo4->cantidad_1,P1:$cotgrupo4->valor_empresa | C2:$cotgrupo4->cantidad_2,P2:$cotgrupo4->valor_empresa_2 | C3:$cotgrupo4->cantidad_3,P3:$cotgrupo4->valor_empresa_3 | C4:$cotgrupo4->cantidad_4,P4:$cotgrupo4->valor_empresa_4</td>";
+                    $detallecotgrupo4.= "<td>$cotgrupo4->fecha</td>";
+                    $detallecotgrupo4.= "<tr>";
+                }else{
+                    $detallecotgrupo4.= "<tr><td align='center'>$existegrupo->idc_04 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_04 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_05!="" || $existegrupo->idc_05!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo5=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_05);
+                if(sizeof($cotgrupo5)>0){
+                    $detallecotgrupo5 = "<tr>";
+                    $detallecotgrupo5.= "<td align='center'>$cotgrupo5->id_cotizacion</td>";
+                    $detallecotgrupo5.= "<td>$cotgrupo5->producto | C1:$cotgrupo5->cantidad_1,P1:$cotgrupo5->valor_empresa | C2:$cotgrupo5->cantidad_2,P2:$cotgrupo5->valor_empresa_2 | C3:$cotgrupo5->cantidad_3,P3:$cotgrupo5->valor_empresa_3 | C4:$cotgrupo5->cantidad_4,P4:$cotgrupo5->valor_empresa_4</td>";
+                    $detallecotgrupo5.= "<td>$cotgrupo5->fecha</td>";
+                    $detallecotgrupo5.= "<tr>";
+                }else{
+                    $detallecotgrupo5.= "<tr><td align='center'>$existegrupo->idc_05 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_05 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_06!="" || $existegrupo->idc_06!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo6=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_06);
+                if(sizeof($cotgrupo6)>0){
+                    $detallecotgrupo6 = "<tr>";
+                    $detallecotgrupo6.= "<td align='center'>$cotgrupo6->id_cotizacion</td>";
+                    $detallecotgrupo6.= "<td>$cotgrupo6->producto | C1:$cotgrupo6->cantidad_1,P1:$cotgrupo6->valor_empresa | C2:$cotgrupo6->cantidad_2,P2:$cotgrupo6->valor_empresa_2 | C3:$cotgrupo6->cantidad_3,P3:$cotgrupo6->valor_empresa_3 | C4:$cotgrupo6->cantidad_4,P4:$cotgrupo6->valor_empresa_4</td>";
+                    $detallecotgrupo6.= "<td>$cotgrupo6->fecha</td>";
+                    $detallecotgrupo6.= "<tr>";
+                }else{
+                    $detallecotgrupo6.= "<tr><td align='center'>$existegrupo->idc_06 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_06 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_07!="" || $existegrupo->idc_07!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo7=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_07);
+                if(sizeof($cotgrupo7)>0){
+                    $detallecotgrupo7 = "<tr>";
+                    $detallecotgrupo7.= "<td align='center'>$cotgrupo7->id_cotizacion</td>";
+                    $detallecotgrupo7.= "<td>$cotgrupo7->producto | C1:$cotgrupo7->cantidad_1,P1:$cotgrupo7->valor_empresa | C2:$cotgrupo7->cantidad_2,P2:$cotgrupo7->valor_empresa_2 | C3:$cotgrupo7->cantidad_3,P3:$cotgrupo7->valor_empresa_3 | C4:$cotgrupo7->cantidad_4,P4:$cotgrupo7->valor_empresa_4</td>";
+                    $detallecotgrupo7.= "<td>$cotgrupo7->fecha</td>";
+                    $detallecotgrupo7.= "<tr>";
+                }else{
+                    $detallecotgrupo7.= "<tr><td align='center'>$existegrupo->idc_07 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_07 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_08!="" || $existegrupo->idc_08!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo8=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_08);
+                if(sizeof($cotgrupo8)>0){
+                    $detallecotgrupo8 = "<tr>";
+                    $detallecotgrupo8.= "<td align='center'>$cotgrupo8->id_cotizacion</td>";
+                    $detallecotgrupo8.= "<td>$cotgrupo8->producto | C1:$cotgrupo8->cantidad_1,P1:$cotgrupo8->valor_empresa | C2:$cotgrupo8->cantidad_2,P2:$cotgrupo8->valor_empresa_2 | C3:$cotgrupo8->cantidad_3,P3:$cotgrupo8->valor_empresa_3 | C4:$cotgrupo8->cantidad_4,P4:$cotgrupo8->valor_empresa_4</td>";
+                    $detallecotgrupo8.= "<td>$cotgrupo8->fecha</td>";
+                    $detallecotgrupo8.= "<tr>";
+                }else{
+                    $detallecotgrupo8.= "<tr><td align='center'>$existegrupo->idc_08 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_08 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_09!="" || $existegrupo->idc_09!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo9=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_09);
+                if(sizeof($cotgrupo9)>0){
+                    $detallecotgrupo9 = "<tr>";
+                    $detallecotgrupo9.= "<td align='center'>$cotgrupo9->id_cotizacion</td>";
+                    $detallecotgrupo9.= "<td>$cotgrupo9->producto | C1:$cotgrupo9->cantidad_1,P1:$cotgrupo9->valor_empresa | C2:$cotgrupo9->cantidad_2,P2:$cotgrupo9->valor_empresa_2 | C3:$cotgrupo9->cantidad_3,P3:$cotgrupo9->valor_empresa_3 | C4:$cotgrupo9->cantidad_4,P4:$cotgrupo9->valor_empresa_4</td>";
+                    $detallecotgrupo9.= "<td>$cotgrupo9->fecha</td>";
+                    $detallecotgrupo9.= "<tr>";
+                }else{
+                    $detallecotgrupo9.= "<tr><td align='center'>$existegrupo->idc_09 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_09 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_10!="" || $existegrupo->idc_10!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo10=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_10);
+                if(sizeof($cotgrupo10)>0){
+                    $detallecotgrupo10 = "<tr>";
+                    $detallecotgrupo10.= "<td align='center'>$cotgrupo10->id_cotizacion</td>";
+                    $detallecotgrupo10.= "<td>$cotgrupo10->producto | C1:$cotgrupo10->cantidad_1,P1:$cotgrupo10->valor_empresa | C2:$cotgrupo10->cantidad_2,P2:$cotgrupo10->valor_empresa_2 | C3:$cotgrupo10->cantidad_3,P3:$cotgrupo10->valor_empresa_3 | C4:$cotgrupo10->cantidad_4,P4:$cotgrupo10->valor_empresa_4</td>";
+                    $detallecotgrupo10.= "<td>$cotgrupo10->fecha</td>";
+                    $detallecotgrupo10.= "<tr>";
+                }else{
+                    $detallecotgrupo10.= "<tr><td align='center'>$existegrupo->idc_010 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_010 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+        }  
         
-    
-        <?php 
+        ?>
+        <?php if(sizeof($existegrupo)>0) { ?>
+    <!-------------Fin de Logica de Grupos----------------->
+    <div class="control-group">
+         <div id="grupos">
+            
+    <table class="">
+                <tr>
+                    <td colspan="3" class="title">Esta cotizacion pertenece a un grupo</td>
+                </tr>
+                <tr>
+                    <td style="width:500px;" colspan="2"><b>Nombre de Grupo:</b> <?php echo $existegrupo->grupo; ?></td>
+                    <td><b>Cantidad:</b> <?php echo $numero_en_grupo;  ?></td>
+                </tr>
+                <tr>
+                    <td class="title" colspan="3" >Productos</td>
+                </tr>
+                <tr>
+                    <td colspan="" style="text-align:center"><b>Nro</b></td>
+                    <td colspan="" style="text-align:center"><b>Detalle de Cotizacion</b></td>
+                    <td colspan="" style="text-align:center" ><b>Fecha</b></td>
+                </tr>
+                    <?php if($detallecotgrupo1!=""){echo $detallecotgrupo1; } ?>
+                    <?php if($detallecotgrupo2!=""){echo $detallecotgrupo2; } ?>
+                    <?php if($detallecotgrupo3!=""){echo $detallecotgrupo3; } ?>
+                    <?php if($detallecotgrupo4!=""){echo $detallecotgrupo4; } ?>
+                    <?php if($detallecotgrupo5!=""){echo $detallecotgrupo5; } ?>
+                    <?php if($detallecotgrupo6!=""){echo $detallecotgrupo6; } ?>
+                    <?php if($detallecotgrupo7!=""){echo $detallecotgrupo7; } ?>
+                    <?php if($detallecotgrupo8!=""){echo $detallecotgrupo8; } ?>
+                    <?php if($detallecotgrupo9!=""){echo $detallecotgrupo9; } ?>
+                    <?php if($detallecotgrupo10!=""){echo $detallecotgrupo10; } ?>
+    </table>
+        </div>
+    </div>   
+        <?php }
         
 //if($datos->numero_molde==""){
 $moldes2=$this->moldes_model->getMoldesPorId($datos->numero_molde);    
@@ -471,7 +665,7 @@ $moldes2=$this->moldes_model->getMoldesPorId($datos->numero_molde);
     <hr />	
     <?php
     if ($this->session->userdata('perfil') != 2) {
-        ?>
+    ?>
     <div class="control-group">
         <label class="control-label" for="usuario"><strong>PDF Archivo de Información Digital (Cliente)</strong></label>
 		<div class="controls">
@@ -489,9 +683,9 @@ $moldes2=$this->moldes_model->getMoldesPorId($datos->numero_molde);
 	</div>
 	<?php }?>
     <hr />
-    <div  class="control-group">
+<!--    <div  class="control-group">
         <label class="control-label" for="usuario" data-toggle="modal" data-target="#asociar_grupo"><a href="#" id="link_grupo">Crear Grupo a partir de cotizaciones</a></label>
-    </div>
+    </div>-->
     <div id="asociar_grupo" class="modal fade">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -1456,14 +1650,21 @@ th {
 		</div>
 	</div>
         <?php
-        } else { ?>
+        } else { if($ing->estan_los_moldes=="NO LLEVA" && $datos->condicion_del_producto=="Nuevo"){ ?>
+            <div class="control-group" id="crea_molde">
+		<label class="control-label" for="usuario"><strong>Nombre Molde sugerido;</strong></label>
+		<div class="controls">
+                    <input style="width: 600px;" readonly="true" type="text" name="nombre_molde" placeholder="Nombre Molde sugerido" value="" /> 
+		</div>
+	</div>
+        <?php }else{ ?>
         <div class="control-group" id="crea_molde">
 		<label class="control-label" for="usuario"><strong>Nombre Molde sugerido;</strong></label>
 		<div class="controls">
                     <input style="width: 600px;" readonly="true" type="text" name="nombre_molde" placeholder="Nombre Molde sugerido" value="<?php echo $ing->nombre_molde?>" /> 
 		</div>
 	</div>            
-        <?php }
+        <?php }}
     }
     ?>   
     
@@ -1480,124 +1681,7 @@ th {
 		</div>
 	</div>
     
-<div class="control-group">
-        <div class="span4 control-group"></div>
-        <div class="span8 control-group"><h3><b><a onclick="ver_informacion('restricciones_ccac');">Click para ver Calculo de Restricciones CCAC</a></b></h3></div>
-</div>
-        <div id="restricciones_ccac" style="display:none;">
-        <div class="control-group" style="border:1px">
-            <table>
-                <tr>
-                    <td>
-                        <table border="1">
-                            <th>Imagen al Centro Pinza Adentro</th>
-                            <tr><td>pinza 5mm</td></tr>
-                            <tr><td>cola 5mm</td></tr>
-                            <tr><td>CCAC MIN 10mm</td></tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table border="1">
-                            <th>Imagen al Corte Sin Fondo</th>
-                            <tr><td>pinza 15mm</td></tr>
-                            <tr><td>cola 5mm</td></tr>
-                            <tr><td>CCAC MIN 20mm</td></tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table border="1">
-                            <th>Con Fondo</th>
-                            <tr><td>pinza 15mm</td></tr>
-                            <tr><td>cola 15mm</td></tr>
-                            <tr><td>CCAC MIN 25mm</td></tr>
-                        </table>    
-                    </td>
-                    <td>
-                        <table border="1">
-                            <th>Imprimir con la Fibra</th>
-                            <tr><td>pinza 15mm</td></tr>
-                            <tr><td>cola 30mm</td></tr>
-                            <tr><td>CCAC MIN 45mm</td></tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    
-<?php //print_r($molde); //my code is here ?>
-   <table border='0' class="tablita table-no-bordered">
-       <tr>
-           <td>
-               
- <div class="control-group" id="producto">
-   <label class="control-label" for="usuario">Distancia en molde:<strong style="color: red;">(*<?php echo $distancia;?>)</strong></label>    
-   </div>  
-<div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Distancia cuchillo a cuchillo<strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-                    <?php if(sizeof($ing)>0) { ?>
-                        <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php if($ing->tamano_cuchillo_1=="" || $ing->tamano_cuchillo_1=="0"){ echo $moldes2->cuchillocuchillo; }else{ echo $ing->tamano_cuchillo_1;} ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php if($ing->tamano_cuchillo_2=="" || $ing->tamano_cuchillo_2=="0"){echo $moldes2->cuchillocuchillo2; }else{echo $ing->tamano_cuchillo_2;} ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
-                    <?php } elseif(sizeof($datos)>0) { ?>
-			<!--<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php //echo $datos->tamano_cuchillo_1; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php //echo $datos->tamano_cuchillo_2; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms.--> 
-                        <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->cuchillocuchillo;}else{echo $moldes2->cuchillocuchillo; }?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->cuchillocuchillo2;}else{echo $moldes2->cuchillocuchillo2; }?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms.
-                    <?php } else { ?>      
-			<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php echo $_POST["tamano_cuchillo_1"]; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php echo $_POST["tamano_cuchillo_2"]; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
-                    <?php }  ?>                      
-        	<div id="msg_imagen_impresion">
-                    
-		</div>    		
-                </div>
-            
-	</div>	
-   <input type="hidden" name="ccac_o" id="ccac_o" value="45">
-    <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Tamaño a imprimir <strong>Ancho por Largo </strong>(largo a cortar) :<strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-                    <?php if(sizeof($ing)>0) { ?>
-			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $ing->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $ing->tamano_a_imprimir_2; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $ing->tamano_a_imprimir_1." X ".$ing->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
-                    <?php } elseif(sizeof($datos)>0) { ?>
-			<!--<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php //echo $datos->tamano_a_imprimir_1." X ".$datos->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccac"></h3></div>-->
-			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->ancho_bobina;}else{echo $moldes2->ancho_bobina; }?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->largo_bobina;}else{echo $moldes2->largo_bobina; }?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $_POST["tamano_1"]." X ".$_POST["tamano_2"]." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
-                    <?php } else { ?>                
-			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $_POST["tamano_1"]; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $_POST["tamano_2"]; ?> ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
-                    <?php }  ?>                        
-                
-		</div>
-	</div>
-    
-   <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Calculo CCAC<strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-                    <?php if(sizeof($ing)>0) { ?>
-                    <?php if ($ing->ccac_1>0) { ?>
-                        <input id="ccac_1" type="text" value="<?php echo $ing->ccac_1; ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo $ing->ccac_2; ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                    <?php } else { ?>
-                        <?php if (($ing->tamano_cuchillo_1>0) and ($ing->tamano_cuchillo_2>0)){ ?>
-                            <input id="ccac_1" type="text" value="<?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10); ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                        <?php } else { ?>    
-                            <input id="ccac_1" type="text" value="<?php echo $ing->tamano_a_imprimir_1; ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo $ing->tamano_a_imprimir_2; ?>"" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                        <?php }  ?>                                
-                    <?php } ?>                        
-                    <?php } else { ?>   
-                        <input id="ccac_1" type="text" value="<?php echo (($_POST["tamano_1"]-$_POST["tamano_cuchillo_1"])*10); ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo (($_POST["tamano_2"]-$_POST["tamano_cuchillo_2"])*10); ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                    <?php }  ?>                         
-		</div>
-	</div>   
-           </td>
-           <td><h3 id="msgccac"></h3>
-               <ul id='rccac' style="list-style: none">
-                   <li id='fn'></li>
-                   <li id="im"></li>
-                   <li id="pr"></li>
-                   <li id="ccacmin"></li>
-               </ul>
-           </td>
-       </tr>
-   </table>
-
-    
-    <h3>Materialidad <strong style="color: red;">(*)</strong></h3>
+<h3>Materialidad <strong style="color: red;">(*)</strong></h3>
     
     <div class="control-group">
 		<label class="control-label" for="usuario">Datos Técnicos</label>
@@ -1823,6 +1907,124 @@ th {
         
         
     </div>
+   <div class="control-group">
+        <div class="span4 control-group"></div>
+        <div class="span8 control-group"><h3><b><a onclick="ver_informacion('restricciones_ccac');">Click para ver Calculo de Restricciones CCAC</a></b></h3></div>
+</div>
+        <div id="restricciones_ccac" style="display:none;">
+        <div class="control-group" style="border:1px">
+            <table>
+                <tr>
+                    <td>
+                        <table border="1">
+                            <th>Imagen al Centro Pinza Adentro</th>
+                            <tr><td>pinza 5mm</td></tr>
+                            <tr><td>cola 5mm</td></tr>
+                            <tr><td>CCAC MIN 10mm</td></tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table border="1">
+                            <th>Imagen al Corte Sin Fondo</th>
+                            <tr><td>pinza 15mm</td></tr>
+                            <tr><td>cola 5mm</td></tr>
+                            <tr><td>CCAC MIN 20mm</td></tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table border="1">
+                            <th>Con Fondo</th>
+                            <tr><td>pinza 15mm</td></tr>
+                            <tr><td>cola 15mm</td></tr>
+                            <tr><td>CCAC MIN 25mm</td></tr>
+                        </table>    
+                    </td>
+                    <td>
+                        <table border="1">
+                            <th>Imprimir con la Fibra</th>
+                            <tr><td>pinza 15mm</td></tr>
+                            <tr><td>cola 30mm</td></tr>
+                            <tr><td>CCAC MIN 45mm</td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+<?php //print_r($molde); //my code is here ?>
+   <table border='0' class="tablita table-no-bordered">
+       <tr>
+           <td>
+               
+ <div class="control-group" id="producto">
+   <label class="control-label" for="usuario">Distancia en molde:<strong style="color: red;">(*<?php echo $distancia;?>)</strong></label>    
+   </div>  
+<div class="control-group" id="producto">
+		<label class="control-label" for="usuario">Distancia cuchillo a cuchillo<strong style="color: red;">(*)</strong></label>
+		<div class="controls">
+                    <?php if(sizeof($ing)>0) { ?>
+                        <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php if($ing->tamano_cuchillo_1=="" || $ing->tamano_cuchillo_1=="0"){ echo $moldes2->cuchillocuchillo; }else{ echo $ing->tamano_cuchillo_1;} ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php if($ing->tamano_cuchillo_2=="" || $ing->tamano_cuchillo_2=="0"){echo $moldes2->cuchillocuchillo2; }else{echo $ing->tamano_cuchillo_2;} ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
+                    <?php } elseif(sizeof($datos)>0) { ?>
+			<!--<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php //echo $datos->tamano_cuchillo_1; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php //echo $datos->tamano_cuchillo_2; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms.--> 
+                        <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->cuchillocuchillo;}else{echo $moldes2->cuchillocuchillo; }?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->cuchillocuchillo2;}else{echo $moldes2->cuchillocuchillo2; }?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms.
+                    <?php } else { ?>      
+			<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php echo $_POST["tamano_cuchillo_1"]; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php echo $_POST["tamano_cuchillo_2"]; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
+                    <?php }  ?>                      
+        	<div id="msg_imagen_impresion">
+                    
+		</div>    		
+                </div>
+            
+	</div>	
+   <input type="hidden" name="ccac_o" id="ccac_o" value="45">
+    <div class="control-group" id="producto">
+		<label class="control-label" for="usuario">Tamaño a imprimir <strong>Ancho por Largo </strong>(largo a cortar) :<strong style="color: red;">(*)</strong></label>
+		<div class="controls">
+                    <?php if(sizeof($ing)>0) { ?>
+			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $ing->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $ing->tamano_a_imprimir_2; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $ing->tamano_a_imprimir_1." X ".$ing->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
+                    <?php } elseif(sizeof($datos)>0) { ?>
+			<!--<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php //echo $datos->tamano_a_imprimir_1." X ".$datos->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccac"></h3></div>-->
+			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->ancho_bobina;}else{echo $moldes2->ancho_bobina; }?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->largo_bobina;}else{echo $moldes2->largo_bobina; }?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $_POST["tamano_1"]." X ".$_POST["tamano_2"]." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
+                    <?php } else { ?>                
+			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $_POST["tamano_1"]; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $_POST["tamano_2"]; ?> ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
+                    <?php }  ?>                        
+                
+		</div>
+	</div>
+    
+   <div class="control-group" id="producto">
+		<label class="control-label" for="usuario">Calculo CCAC<strong style="color: red;">(*)</strong></label>
+		<div class="controls">
+                    <?php if(sizeof($ing)>0) { ?>
+                    <?php if ($ing->ccac_1>0) { ?>
+                        <input id="ccac_1" type="text" value="<?php echo $ing->ccac_1; ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo $ing->ccac_2; ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
+                    <?php } else { ?>
+                        <?php if (($ing->tamano_cuchillo_1>0) and ($ing->tamano_cuchillo_2>0)){ ?>
+                            <input id="ccac_1" type="text" value="<?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10); ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
+                        <?php } else { ?>    
+                            <input id="ccac_1" type="text" value="<?php echo $ing->tamano_a_imprimir_1; ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo $ing->tamano_a_imprimir_2; ?>"" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
+                        <?php }  ?>                                
+                    <?php } ?>                        
+                    <?php } else { ?>   
+                        <input id="ccac_1" type="text" value="<?php echo (($_POST["tamano_1"]-$_POST["tamano_cuchillo_1"])*10); ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo (($_POST["tamano_2"]-$_POST["tamano_cuchillo_2"])*10); ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
+                    <?php }  ?>                         
+		</div>
+	</div>   
+           </td>
+           <td><h3 id="msgccac"></h3>
+               <ul id='rccac' style="list-style: none">
+                   <li id='fn'></li>
+                   <li id="im"></li>
+                   <li id="pr"></li>
+                   <li id="ccacmin"></li>
+               </ul>
+           </td>
+       </tr>
+   </table>
+
+    
+    
     
     <h3>Trabajos Internos</h3>        
     
@@ -2948,7 +3150,7 @@ th {
                           <input type="hidden" name="id" value="<?php echo $id ?>" />
                           <input type="hidden" name="pagina" value="<?php echo $pagina ?>" />
                           <input type="hidden" name="estado" />
-                          <?php include 'plantilla_botones.php'; //my code is here ?>
+                          <div id="botones"> <?php include 'plantilla_botones.php'; //my code is here ?></div>
                       </div>
                       <ol  class= "breadcrumb" style="left:250px">  
                           <li><a href="<?php echo base_url() ?>cotizaciones/index/<?php echo $pagina ?>">Cotizaciones &gt;&gt;</a></li>
@@ -2963,7 +3165,7 @@ th {
                     <input type="hidden" name="id" value="<?php echo $id?>" />
                     <input type="hidden" name="pagina" value="<?php echo $pagina?>" />
                     <input type="hidden" name="estado" />
-                <input type="button" value="Liberar" class="btn <?php if($ing->estado==1){echo 'btn-warning';}?>"  data-toggle="modal" data-target="#comparativa_molde" onclick="comparacion(1);" />
+                    <input id="liberar" type="button" value="Liberar" class="btn <?php if($ing->estado==1){echo 'btn-warning';}?>"  data-toggle="modal" data-target="#comparativa_molde" onclick="comparacion(1);" />
                 </div></div>
             <?php }else{ ?>
         <div class="control-group">
@@ -3324,5 +3526,7 @@ switch (x) {
     $("#im").html('<h4>IMG IMPRESION '+imv+'</h4>');
     $("#pr").html('<h4>IMPRESION CONTRA LA FIBRA '+pr+prv+'</h4>');
     $("#ccacmin").html('<h4 style="color:green">Distancia '+ccacmin+'</h4>');
-      
+    
+    
+   
 </script>

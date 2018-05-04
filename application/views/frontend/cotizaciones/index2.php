@@ -360,6 +360,11 @@
             ?>
         </td>
         <td style="text-align: center; width: 10px;">		
+            <?php if ($fotomecanica->pdf_imagen_imprimir!=""){ ?>
+		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen_imprimir ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Imagen a Imprimir" title="PDF Cliente"></a>
+            <?php } else { ?>    
+		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de Imagen a Imprimir" title="No existe PDF de Imagen a Imprimir">
+            <?php } ?>                <br />
             <?php if ($archivo_cliente->archivo!=""){ ?>
 		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$archivo_cliente->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Cliente" title="PDF Cliente"></a>
             <?php } else { ?>    

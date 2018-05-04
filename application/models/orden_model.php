@@ -948,7 +948,7 @@ echo $query->num_rows();
                 ->join("hoja_de_costos_datos as h","h.id_cotizacion=op.id_cotizacion","left")                
                 ->join("materiales as m","m.id= c.id_mat_liner3","left")                
 
-                ->where("op.estado <> 2 AND op.estado <> 0 AND op.estado <> '3' AND op.estado <> '4' AND op.fecha>'2017-12-12'")
+                ->where("op.estado <> 2 AND op.estado <> 0 AND op.estado <> '3' AND op.estado <> '4' AND op.fecha>'2017-12-12' and cc.situacion <> 'Liberada'")
                 ->order_by("oc.id","asc")
 
                 ->get();

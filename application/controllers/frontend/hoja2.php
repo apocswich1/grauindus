@@ -1177,7 +1177,7 @@ class Hoja2 extends CI_Controller {
         $hoja2=$this->cotizaciones_model->getHojaDeCostos2PorIdCotizacion($id);
         $ing2=$this->cotizaciones_model->getCotizacionIngenieria2PorIdCotizacion($id);
         $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
-
+//print_r($ing);
         if($this->input->post())
         {
             
@@ -1727,8 +1727,14 @@ class Hoja2 extends CI_Controller {
 
         if($this->input->post())
         {
-            
+           // print_r($ing);exit();
             if(sizeof($ing2)==0){
+                if($ing->cotizaciones_grupales==null){
+                    $ing->cotizaciones_grupales = "";
+                }
+                if($ing->tipo_pegado==null){
+                    $ing->tipo_pegado = "";
+                }
                $this->db->insert("cotizacion_ingenieria_cambios",$ing); 
             }
             if(sizeof($datos2)==0){

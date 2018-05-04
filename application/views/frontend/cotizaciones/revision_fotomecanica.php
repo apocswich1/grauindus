@@ -64,6 +64,28 @@ function getField($campo,$datos,$ing)
 	top:20px;
 	right:20px;
 }
+
+
+#grupos{
+    width: 800px;
+    z-index: 9000;
+    margin-top:-160px;
+    position: absolute;
+    margin-left: 920px;
+}
+#grupos table{
+    font-size: 11px;
+    width: 580px;
+}
+
+#grupos table tr td{
+    padding: 3px;
+    border:1px solid #eeeeee;
+}
+
+#grupos .title{
+    text-align:center; color:white; font-weight: bold; background-color: #004c68;
+}
 </style>
 <div id="contenidos">
 <?php echo form_open_multipart(null, array('class' => 'form-horizontal','name'=>'form','id'=>'form')); ?>
@@ -176,7 +198,180 @@ function getField($campo,$datos,$ing)
 
    </div>
    <!--productos asociados--> 
-	
+  <!-------------Logica de Grupos------------------------ >
+     <?php 
+        $existegrupo=$this->grupos_model->getExisteGrupo($id);
+        $numero_en_grupo = 0;
+        if(sizeof($existegrupo)>0){
+            if($existegrupo->idc_01!="" || $existegrupo->idc_01!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo1=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_01);
+                if(sizeof($cotgrupo1)>0){
+                    $detallecotgrupo1 = "<tr>";
+                    $detallecotgrupo1.= "<td align='center'>$cotgrupo1->id_cotizacion</td>";
+                    $detallecotgrupo1.= "<td>$cotgrupo1->producto | C1:$cotgrupo1->cantidad_1,P1:$cotgrupo1->valor_empresa | C2:$cotgrupo1->cantidad_2,P2:$cotgrupo1->valor_empresa_2 | C3:$cotgrupo1->cantidad_3,P3:$cotgrupo1->valor_empresa_3 | C4:$cotgrupo1->cantidad_4,P4:$cotgrupo1->valor_empresa_4</td>";
+                    $detallecotgrupo1.= "<td>$cotgrupo1->fecha</td>";
+                    $detallecotgrupo1.= "<tr>";
+                }else{
+                    $detallecotgrupo1.= "<tr><td align='center'>$existegrupo->idc_01 </td><td colspan='2' align='center' align='center'>La cotizacion Nro: $existegrupo->idc_01 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            
+            if($existegrupo->idc_02!="" || $existegrupo->idc_02!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo2=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_02);
+                if(sizeof($cotgrupo2)>0){
+                    $detallecotgrupo2 = "<tr>";
+                    $detallecotgrupo2.= "<td align='center'>$cotgrupo2->id_cotizacion</td>";
+                    $detallecotgrupo2.= "<td>$cotgrupo2->producto | C1:$cotgrupo2->cantidad_1,P1:$cotgrupo2->valor_empresa | C2:$cotgrupo2->cantidad_2,P2:$cotgrupo2->valor_empresa_2 | C3:$cotgrupo2->cantidad_3,P3:$cotgrupo2->valor_empresa_3 | C4:$cotgrupo2->cantidad_4,P4:$cotgrupo2->valor_empresa_4</td>";
+                    $detallecotgrupo2.= "<td>$cotgrupo2->fecha</td>";
+                    $detallecotgrupo2.= "<tr>";
+                }else{
+                    $detallecotgrupo2.= "<tr><td align='center'>$existegrupo->idc_02 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_02 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_03!="" || $existegrupo->idc_03!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo3=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_03);
+                if(sizeof($cotgrupo3)>0){
+                    $detallecotgrupo3 = "<tr>";
+                    $detallecotgrupo3.= "<td align='center'>$cotgrupo3->id_cotizacion</td>";
+                    $detallecotgrupo3.= "<td>$cotgrupo3->producto | C1:$cotgrupo3->cantidad_1,P1:$cotgrupo3->valor_empresa | C2:$cotgrupo3->cantidad_2,P2:$cotgrupo3->valor_empresa_2 | C3:$cotgrupo3->cantidad_3,P3:$cotgrupo3->valor_empresa_3 | C4:$cotgrupo3->cantidad_4,P4:$cotgrupo3->valor_empresa_4</td>";
+                    $detallecotgrupo3.= "<td>$cotgrupo3->fecha</td>";
+                    $detallecotgrupo3.= "<tr>";
+                }else{
+                    $detallecotgrupo3.= "<tr><td align='center'>$existegrupo->idc_03 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_03 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_04!="" || $existegrupo->idc_04!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo4=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_04);
+                if(sizeof($cotgrupo4)>0){
+                    $detallecotgrupo4 = "<tr>";
+                    $detallecotgrupo4.= "<td align='center'>$cotgrupo4->id_cotizacion</td>";
+                    $detallecotgrupo4.= "<td>$cotgrupo4->producto | C1:$cotgrupo4->cantidad_1,P1:$cotgrupo4->valor_empresa | C2:$cotgrupo4->cantidad_2,P2:$cotgrupo4->valor_empresa_2 | C3:$cotgrupo4->cantidad_3,P3:$cotgrupo4->valor_empresa_3 | C4:$cotgrupo4->cantidad_4,P4:$cotgrupo4->valor_empresa_4</td>";
+                    $detallecotgrupo4.= "<td>$cotgrupo4->fecha</td>";
+                    $detallecotgrupo4.= "<tr>";
+                }else{
+                    $detallecotgrupo4.= "<tr><td align='center'>$existegrupo->idc_04 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_04 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_05!="" || $existegrupo->idc_05!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo5=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_05);
+                if(sizeof($cotgrupo5)>0){
+                    $detallecotgrupo5 = "<tr>";
+                    $detallecotgrupo5.= "<td align='center'>$cotgrupo5->id_cotizacion</td>";
+                    $detallecotgrupo5.= "<td>$cotgrupo5->producto | C1:$cotgrupo5->cantidad_1,P1:$cotgrupo5->valor_empresa | C2:$cotgrupo5->cantidad_2,P2:$cotgrupo5->valor_empresa_2 | C3:$cotgrupo5->cantidad_3,P3:$cotgrupo5->valor_empresa_3 | C4:$cotgrupo5->cantidad_4,P4:$cotgrupo5->valor_empresa_4</td>";
+                    $detallecotgrupo5.= "<td>$cotgrupo5->fecha</td>";
+                    $detallecotgrupo5.= "<tr>";
+                }else{
+                    $detallecotgrupo5.= "<tr><td align='center'>$existegrupo->idc_05 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_05 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_06!="" || $existegrupo->idc_06!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo6=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_06);
+                if(sizeof($cotgrupo6)>0){
+                    $detallecotgrupo6 = "<tr>";
+                    $detallecotgrupo6.= "<td align='center'>$cotgrupo6->id_cotizacion</td>";
+                    $detallecotgrupo6.= "<td>$cotgrupo6->producto | C1:$cotgrupo6->cantidad_1,P1:$cotgrupo6->valor_empresa | C2:$cotgrupo6->cantidad_2,P2:$cotgrupo6->valor_empresa_2 | C3:$cotgrupo6->cantidad_3,P3:$cotgrupo6->valor_empresa_3 | C4:$cotgrupo6->cantidad_4,P4:$cotgrupo6->valor_empresa_4</td>";
+                    $detallecotgrupo6.= "<td>$cotgrupo6->fecha</td>";
+                    $detallecotgrupo6.= "<tr>";
+                }else{
+                    $detallecotgrupo6.= "<tr><td align='center'>$existegrupo->idc_06 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_06 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_07!="" || $existegrupo->idc_07!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo7=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_07);
+                if(sizeof($cotgrupo7)>0){
+                    $detallecotgrupo7 = "<tr>";
+                    $detallecotgrupo7.= "<td align='center'>$cotgrupo7->id_cotizacion</td>";
+                    $detallecotgrupo7.= "<td>$cotgrupo7->producto | C1:$cotgrupo7->cantidad_1,P1:$cotgrupo7->valor_empresa | C2:$cotgrupo7->cantidad_2,P2:$cotgrupo7->valor_empresa_2 | C3:$cotgrupo7->cantidad_3,P3:$cotgrupo7->valor_empresa_3 | C4:$cotgrupo7->cantidad_4,P4:$cotgrupo7->valor_empresa_4</td>";
+                    $detallecotgrupo7.= "<td>$cotgrupo7->fecha</td>";
+                    $detallecotgrupo7.= "<tr>";
+                }else{
+                    $detallecotgrupo7.= "<tr><td align='center'>$existegrupo->idc_07 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_07 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_08!="" || $existegrupo->idc_08!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo8=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_08);
+                if(sizeof($cotgrupo8)>0){
+                    $detallecotgrupo8 = "<tr>";
+                    $detallecotgrupo8.= "<td align='center'>$cotgrupo8->id_cotizacion</td>";
+                    $detallecotgrupo8.= "<td>$cotgrupo8->producto | C1:$cotgrupo8->cantidad_1,P1:$cotgrupo8->valor_empresa | C2:$cotgrupo8->cantidad_2,P2:$cotgrupo8->valor_empresa_2 | C3:$cotgrupo8->cantidad_3,P3:$cotgrupo8->valor_empresa_3 | C4:$cotgrupo8->cantidad_4,P4:$cotgrupo8->valor_empresa_4</td>";
+                    $detallecotgrupo8.= "<td>$cotgrupo8->fecha</td>";
+                    $detallecotgrupo8.= "<tr>";
+                }else{
+                    $detallecotgrupo8.= "<tr><td align='center'>$existegrupo->idc_08 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_08 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_09!="" || $existegrupo->idc_09!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo9=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_09);
+                if(sizeof($cotgrupo9)>0){
+                    $detallecotgrupo9 = "<tr>";
+                    $detallecotgrupo9.= "<td align='center'>$cotgrupo9->id_cotizacion</td>";
+                    $detallecotgrupo9.= "<td>$cotgrupo9->producto | C1:$cotgrupo9->cantidad_1,P1:$cotgrupo9->valor_empresa | C2:$cotgrupo9->cantidad_2,P2:$cotgrupo9->valor_empresa_2 | C3:$cotgrupo9->cantidad_3,P3:$cotgrupo9->valor_empresa_3 | C4:$cotgrupo9->cantidad_4,P4:$cotgrupo9->valor_empresa_4</td>";
+                    $detallecotgrupo9.= "<td>$cotgrupo9->fecha</td>";
+                    $detallecotgrupo9.= "<tr>";
+                }else{
+                    $detallecotgrupo9.= "<tr><td align='center'>$existegrupo->idc_09 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_09 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_10!="" || $existegrupo->idc_10!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo10=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_10);
+                if(sizeof($cotgrupo10)>0){
+                    $detallecotgrupo10 = "<tr>";
+                    $detallecotgrupo10.= "<td align='center'>$cotgrupo10->id_cotizacion</td>";
+                    $detallecotgrupo10.= "<td>$cotgrupo10->producto | C1:$cotgrupo10->cantidad_1,P1:$cotgrupo10->valor_empresa | C2:$cotgrupo10->cantidad_2,P2:$cotgrupo10->valor_empresa_2 | C3:$cotgrupo10->cantidad_3,P3:$cotgrupo10->valor_empresa_3 | C4:$cotgrupo10->cantidad_4,P4:$cotgrupo10->valor_empresa_4</td>";
+                    $detallecotgrupo10.= "<td>$cotgrupo10->fecha</td>";
+                    $detallecotgrupo10.= "<tr>";
+                }else{
+                    $detallecotgrupo10.= "<tr><td align='center'>$existegrupo->idc_010 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_010 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+        }  
+        
+        ?>
+        <?php if(sizeof($existegrupo)>0) { ?>
+    <!-------------Fin de Logica de Grupos----------------->
+ <div class="control-group">
+         <div id="grupos">
+            
+             <table class="" style="border:1px solid #eeeeee">
+                <tr>
+                    <td colspan="3" class="title">Esta cotizacion pertenece a un grupo</td>
+                </tr>
+                <tr>
+                    <td style="width:500px;" colspan="2"><b>Nombre de Grupo:</b> <?php echo $existegrupo->grupo; ?></td>
+                    <td><b>Cantidad:</b> <?php echo $numero_en_grupo;  ?></td>
+                </tr>
+                <tr>
+                    <td class="title" colspan="3" >Productos</td>
+                </tr>
+                <tr>
+                    <td colspan="" style="text-align:center"><b>Nro</b></td>
+                    <td colspan="" style="text-align:center"><b>Detalle de Cotizacion</b></td>
+                    <td colspan="" style="text-align:center" ><b>Fecha</b></td>
+                </tr>
+                    <?php if($detallecotgrupo1!=""){echo $detallecotgrupo1; } ?>
+                    <?php if($detallecotgrupo2!=""){echo $detallecotgrupo2; } ?>
+                    <?php if($detallecotgrupo3!=""){echo $detallecotgrupo3; } ?>
+                    <?php if($detallecotgrupo4!=""){echo $detallecotgrupo4; } ?>
+                    <?php if($detallecotgrupo5!=""){echo $detallecotgrupo5; } ?>
+                    <?php if($detallecotgrupo6!=""){echo $detallecotgrupo6; } ?>
+                    <?php if($detallecotgrupo7!=""){echo $detallecotgrupo7; } ?>
+                    <?php if($detallecotgrupo8!=""){echo $detallecotgrupo8; } ?>
+                    <?php if($detallecotgrupo9!=""){echo $detallecotgrupo9; } ?>
+                    <?php if($detallecotgrupo10!=""){echo $detallecotgrupo10; } ?>
+    </table>
+        </div>
+    </div>
+        <?php } ?>    
 	
   <div class="control-group">
 		<label class="control-label" for="usuario">Identificacion del Producto</label>
@@ -1051,7 +1246,449 @@ function getField($campo,$datos,$ing)
     <input id="cuatro" value="<?php echo $var1 ?>" name="conteo4" type="hidden" />
     <input id="cinco" value="<?php echo $var2 ?>" name="conteo5" type="hidden" />
     <input id="seis" value="<?php echo $var3 ?>" name="conteo6" type="hidden" />
- 	
+    <h3>Procesos Especiales</h3>
+    
+    <div class="control-group">
+		<label class="control-label" for="usuario">Folia</label>
+		<div class="controls">
+                    <select name="folia" style="width: 100px;" onchange="cambiaFolia_Cotizacion(); cambiaFolia();">
+                        <?php
+                        if(sizeof($ing)==0)
+                        {
+                            $procesos_especiales=$datos->procesos_especiales_folia;
+                            ?>
+                            <option value="NO" <?php if($datos->procesos_especiales_folia=="NO"){echo 'selected="true"';}?>>NO</option>
+                            <option value="SI" <?php if($datos->procesos_especiales_folia=="SI"){echo 'selected="true"';}?>>SI</option>
+                            <?php
+                        }else
+                        {
+                            $procesos_especiales=$ing->procesos_especiales_folia;
+                            ?>
+                            <option value="NO" <?php if($ing->procesos_especiales_folia=="NO"){echo 'selected="true"';}?>>NO</option>
+                            <option value="SI" <?php if($ing->procesos_especiales_folia=="SI"){echo 'selected="true"';}?>>SI</option>
+                            <?php            
+                        }
+                        ?>
+                    </select> 
+                    <span id="folia_se_a" style="display: <?php if($procesos_especiales=='SI'){echo 'block';}else{echo 'none';}?>;">
+                        <select name="folia_se" id="folia_se" onchange="repeticion(this);">
+                        <?php
+                        if(sizeof($ing)==0)
+                        {
+                        ?>
+                            <option value="Nuevo" <?php if($datos->procesos_especiales_folia_valor=="Nuevo"){echo 'selected="true"';}?>>Nuevo</option>
+                            <option value="Repetición" <?php if($datos->procesos_especiales_folia_valor=="Repetición"){echo 'selected="true"';}?>>Repetición</option>                
+                        <?php
+                        }else
+                        {
+                        ?>
+                            <option value="Nuevo" <?php if($ing->procesos_especiales_folia_valor=="Nuevo"){echo 'selected="true"';}?>>Nuevo</option>
+                            <option value="Repetición" <?php if($ing->procesos_especiales_folia_valor=="Repetición"){echo 'selected="true"';}?>>Repetición</option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    </span>
+                    <div id="folia1_proceso" style="display:<?php if($procesos_especiales=="SI"){echo 'block';}else{echo 'none';}?>;"> <strong>&nbsp;Proceso Especial (golpe): &nbsp;</strong>                      
+                        <select name="folia1_proceso_seletec"  style="width: 500px;" onchange="carga_ajax_obtenerInfoProcesos(this.value,'pt1');">
+                            <option value="0">Seleccione......</option>
+                            <?php
+                            $procesos=$this->procesosespeciales_model->getProcesosEspecialesCotizacion();                
+                            if(sizeof($ing)==0){
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$datos->folia1_proceso_seletec){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }}else{
+                             foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$ing->folia1_proceso_seletec){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }   
+                            }
+                            ?>
+                        </select><a id="pt1"></a>            
+                    </div><br>
+                    <div id="folia1_molde_selected" style="display:<?php if($procesos_especiales=="SI"){echo 'block';}else{echo 'none';}?>;"> <strong>&nbsp;Proceso Especial (molde): &nbsp;</strong>                      
+                        <select name="folia1_molde_selected"  style="width: 500px;" onchange="carga_ajax_obtenerInfoProcesos(this.value,'ptm1');">
+                            <option value="0">Seleccione......</option>
+                            <?php
+                            $procesos=$this->procesosespeciales_model->getProcesosEspecialesCotizacion();                
+                            if(sizeof($ing)==0){
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$datos->folia1_molde_selected){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }}else{
+                             foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$ing->folia1_molde_selected){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }   
+                            }
+                            ?>
+                        </select><a id="ptm1"></a>            
+                    </div>
+		</div>                
+	</div>
+    
+    <div class="control-group">
+		<label class="control-label" for="usuario">Folia 2</label>
+		<div class="controls">
+		<select name="folia_2" style="width: 100px;" onchange="cambiaFolia2_Cotizacion(); cambiaFolia2();">
+                <?php
+                if(sizeof($ing)==0)
+                {
+                    $procesos_especiales2=$datos->procesos_especiales_folia_2;
+                    ?>
+                    <option value="NO" <?php if($datos->procesos_especiales_folia_2=="NO"){echo 'selected="true"';}?>>NO</option>
+                    <option value="SI" <?php if($datos->procesos_especiales_folia_2=="SI"){echo 'selected="true"';}?>>SI</option>
+                    <?php
+                }else
+                {
+                    $procesos_especiales2=$ing->procesos_especiales_folia_2;
+                    ?>
+                    <option value="NO" <?php if($ing->procesos_especiales_folia_2=="NO"){echo 'selected="true"';}?>>NO</option>
+                    <option value="SI" <?php if($ing->procesos_especiales_folia_2=="SI"){echo 'selected="true"';}?>>SI</option>
+                    <?php            
+                }
+                ?>
+                </select> 
+                <span id="folia_se_2_a" style="display: <?php if($procesos_especiales2=='SI'){echo 'block';}else{echo 'none';}?>;">
+                <select name="folia_se_2">
+                <?php
+                    if(sizeof($ing)==0)
+                    {
+                    ?>
+                        <option value="Nuevo" <?php if($datos->procesos_especiales_folia_2_valor=="Nuevo"){echo 'selected="true"';}?>>Nuevo</option>
+                        <option value="Repetición" <?php if($datos->procesos_especiales_folia_2_valor=="Repetición"){echo 'selected="true"';}?>>Repetición</option>                                          
+                    <?php
+                    }else
+                    {
+                    ?>
+                        <option value="Nuevo" <?php if($ing->procesos_especiales_folia_2_valor=="Nuevo"){echo 'selected="true"';}?>>Nuevo</option>
+                        <option value="Repetición" <?php if($ing->procesos_especiales_folia_2_valor=="Repetición"){echo 'selected="true"';}?>>Repetición</option>
+                    <?php
+                    }
+                    ?>
+                </select>
+                </span><div id="folia2_proceso" style="display:<?php if($procesos_especiales2=="SI"){echo 'block';}else{echo 'none';}?>;"><strong>&nbsp;Proceso Especial (golpe):&nbsp; </strong>                   
+                        <select name="folia2_proceso_seletec"  style="width: 500px;" onchange="carga_ajax_obtenerInfoProcesos(this.value,'pt2');">
+                            <option value="0">Seleccione......</option>
+                            <?php
+                            $procesos=$this->procesosespeciales_model->getProcesosEspecialesCotizacion();    
+                            if(sizeof($ing)==0){
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$datos->folia2_proceso_seletec){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }}else{
+                             foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$ing->folia2_proceso_seletec){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }   
+                            }
+                            ?>
+                        </select><a id="pt2"></a>            
+                    </div><br>
+                    <div id="folia2_molde_selected" style="display:<?php if($procesos_especiales=="SI"){echo 'block';}else{echo 'none';}?>;"> <strong>&nbsp;Proceso Especial (molde): &nbsp;</strong>                      
+                        <select name="folia2_molde_selected"  style="width: 500px;" onchange="carga_ajax_obtenerInfoProcesos(this.value,'ptm2');">
+                            <option value="0">Seleccione......</option>
+                            <?php
+                            $procesos=$this->procesosespeciales_model->getProcesosEspecialesCotizacion();                
+                            if(sizeof($ing)==0){
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$datos->folia2_molde_selected){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }}else{
+                             foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$ing->folia2_molde_selected){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }   
+                            }
+                            ?>
+                        </select><a id="ptm2"></a>            
+                    </div>
+		</div>                
+	</div>
+    
+    <div class="control-group">
+            <label class="control-label" for="usuario">Folia 3</label>
+            <div class="controls">
+		<select name="folia_3" style="width: 100px;" onchange="cambiaFolia3_Cotizacion(); cambiaFolia3();">
+                <?php
+                if(sizeof($ing)==0)
+                {
+                    $procesos_especiales3=$datos->procesos_especiales_folia_3;
+                ?>
+                    <option value="NO" <?php if($datos->procesos_especiales_folia_3=="NO"){echo 'selected="true"';}?>>NO</option>
+                    <option value="SI" <?php if($datos->procesos_especiales_folia_3=="SI"){echo 'selected="true"';}?>>SI</option>
+                <?php
+                }else
+                {
+                    $procesos_especiales3=$ing->procesos_especiales_folia_3;
+                ?>
+                    <option value="NO" <?php if($ing->procesos_especiales_folia_3=="NO"){echo 'selected="true"';}?>>NO</option>
+                    <option value="SI" <?php if($ing->procesos_especiales_folia_3=="SI"){echo 'selected="true"';}?>>SI</option>
+                <?php            
+                }
+                ?>
+                </select> 
+                <span id="folia_se_3_a" style="display: <?php if($procesos_especiales3=='SI'){echo 'block';}else{echo 'none';}?>;">
+                <select name="folia_se_3">
+                <?php
+                    if(sizeof($ing)==0)
+                    {
+                    ?>
+                        <option value="Nuevo" <?php if($datos->procesos_especiales_folia_3_valor=="Nuevo"){echo 'selected="true"';}?>>Nuevo</option>
+                        <option value="Repetición" <?php if($datos->procesos_especiales_folia_3_valor=="Repetición"){echo 'selected="true"';}?>>Repetición</option>                                           
+                    <?php
+                    }else
+                    {
+                    ?>
+                        <option value="Nuevo" <?php if($ing->procesos_especiales_folia_3_valor=="Nuevo"){echo 'selected="true"';}?>>Nuevo</option>
+                        <option value="Repetición" <?php if($ing->procesos_especiales_folia_3_valor=="Repetición"){echo 'selected="true"';}?>>Repetición</option>
+                    <?php
+                    }
+                    ?>
+                </select>
+                </span><div id="folia3_proceso" style="display:<?php if($procesos_especiales3=="SI"){echo 'block';}else{echo 'none';}?>;"><strong>&nbsp;Proceso Especial (golpe):&nbsp; </strong>                          
+                    <select name="folia3_proceso_seletec"  style="width: 500px;" onchange="carga_ajax_obtenerInfoProcesos(this.value,'pt3'); cambiaFolia3()">
+                            <option value="0">Seleccione......</option>
+                            <?php
+                            $procesos=$this->procesosespeciales_model->getProcesosEspecialesCotizacion(); 
+                            if(sizeof($ing)==0){
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$datos->folia3_proceso_seletec){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }}else{
+                             foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$ing->folia3_proceso_seletec){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }   
+                            }
+                            ?>
+                        </select><a id="pt3"></a>            
+                    </div><br>
+                    <div id="folia3_molde_selected" style="display:<?php if($procesos_especiales3=="SI"){echo 'block';}else{echo 'none';}?>;"> <strong>&nbsp;Proceso Especial (molde): &nbsp;</strong>                      
+                        <select name="folia3_molde_selected"  style="width: 500px;" onchange="carga_ajax_obtenerInfoProcesos(this.value,'ptm3');">
+                            <option value="0">Seleccione......</option>
+                            <?php
+                            $procesos=$this->procesosespeciales_model->getProcesosEspecialesCotizacion();                
+                            if(sizeof($ing)==0){
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$datos->folia3_molde_selected){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }}else{
+                             foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$ing->folia3_molde_selected){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }   
+                            }
+                            ?>
+                        </select><a id="ptm3"></a>            
+                    </div>
+		</div>                
+	</div>
+    
+    <div class="control-group">
+		<label class="control-label" for="usuario">Cuño</label>
+		<div class="controls">
+		<select name="cuno" style="width: 100px;" onchange="cambiaCunoIng();">
+                <?php
+                if(sizeof($ing)==0)
+                {
+                    $procesos_especiales4=$datos->procesos_especiales_cuno;
+                ?>
+                    <option value="NO" <?php if($datos->procesos_especiales_cuno=="NO"){echo 'selected="true"';}?>>NO</option>
+                    <option value="SI" <?php if($datos->procesos_especiales_cuno=="SI"){echo 'selected="true"';}?>>SI</option>
+                <?php
+                }else
+                {
+                    $procesos_especiales4=$ing->procesos_especiales_cuno;
+                ?>
+                    <option value="NO" <?php if($ing->procesos_especiales_cuno=="NO"){echo 'selected="true"';}?>>NO</option>
+                    <option value="SI" <?php if($ing->procesos_especiales_cuno=="SI"){echo 'selected="true"';}?>>SI</option>
+                <?php            
+                }
+                ?>
+                
+                
+            </select> 
+            <span id="cuno_se_a" style="display: <?php if($procesos_especiales4=='SI'){echo 'block';}else{echo 'none';}?>;">
+            <select name="cuno_se">
+                <?php
+                if(sizeof($ing)==0)
+                {
+                ?>
+                    <option value="Nuevo" <?php if($datos->procesos_especiales_cuno_valor=="Nuevo"){echo 'selected="true"';}?>>Nuevo</option>
+                    <option value="Repetición" <?php if($datos->procesos_especiales_cuno_valor=="Repetición"){echo 'selected="true"';}?>>Repetición</option>                                         
+                <?php
+                }else
+                {
+                ?>
+                    <option value="Nuevo" <?php if($ing->procesos_especiales_cuno_valor=="Nuevo"){echo 'selected="true"';}?>>Nuevo</option>
+                    <option value="Repetición" <?php if($ing->procesos_especiales_cuno_valor=="Repetición"){echo 'selected="true"';}?>>Repetición</option>
+                <?php
+                }
+                ?>
+            </select>
+            </span><div id="cuno1_proceso" style="display:<?php if($procesos_especiales4=="SI"){echo 'block';}else{echo 'none';}?>;"><strong>&nbsp;Proceso Especial (golpe):&nbsp; </strong>                        
+                        <select name="cuno1_proceso_seletec"  style="width: 500px;" onchange="carga_ajax_obtenerInfoProcesos(this.value,'pt4');">
+                            <option value="0">Seleccione......</option>
+                            <?php
+                            $procesos=$this->procesosespeciales_model->getProcesosEspecialesCotizacion(); 
+                            if(sizeof($ing)==0){
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$datos->cuno1_proceso_seletec){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }}else{
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$ing->cuno1_proceso_seletec){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }    
+                            }
+                            ?>
+                        </select><a id="pt4"></a>            
+                    </div><br>         
+                <div id="cuno1_molde_selected" style="display:<?php if($procesos_especiales4=="SI"){echo 'block';}else{echo 'none';}?>;"><strong>&nbsp;Proceso Especial (molde):&nbsp; </strong>                        
+                        <select name="cuno1_molde_selected"  style="width: 500px;" onchange="carga_ajax_obtenerInfoProcesos(this.value,'ptm4');">
+                            <option value="0">Seleccione......</option>
+                            <?php
+                            $procesos=$this->procesosespeciales_model->getProcesosEspecialesCotizacion(); 
+                            if(sizeof($ing)==0){
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$datos->cuno1_molde_selected){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }}else{
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$ing->cuno1_molde_selected){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }    
+                            }
+                            ?>
+                        </select><a id="ptm4"></a>            
+                    </div>         
+                 
+		</div>
+	</div>
+    
+    <div class="control-group">
+		<label class="control-label" for="usuario">Cuño 2</label>
+		<div class="controls">
+		<select name="cuno_2" style="width: 100px;" onchange="cambiaCuno2();">
+                <?php
+                if(sizeof($ing)==0)
+                {
+                    $procesos_especiales5=$datos->procesos_especiales_cuno_2;
+                    ?>
+                    <option value="NO" <?php if($datos->procesos_especiales_cuno_2=="NO"){echo 'selected="true"';}?>>NO</option>
+                    <option value="SI" <?php if($datos->procesos_especiales_cuno_2=="SI"){echo 'selected="true"';}?>>SI</option>
+                    <?php
+                }else
+                {
+                    $procesos_especiales5=$ing->procesos_especiales_cuno_2;
+                    ?>
+                    <option value="NO" <?php if($ing->procesos_especiales_cuno_2=="NO"){echo 'selected="true"';}?>>NO</option>
+                    <option value="SI" <?php if($ing->procesos_especiales_cuno_2=="SI"){echo 'selected="true"';}?>>SI</option>
+                    <?php            
+                }
+                ?>
+                
+                
+            </select> 
+            <span id="cuno_se_2_a" style="display: <?php if($procesos_especiales5=='SI'){echo 'block';}else{echo 'none';}?>;">
+            <select name="cuno_se_2">
+            <?php
+                if(sizeof($ing)==0)
+                {
+                ?>
+                    <option value="Nuevo" <?php if($datos->procesos_especiales_cuno_2_valor=="Nuevo"){echo 'selected="true"';}?>>Nuevo</option>
+                    <option value="Repetición" <?php if($datos->procesos_especiales_cuno_2_valor=="Repetición"){echo 'selected="true"';}?>>Repetición</option>                                          
+                <?php
+                }else
+                {
+                ?>
+                    <option value="Nuevo" <?php if($ing->procesos_especiales_cuno_2_valor=="Nuevo"){echo 'selected="true"';}?>>Nuevo</option>
+                    <option value="Repetición" <?php if($ing->procesos_especiales_cuno_2_valor=="Repetición"){echo 'selected="true"';}?>>Repetición</option>
+                <?php
+                }
+                ?>
+            </select>
+            </span><div id="cuno2_proceso" style="display:<?php if($procesos_especiales5=="SI"){echo 'block';}else{echo 'none';}?>;"><strong>&nbsp;Proceso Especial (golpe):&nbsp; </strong>                          
+                        <select name="cuno2_proceso_seletec" style="width: 500px;" onchange="carga_ajax_obtenerInfoProcesos(this.value,'pt5');">
+                            <option value="0">Seleccione......</option>
+                            <?php
+                            $procesos=$this->procesosespeciales_model->getProcesosEspecialesCotizacion();
+                            if(sizeof($ing)==0){
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$datos->cuno2_proceso_seletec){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }}else{
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$ing->cuno2_proceso_seletec){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }    
+                            }
+                            ?>
+                        </select><a id="pt5"></a>            
+                    </div><br>         
+                <div id="cuno2_molde_selected" style="display:<?php if($procesos_especiales5=="SI"){echo 'block';}else{echo 'none';}?>;"><strong>&nbsp;Proceso Especial (molde):&nbsp; </strong>                        
+                        <select name="cuno2_molde_selected"  style="width: 500px;" onchange="carga_ajax_obtenerInfoProcesos(this.value,'ptm5');">
+                            <option value="0">Seleccione......</option>
+                            <?php
+                            $procesos=$this->procesosespeciales_model->getProcesosEspecialesCotizacion(); 
+                            if(sizeof($ing)==0){
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$datos->cuno2_molde_selected){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }}else{
+                            foreach($procesos as $pro)
+                            {
+                                ?>
+                                <option value="<?php echo $pro->id; ?>" title="Procesos <?php echo $pro->caracteristicas; ?>" <?php if($pro->id==$ing->cuno2_molde_selected){echo 'selected="selected"';}?>><?php echo $pro->caracteristicas; ?> (Valor Venta: <?php echo $pro->valor_venta; ?>)</option>
+                                <?php
+                            }    
+                            }
+                            ?>
+                        </select><a id="ptm5"></a>            
+                    </div>         
+                 
+		</div>
+	</div>
     <div class="control-group">
 		<label class="control-label" for="usuario">Lleva Fondo Negro</label>
 		<div class="controls">

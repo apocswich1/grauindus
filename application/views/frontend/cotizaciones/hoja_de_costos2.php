@@ -1227,9 +1227,196 @@ page[size="A4"][layout="portrait"] {
 	top:20px;
 	right:20px;
 }
+
+#grupos{
+    width: 800px;
+    float: right;
+    margin-top:305px;
+}
+#grupos table{
+    font-size: 11px;
+    width: 580px;
+}
+
+#grupos table tr td{
+    padding: 3px;
+}
+
+#grupos .title{
+    text-align:center; color:white; font-weight: bold; background-color: #004c68;
+}
         </style>
     </head>
     <body>  
+     <?php 
+        $existegrupo=$this->grupos_model->getExisteGrupo($id);
+        $numero_en_grupo = 0;
+        if(sizeof($existegrupo)>0){
+            if($existegrupo->idc_01!="" || $existegrupo->idc_01!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo1=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_01);
+                if(sizeof($cotgrupo1)>0){
+                    $detallecotgrupo1 = "<tr>";
+                    $detallecotgrupo1.= "<td align='center'>$cotgrupo1->id_cotizacion</td>";
+                    $detallecotgrupo1.= "<td>$cotgrupo1->producto | C1:$cotgrupo1->cantidad_1,P1:$cotgrupo1->valor_empresa | C2:$cotgrupo1->cantidad_2,P2:$cotgrupo1->valor_empresa_2 | C3:$cotgrupo1->cantidad_3,P3:$cotgrupo1->valor_empresa_3 | C4:$cotgrupo1->cantidad_4,P4:$cotgrupo1->valor_empresa_4</td>";
+                    $detallecotgrupo1.= "<td>$cotgrupo1->fecha</td>";
+                    $detallecotgrupo1.= "<tr>";
+                }else{
+                    $detallecotgrupo1.= "<tr><td align='center'>$existegrupo->idc_01 </td><td colspan='2' align='center' align='center'>La cotizacion Nro: $existegrupo->idc_01 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            
+            if($existegrupo->idc_02!="" || $existegrupo->idc_02!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo2=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_02);
+                if(sizeof($cotgrupo2)>0){
+                    $detallecotgrupo2 = "<tr>";
+                    $detallecotgrupo2.= "<td align='center'>$cotgrupo2->id_cotizacion</td>";
+                    $detallecotgrupo2.= "<td>$cotgrupo2->producto | C1:$cotgrupo2->cantidad_1,P1:$cotgrupo2->valor_empresa | C2:$cotgrupo2->cantidad_2,P2:$cotgrupo2->valor_empresa_2 | C3:$cotgrupo2->cantidad_3,P3:$cotgrupo2->valor_empresa_3 | C4:$cotgrupo2->cantidad_4,P4:$cotgrupo2->valor_empresa_4</td>";
+                    $detallecotgrupo2.= "<td>$cotgrupo2->fecha</td>";
+                    $detallecotgrupo2.= "<tr>";
+                }else{
+                    $detallecotgrupo2.= "<tr><td align='center'>$existegrupo->idc_02 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_02 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_03!="" || $existegrupo->idc_03!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo3=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_03);
+                if(sizeof($cotgrupo3)>0){
+                    $detallecotgrupo3 = "<tr>";
+                    $detallecotgrupo3.= "<td align='center'>$cotgrupo3->id_cotizacion</td>";
+                    $detallecotgrupo3.= "<td>$cotgrupo3->producto | C1:$cotgrupo3->cantidad_1,P1:$cotgrupo3->valor_empresa | C2:$cotgrupo3->cantidad_2,P2:$cotgrupo3->valor_empresa_2 | C3:$cotgrupo3->cantidad_3,P3:$cotgrupo3->valor_empresa_3 | C4:$cotgrupo3->cantidad_4,P4:$cotgrupo3->valor_empresa_4</td>";
+                    $detallecotgrupo3.= "<td>$cotgrupo3->fecha</td>";
+                    $detallecotgrupo3.= "<tr>";
+                }else{
+                    $detallecotgrupo3.= "<tr><td align='center'>$existegrupo->idc_03 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_03 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_04!="" || $existegrupo->idc_04!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo4=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_04);
+                if(sizeof($cotgrupo4)>0){
+                    $detallecotgrupo4 = "<tr>";
+                    $detallecotgrupo4.= "<td align='center'>$cotgrupo4->id_cotizacion</td>";
+                    $detallecotgrupo4.= "<td>$cotgrupo4->producto | C1:$cotgrupo4->cantidad_1,P1:$cotgrupo4->valor_empresa | C2:$cotgrupo4->cantidad_2,P2:$cotgrupo4->valor_empresa_2 | C3:$cotgrupo4->cantidad_3,P3:$cotgrupo4->valor_empresa_3 | C4:$cotgrupo4->cantidad_4,P4:$cotgrupo4->valor_empresa_4</td>";
+                    $detallecotgrupo4.= "<td>$cotgrupo4->fecha</td>";
+                    $detallecotgrupo4.= "<tr>";
+                }else{
+                    $detallecotgrupo4.= "<tr><td align='center'>$existegrupo->idc_04 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_04 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_05!="" || $existegrupo->idc_05!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo5=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_05);
+                if(sizeof($cotgrupo5)>0){
+                    $detallecotgrupo5 = "<tr>";
+                    $detallecotgrupo5.= "<td align='center'>$cotgrupo5->id_cotizacion</td>";
+                    $detallecotgrupo5.= "<td>$cotgrupo5->producto | C1:$cotgrupo5->cantidad_1,P1:$cotgrupo5->valor_empresa | C2:$cotgrupo5->cantidad_2,P2:$cotgrupo5->valor_empresa_2 | C3:$cotgrupo5->cantidad_3,P3:$cotgrupo5->valor_empresa_3 | C4:$cotgrupo5->cantidad_4,P4:$cotgrupo5->valor_empresa_4</td>";
+                    $detallecotgrupo5.= "<td>$cotgrupo5->fecha</td>";
+                    $detallecotgrupo5.= "<tr>";
+                }else{
+                    $detallecotgrupo5.= "<tr><td align='center'>$existegrupo->idc_05 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_05 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_06!="" || $existegrupo->idc_06!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo6=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_06);
+                if(sizeof($cotgrupo6)>0){
+                    $detallecotgrupo6 = "<tr>";
+                    $detallecotgrupo6.= "<td align='center'>$cotgrupo6->id_cotizacion</td>";
+                    $detallecotgrupo6.= "<td>$cotgrupo6->producto | C1:$cotgrupo6->cantidad_1,P1:$cotgrupo6->valor_empresa | C2:$cotgrupo6->cantidad_2,P2:$cotgrupo6->valor_empresa_2 | C3:$cotgrupo6->cantidad_3,P3:$cotgrupo6->valor_empresa_3 | C4:$cotgrupo6->cantidad_4,P4:$cotgrupo6->valor_empresa_4</td>";
+                    $detallecotgrupo6.= "<td>$cotgrupo6->fecha</td>";
+                    $detallecotgrupo6.= "<tr>";
+                }else{
+                    $detallecotgrupo6.= "<tr><td align='center'>$existegrupo->idc_06 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_06 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_07!="" || $existegrupo->idc_07!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo7=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_07);
+                if(sizeof($cotgrupo7)>0){
+                    $detallecotgrupo7 = "<tr>";
+                    $detallecotgrupo7.= "<td align='center'>$cotgrupo7->id_cotizacion</td>";
+                    $detallecotgrupo7.= "<td>$cotgrupo7->producto | C1:$cotgrupo7->cantidad_1,P1:$cotgrupo7->valor_empresa | C2:$cotgrupo7->cantidad_2,P2:$cotgrupo7->valor_empresa_2 | C3:$cotgrupo7->cantidad_3,P3:$cotgrupo7->valor_empresa_3 | C4:$cotgrupo7->cantidad_4,P4:$cotgrupo7->valor_empresa_4</td>";
+                    $detallecotgrupo7.= "<td>$cotgrupo7->fecha</td>";
+                    $detallecotgrupo7.= "<tr>";
+                }else{
+                    $detallecotgrupo7.= "<tr><td align='center'>$existegrupo->idc_07 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_07 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_08!="" || $existegrupo->idc_08!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo8=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_08);
+                if(sizeof($cotgrupo8)>0){
+                    $detallecotgrupo8 = "<tr>";
+                    $detallecotgrupo8.= "<td align='center'>$cotgrupo8->id_cotizacion</td>";
+                    $detallecotgrupo8.= "<td>$cotgrupo8->producto | C1:$cotgrupo8->cantidad_1,P1:$cotgrupo8->valor_empresa | C2:$cotgrupo8->cantidad_2,P2:$cotgrupo8->valor_empresa_2 | C3:$cotgrupo8->cantidad_3,P3:$cotgrupo8->valor_empresa_3 | C4:$cotgrupo8->cantidad_4,P4:$cotgrupo8->valor_empresa_4</td>";
+                    $detallecotgrupo8.= "<td>$cotgrupo8->fecha</td>";
+                    $detallecotgrupo8.= "<tr>";
+                }else{
+                    $detallecotgrupo8.= "<tr><td align='center'>$existegrupo->idc_08 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_08 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_09!="" || $existegrupo->idc_09!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo9=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_09);
+                if(sizeof($cotgrupo9)>0){
+                    $detallecotgrupo9 = "<tr>";
+                    $detallecotgrupo9.= "<td align='center'>$cotgrupo9->id_cotizacion</td>";
+                    $detallecotgrupo9.= "<td>$cotgrupo9->producto | C1:$cotgrupo9->cantidad_1,P1:$cotgrupo9->valor_empresa | C2:$cotgrupo9->cantidad_2,P2:$cotgrupo9->valor_empresa_2 | C3:$cotgrupo9->cantidad_3,P3:$cotgrupo9->valor_empresa_3 | C4:$cotgrupo9->cantidad_4,P4:$cotgrupo9->valor_empresa_4</td>";
+                    $detallecotgrupo9.= "<td>$cotgrupo9->fecha</td>";
+                    $detallecotgrupo9.= "<tr>";
+                }else{
+                    $detallecotgrupo9.= "<tr><td align='center'>$existegrupo->idc_09 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_09 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+            if($existegrupo->idc_10!="" || $existegrupo->idc_10!=null){
+                $numero_en_grupo = $numero_en_grupo +1;
+                $cotgrupo10=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacionMatriz($existegrupo->idc_10);
+                if(sizeof($cotgrupo10)>0){
+                    $detallecotgrupo10 = "<tr>";
+                    $detallecotgrupo10.= "<td align='center'>$cotgrupo10->id_cotizacion</td>";
+                    $detallecotgrupo10.= "<td>$cotgrupo10->producto | C1:$cotgrupo10->cantidad_1,P1:$cotgrupo10->valor_empresa | C2:$cotgrupo10->cantidad_2,P2:$cotgrupo10->valor_empresa_2 | C3:$cotgrupo10->cantidad_3,P3:$cotgrupo10->valor_empresa_3 | C4:$cotgrupo10->cantidad_4,P4:$cotgrupo10->valor_empresa_4</td>";
+                    $detallecotgrupo10.= "<td>$cotgrupo10->fecha</td>";
+                    $detallecotgrupo10.= "<tr>";
+                }else{
+                    $detallecotgrupo10.= "<tr><td align='center'>$existegrupo->idc_010 </td><td colspan='2' align='center'>La cotizacion Nro: $existegrupo->idc_010 aun no tiene Hoja de Costos</td><tr>";
+                }
+            }
+        }  
+        
+        ?>
+        <?php if(sizeof($existegrupo)>0) { ?>
+        <div id="grupos">
+            <table border='1'>
+                <tr>
+                    <td colspan="3" class="title">Esta cotizacion pertenece a un grupo</td>
+                </tr>
+                <tr>
+                    <td style="width:500px;" colspan="2"><b>Nombre de Grupo:</b> <?php echo $existegrupo->grupo; ?></td>
+                    <td><b>Cantidad:</b> <?php echo $numero_en_grupo;  ?></td>
+                </tr>
+                <tr>
+                    <td class="title" colspan="3" >Productos</td>
+                </tr>
+                <tr>
+                    <td colspan="" style="text-align:center"><b>Nro</b></td>
+                    <td colspan="" style="text-align:center"><b>Detalle de Cotizacion</b></td>
+                    <td colspan="" style="text-align:center" ><b>Fecha</b></td>
+                </tr>
+                    <?php if($detallecotgrupo1!=""){echo $detallecotgrupo1; } ?>
+                    <?php if($detallecotgrupo2!=""){echo $detallecotgrupo2; } ?>
+                    <?php if($detallecotgrupo3!=""){echo $detallecotgrupo3; } ?>
+                    <?php if($detallecotgrupo4!=""){echo $detallecotgrupo4; } ?>
+                    <?php if($detallecotgrupo5!=""){echo $detallecotgrupo5; } ?>
+                    <?php if($detallecotgrupo6!=""){echo $detallecotgrupo6; } ?>
+                    <?php if($detallecotgrupo7!=""){echo $detallecotgrupo7; } ?>
+                    <?php if($detallecotgrupo8!=""){echo $detallecotgrupo8; } ?>
+                    <?php if($detallecotgrupo9!=""){echo $detallecotgrupo9; } ?>
+                    <?php if($detallecotgrupo10!=""){echo $detallecotgrupo10; } ?>
+            </table>
+        </div>
+        <?php } ?>
     <form name="form" id="form" method="post" action="<?php echo base_url();?>hoja/save"> 
      <div class="container fuente">
     
@@ -1836,7 +2023,7 @@ page[size="A4"][layout="portrait"] {
                                         {
                                             $barniz2=1;
                                         }
-                                  
+                                        
                                         if($maquina=="Máquina Roland 800")
                                          {
                                             $tira1=((($datoscantidad1/$ing->unidades_por_pliego)+$sum)*$factor_rango+$base_imprenta->precio )*($fotomecanica->colores+$barniz2);
@@ -2147,7 +2334,7 @@ page[size="A4"][layout="portrait"] {
                                 ?>
                  </td>
                 <td class="celda_5 valign_top">
-                    <!--trabajos externos-->
+                     <!--trabajos externos-->
                     <table border="1">
                             <tr>
                                 <td class="celda_5" colspan="10"><strong>&nbsp;&nbsp;Trabajos Externos</strong></td>
@@ -2158,6 +2345,7 @@ page[size="A4"][layout="portrait"] {
                                 <td class="celda_5" >&nbsp;M2&nbsp;</td>
                                 <td class="celda_5" >&nbsp;V. Unit.M2&nbsp;</td>												
                                 <td class="celda_5" >&nbsp;C. Unit&nbsp;</td>
+                                <td class="celda_5" >&nbsp;Unid.P&nbsp;</td>
                                 <td class="celda_5" >&nbsp;Total&nbsp;</td>                                                
                             </tr>
                                          
@@ -2165,7 +2353,7 @@ page[size="A4"][layout="portrait"] {
                                 $cantidad_4=0;
                                 $externos_produccion=0;
                              //    exit($fotomecanica->acabado_impresion_4."hollaaa");
-				if($fotomecanica->acabado_impresion_4=="17")
+				if($fotomecanica->acabado_impresion_4=="1700")
                                 {
                                     $acabado_4="";
                                     $acabado_4Valor="";
@@ -2181,7 +2369,7 @@ page[size="A4"][layout="portrait"] {
                                     $acabado_4MedidaMasValorVenta=($tamano1*$tamano2*$acabado_4Valor)/10000; // (ancho x largo x valor venta) /10000									
                                     $acabado_4CostoFijo=$acabado_4Array->costo_fijo;	
 								
-                                    
+                                   // echo "<h1>" . $acabado_4Array->unidad_de_venta . "</h1>";
                                     if ($acabado_4Array->unidad_de_venta == '1') //Metros
                                     {
                                         $costo_unitario4=$acabado_4MedidaMasValorVenta;
@@ -2216,8 +2404,8 @@ page[size="A4"][layout="portrait"] {
                                     }   
                                     elseif ($acabado_4Array->unidad_de_venta == '7') //mt2
                                     {
-                                        $costo_unitario4=$acabado_4MedidaMasValorVenta;
-                                        $precio_total_4=$acabado_4MedidaMasValorVenta*$datoscantidad1;
+                                        $costo_unitario4=$acabado_4MedidaMasValorVenta/$ing->unidades_por_pliego;
+                                        $precio_total_4=($acabado_4MedidaMasValorVenta/$ing->unidades_por_pliego)*$datoscantidad1;
                                         $cantidad_4=$datoscantidad1;
                                     }
                                     elseif ($acabado_4Array->unidad_de_venta == '8') //cms
@@ -2238,8 +2426,8 @@ page[size="A4"][layout="portrait"] {
                                     }
                                     
                                 }
-								
-                                if($fotomecanica->acabado_impresion_5=="17")
+                                
+                                if($fotomecanica->acabado_impresion_5=="1700")
                                 {
                                     $acabado_5="";
                                     $acabado_5Valor="";
@@ -2247,7 +2435,7 @@ page[size="A4"][layout="portrait"] {
                                     $acabado_5Unitario="";
                                     $acabado_5UnidadVentaNombre="";
                                 }else
-                                {
+                                {                                    
                                     $acabado_5Array=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_5);
                                     $acabado_5=$acabado_5Array->caracteristicas;
                                     $acabado_5UnidadVentaNombre=$acabado_5Array->unv; //Nombre unidad de venta
@@ -2288,8 +2476,8 @@ page[size="A4"][layout="portrait"] {
                                     }   
                                     elseif ($acabado_5Array->unidad_de_venta == '7') //mt2
                                     {
-                                        $costo_unitario5=$acabado_5MedidaMasValorVenta;
-                                        $precio_total_5=$acabado_5MedidaMasValorVenta*$datoscantidad1;
+                                        $costo_unitario5=$acabado_5MedidaMasValorVenta/$ing->unidades_por_pliego;
+                                        $precio_total_5=($acabado_5MedidaMasValorVenta/$ing->unidades_por_pliego)*$datoscantidad1;
                                         $cantidad_5=$datoscantidad1;
                                     }
                                     elseif ($acabado_5Array->unidad_de_venta == '8') //mt2
@@ -2297,9 +2485,10 @@ page[size="A4"][layout="portrait"] {
                                         $precio_total_5=($acabado_5MedidaMasValorVenta*$datoscantidad1);
                                     }           
                                     elseif ($acabado_5Array->unidad_de_venta == '9') //Monto Fijo 
-                                    {
+                                    { 
                                         $costo_unitario5=$acabado_5Valor;                                        
-                                        $precio_total_5=($acabado_5Valor*$fotomecanica->input_variable_externo_5);
+                                        //$precio_total_5=($acabado_5Valor*$fotomecanica->input_variable_externo_5);
+                                        $precio_total_5=$acabado_5Valor;
                                         $cantidad_5=$fotomecanica->input_variable_externo_5;
                                     }   
                                     elseif ($acabado_5Array->unidad_de_venta == '10') //Por Pasada 
@@ -2309,7 +2498,8 @@ page[size="A4"][layout="portrait"] {
                                         $cantidad_5=$datoscantidad1;
                                     }                                      
                                 }    
-                                if($fotomecanica->acabado_impresion_6=="17")
+                                
+                                if($fotomecanica->acabado_impresion_6=="1700")
                                 {
                                     $acabado_6="";
                                     $acabado_6Valor="";
@@ -2324,6 +2514,7 @@ page[size="A4"][layout="portrait"] {
                                     $acabado_6Valor=$acabado_6Array->valor_venta; // ej: 52
                                     $acabado_6MedidaMasValorVenta=($tamano1*$tamano2*$acabado_6Valor)/10000; // (ancho x largo x valor venta) /10000									
                                     $acabado_6CostoFijo=$acabado_6Array->costo_fijo;		
+                                    //echo "<h1>" . $acabado_6MedidaMasValorVenta . "</h1>";exit();
                                     if ($acabado_6Array->unidad_de_venta == '1') //mt2
                                     {
                                         $precio_total_6=($acabado_6MedidaMasValorVenta*$datoscantidad1);
@@ -2345,7 +2536,7 @@ page[size="A4"][layout="portrait"] {
                                     elseif ($acabado_6Array->unidad_de_venta == '5') //unidad
                                     {
                                         $costo_unitario6=$acabado_6Valor;                                        
-                                        $precio_total_6=($datoscantidad1*$acabado_5Valor);
+                                        $precio_total_6=($datoscantidad1*$acabado_6Valor);
                                         $cantidad_6=$datoscantidad1;
                                     }       
                                     elseif ($acabado_6Array->unidad_de_venta == '6') //mt2
@@ -2356,8 +2547,8 @@ page[size="A4"][layout="portrait"] {
                                     }   
                                     elseif ($acabado_6Array->unidad_de_venta == '7') //mt2
                                     {
-                                        $costo_unitario6=$acabado_6MedidaMasValorVenta;
-                                        $precio_total_6=$acabado_6MedidaMasValorVenta*$datoscantidad1;
+                                        $costo_unitario6=$acabado_6MedidaMasValorVenta/$ing->unidades_por_pliego;
+                                        $precio_total_6=($acabado_6MedidaMasValorVenta/$ing->unidades_por_pliego)*$datoscantidad1;
                                         $cantidad_6=$datoscantidad1;
                                     }
                                     elseif ($acabado_6Array->unidad_de_venta == '8') //cms
@@ -2377,150 +2568,144 @@ page[size="A4"][layout="portrait"] {
                                         $cantidad_6=$datoscantidad1;
                                     }                                      
 
-                                }        
+                                } //echo "<h1>" . $folia1->unidad_de_venta . "</h1>";
                ?>
                <?php if($procesosespeciales>0 && $tesp1 != 0){ ?>
                <tr>
                     <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($folia1->caracteristicas)));?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;<?php echo $folia1->unidades_de_venta ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php echo $folia1->unv ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php  echo $datoscantidad1; ?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  echo $folia1->ancho; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php  echo $folia1->largo; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;&nbsp;</td>												
                     <td class="celda_3">&nbsp;<?php  echo $folia1->valor_venta; ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  echo $folia1->valor_venta; ?>&nbsp;</td>
-                    <?php if ($fv1=="Nuevo"){ ?>
-                    <td class="celda_3">&nbsp;<?php  $costo1=$folia1->valor_venta*$datoscantidad1; echo number_format($costo1,0,'','.');  ?>&nbsp;</td></tr>
-                    <!-- --->
-                    <tr>
-                    <td class="celda_5" colspan="10">&nbsp;&nbsp;Molde Folia<?php ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;Monto Fijo</td>
-                    <td class="celda_5">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;<?php   ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if(str_replace("�", "ñ", ucwords(strtolower($folia1->caracteristicas)))=="Folia (golpe)"){echo $folia1->valor_venta/$ing->unidades_por_pliego; }else{echo $folia1->valor_venta; } ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if($folia1->unidad_de_venta==5){$costo1=($folia1->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{if($folia1->unidad_de_venta==9){$costo1=$folia1->valor_venta;}else{$costo1=$folia1->valor_venta*$datoscantidad1;}} echo number_format($costo1,0,'','.');  ?>&nbsp;</td></tr>
+                
+               <?php } ?>        
+               <?php if($procesosespeciales>0 && sizeof($cffolia1) > 0){ ?>
+               <tr>
+                    <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($cffolia1->caracteristicas)));?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php echo $cffolia1->unv ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php  echo $datoscantidad1; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  echo $cffolia1->ancho; ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php  echo $cffolia1->largo; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;&nbsp;</td>												
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  $costoa1=$cffolia1->valor_venta; echo number_format($costoa1,0,'','.');  ?>&nbsp;</td></tr>
-                    <!-- --->
-                    <?php }else{ ?>
-                    <td class="celda_3">&nbsp;<?php  $costo1=$folia1->valor_venta*$datoscantidad1; echo number_format($costo1,0,'','.');  ?>&nbsp;</td></tr>
-                    <?php } ?>
+                    <td class="celda_3">&nbsp;<?php  echo $cffolia1->valor_venta; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if(str_replace("�", "ñ", ucwords(strtolower($cffolia1->caracteristicas)))=="Folia (golpe)"){echo $cffolia1->valor_venta/$ing->unidades_por_pliego; }else{if(str_replace("�", "ñ", ucwords(strtolower($cffolia1->caracteristicas)))=="Cuno Pasada"){echo $cffolia1->valor_venta/$ing->unidades_por_pliego; }else{echo $cffolia1->valor_venta;}} ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if($cffolia1->unidad_de_venta==5){$costo11=($cffolia1->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{if($cffolia1->unidad_de_venta==9){$costo11=$cffolia1->valor_venta;}else{$costo11=$cffolia1->valor_venta*$datoscantidad1;}} echo number_format($costo11,0,'','.');  ?>&nbsp;</td></tr>
                 
                <?php } ?>        
                <?php if($procesosespeciales>0 && $tesp2 != 0){ ?>
                <tr>
                     <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($folia2->caracteristicas)));?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;<?php echo $folia2->unidades_de_venta ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php echo $folia2->unv ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php  echo $datoscantidad1; ?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  echo $folia2->ancho; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php  echo $folia2->largo; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;&nbsp;</td>												
                     <td class="celda_3">&nbsp;<?php  echo $folia2->valor_venta; ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  echo $folia2->valor_venta; ?>&nbsp;</td>
-                    <?php if ($fv2=="Nuevo"){ ?>
-                    <td class="celda_3">&nbsp;<?php  $costo2=$folia2->valor_venta*$datoscantidad1; echo number_format($costo2,0,'','.');  ?>&nbsp;</td></tr>
-                    <!-- --->
-                    <tr>
-                    <td class="celda_5" colspan="10">&nbsp;&nbsp;Molde Folia<?php ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;Monto Fijo</td>
-                    <td class="celda_5">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;<?php   ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if(str_replace("�", "ñ", ucwords(strtolower($folia2->caracteristicas)))=="Folia (golpe)"){echo $folia2->valor_venta/$ing->unidades_por_pliego; }else{echo $folia2->valor_venta; } ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if($folia1->unidad_de_venta==5){$costo2=($folia2->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{if($folia2->unidad_de_venta==9){$costo2=$folia2->valor_venta;}else{$costo2=$folia2->valor_venta*$datoscantidad1;}}  ?>&nbsp;</td></tr>
+               <?php } ?>
+               <?php if($procesosespeciales>0 && sizeof($cffolia2) > 0){ ?>
+               <tr>
+                    <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($cffolia2->caracteristicas)));?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php echo $cffolia2->unv ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php  echo $datoscantidad1; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  echo $cffolia2->ancho; ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php  echo $cffolia2->largo; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;&nbsp;</td>												
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  $costoa2=$cffolia2->valor_venta; echo number_format($costoa2,0,'','.');  ?>&nbsp;</td></tr>
-                    <!-- --->
-                    <?php }else{ ?>
-                    <td class="celda_3">&nbsp;<?php  $costo2=$folia2->valor_venta*$datoscantidad1; echo number_format($costo2,0,'','.');  ?>&nbsp;</td></tr>
-                    <?php } ?>
-               <?php } ?>        
+                    <td class="celda_3">&nbsp;<?php  echo $cffolia2->valor_venta; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if(str_replace("�", "ñ", ucwords(strtolower($cffolia2->caracteristicas)))=="Folia (golpe)"){echo $cffolia2->valor_venta/$ing->unidades_por_pliego; }else{if(str_replace("�", "ñ", ucwords(strtolower($cffolia2->caracteristicas)))=="Cuno Pasada"){echo $cffolia2->valor_venta/$ing->unidades_por_pliego; }else{echo $cffolia2->valor_venta;}} ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if($cffolia2->unidad_de_venta==5){$costo12=($cffolia2->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{if($cffolia2->unidad_de_venta==9){$costo12=$cffolia2->valor_venta;}else{$costo12=$cffolia2->valor_venta*$datoscantidad1;}} echo number_format($costo12,0,'','.');  ?>&nbsp;</td></tr>
+                
+               <?php } ?>     
                <?php if($procesosespeciales>0 && $tesp3 != 0){ ?>
                <tr>
                     <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($folia3->caracteristicas)));?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;<?php echo $folia3->unidades_de_venta ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php echo $folia3->unv ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php  echo $datoscantidad1; ?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  echo $folia3->ancho; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php  echo $folia3->largo; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;&nbsp;</td>												
                     <td class="celda_3">&nbsp;<?php  echo $folia3->valor_venta; ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  echo $folia3->valor_venta; ?>&nbsp;</td>
-                    <?php if ($fv3=="Nuevo"){ ?>
-                    <td class="celda_3">&nbsp;<?php  $costo3=$folia3->valor_venta*$datoscantidad1; echo number_format($costo3,0,'','.');  ?>&nbsp;</td></tr>
-                    <!-- --->
-                    <tr>
-                    <td class="celda_5" colspan="10">&nbsp;&nbsp;Molde Folia<?php ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;Monto Fijo</td>
-                    <td class="celda_5">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;<?php   ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if(str_replace("�", "ñ", ucwords(strtolower($folia3->caracteristicas)))=="Folia (golpe)"){echo $folia3->valor_venta/$ing->unidades_por_pliego; }else{echo $folia3->valor_venta; } ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego?>&nbsp;</td>                   
+                    <td class="celda_3">&nbsp;<?php  if($folia3->unidad_de_venta==5){$costo3=($folia3->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{if($folia3->unidad_de_venta==9){$costo3=$folia3->valor_venta;}else{$costo3=$folia3->valor_venta*$datoscantidad1;}}  ?>&nbsp;</td></tr>
+               <?php } ?>
+               <?php if($procesosespeciales>0 && sizeof($cffolia3) > 0){ ?>
+               <tr>
+                    <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($cffolia3->caracteristicas)));?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php echo $cffolia3->unv ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php  echo $datoscantidad1; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  echo $cffolia3->ancho; ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php  echo $cffolia3->largo; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;&nbsp;</td>												
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  $costoa3=$cffolia3->valor_venta; echo number_format($costoa3,0,'','.');  ?>&nbsp;</td></tr>
-                    <!-- --->
-                    <?php }else{ ?>
-                    <td class="celda_3">&nbsp;<?php  $costo3=$folia3->valor_venta*$datoscantidad1; echo number_format($costo3,0,'','.');  ?>&nbsp;</td></tr>
-                    <?php } ?>
-               <?php } ?>        
+                    <td class="celda_3">&nbsp;<?php  echo $cffolia3->valor_venta; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if(str_replace("�", "ñ", ucwords(strtolower($cffolia3->caracteristicas)))=="Folia (golpe)"){echo $cffolia3->valor_venta/$ing->unidades_por_pliego; }else{if(str_replace("�", "ñ", ucwords(strtolower($cffolia3->caracteristicas)))=="Cuno Pasada"){echo $cffolia3->valor_venta/$ing->unidades_por_pliego; }else{echo $cffolia3->valor_venta;}} ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if($cffolia3->unidad_de_venta==5){$costo13=($cffolia3->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{if($cffolia3->unidad_de_venta==9){$costo13=$cffolia3->valor_venta;}else{$costo13=$cffolia3->valor_venta*$datoscantidad1;}} echo number_format($costo13,0,'','.');  ?>&nbsp;</td></tr>
+                
+               <?php } ?> 
                <?php if($procesosespeciales>0 && $tesp4 != 0){ ?>
                <tr>
                     <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($cuno1->caracteristicas)));?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;<?php echo $cuno1->unidades_de_venta ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php echo $cuno1->unv ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php echo $datoscantidad1; ?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  echo $cuno1->ancho; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php  echo $cuno1->largo; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;&nbsp;</td>												
                     <td class="celda_3">&nbsp;<?php  echo $cuno1->valor_venta; ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  echo $cuno1->valor_venta; ?>&nbsp;</td>
-                    <?php if ($cv1=="Nuevo"){ ?>
-                    <td class="celda_3">&nbsp;<?php  $costo4=$cuno1->valor_venta*$datoscantidad1; echo number_format($costo4,0,'','.');  ?>&nbsp;</td></tr>
-                    <!-- --->
-                    <tr>
-                    <td class="celda_5" colspan="10">&nbsp;&nbsp;Molde Folia<?php ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;Monto Fijo</td>
-                    <td class="celda_5">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;&nbsp;</td>												
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  $costoa4=$cfcuno1->valor_venta;; echo number_format($costoa4,0,'','.');  ?>&nbsp;</td></tr>
-                    <!-- --->
-                    <?php }else{ ?>
-                    <td class="celda_3">&nbsp;<?php  $costo4=$cuno1->valor_venta*$datoscantidad1; echo number_format($costo4,0,'','.');  ?>&nbsp;</td></tr>
-                    <?php } ?>
+                    <td class="celda_3">&nbsp;<?php  if(str_replace("�", "ñ", ucwords(strtolower($cuno1->caracteristicas)))=="Folia (golpe)"){echo $cuno1->valor_venta/$ing->unidades_por_pliego; }else{echo $cuno1->valor_venta; } ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if($cuno1->unidad_de_venta==5){$costo4=($cuno1->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{if($cuno1->unidad_de_venta==9){$costo4=$cuno1->valor_venta;}else{$costo4=$cuno1->valor_venta*$datoscantidad1;}}  ?>&nbsp;</td></tr>
                <?php } ?>        
+               <?php if($procesosespeciales>0 && sizeof($cfcuno1) > 0){ ?>
+               <tr>
+                    <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($cfcuno1->caracteristicas)));?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php echo $cfcuno1->unv ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php  echo $datoscantidad1; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  echo $cfcuno1->ancho; ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php  echo $cfcuno1->largo; ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;&nbsp;</td>												
+                    <td class="celda_3">&nbsp;<?php  echo $cfcuno1->valor_venta; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if(str_replace("�", "ñ", ucwords(strtolower($cfcuno1->caracteristicas)))=="Folia (golpe)"){echo $cfcuno1->valor_venta/$ing->unidades_por_pliego; }else{if(str_replace("�", "ñ", ucwords(strtolower($cfcuno1->caracteristicas)))=="Cuno Pasada"){echo $cfcuno1->valor_venta/$ing->unidades_por_pliego; }else{echo $cfcuno1->valor_venta;}} ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if($cfcuno1->unidad_de_venta==5){$costo14=($cfcuno1->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{if($cfcuno1->unidad_de_venta==9){$costo14=$cfcuno1->valor_venta;}else{$costo14=$cfcuno1->valor_venta*$datoscantidad1;}} echo number_format($costo14,0,'','.');  ?>&nbsp;</td></tr>
+                
+               <?php } ?> 
                <?php if($procesosespeciales>0 && $tesp5 != 0){ ?>
                <tr>
                     <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($cuno2->caracteristicas)));?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;<?php echo $cuno2->unidades_de_venta ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php echo $cuno2->unv ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php echo $datoscantidad1; ?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  echo $cuno2->ancho; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php  echo $cuno2->largo; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;&nbsp;</td>												
                     <td class="celda_3">&nbsp;<?php  echo $cuno2->valor_venta; ?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  echo $cuno2->valor_venta; ?>&nbsp;</td>
-                    <?php if ($cv2=="Nuevo"){ ?>
-                    <td class="celda_3">&nbsp;<?php  $costo5=$cuno2->valor_venta*$datoscantidad1; echo number_format($costo5,0,'','.');  ?>&nbsp;</td></tr>
-                    <!-- --->
-                    <tr>
-                    <td class="celda_5" colspan="10">&nbsp;&nbsp;Molde Folia<?php ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;Monto Fijo</td>
-                    <td class="celda_5">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_5">&nbsp;&nbsp;</td>												
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php   ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  $costoa5=$cfcuno2->valor_venta; echo number_format($costoa5,0,'','.');  ?>&nbsp;</td></tr>
-                    <!-- --->
-                    <?php }else{ ?>
-                    <td class="celda_3">&nbsp;<?php  $costo5=$cuno2->valor_venta*$datoscantidad1; echo number_format($costo5,0,'','.');  ?>&nbsp;</td></tr>
-                    <?php } ?>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if($cuno2->unidad_de_venta==5){$costo5=($cuno2->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{if($cuno2->unidad_de_venta==9){$costo5=$cuno2->valor_venta;}else{$costo5=$cuno2->valor_venta*$datoscantidad1;}}  ?>&nbsp;</td></tr>
                <?php } ?>        
-                      
+               <?php if($procesosespeciales>0 && sizeof($cfcuno2) > 0){ ?>
+               <tr>
+                    <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($cfcuno2->caracteristicas)));?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php echo $cfcuno2->unv ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php  echo $datoscantidad1; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  echo $cfcuno2->ancho; ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;<?php  echo $cfcuno2->largo; ?>&nbsp;</td>
+                    <td class="celda_5">&nbsp;&nbsp;</td>												
+                    <td class="celda_3">&nbsp;<?php  echo $cfcuno2->valor_venta; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if(str_replace("�", "ñ", ucwords(strtolower($cfcuno2->caracteristicas)))=="Folia (golpe)"){echo $cfcuno2->valor_venta/$ing->unidades_por_pliego; }else{if(str_replace("�", "ñ", ucwords(strtolower($cfcuno2->caracteristicas)))=="Cuno Pasada"){echo $cfcuno2->valor_venta/$ing->unidades_por_pliego; }else{echo $cfcuno2->valor_venta;}} ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if($cfcuno2->unidad_de_venta==5){$costo15=($cfcuno2->valor_venta/$ing->unidades_por_pliego)*$datoscantidad1;}else{if($cfcuno2->unidad_de_venta==9){$costo15=$cfcuno2->valor_venta;}else{$costo15=$cfcuno2->valor_venta*$datoscantidad1;}} echo number_format($costo15,0,'','.');  ?>&nbsp;</td></tr>
+                
+               <?php } ?>        
                <tr>
                     <td class="celda_5" colspan="10">&nbsp;&nbsp;<?php echo str_replace("�", "ñ", ucwords(strtolower($acabado_4)));?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php echo $acabado_4UnidadVentaNombre?>&nbsp;</td>
@@ -2529,7 +2714,8 @@ page[size="A4"][layout="portrait"] {
                     <td class="celda_5">&nbsp;<?php  if ($acabado_4UnidadVentaNombre!="") echo $tamano2; else echo ""; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php  if ($acabado_4UnidadVentaNombre!="") echo (($tamano1*$tamano2)/10000); else echo ""; ?>&nbsp;</td>												
                     <td class="celda_3">&nbsp;<?php  if ($acabado_4Valor>0) echo number_format($acabado_4Valor,0,'','.'); else echo ""; ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  if ($costo_unitario4>0) echo number_format($costo_unitario4,0,'','.'); else echo ""; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if ($costo_unitario4>0){ echo number_format($costo_unitario4,0,'','.'); }else{ echo "";} ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  if ($precio_total_4>0) echo number_format($precio_total_4,0,'','.'); else echo ""; ?>&nbsp;</td>
                 </tr>
                 <tr>
@@ -2541,6 +2727,7 @@ page[size="A4"][layout="portrait"] {
                     <td class="celda_5">&nbsp;<?php  if ($acabado_5UnidadVentaNombre!="") echo (($tamano1*$tamano2)/10000); else echo ""; ?>&nbsp;</td>												
                     <td class="celda_3">&nbsp;<?php  if ($acabado_5Valor>0) echo number_format($acabado_5Valor,0,'','.'); else echo ""; ?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  if ($costo_unitario5>0) echo number_format($costo_unitario5,0,'','.'); else echo ""; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  if ($precio_total_5>0) echo number_format($precio_total_5,0,'','.'); else echo ""; ?>&nbsp;</td>
                 </tr>
                 <tr>
@@ -2551,12 +2738,13 @@ page[size="A4"][layout="portrait"] {
                     <td class="celda_5">&nbsp;<?php  if ($acabado_6UnidadVentaNombre!="") echo $tamano2; else echo ""; ?>&nbsp;</td>
                     <td class="celda_5">&nbsp;<?php  if ($acabado_6UnidadVentaNombre!="") echo (($tamano1*$tamano2)/10000); else echo ""; ?>&nbsp;</td>												
                     <td class="celda_3">&nbsp;<?php  if ($acabado_6Valor>0) echo number_format($acabado_6Valor,0,'','.'); else echo ""; ?>&nbsp;</td>
-                    <td class="celda_3">&nbsp;<?php  if ($costo_unitario6>0) echo number_format($costo_unitario6,0,'','.'); else echo ""; ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php  if ($costo_unitario6>0){ echo number_format($costo_unitario6,0,'','.'); }else{ echo "";} ?>&nbsp;</td>
+                    <td class="celda_3">&nbsp;<?php echo $ing->unidades_por_pliego?>&nbsp;</td>
                     <td class="celda_3">&nbsp;<?php  if ($precio_total_6>0) echo number_format($precio_total_6,0,'','.'); else echo ""; ?>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="celda_5" colspan="17"><strong>&nbsp;&nbsp;Total Precio de Trabajos Externos</strong></td>
-                    <td>&nbsp;&nbsp;<?php if($hoja->valor_externo!=0){ $externos_produccion=$externos_produccion+$hoja->valor_externo+$costo1+$costo2+$costo3+$costo4+$costo5+$costoa1+$costoa2+$costoa3+$costoa4+$costoa5; echo number_format($hoja->valor_externo,0,'','.');}else{  $externos_produccion=$precio_total_4+$precio_total_5+$precio_total_6+$costo1+$costo2+$costo3+$costo4+$costo5+$costoa1+$costoa2+$costoa3+$costoa4+$costoa5; echo number_format($externos_produccion,0,'','.');} ?>&nbsp;&nbsp;
+                    <td class="celda_5" colspan="18"><strong>&nbsp;&nbsp;Total Precio de Trabajos Externos</strong></td>
+                    <td>&nbsp;&nbsp;<?php if($hoja->valor_externo!=0){ $externos_produccion=$externos_produccion+$hoja->valor_externo+$costo1+$costo2+$costo3+$costo4+$costo5+$costoa1+$costoa2+$costoa3+$costoa4+$costoa5+$costo11+$costo12+$costo13+$costo14+$costo15; echo number_format($hoja->valor_externo,0,'','.');}else{  $externos_produccion=$precio_total_4+$precio_total_5+$precio_total_6+$costo1+$costo2+$costo3+$costo4+$costo5+$costoa1+$costoa2+$costoa3+$costoa4+$costoa5+$costo11+$costo12+$costo13+$costo14+$costo15; echo number_format($externos_produccion,0,'','.');} ?>&nbsp;&nbsp;
                     <?php if($hoja->impreso!=1){echo "<a href='".base_url()."hoja/trabajos_externos/".$id."/4' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{echo "<a href='".base_url()."hoja2/trabajos_externos/".$id."/4' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}?> 
                     <input type="hidden" name="valor_externo" value="<?php if($hoja->valor_externo!=0){ echo number_format($hoja->valor_externo,0,'','.');}else{ echo number_format($externos_produccion,0,'','.');} ?>" /></td>
                     <!--<a href="<?php //echo base_url()?>hoja/trabajos_externos/<?php //echo $id?>/4" class="fancybox fancybox.ajax"><img src="<?php //echo base_url()?>public/frontend/images/edit.png" class="img_16" /></a>-->
@@ -2570,6 +2758,7 @@ page[size="A4"][layout="portrait"] {
                     <td class="celda_5">&nbsp;</td>												
                     <td class="celda_5">&nbsp;</td>
                     <td class="celda_5">&nbsp;</td>											
+                    <td class="celda_5">&nbsp;</td>
                     <td class="celda_5">&nbsp;</td>
                 </tr>
                 <?php
@@ -2601,7 +2790,7 @@ page[size="A4"][layout="portrait"] {
                     $piezaUnidadVentaNombre2=$piezasAdicionales->unv; //Nombre unidad de venta                                    
                     $piezaAdacionalNom2 = $piezasAdicionales->piezas_adicionales;
                     $piezaAdacionalValor2= $piezasAdicionales->valor_venta;
-                    $piezaAdacionalTotal2= $datoscantidad2 * $piezaAdacionalValor2;
+                    $piezaAdacionalTotal2= $datoscantidad1 * $piezaAdacionalValor2;
                     $piezaAdacionalEmpresa2= $hoja->piezas_adicionales2;
                 }
                 if($ing->piezas_adicionales3 == 'NO LLEVA')
@@ -2616,7 +2805,7 @@ page[size="A4"][layout="portrait"] {
                     $piezaUnidadVentaNombre3=$piezasAdicionales->unv; //Nombre unidad de venta                                    
                     $piezaAdacionalNom3 = $piezasAdicionales->piezas_adicionales;
                     $piezaAdacionalValor3 =  $piezasAdicionales->valor_venta;
-                    $piezaAdacionalTotal3= $datoscantidad3 * $piezaAdacionalValor3;;
+                    $piezaAdacionalTotal3= $datoscantidad1 * $piezaAdacionalValor3;;
                     $piezaAdacionalEmpresa3= $hoja->piezas_adicionales3;
                 }
                 ?>
@@ -2629,6 +2818,7 @@ page[size="A4"][layout="portrait"] {
                 <td class="celda_5">&nbsp;</td>
                 <td class="celda_5">&nbsp;</td>												
                 <td class="celda_5">&nbsp;<?php  if ($piezaUnidadVentaNombre1!="") echo $piezaAdacionalValor1; else echo ""; ?>&nbsp;</td>					
+                <td class="celda_3">&nbsp;&nbsp;</td>
                 <td class="celda_3">&nbsp;&nbsp;<?php echo number_format($piezaAdacionalTotal1,0,'','.');  ?>&nbsp;&nbsp;</td>
             </tr>
             <tr>
@@ -2640,6 +2830,7 @@ page[size="A4"][layout="portrait"] {
                 <td class="celda_5">&nbsp;</td>
                 <td class="celda_5">&nbsp;</td>												
                 <td class="celda_5">&nbsp;<?php  if ($piezaUnidadVentaNombre2!="") echo $piezaAdacionalValor2; else echo ""; ?>&nbsp;</td>					
+                <td class="celda_3">&nbsp;&nbsp;</td>
                 <td class="celda_3">&nbsp;&nbsp;<?php echo number_format($piezaAdacionalTotal2,0,'','.');  ?>&nbsp;&nbsp;</td>
             </tr>
             <tr>
@@ -2651,20 +2842,21 @@ page[size="A4"][layout="portrait"] {
                 <td class="celda_5">&nbsp;</td>
                 <td class="celda_5">&nbsp;</td>												
                 <td class="celda_5">&nbsp;<?php  if ($piezaUnidadVentaNombre3!="") echo $piezaAdacionalValor3; else echo ""; ?>&nbsp;</td>					
+                <td class="celda_3">&nbsp;&nbsp;</td>
                 <td class="celda_3">&nbsp;&nbsp;<?php echo number_format($piezaAdacionalTotal3,0,'','.');  ?>&nbsp;&nbsp;</td>
 
                                                                                                       
             </tr>
                 <tr>
-                    <td class="celda_5" colspan="17"><strong>&nbsp;&nbsp;Total Precio de Piezas Adicionales</strong></td>
+                    <td class="celda_5" colspan="18"><strong>&nbsp;&nbsp;Total Precio de Piezas Adicionales</strong></td>
                     <td>&nbsp;&nbsp;<?php if($hoja->valor_piezas!=0){ $piezas_produccion=$piezas_produccion+$hoja->valor_piezas;  echo number_format($hoja->valor_piezas,0,'','.');}else{  $piezas_produccion=$piezaAdacionalTotal1+$piezaAdacionalTotal2+$piezaAdacionalTotal3; echo number_format($piezas_produccion,0,'','.');} ?>&nbsp;&nbsp;
                     <!--<a href="<?php //echo base_url()?>hoja/trabajos_externos/<?php// echo $id?>/5" class="fancybox fancybox.ajax"><img src="<?php //echo base_url()?>public/frontend/images/edit.png" class="img_16" /></a>-->
                     <?php if($hoja->impreso!=1){echo "<a href='".base_url()."hoja/trabajos_externos/".$id."/5' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{echo "<a href='".base_url()."hoja2/trabajos_externos/".$id."/5' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}?> 
                     <input type="hidden" name="valor_piezas" value="<?php if($hoja->valor_piezas!=0){ echo number_format($hoja->valor_piezas,0,'','.');}else{ echo number_format($piezas_produccion,0,'','.');} ?>" /></td>
                 </tr>      
                 <tr>
-                    <td class="celda_5" colspan="17"><strong>&nbsp;&nbsp;Total Externos</strong></td>
-                    <td class="celda_5" >&nbsp;<?php $externos_produccion=$externos_produccion; echo number_format(($externos_produccion),0,'','.');  ?>&nbsp;</td>
+                    <td class="celda_5" colspan="18"><strong>&nbsp;&nbsp;Total Externos</strong></td>
+                    <td class="celda_5" >&nbsp;<?php $externos_produccion=$externos_produccion+$piezas_produccion; echo number_format(($externos_produccion),0,'','.');  ?>&nbsp;</td>
                     <!--<td class="celda_5" >&nbsp;<?php //$externos_produccion=$externos_produccion+$piezas_produccion; echo number_format(($externos_produccion),0,'','.');  ?>&nbsp;</td>-->
                 </tr>                  
 											
@@ -2769,7 +2961,7 @@ page[size="A4"][layout="portrait"] {
                                         
                                         
                                   ?>  
-					<?php if($hoja->valor_externo!=0){ $externos_produccion=$externos_produccion+$hoja->valor_externo+$costo1+$costo2+$costo3+$costo4+$costo5+$costoa1+$costoa2+$costoa3+$costoa4+$costoa5; }else{  $externos_produccion=$precio_total_4+$precio_total_5+$precio_total_6+$costo1+$costo2+$costo3+$costo4+$costo5+$costoa1+$costoa2+$costoa3+$costoa4+$costoa5; } ?>			  
+					<?php if($hoja->valor_externo!=0){ $externos_produccion=$externos_produccion+$hoja->valor_externo+$costo1+$costo2+$costo3+$costo4+$costo5+$costoa1+$costoa2+$costoa3+$costoa4+$costoa5+$costo11+$costo12+$costo13+$costo14+$costo15; }else{  $externos_produccion=$precio_total_4+$precio_total_5+$precio_total_6+$costo1+$costo2+$costo3+$costo4+$costo5+$costoa1+$costoa2+$costoa3+$costoa4+$costoa5+$costo11+$costo12+$costo13+$costo14+$costo15; } ?>
 
 								  
                     <tr>

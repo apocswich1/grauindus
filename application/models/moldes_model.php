@@ -80,7 +80,7 @@ function __construct()
         
         $sql= "SELECT c.razon_social as nombre FROM 
             `moldes_grau` m INNER JOIN clientes c 
-            ON m.nombrecliente = c.id WHERE m.id = $id";   
+            ON m.nombrecliente = c.id WHERE m.id = '$id'";   
        // echo $sql;
     	$return=$this->db->query($sql);
     	return $return->result();        

@@ -711,6 +711,18 @@ class cotizaciones_model extends CI_Model{
 //                echo $this->db->last_query();exit;
                 return $query->row();
     }
+    public function getHojaDeCostosPorIdCotizacionMatriz($id)
+    {
+       $query=$this->db
+                ->select("c.producto,c.cantidad_1,c.cantidad_2,c.cantidad_3,c.cantidad_4,c.fecha,h.*")
+                ->from("hoja_de_costos_datos h")
+                ->join("cotizaciones c","c.id=h.id_cotizacion","inner")
+                ->where(array("h.id_cotizacion"=>$id))
+		->order_by("h.id","desc")
+                ->get();
+//                echo $this->db->last_query();exit;
+                return $query->row();
+    }
     public function getHojaDeCostos2PorIdCotizacion($id)
     {
        $query=$this->db

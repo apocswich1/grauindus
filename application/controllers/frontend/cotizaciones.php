@@ -10985,7 +10985,12 @@ $cuerpo2.='<table class="tabla">';
                                        "procesos_especiales_cuno"=>$this->input->post("cuno",true),
                                        "procesos_especiales_cuno_valor"=>$this->input->post("cuno_se",true),
                                        "procesos_especiales_cuno_2"=>$this->input->post("cuno_2",true),
-                                       "procesos_especiales_cuno_2_valor"=>$this->input->post("cuno_se_2",true),                                        
+                                       "procesos_especiales_cuno_2_valor"=>$this->input->post("cuno_se_2",true),
+                                        "folia1_molde_selected"=>$this->input->post("folia1_molde_selected",true),                             
+                                        "folia2_molde_selected"=>$this->input->post("folia2_molde_selected",true),                             
+                                        "folia3_molde_selected"=>$this->input->post("folia3_molde_selected",true),                             
+                                        "cuno1_molde_selected"=>$this->input->post("cuno1_molde_selected",true),                             
+                                        "cuno2_molde_selected"=>$this->input->post("cuno2_molde_selected",true),
                                        "hacer_troquel"=>$hacer_troquel,
                                        "lleva_troquelado"=>$lleva_troquelado,   
                                        // Trabajos internos
@@ -11327,6 +11332,7 @@ $cuerpo2.='<table class="tabla">';
             $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
             $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
             $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
+            $produccion=$this->produccion_model->getFotomecanicaPorTipo(1,$id);
             $maximo=$this->cotizaciones_model->obtenerMaximoId();
             $idnuevo=$maximo->id_max+1;
           
@@ -11358,6 +11364,9 @@ $cuerpo2.='<table class="tabla">';
             $ing->id_cotizacion = $idnuevo;
             unset($fotomecanica->id);
             $fotomecanica->id_cotizacion = $idnuevo;
+            if(sizeof($produccion)>0){
+            $fotomecanica->pdf_imagen_imprimir = $produccion->pdf_imagen;    
+            }
                     //echo print_r($hoja);
             if(sizeof($hoja)){
             unset($hoja->id);
@@ -11409,6 +11418,9 @@ $cuerpo2.='<table class="tabla">';
             $ing->id_cotizacion = $idnuevo;
             unset($fotomecanica->id);
             $fotomecanica->id_cotizacion = $idnuevo;
+            if(sizeof($produccion)>0){
+            $fotomecanica->pdf_imagen_imprimir = $produccion->pdf_imagen;    
+            }
             unset($hoja->id);
             $hoja->id_cotizacion = $idnuevo;
             $hoja->valor_empresa = "";

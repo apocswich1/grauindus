@@ -46,6 +46,18 @@ class grupos_model extends CI_Model{
      return $query->result(); 
     }
     
+    public function getExisteGrupo($id)
+    {
+        $query=$this->db
+        ->select("*")
+        ->from("grupos")
+        ->where("idc_01 = $id OR idc_02 = $id OR idc_03 = $id OR idc_04 = $id OR idc_05 = $id OR idc_06 = $id OR idc_07 = $id OR idc_08 = $id OR idc_09 = $id OR idc_10 = $id")
+        ->order_by("id","asc")
+        ->get();
+  //echo $this->db->last_query();exit;
+     return $query->row(); 
+    }
+    
      public function getGruposPorId($id)
     {
         $query=$this->db

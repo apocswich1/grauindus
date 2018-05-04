@@ -565,8 +565,8 @@
         </td>
         <td style="text-align: center;">
            
-  <!-- ?php if ($fotomecanica->pdf_imagen!=""){ ?-->
-  <?php if ($fotomecanica2->colores > 0){ ?>  
+  <?php if ($fotomecanica->pdf_imagen!=""){ ?>
+  <!--?php if ($fotomecanica2->colores > 0){ ?-->  
         <a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Cliente" title="PDF imagen a imprimir"></a>
             <?php } else { ?>    
         <!-- img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No se Imprime el PDF" title="No se Imprime el PDF"-->        

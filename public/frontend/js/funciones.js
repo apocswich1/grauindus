@@ -1100,7 +1100,7 @@ function guardarFormularioAdd2(valor)
         }
     }
     if(materialidad==3){
-        if(materialidad1=="0" || materialidad2=="0"){
+        if(materialidad1=="0" || materialidad3=="0"){
             alert("Debe completar el tipo de material segun la materialidad seleccionada");
       
         }else{
@@ -1618,7 +1618,7 @@ function procesosExternos()
     var acabado_impresion_4=document.form.acabado_impresion_4.value;
     var acabado_impresion_5=document.form.acabado_impresion_5.value;
     var acabado_impresion_6=document.form.acabado_impresion_6.value;
-    if(acabado_impresion_4==acabado_impresion_5)
+    if(acabado_impresion_4==acabado_impresion_5 && acabado_impresion_4!="")
     {
         alert("No se pueden repetir los acabados externos");
         document.form.acabado_impresion_4.value='17';
@@ -1632,7 +1632,7 @@ function procesosExternos()
         document.form.input_variable_externo_6.value='0';           
         return false;
     }
-    if(acabado_impresion_4==acabado_impresion_6)
+    if(acabado_impresion_4==acabado_impresion_6 && acabado_impresion_4!="")
     {
         alert("No se pueden repetir los acabados externos");
         document.form.acabado_impresion_4.value='17';
@@ -1646,7 +1646,7 @@ function procesosExternos()
         document.form.input_variable_externo_6.value='0';         
         return false;
     }
-    if(acabado_impresion_6==acabado_impresion_5)
+    if(acabado_impresion_6==acabado_impresion_5 && acabado_impresion_6!="")
     {
         alert("No se pueden repetir los acabados externos");
         document.form.acabado_impresion_4.value='17';
