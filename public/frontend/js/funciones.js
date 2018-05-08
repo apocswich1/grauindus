@@ -4382,7 +4382,7 @@ function cortes_de_bobina_Onda()
  
  $(document).ready(function(){
  function alertdata(){
-  alert();
+  //alert();
 //var lleva = $("#ing_lleva_barniz").val();
 //if(lleva==""){
 //    alert("Debe indicar si lleva barniz");
@@ -4925,7 +4925,7 @@ function generar() {
 // ultima funcion agrgada injssg 17/09/2017
 function verificar_estatus_cliente(valor,div) 
 {
-   alert(valor);
+  // alert(valor);
    alert("Verificando Cliente espere.");    
    var ruta=webroot+'ordenes/ajax_obtener_estatus_cliente';
    $.post(ruta,{valor:valor,div:div},function(resp)

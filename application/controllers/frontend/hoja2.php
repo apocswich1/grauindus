@@ -359,7 +359,7 @@ class Hoja2 extends CI_Controller {
         $hoja2=$this->cotizaciones_model->getHojaDeCostos2PorIdCotizacion($id);
         $ing2=$this->cotizaciones_model->getCotizacionIngenieria2PorIdCotizacion($id);
         $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
-
+//print_r($ing2);
         if($this->input->post())
         {
             

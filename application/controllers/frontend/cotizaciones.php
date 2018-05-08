@@ -7095,10 +7095,11 @@ $cuerpo2.='<table class="tabla">';
             $datos_fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);                
             $ValidarProducto=$this->productos_model->getProductosPorNombre($this->input->post("producto",true));
             $modulo="add_con_cambios";
-//            print_r($datos_fotomecanica);
+            //print_r($datos_ingenieria);
 //            exit();
             if ( $this->input->post() )
  		{
+           //     echo $this->input->post("producto",true);exit();
 //                    if(sizeof($ValidarProducto)==0)
 //                    {
 //                       exit("paso");
@@ -7495,7 +7496,7 @@ $cuerpo2.='<table class="tabla">';
                                     "cantidad_de_despachos"=>$this->input->post("cantidad_de_despachos",true),
                                     "fecha_registro"=> date('Y-m-d'), 
                                      );
-            //print_r($data);exit();
+           
                                     $guardar=$this->cotizaciones_model->insertar($data);
                                     
                                     $consulta_id_max=$this->cotizaciones_model->obtenerMaximoId();
@@ -7648,11 +7649,16 @@ $cuerpo2.='<table class="tabla">';
                                                 $this->cotizaciones_model->insertarFotomecanica($dataFotomecanica);
                                             //creo ingeniería
 //                                              print_r($data);
+                                                if($datos_ingenieria->producto==""){
+                                                    $nombreproducto = $producto;
+                                                }else{
+                                                    $nombreproducto = $datos_ingenieria->producto;
+                                                }
                                               $dataIngenieria=array
                                               (
                                                  "id_usuario"=>$this->session->userdata('id'),
                                                  "id_cotizacion"=>$guardar,
-                                                 "producto"=>$datos_ingenieria->producto,
+                                                 "producto"=>$nombreproducto,
                                                  "cantidad_ordenes"=>$datos_ingenieria->cantidad_ordenes,
                                                  "medidas_de_la_caja"=>$datos_ingenieria->medidas_de_la_caja,
                                                  "medidas_de_la_caja_2"=>$datos_ingenieria->medidas_de_la_caja_2,
@@ -7732,7 +7738,7 @@ $cuerpo2.='<table class="tabla">';
                                                  "id_mat_onda2"=>$datos_ingenieria->id_mat_onda2,
                                                  "id_mat_liner3"=>$datos_ingenieria->id_mat_liner3,
                                               );
-//                                              print_r($data);
+                                              //print_r($dataIngenieria);exit();
 
                                               $this->cotizaciones_model->insertarIngenieria($dataIngenieria);
 //                                        }
@@ -9814,6 +9820,7 @@ $cuerpo2.='<table class="tabla">';
                             "id_mat_placa1"=>$this->input->post("materialidad_1",true),
                             "id_mat_onda2"=>$this->input->post("materialidad_2",true),
                             "id_mat_liner3"=>$this->input->post("materialidad_3",true),
+                            "desgajado_automatico"=>$this->input->post("desgajado_automatico",true),
                             );
                       // exit(print_r($data));
                         
@@ -10790,7 +10797,7 @@ $cuerpo2.='<table class="tabla">';
                                         "id_mat_liner3"=>$this->input->post("materialidad_3",true),
                                         "tamano_pliego"=>$this->input->post("tamano_pliego",true),
                                    );
-									
+                                   //print_r($data);exit();					
 				$data2=array
                                     (
                                          "producto"=>$this->input->post('producto',true),

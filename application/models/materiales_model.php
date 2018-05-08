@@ -381,6 +381,17 @@ $sql="select m.id,m.codigo,m.nombre,m.id_proveedor,m.reverso,m.id_materiales_pro
               //  echo $this->db->last_query();exit;
                 return $query->row();
     }    
+    public function getMaterialesReversoPorId($valor)
+    {
+         $query=$this->db
+                ->select("materiales.id as materialesid,materiales.*,t.materiales_tipo as tipomaterial")
+                ->from("materiales")
+                ->join("materiales_tipo as t","materiales.tipo=t.id","inner")
+                ->where('materiales.id', $valor)                 
+                ->get();
+                //echo $this->db->last_query();exit;
+                return $query->row();
+    }    
     
     public function getMaterialesNombreTipo($valor)
     {

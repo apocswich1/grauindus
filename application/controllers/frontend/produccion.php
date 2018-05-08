@@ -502,6 +502,81 @@ class Produccion extends CI_Controller {
             echo "Orden Cerrada";
             } 
     }
+    public function fecha_confeccion()
+    {
+        $dato=$this->input->post("dato",true);
+        $conf=$this->input->post("conf",true);
+        $modo=$this->input->post("modo",true);
+        
+        if($this->input->post())
+        {
+            if($modo==1){
+             $data=array
+            (
+                "conf_sal_pel"=>$conf,
+                "fecha_conf_sal_pel"=>date('Y-m-d'),
+            );
+            $valor ="  Fecha: ".date('Y-m-d');
+            }else{
+             $data=array
+            (
+                "conf_sal_pel"=>$conf,
+            );  
+            $valor='';
+            }
+            $this->db->where('id_nodo', $dato);
+            $this->db->update("produccion_fotomecanica",$data);
+            
+            echo $valor;
+            } 
+    }
+    public function fecha_status()
+    {
+        $dato=$this->input->post("dato",true);
+        $conf=$this->input->post("conf",true);
+        $modo=$this->input->post("modo",true);
+        
+        if($this->input->post())
+        {
+            if($modo==1){
+             $data=array
+            (
+                "status_linea"=>$conf,
+                "fecha_conf_desg"=>date('Y-m-d'),
+            );
+            $valor ="  Fecha: ".date('Y-m-d');
+            }else{
+             $data=array
+            (
+                "status_linea"=>$conf,
+            );  
+            $valor='';
+            }
+            $this->db->where('id_nodo', $dato);
+            $this->db->update("produccion_fotomecanica",$data);
+            
+            echo $valor;
+            } 
+    }
+    
+    public function desgajado_automatico()
+    {
+        $dato=$this->input->post("dato",true);
+        $conf=$this->input->post("conf",true);
+        
+        if($this->input->post())
+        {
+            
+             $data=array
+            (
+                "desgajado_automatico"=>$conf,
+            );  
+            
+            $this->db->where('id_cotizacion', $dato);
+            $this->db->update("cotizacion_ingenieria",$data);
+            
+            } 
+    }
         
     public function cotizaciones()
 	{

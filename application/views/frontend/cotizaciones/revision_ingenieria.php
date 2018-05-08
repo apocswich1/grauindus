@@ -151,7 +151,7 @@ function getField($campo,$datos,$ing)
 <?php echo form_open_multipart(null, array('class' => 'form-horizontal','name'=>'form','id'=>'form')); ?>
 <!-- Migas -->
     <ol  class= "breadcrumb" >  
-      <li><a href="<?php echo base_url()?>cotizaciones/index/<?php echo $pagina?>">Cotizaciones &gt;&gt;</a></li>
+      <li><a href="<?php echo base_url()?>cotizaciones/index/<?php echo $pagina ?>">Cotizaciones &gt;&gt;</a></li>
       <li><a href="<?php echo base_url()?>cotizaciones/search_cot/<?php echo $id?>">Volver&gt;&gt;</a></li>
       <li>Revisión Ingeniería</li>
     </ol>
@@ -434,6 +434,50 @@ function getField($campo,$datos,$ing)
             </td>
         </tr>
     </table>
+         <?php
+    if ($this->session->userdata('perfil') != 2) {
+        ?>
+    <div class="control-group">
+            <label class="control-label" for="usuario"><strong>PDF Trazado Fotomecánic</strong>a</label>
+            <div class="controls">
+                <?php if ($fotomecanica->archivo == "") { ?>
+                    <a href='#'>No Existe Archivo de Trazado Fotomecanica</a>
+                <?php } else {
+                    ?>
+                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $fotomecanica->archivo ?>' target="_blank"><i class="icon-search"></i></a>
+                <?php } ?>
+                <?php //var_dump($ing); ?>
+            </div>
+        </div>
+    <?php } ?>
+    <hr />	
+    <?php
+    if ($this->session->userdata('perfil') != 2) {
+        ?>
+    
+    <div class="control-group">
+            <label class="control-label" for="usuario"><strong>PDF Trazado Ingeniería</strong></label>
+            <div class="controls">
+                    <?php //echo $ing->archivo;// print_r($trazadosing) //my code is here ?>
+                <?php if ($ing->archivo == "") {
+                    if($moldes2->archivo == ""){?>
+                    <a href='#'>No Existe Archivo de Trazado Ingenieria</a>
+                    <?php }else{ if($trazadosing->archivo==""){?>
+                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $moldes2->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>    
+                    <?php }else{ ?>
+                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero  ?></a>        
+                    <?php } }} else { if ($ing->archivo == "") {?>
+                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
+                    <?php }else{ if($trazadosing->archivo==""){?>
+                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
+                    <?php }else{ ?> 
+                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero  ?></a>            
+                    <?php }}} ?>
+                <?php //var_dump($ing); ?>
+            </div>
+        </div>
+    <?php } ?>
+    <hr />
      <div  class="control-group">
         <label class="control-label" for="usuario" data-toggle="modal" data-target="#asociar_grupo"><a href="#" id="link_grupo">Crear Grupo a partir de cotizaciones</a></label>
     </div>
@@ -619,50 +663,7 @@ $moldes2=$this->moldes_model->getMoldesPorId($datos->numero_molde);
 //}
 
 ?>
-    <?php
-    if ($this->session->userdata('perfil') != 2) {
-        ?>
-    <div class="control-group">
-            <label class="control-label" for="usuario"><strong>PDF Trazado Fotomecánic</strong>a</label>
-            <div class="controls">
-                <?php if ($fotomecanica->archivo == "") { ?>
-                    <a href='#'>No Existe Archivo de Trazado Fotomecanica</a>
-                <?php } else {
-                    ?>
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $fotomecanica->archivo ?>' target="_blank"><i class="icon-search"></i></a>
-                <?php } ?>
-                <?php //var_dump($ing); ?>
-            </div>
-        </div>
-    <?php } ?>
-    <hr />	
-    <?php
-    if ($this->session->userdata('perfil') != 2) {
-        ?>
-    
-    <div class="control-group">
-            <label class="control-label" for="usuario"><strong>PDF Trazado Ingeniería</strong></label>
-            <div class="controls">
-                    <?php //echo $ing->archivo;// print_r($trazadosing) //my code is here ?>
-                <?php if ($ing->archivo == "") {
-                    if($moldes2->archivo == ""){?>
-                    <a href='#'>No Existe Archivo de Trazado Ingenieria</a>
-                    <?php }else{ if($trazadosing->archivo==""){?>
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $moldes2->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>    
-                    <?php }else{ ?>
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero  ?></a>        
-                    <?php } }} else { if ($ing->archivo == "") {?>
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
-                    <?php }else{ if($trazadosing->archivo==""){?>
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
-                    <?php }else{ ?> 
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero  ?></a>            
-                    <?php }}} ?>
-                <?php //var_dump($ing); ?>
-            </div>
-        </div>
-    <?php } ?>
-    <hr />	
+	
     <?php
     if ($this->session->userdata('perfil') != 2) {
     ?>
@@ -988,126 +989,147 @@ th {
                 <?php }?>                      
 		</div>    
         </div>
-    
-    
-    <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Unidades ("Producto Completo") por pliego <strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-		<?php if(sizeof($ing) >0) {?>  
-			<input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php echo $ing->unidades_por_pliego;?>" /><a style="color:#BBBBBB"> [<?php echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>
-                <?php } else {?>  
-                        <input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php if($moldes2->unidades_productos_completos!=""){if($trazadosing->unidades_productos_completos==""){echo $moldes2->unidades_productos_completos;}else{echo $trazadosing->unidades_productos_completos;}}else{echo $_POST["unidades_por_pliego"];}?>" /><a style="color:#BBBBBB"> [<?php echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>
-                <?php }?>                       
-         
-		</div>
-	</div>
-    
-   <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Piezas totales en el pliego ( para desgajado )<strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-                    <?php if(sizeof($ing)>0) { ?>
-			<input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php echo $ing->piezas_totales_en_el_pliego?>" /> <a style="color:#BBBBBB"> [<?php if($ing->piezas_totales_en_el_pliego!=0){echo number_format($ing->piezas_totales_en_el_pliego,0,'','.');}?>] </a>
-                    <?php } elseif(sizeof($datos)>0) { ?>
-                        <input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php if($moldes2->piezas_totales!=""){if($trazadosing->piezas_totales!=""){echo $trazadosing->piezas_totales;}else{echo $moldes2->piezas_totales;}}else{echo $datos->piezas_totales_en_el_pliego;}?>" /><a style="color:#BBBBBB"> [<?php if($datos->piezas_totales_en_el_pliego!=0){echo number_format($datos->piezas_totales_en_el_pliego,0,'','.');}?>] </a>
-                    <?php } else { ?>                
-			<input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php echo $_POST["piezas_totales_en_el_pliego"] ?>" /><a style="color:#BBBBBB"> [<?php echo number_format($_POST["piezas_totales_en_el_pliego"],0,'','.')?>] </a>
-                    <?php }  ?>                     
-         
-		</div>
-	</div>
-    
+    <h3>Impresion <strong style="color: red;">(*)</strong></h3>
+      <?php //print_r($ing);exit(); ?>
      <div class="control-group">
-		<label class="control-label" for="id_antiguo">Lleva troquelado?</label>
+		<label class="control-label" for="usuario">Colores</label>
 		<div class="controls">
-
-		<?php
-          //  print_r($datos);exit();
-		if(sizeof($ing)==0) { ?>
-		<input readonly="true" type="text" name="lleva_troquelado"  value="<?php if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE"){echo 'SI';} if($datos->estan_los_moldes=="MOLDE GENERICO"){echo 'SI';} if($datos->estan_los_moldes=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO"){echo 'SI';} if($datos->estan_los_moldes=="NO LLEVA"){echo 'NO';} if($datos->estan_los_moldes=="CLIENTE LO APORTA"){echo 'SI';} ?>" />
-		<?php } elseif(sizeof($ing)>= 1) { ?>
-		<input readonly="true" type="text" name="lleva_troquelado"  value="<?php echo $ing->lleva_troquelado ?>" />
-		<?php } ?>
-		</div>
-	</div> 
-    
-    <div class="control-group" id="hacer_troquel" style="display: block;">
-		<label class="control-label" for="id_antiguo">Hay que hacer troquel</label>
-		<div class="controls">
-		<?php
-                if(sizeof($ing)>0) 
-                { 
-                    $hacer_troquel=$ing->hacer_troquel;
+			<select name="colores" onchange="colores_barniz(this.value);llevaBarnizFotomecanica();">
+                <?php
+                if($ing->colores=='')
+                {
+                    $colores=$datos->impresion_colores;
+                }else
+                {
+                    $colores=$ing->colores;
                 }
-                else
-	        {
-                    if($datos->estan_los_moldes=="MOLDE GENERICO")
-                        $hacer_troquel='NO';
-                    if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE")
-                        $hacer_troquel='NO';
-                    if($datos->estan_los_moldes=="SI")
-                        $hacer_troquel='NO';
-                    if($datos->estan_los_moldes=="NO")
-                        $hacer_troquel='SI';
-                    if($datos->estan_los_moldes=="NO LLEVA")
-                        $hacer_troquel='NO';
-                    if($datos->estan_los_moldes=="CLIENTE LO APORTA")
-                        $hacer_troquel='NO';
-                }                    
+                for($i=0;$i<9;$i++)
+                {
+                    ?>
+                    <option value="<?php echo $i?>" <?php if($colores==$i){echo 'selected="selected"';}?>><?php echo $i?></option>
+                    <?php
+                }
                 ?>
-                <input readonly="true" type="text" name="hacer_troquel"  value="<?php echo $hacer_troquel; ?>" />
-                    
+                
+                
+            </select>
+            <?php echo $datos->impresion_colores ?>
 		</div>
-                <?php $molde=$this->moldes_model->getMoldesPorId($datos->numero_molde) ?>
-                
-                <?php $distancia=$molde->cuchillocuchillo." X ".$molde->cuchillocuchillo2; ?>
-	</div> 
-	<?php
-	if((sizeof($ing)>0) and ($ing->estan_los_moldes!="NO LLEVA"))
-	{
-	?>
-            <div class="control-group">
-                <label class="control-label" for="usuario">Lleva Troquel por atrás (reverso):</label>
-                <div class="controls">
-                        <select name="troquel_por_atras" style="width: 150px;" onchange="llevafondo2(this.value);">
-                        <option value="">Seleccione......</option>
-                        <?php if (sizeof($ing)>0)  { ?>
-                            <option value="SI" <?php if($ing->troquel_por_atras=="SI"){echo 'selected="selected"';}?>>Por atrás</option>
-                            <option value="NO" <?php if($ing->troquel_por_atras=="NO"){echo 'selected="selected"';}?>>Por adelante</option>
-                        <?php } else { ?>
-                            <option value="SI" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='SI'){echo 'selected="selected"';}?>>Por atrás</option> 
-                            <option value="NO" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='NO'){echo 'selected="selected"';}?>>Por adelante</option>
-                        <?php }  ?>                                                    
-                        </select> 			
-                </div>
-             </div>
-	<?php
-	} else {
-	?>
-        <div class="control-group">
-            <label class="control-label" for="usuario">Lleva Troquel por atrás  (reverso):</label>
-            <div class="controls">
-		<?php //if(sizeof($ing) >0) {?>  
-                <!--<input type="text" name="troquel_por_atras" placeholder="troquel_por_atras" readonly="true" value="<?php //echo $ing->troquel_por_atras;?>" />--> 
-                <?php// } else {?>  
-                <!--<input type="text" name="troquel_por_atras" placeholder="troquel_por_atras" readonly="true" value="<?php// echo $_POST["troquel_por_atras"];?>" />--> 
-                <?php //}?>      
-                <select name="troquel_por_atras" style="width: 150px;" onchange="llevafondo2(this.value);">
-                        <option value="">Seleccione......</option>
-                        <?php if (sizeof($ing)>0)  { ?>
-                            <option value="SI" <?php if($ing->troquel_por_atras=="SI"){echo 'selected="selected"';}?>>Por atrás</option>
-                            <option value="NO" <?php if($ing->troquel_por_atras=="NO"){echo 'selected="selected"';}?>>Por adelante</option>
-                        <?php } else { ?>
-                            <option value="SI" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='SI'){echo 'selected="selected"';}?>>Por atrás</option> 
-                            <option value="NO" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='NO'){echo 'selected="selected"';}?>>Por adelante</option>
-                        <?php }  ?>                                                    
-                        </select> 
-                
-            </div>
 	</div>
-	<?php
-	}
-	?>
-  
+    <!-- Inicio de combo de color modificado -->
+    <?php// echo sizeof($ing);?>
+    <?php if($datos->condicion_del_producto=="Repetición Con Cambios"){ ?>
+   <?php if(sizeof($ing)>0 && $ing->tiene_color_modificado=="SI"){?>
+   <div class="control-group">
+        <label class="control-label" for="usuario">Tiene Algun Color Modificado<strong style="color: red;">(*)</strong></label>
+        <div class="controls">
+            <select name="tiene_color_modificado_ing">
+            <option value="" <?php echo set_value_select($ing,'tiene_color_modificado_ing',$ing->tiene_color_modificado,'');?>>Seleccione</option>
+            <option value="NO" <?php echo set_value_select($ing,'tiene_color_modificado_ing',$ing->tiene_color_modificado,'NO');?>>NO</option>
+            <option value="SI" <?php echo set_value_select($ing,'tiene_color_modificado_ing',$ing->tiene_color_modificado,'SI');?>>SI</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group" <?php if($ing->tiene_color_modificado<>'SI'){echo 'hidden=true'; }?> id="numero_color_modificado_ing">
+        <label class="control-label" for="usuario">Numero de Colores<strong style="color: red;">(*)</strong></label>
+        <div class="controls">
+            <select name="numero_color_modificado_ing">
+             <?php if (sizeof($ing)>0)  { ?>
+            <option value="" <?php if($ing->numero_color_modificado==""){echo "selected='selected'";} ?>>Seleccione</option>
+            <option value="1" <?php if($ing->numero_color_modificado=="1"){echo "selected='selected'";} ?>>1</option>
+            <option value="2" <?php if($ing->numero_color_modificado=="2"){echo "selected='selected'";} ?>>2</option>
+            <option value="3" <?php if($ing->numero_color_modificado=="3"){echo "selected='selected'";} ?>>3</option>
+            <option value="4" <?php if($ing->numero_color_modificado=="4"){echo "selected='selected'";} ?>>4</option>
+            <option value="5" <?php if($ing->numero_color_modificado=="5"){echo "selected='selected'";} ?>>5</option>
+            <option value="6" <?php if($ing->numero_color_modificado=="6"){echo "selected='selected'";} ?>>6</option>
+             <?php } else { ?>
+            <option value="" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'');?><?php if($_POST['numero_color_modificado_ing']==""){echo "selected=selected";} ?>>Seleccione</option>
+            <option value="1" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'1');?><?php if($_POST['numero_color_modificado_ing']=="1"){echo "selected=selected";} ?>>1</option>
+            <option value="2" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'2');?><?php if($_POST['numero_color_modificado_ing']=="2"){echo "selected=selected";} ?>>2</option>
+            <option value="3" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'3');?><?php if($_POST['numero_color_modificado_ing']=="3"){echo "selected=selected";} ?>>3</option>
+            <option value="4" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'4');?><?php if($_POST['numero_color_modificado_ing']=="4"){echo "selected=selected";} ?>>4</option>
+            <option value="5" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'5');?><?php if(isset($_POST["fondo_otro_color"]) && ($_POST['numero_color_modificado_ing']=="5")){echo "selected=selected";} ?>>5</option>
+            <option value="6" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'6');?><?php if($_POST['numero_color_modificado_ing']=="6"){echo "selected=selected";} ?>>6</option>
+            <?php }  ?>
+            </select>
+        </div>
+    </div>
+             <?php } else {
+   //  print_r($datos);
+                 ?>
+                <div class="control-group">
+        <label class="control-label" for="usuario">Tiene Algun Color Modificado<strong style="color: red;">(*)</strong></label>
+        <div class="controls">
+            <select name="tiene_color_modificado_ing">
+            <option value="" <?php echo set_value_select($datos,'tiene_color_modificado_ing',$datos->tiene_color_modificado,'');?>>Seleccione</option>
+            <option value="NO" <?php echo set_value_select($datos,'tiene_color_modificado_ing',$datos->tiene_color_modificado,'NO');?>>NO</option>
+            <option value="SI" <?php echo set_value_select($datos,'tiene_color_modificado_ing',$datos->tiene_color_modificado,'SI');?>>SI</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group" <?php if($datos->tiene_color_modificado<>'SI'){echo 'hidden=true'; }?> id="numero_color_modificado_ing">
+        <label class="control-label" for="usuario">Numero de Colores<strong style="color: red;">(*)</strong></label>
+        <div class="controls">
+            <select name="numero_color_modificado_ing">
+             <?php if (sizeof($datos)>0)  { ?>
+            <option value="" <?php if($datos->numero_color_modificado==""){echo "selected='selected'";} ?>>Seleccione</option>
+            <option value="1" <?php if($datos->numero_color_modificado=="1"){echo "selected='selected'";} ?>>1</option>
+            <option value="2" <?php if($datos->numero_color_modificado=="2"){echo "selected='selected'";} ?>>2</option>
+            <option value="3" <?php if($datos->numero_color_modificado=="3"){echo "selected='selected'";} ?>>3</option>
+            <option value="4" <?php if($datos->numero_color_modificado=="4"){echo "selected='selected'";} ?>>4</option>
+            <option value="5" <?php if($datos->numero_color_modificado=="5"){echo "selected='selected'";} ?>>5</option>
+            <option value="6" <?php if($datos->numero_color_modificado=="6"){echo "selected='selected'";} ?>>6</option>
+             <?php } else { ?>
+            <option value="" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'');?><?php if($_POST['numero_color_modificado_ing']==""){echo "selected=selected";} ?>>Seleccione</option>
+            <option value="1" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'1');?><?php if($_POST['numero_color_modificado_ing']=="1"){echo "selected=selected";} ?>>1</option>
+            <option value="2" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'2');?><?php if($_POST['numero_color_modificado_ing']=="2"){echo "selected=selected";} ?>>2</option>
+            <option value="3" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'3');?><?php if($_POST['numero_color_modificado_ing']=="3"){echo "selected=selected";} ?>>3</option>
+            <option value="4" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'4');?><?php if($_POST['numero_color_modificado_ing']=="4"){echo "selected=selected";} ?>>4</option>
+            <option value="5" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'5');?><?php if(isset($_POST["fondo_otro_color"]) && ($_POST['numero_color_modificado_ing']=="5")){echo "selected=selected";} ?>>5</option>
+            <option value="6" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'6');?><?php if($_POST['numero_color_modificado_ing']=="6"){echo "selected=selected";} ?>>6</option>
+            <?php }  ?>
+            </select>
+        </div>
+    </div>
+    <?php } }?>
+   
+            <div id="que_es_esto" name="que_es_esto" class="control-group" style="display:none;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img src="<?php echo base_url().$this->config->item('direccion_pdf')."que_es_esto.png" ?>" alt="Smiley face" height="60%" width="60%">
+                    
+             </div>    
+   
+           <div class="control-group">
+                     <label class="control-label" for="usuario">Lleva Fondo Otro Color</label>
+                     <div class="controls">
+                        <select name="fondo_otro_color" onchange="msg_fondo();calculo_ccac();" style="width: 150px;" >
+                        <option value="">Seleccione......</option>  
+                        <?php if (sizeof($ing)>0)  { ?>
+                            <option value="SI" <?php if($ing->fondo_otro_color=="SI"){echo 'selected="selected"';}?>>Sì</option>
+                            <option value="NO" <?php if($ing->fondo_otro_color=="NO"){echo 'selected="selected"';}?>>No</option>
+                        <?php } else { ?>
+                            <option value="SI" <?php if(isset($_POST["fondo_otro_color"]) and $_POST["fondo_otro_color"]=='SI'){echo 'selected="selected"';}?>>Sì</option> 
+                            <option value="NO" <?php if(isset($_POST["fondo_otro_color"]) and $_POST["fondo_otro_color"]=='NO'){echo 'selected="selected"';}?>>No</option>
+                        <?php }  ?>                               
+                        </select> 	
+                     </div>
+             </div>   
+   <!--Codigo agregado por ehndz (hay que imprimir contra la fibra)-->
+           <div class="control-group">
+                     <label class="control-label" for="usuario">Hay que Imprimir Contra la Fibra</label>
+                     <div class="controls">
+                        <select class="comprobacion" id="imprimir_contra_la_fibra" name="imprimir_contra_la_fibra" onchange="validar_ccac();" style="width: 150px;" >
+                        <option value="">Seleccione......</option>  
+                        <?php if (sizeof($ing)>0)  { ?>
+                            <option value="SI" <?php if($ing->imprimir_contra_la_fibra=="SI"){echo 'selected="selected"';}?>>Sí</option>
+                            <option value="NO" <?php if($ing->imprimir_contra_la_fibra=="NO"){echo 'selected="selected"';}?>>No</option>
+                        <?php } else { ?>
+                            <option value="SI" <?php if(isset($_POST["imprimir_contra_la_fibra"]) and $_POST["imprimir_contra_la_fibra"]=='SI'){echo 'selected="selected"';}?>>Sí</option> 
+                            <option value="NO" <?php if(isset($_POST["imprimir_contra_la_fibra"]) and $_POST["imprimir_contra_la_fibra"]=='NO'){echo 'selected="selected"';}?>>No</option>
+                        <?php }  ?>                               
+                        </select> 	
+                     </div>
+             </div>   
    <!--********************combos de barniz - agregado pot ehndz**********************-->
      <?php if($cotizacion->lleva_barniz != '' && $ing->ing_lleva_barniz == ''){?>
          <div class="control-group">
@@ -1269,150 +1291,174 @@ th {
 
 		</div>
 		</div>
-   
-   <?php //print_r($ing);exit(); ?>
-     <div class="control-group">
-		<label class="control-label" for="usuario">Colores</label>
+   <h3>Troquelado <strong style="color: red;">(*)</strong></h3>
+    <div class="control-group">
+		<label class="control-label" for="id_antiguo">Lleva troquelado?</label>
 		<div class="controls">
-			<select name="colores" onchange="colores_barniz(this.value);llevaBarnizFotomecanica();">
-                <?php
-                if($ing->colores=='')
-                {
-                    $colores=$datos->impresion_colores;
-                }else
-                {
-                    $colores=$ing->colores;
+
+		<?php
+          //  print_r($datos);exit();
+		if(sizeof($ing)==0) { ?>
+		<input readonly="true" type="text" name="lleva_troquelado"  value="<?php if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE"){echo 'SI';} if($datos->estan_los_moldes=="MOLDE GENERICO"){echo 'SI';} if($datos->estan_los_moldes=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="NO"){echo 'NO';} if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO LLEVA"){echo 'NO';} if($datos->estan_los_moldes=="CLIENTE LO APORTA"){echo 'SI';} ?>" />
+		<?php } elseif(sizeof($ing)>= 1) { ?>
+		<input readonly="true" type="text" name="lleva_troquelado"  value="<?php echo $ing->lleva_troquelado ?>" />
+		<?php } ?>
+		</div>
+	</div> 
+    
+    <div class="control-group" id="hacer_troquel" style="display: block;">
+		<label class="control-label" for="id_antiguo">Hay que hacer troquel</label>
+		<div class="controls">
+		<?php
+                if(sizeof($ing)>0) 
+                { 
+                    $hacer_troquel=$ing->hacer_troquel;
                 }
-                for($i=0;$i<9;$i++)
-                {
-                    ?>
-                    <option value="<?php echo $i?>" <?php if($colores==$i){echo 'selected="selected"';}?>><?php echo $i?></option>
-                    <?php
-                }
+                else
+	        {
+                    if($datos->estan_los_moldes=="MOLDE GENERICO")
+                        $hacer_troquel='NO';
+                    if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE")
+                        $hacer_troquel='NO';
+                    if($datos->estan_los_moldes=="SI")
+                        $hacer_troquel='NO';
+                    if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="SI")
+                        $hacer_troquel='SI';
+                    if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="NO")
+                        $hacer_troquel='NO';
+                    if($datos->estan_los_moldes=="NO LLEVA")
+                        $hacer_troquel='NO';
+                    if($datos->estan_los_moldes=="CLIENTE LO APORTA")
+                        $hacer_troquel='NO';
+                }                    
                 ?>
+                <input readonly="true" type="text" name="hacer_troquel"  value="<?php echo $hacer_troquel; ?>" />
+                    
+		</div>
+                <?php $molde=$this->moldes_model->getMoldesPorId($datos->numero_molde) ?>
                 
-                
-            </select>
-            <?php echo $datos->impresion_colores ?>
+                <?php $distancia=$molde->cuchillocuchillo." X ".$molde->cuchillocuchillo2; ?>
+	</div> 
+     <div class="control-group" id="div_hay_que_troquelar">
+		<label class="control-label" for="usuario">Hay que Troquelar?</label>
+		<div class="controls">
+			<select name="hay_que_troquelar" style="width: 100px;" onchange="">
+                        <?php
+                        if($ing->hay_que_troquelar=="" && $datos->hay_que_troquelar!=""){
+                            
+                         if (sizeof($datos)>0)  { ?>
+                            <option value="SI" <?php if($datos->hay_que_troquelar=='SI'){echo 'selected="true"';}?>>SI</option> 
+                            <option value="NO" <?php if($datos->hay_que_troquelar=="NO"){echo 'selected="true"';}?>>NO</option>
+                            <option value="NO SE" <?php if($datos->hay_que_troquelar=="NO SE"){echo 'selected="true"';}?>>NO SE</option>
+                        <?php } else { ?>
+                            <option value="SI" <?php if(($_POST["hay_que_troquelar"])=='SI'){echo 'selected="selected"';}?>>SI</option> 
+                            <option value="NO" <?php if(($_POST["hay_que_troquelar"])=='NO'){echo 'selected="selected"';}?>>NO</option>
+                            <option value="NO SE" <?php if(($_POST["hay_que_troquelar"])=='NO SE'){echo 'selected="selected"';}?>>NO SE</option>
+                        <?php }  
+                        }else{
+                            if (sizeof($ing)>0)  { ?>
+                            <option value="SI" <?php if($ing->hay_que_troquelar=='SI'){echo 'selected="true"';}?>>SI</option> 
+                            <option value="NO" <?php if($ing->hay_que_troquelar=="NO"){echo 'selected="true"';}?>>NO</option>
+                            <option value="NO SE" <?php if($ing->hay_que_troquelar=="NO SE"){echo 'selected="true"';}?>>NO SE</option>
+                        <?php } else { ?>
+                            <option value="SI" <?php if(($_POST["hay_que_troquelar"])=='SI'){echo 'selected="selected"';}?>>SI</option> 
+                            <option value="NO" <?php if(($_POST["hay_que_troquelar"])=='NO'){echo 'selected="selected"';}?>>NO</option>
+                            <option value="NO SE" <?php if(($_POST["hay_que_troquelar"])=='NO SE'){echo 'selected="selected"';}?>>NO SE</option>
+                        <?php }
+                        }
+                        ?>   
+                        </select> </div>
+        </div>
+        <div class="control-group">
+                <label class="control-label" for="usuario">Lleva desgajado automatico:</label>
+                <div class="controls">
+                        <select name="desgajado_automatico" style="width: 150px;" onchange="">
+<!--                        <option value="">Seleccione......</option>-->
+                        <?php if (sizeof($ing)>0)  { ?>
+                            <option value="NO" <?php if($ing->desgajado_automatico=="NO"){echo 'selected="selected"';}?>>NO</option>
+                            <option value="SI" <?php if($ing->desgajado_automatico=="SI"){echo 'selected="selected"';}?>>SI</option>
+                            <option value="POR DEFINIR" <?php if($ing->desgajado_automatico=="POR DEFINIR"){echo 'selected="selected"';}?>>POR DEFINIR</option>
+                        <?php } else { ?>
+                            <option value="NO" <?php if(isset($_POST["desgajado_automatico"]) && $_POST["desgajado_automatico"]=='NO'){echo 'selected="selected"';}?>>NO</option>
+                            <option value="SI" <?php if(isset($_POST["desgajado_automatico"]) && $_POST["desgajado_automatico"]=='SI'){echo 'selected="selected"';}?>>SI</option> 
+                            <option value="POR DEFINIR" <?php if(isset($_POST["desgajado_automatico"]) && $_POST["desgajado_automatico"]=='NO'){echo 'selected="selected"';}?>>POR DEFINIR</option>
+                        <?php }  ?>                                                    
+                        </select> 			
+                </div>
+             </div>
+    <div class="control-group" id="producto">
+		<label class="control-label" for="usuario">Unidades ("Producto Completo") por pliego <strong style="color: red;">(*)</strong></label>
+		<div class="controls">
+		<?php if(sizeof($ing) >0) {?>  
+			<input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php echo $ing->unidades_por_pliego;?>" /><a style="color:#BBBBBB"> [<?php echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>
+                <?php } else {?>  
+                        <input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php if($moldes2->unidades_productos_completos!=""){if($trazadosing->unidades_productos_completos==""){echo $moldes2->unidades_productos_completos;}else{echo $trazadosing->unidades_productos_completos;}}else{echo $_POST["unidades_por_pliego"];}?>" /><a style="color:#BBBBBB"> [<?php echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>
+                <?php }?>                       
+         
 		</div>
 	</div>
-    <!-- Inicio de combo de color modificado -->
-    <?php// echo sizeof($ing);?>
-    <?php if($datos->condicion_del_producto=="Repetición Con Cambios"){ ?>
-   <?php if(sizeof($ing)>0 && $ing->tiene_color_modificado=="SI"){?>
-   <div class="control-group">
-        <label class="control-label" for="usuario">Tiene Algun Color Modificado<strong style="color: red;">(*)</strong></label>
-        <div class="controls">
-            <select name="tiene_color_modificado_ing">
-            <option value="" <?php echo set_value_select($ing,'tiene_color_modificado_ing',$ing->tiene_color_modificado,'');?>>Seleccione</option>
-            <option value="NO" <?php echo set_value_select($ing,'tiene_color_modificado_ing',$ing->tiene_color_modificado,'NO');?>>NO</option>
-            <option value="SI" <?php echo set_value_select($ing,'tiene_color_modificado_ing',$ing->tiene_color_modificado,'SI');?>>SI</option>
-            </select>
-        </div>
-    </div>
-    <div class="control-group" <?php if($ing->tiene_color_modificado<>'SI'){echo 'hidden=true'; }?> id="numero_color_modificado_ing">
-        <label class="control-label" for="usuario">Numero de Colores<strong style="color: red;">(*)</strong></label>
-        <div class="controls">
-            <select name="numero_color_modificado_ing">
-             <?php if (sizeof($ing)>0)  { ?>
-            <option value="" <?php if($ing->numero_color_modificado==""){echo "selected='selected'";} ?>>Seleccione</option>
-            <option value="1" <?php if($ing->numero_color_modificado=="1"){echo "selected='selected'";} ?>>1</option>
-            <option value="2" <?php if($ing->numero_color_modificado=="2"){echo "selected='selected'";} ?>>2</option>
-            <option value="3" <?php if($ing->numero_color_modificado=="3"){echo "selected='selected'";} ?>>3</option>
-            <option value="4" <?php if($ing->numero_color_modificado=="4"){echo "selected='selected'";} ?>>4</option>
-            <option value="5" <?php if($ing->numero_color_modificado=="5"){echo "selected='selected'";} ?>>5</option>
-            <option value="6" <?php if($ing->numero_color_modificado=="6"){echo "selected='selected'";} ?>>6</option>
-             <?php } else { ?>
-            <option value="" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'');?><?php if($_POST['numero_color_modificado_ing']==""){echo "selected=selected";} ?>>Seleccione</option>
-            <option value="1" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'1');?><?php if($_POST['numero_color_modificado_ing']=="1"){echo "selected=selected";} ?>>1</option>
-            <option value="2" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'2');?><?php if($_POST['numero_color_modificado_ing']=="2"){echo "selected=selected";} ?>>2</option>
-            <option value="3" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'3');?><?php if($_POST['numero_color_modificado_ing']=="3"){echo "selected=selected";} ?>>3</option>
-            <option value="4" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'4');?><?php if($_POST['numero_color_modificado_ing']=="4"){echo "selected=selected";} ?>>4</option>
-            <option value="5" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'5');?><?php if(isset($_POST["fondo_otro_color"]) && ($_POST['numero_color_modificado_ing']=="5")){echo "selected=selected";} ?>>5</option>
-            <option value="6" <?php echo set_value_select($ing,'numero_color_modificado_ing',$ing->numero_color_modificado,'6');?><?php if($_POST['numero_color_modificado_ing']=="6"){echo "selected=selected";} ?>>6</option>
-            <?php }  ?>
-            </select>
-        </div>
-    </div>
-             <?php } else {
-   //  print_r($datos);
-                 ?>
-                <div class="control-group">
-        <label class="control-label" for="usuario">Tiene Algun Color Modificado<strong style="color: red;">(*)</strong></label>
-        <div class="controls">
-            <select name="tiene_color_modificado_ing">
-            <option value="" <?php echo set_value_select($datos,'tiene_color_modificado_ing',$datos->tiene_color_modificado,'');?>>Seleccione</option>
-            <option value="NO" <?php echo set_value_select($datos,'tiene_color_modificado_ing',$datos->tiene_color_modificado,'NO');?>>NO</option>
-            <option value="SI" <?php echo set_value_select($datos,'tiene_color_modificado_ing',$datos->tiene_color_modificado,'SI');?>>SI</option>
-            </select>
-        </div>
-    </div>
-    <div class="control-group" <?php if($datos->tiene_color_modificado<>'SI'){echo 'hidden=true'; }?> id="numero_color_modificado_ing">
-        <label class="control-label" for="usuario">Numero de Colores<strong style="color: red;">(*)</strong></label>
-        <div class="controls">
-            <select name="numero_color_modificado_ing">
-             <?php if (sizeof($datos)>0)  { ?>
-            <option value="" <?php if($datos->numero_color_modificado==""){echo "selected='selected'";} ?>>Seleccione</option>
-            <option value="1" <?php if($datos->numero_color_modificado=="1"){echo "selected='selected'";} ?>>1</option>
-            <option value="2" <?php if($datos->numero_color_modificado=="2"){echo "selected='selected'";} ?>>2</option>
-            <option value="3" <?php if($datos->numero_color_modificado=="3"){echo "selected='selected'";} ?>>3</option>
-            <option value="4" <?php if($datos->numero_color_modificado=="4"){echo "selected='selected'";} ?>>4</option>
-            <option value="5" <?php if($datos->numero_color_modificado=="5"){echo "selected='selected'";} ?>>5</option>
-            <option value="6" <?php if($datos->numero_color_modificado=="6"){echo "selected='selected'";} ?>>6</option>
-             <?php } else { ?>
-            <option value="" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'');?><?php if($_POST['numero_color_modificado_ing']==""){echo "selected=selected";} ?>>Seleccione</option>
-            <option value="1" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'1');?><?php if($_POST['numero_color_modificado_ing']=="1"){echo "selected=selected";} ?>>1</option>
-            <option value="2" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'2');?><?php if($_POST['numero_color_modificado_ing']=="2"){echo "selected=selected";} ?>>2</option>
-            <option value="3" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'3');?><?php if($_POST['numero_color_modificado_ing']=="3"){echo "selected=selected";} ?>>3</option>
-            <option value="4" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'4');?><?php if($_POST['numero_color_modificado_ing']=="4"){echo "selected=selected";} ?>>4</option>
-            <option value="5" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'5');?><?php if(isset($_POST["fondo_otro_color"]) && ($_POST['numero_color_modificado_ing']=="5")){echo "selected=selected";} ?>>5</option>
-            <option value="6" <?php echo set_value_select($datos,'numero_color_modificado_ing',$datos->numero_color_modificado,'6');?><?php if($_POST['numero_color_modificado_ing']=="6"){echo "selected=selected";} ?>>6</option>
-            <?php }  ?>
-            </select>
-        </div>
-    </div>
-    <?php } }?>
-   
-            <div id="que_es_esto" name="que_es_esto" class="control-group" style="display:none;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="<?php echo base_url().$this->config->item('direccion_pdf')."que_es_esto.png" ?>" alt="Smiley face" height="60%" width="60%">
-                    
-             </div>    
-   
-           <div class="control-group">
-                     <label class="control-label" for="usuario">Lleva Fondo Otro Color</label>
-                     <div class="controls">
-                        <select name="fondo_otro_color" onchange="msg_fondo();calculo_ccac();" style="width: 150px;" >
-                        <option value="">Seleccione......</option>  
+    
+   <div class="control-group" id="producto">
+		<label class="control-label" for="usuario">Piezas totales en el pliego ( para desgajado )<strong style="color: red;">(*)</strong></label>
+		<div class="controls">
+                    <?php if(sizeof($ing)>0) { ?>
+			<input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php echo $ing->piezas_totales_en_el_pliego?>" /> <a style="color:#BBBBBB"> [<?php if($ing->piezas_totales_en_el_pliego!=0){echo number_format($ing->piezas_totales_en_el_pliego,0,'','.');}?>] </a>
+                    <?php } elseif(sizeof($datos)>0) { ?>
+                        <input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php if($moldes2->piezas_totales!=""){if($trazadosing->piezas_totales!=""){echo $trazadosing->piezas_totales;}else{echo $moldes2->piezas_totales;}}else{echo $datos->piezas_totales_en_el_pliego;}?>" /><a style="color:#BBBBBB"> [<?php if($datos->piezas_totales_en_el_pliego!=0){echo number_format($datos->piezas_totales_en_el_pliego,0,'','.');}?>] </a>
+                    <?php } else { ?>                
+			<input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php echo $_POST["piezas_totales_en_el_pliego"] ?>" /><a style="color:#BBBBBB"> [<?php echo number_format($_POST["piezas_totales_en_el_pliego"],0,'','.')?>] </a>
+                    <?php }  ?>                     
+         
+		</div>
+	</div>
+    
+	<?php
+	if((sizeof($ing)>0) and ($ing->estan_los_moldes!="NO LLEVA"))
+	{
+	?>
+            <div class="control-group">
+                <label class="control-label" for="usuario">Lleva Troquel por atrás (reverso):</label>
+                <div class="controls">
+                        <select name="troquel_por_atras" style="width: 250px;" onchange="llevafondo2(this.value);">
+                        <option value="">Seleccione......</option>
                         <?php if (sizeof($ing)>0)  { ?>
-                            <option value="SI" <?php if($ing->fondo_otro_color=="SI"){echo 'selected="selected"';}?>>Sì</option>
-                            <option value="NO" <?php if($ing->fondo_otro_color=="NO"){echo 'selected="selected"';}?>>No</option>
+                            <option value="SI" <?php if($ing->troquel_por_atras=="SI"){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option>
+                            <option value="NO" <?php if($ing->troquel_por_atras=="NO"){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
                         <?php } else { ?>
-                            <option value="SI" <?php if(isset($_POST["fondo_otro_color"]) and $_POST["fondo_otro_color"]=='SI'){echo 'selected="selected"';}?>>Sì</option> 
-                            <option value="NO" <?php if(isset($_POST["fondo_otro_color"]) and $_POST["fondo_otro_color"]=='NO'){echo 'selected="selected"';}?>>No</option>
-                        <?php }  ?>                               
-                        </select> 	
-                     </div>
-             </div>   
-   <!--Codigo agregado por ehndz (hay que imprimir contra la fibra)-->
-           <div class="control-group">
-                     <label class="control-label" for="usuario">Hay que Imprimir Contra la Fibra</label>
-                     <div class="controls">
-                        <select class="comprobacion" id="imprimir_contra_la_fibra" name="imprimir_contra_la_fibra" onchange="validar_ccac();" style="width: 150px;" >
-                        <option value="">Seleccione......</option>  
+                            <option value="SI" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='SI'){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option> 
+                            <option value="NO" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='NO'){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
+                        <?php }  ?>                                                    
+                        </select> 			
+                </div>
+             </div>
+	<?php
+	} else {
+	?>
+        <div class="control-group">
+            <label class="control-label" for="usuario">Lleva Troquel por atrás  (reverso):</label>
+            <div class="controls">
+		<?php //if(sizeof($ing) >0) {?>  
+                <!--<input type="text" name="troquel_por_atras" placeholder="troquel_por_atras" readonly="true" value="<?php //echo $ing->troquel_por_atras;?>" />--> 
+                <?php// } else {?>  
+                <!--<input type="text" name="troquel_por_atras" placeholder="troquel_por_atras" readonly="true" value="<?php// echo $_POST["troquel_por_atras"];?>" />--> 
+                <?php //}?>      
+                <select name="troquel_por_atras" style="width: 250px;" onchange="llevafondo2(this.value);">
+                        <option value="">Seleccione......</option>
                         <?php if (sizeof($ing)>0)  { ?>
-                            <option value="SI" <?php if($ing->imprimir_contra_la_fibra=="SI"){echo 'selected="selected"';}?>>Sí</option>
-                            <option value="NO" <?php if($ing->imprimir_contra_la_fibra=="NO"){echo 'selected="selected"';}?>>No</option>
+                            <option value="SI" <?php if($ing->troquel_por_atras=="SI"){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option>
+                            <option value="NO" <?php if($ing->troquel_por_atras=="NO"){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
                         <?php } else { ?>
-                            <option value="SI" <?php if(isset($_POST["imprimir_contra_la_fibra"]) and $_POST["imprimir_contra_la_fibra"]=='SI'){echo 'selected="selected"';}?>>Sí</option> 
-                            <option value="NO" <?php if(isset($_POST["imprimir_contra_la_fibra"]) and $_POST["imprimir_contra_la_fibra"]=='NO'){echo 'selected="selected"';}?>>No</option>
-                        <?php }  ?>                               
-                        </select> 	
-                     </div>
-             </div>   
-   
-
-   
+                            <option value="SI" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='SI'){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option> 
+                            <option value="NO" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='NO'){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
+                        <?php }  ?>                                                    
+                        </select> 
+                
+            </div>
+	</div>
+	<?php
+	}
+	?>
+  
     <?php
 // print_r($datos);
     $estan="NO";
@@ -1479,37 +1525,6 @@ th {
     
     /*******************************/
     ?>
-         <div class="control-group" id="div_hay_que_troquelar">
-		<label class="control-label" for="usuario">Hay que Troquelar?</label>
-		<div class="controls">
-			<select name="hay_que_troquelar" style="width: 100px;" onchange="">
-                        <?php
-                        if($ing->hay_que_troquelar=="" && $datos->hay_que_troquelar!=""){
-                            
-                         if (sizeof($datos)>0)  { ?>
-                            <option value="SI" <?php if($datos->hay_que_troquelar=='SI'){echo 'selected="true"';}?>>SI</option> 
-                            <option value="NO" <?php if($datos->hay_que_troquelar=="NO"){echo 'selected="true"';}?>>NO</option>
-                            <option value="NO SE" <?php if($datos->hay_que_troquelar=="NO SE"){echo 'selected="true"';}?>>NO SE</option>
-                        <?php } else { ?>
-                            <option value="SI" <?php if(($_POST["hay_que_troquelar"])=='SI'){echo 'selected="selected"';}?>>SI</option> 
-                            <option value="NO" <?php if(($_POST["hay_que_troquelar"])=='NO'){echo 'selected="selected"';}?>>NO</option>
-                            <option value="NO SE" <?php if(($_POST["hay_que_troquelar"])=='NO SE'){echo 'selected="selected"';}?>>NO SE</option>
-                        <?php }  
-                        }else{
-                            if (sizeof($ing)>0)  { ?>
-                            <option value="SI" <?php if($ing->hay_que_troquelar=='SI'){echo 'selected="true"';}?>>SI</option> 
-                            <option value="NO" <?php if($ing->hay_que_troquelar=="NO"){echo 'selected="true"';}?>>NO</option>
-                            <option value="NO SE" <?php if($ing->hay_que_troquelar=="NO SE"){echo 'selected="true"';}?>>NO SE</option>
-                        <?php } else { ?>
-                            <option value="SI" <?php if(($_POST["hay_que_troquelar"])=='SI'){echo 'selected="selected"';}?>>SI</option> 
-                            <option value="NO" <?php if(($_POST["hay_que_troquelar"])=='NO'){echo 'selected="selected"';}?>>NO</option>
-                            <option value="NO SE" <?php if(($_POST["hay_que_troquelar"])=='NO SE'){echo 'selected="selected"';}?>>NO SE</option>
-                        <?php }
-                        }
-                        ?>   
-                        </select> </div>
-        </div>
-   
         <div class="control-group" id="div_estan_los_moldes" <?php if($estan!='NO') { echo 'style="display: none;"'; } else { echo 'style="display: block;"';} ?>>
 		<label class="control-label" for="usuario">Están los moldes?</label>
 		<div class="controls">
@@ -1681,6 +1696,121 @@ th {
 		</div>
 	</div>
     
+  <div class="control-group">
+        <div class="span4 control-group"></div>
+        <div class="span8 control-group"><h3><b><a onclick="ver_informacion('restricciones_ccac');">Click para ver Calculo de Restricciones CCAC</a></b></h3></div>
+</div>
+        <div id="restricciones_ccac" style="display:none;">
+        <div class="control-group" style="border:1px">
+            <table>
+                <tr>
+                    <td>
+                        <table border="1">
+                            <th>Imagen al Centro Pinza Adentro</th>
+                            <tr><td>pinza 5mm</td></tr>
+                            <tr><td>cola 5mm</td></tr>
+                            <tr><td>CCAC MIN 10mm</td></tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table border="1">
+                            <th>Imagen al Corte Sin Fondo</th>
+                            <tr><td>pinza 15mm</td></tr>
+                            <tr><td>cola 5mm</td></tr>
+                            <tr><td>CCAC MIN 20mm</td></tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table border="1">
+                            <th>Con Fondo</th>
+                            <tr><td>pinza 15mm</td></tr>
+                            <tr><td>cola 15mm</td></tr>
+                            <tr><td>CCAC MIN 25mm</td></tr>
+                        </table>    
+                    </td>
+                    <td>
+                        <table border="1">
+                            <th>Imprimir con la Fibra</th>
+                            <tr><td>pinza 15mm</td></tr>
+                            <tr><td>cola 30mm</td></tr>
+                            <tr><td>CCAC MIN 45mm</td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+<?php //print_r($molde); //my code is here ?>
+   <table border='0' class="tablita table-no-bordered">
+       <tr>
+           <td>
+               
+ <div class="control-group" id="producto">
+   <label class="control-label" for="usuario">Distancia en molde:<strong style="color: red;">(*<?php echo $distancia;?>)</strong></label>    
+   </div>  
+<div class="control-group" id="producto">
+		<label class="control-label" for="usuario">Distancia cuchillo a cuchillo<strong style="color: red;">(*)</strong></label>
+		<div class="controls">
+                    <?php if(sizeof($ing)>0) { ?>
+                        <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php if($ing->tamano_cuchillo_1=="" || $ing->tamano_cuchillo_1=="0"){ echo $moldes2->cuchillocuchillo; }else{ echo $ing->tamano_cuchillo_1;} ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php if($ing->tamano_cuchillo_2=="" || $ing->tamano_cuchillo_2=="0"){echo $moldes2->cuchillocuchillo2; }else{echo $ing->tamano_cuchillo_2;} ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
+                    <?php } elseif(sizeof($datos)>0) { ?>
+			<!--<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php //echo $datos->tamano_cuchillo_1; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php //echo $datos->tamano_cuchillo_2; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms.--> 
+                        <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->cuchillocuchillo;}else{echo $moldes2->cuchillocuchillo; }?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->cuchillocuchillo2;}else{echo $moldes2->cuchillocuchillo2; }?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms.
+                    <?php } else { ?>      
+			<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php echo $_POST["tamano_cuchillo_1"]; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php echo $_POST["tamano_cuchillo_2"]; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
+                    <?php }  ?>                      
+        	<div id="msg_imagen_impresion">
+                    
+		</div>    		
+                </div>
+            
+	</div>	
+   <input type="hidden" name="ccac_o" id="ccac_o" value="45">
+    <div class="control-group" id="producto">
+		<label class="control-label" for="usuario">Tamaño a imprimir <strong>Ancho por Largo </strong>(largo a cortar) :<strong style="color: red;">(*)</strong></label>
+		<div class="controls">
+                    <?php if(sizeof($ing)>0) { ?>
+			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $ing->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $ing->tamano_a_imprimir_2; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $ing->tamano_a_imprimir_1." X ".$ing->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
+                    <?php } elseif(sizeof($datos)>0) { ?>
+			<!--<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php //echo $datos->tamano_a_imprimir_1." X ".$datos->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccac"></h3></div>-->
+			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->ancho_bobina;}else{echo $moldes2->ancho_bobina; }?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->largo_bobina;}else{echo $moldes2->largo_bobina; }?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $_POST["tamano_1"]." X ".$_POST["tamano_2"]." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
+                    <?php } else { ?>                
+			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $_POST["tamano_1"]; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $_POST["tamano_2"]; ?> ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
+                    <?php }  ?>                        
+                
+		</div>
+	</div>
+    
+   <div class="control-group" id="producto">
+		<label class="control-label" for="usuario">Calculo CCAC<strong style="color: red;">(*)</strong></label>
+		<div class="controls">
+                    <?php if(sizeof($ing)>0) { ?>
+                    <?php if ($ing->ccac_1>0) { ?>
+                        <input id="ccac_1" type="text" value="<?php echo $ing->ccac_1; ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo $ing->ccac_2; ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
+                    <?php } else { ?>
+                        <?php if (($ing->tamano_cuchillo_1>0) and ($ing->tamano_cuchillo_2>0)){ ?>
+                            <input id="ccac_1" type="text" value="<?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10); ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
+                        <?php } else { ?>    
+                            <input id="ccac_1" type="text" value="<?php echo $ing->tamano_a_imprimir_1; ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo $ing->tamano_a_imprimir_2; ?>"" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
+                        <?php }  ?>                                
+                    <?php } ?>                        
+                    <?php } else { ?>   
+                        <input id="ccac_1" type="text" value="<?php echo (($_POST["tamano_1"]-$_POST["tamano_cuchillo_1"])*10); ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo (($_POST["tamano_2"]-$_POST["tamano_cuchillo_2"])*10); ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
+                    <?php }  ?>                         
+		</div>
+	</div>   
+           </td>
+           <td><h3 id="msgccac"></h3>
+               <ul id='rccac' style="list-style: none">
+                   <li id='fn'></li>
+                   <li id="im"></li>
+                   <li id="pr"></li>
+                   <li id="ccacmin"></li>
+               </ul>
+           </td>
+       </tr>
+   </table>
 <h3>Materialidad <strong style="color: red;">(*)</strong></h3>
     
     <div class="control-group">
@@ -1907,125 +2037,6 @@ th {
         
         
     </div>
-   <div class="control-group">
-        <div class="span4 control-group"></div>
-        <div class="span8 control-group"><h3><b><a onclick="ver_informacion('restricciones_ccac');">Click para ver Calculo de Restricciones CCAC</a></b></h3></div>
-</div>
-        <div id="restricciones_ccac" style="display:none;">
-        <div class="control-group" style="border:1px">
-            <table>
-                <tr>
-                    <td>
-                        <table border="1">
-                            <th>Imagen al Centro Pinza Adentro</th>
-                            <tr><td>pinza 5mm</td></tr>
-                            <tr><td>cola 5mm</td></tr>
-                            <tr><td>CCAC MIN 10mm</td></tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table border="1">
-                            <th>Imagen al Corte Sin Fondo</th>
-                            <tr><td>pinza 15mm</td></tr>
-                            <tr><td>cola 5mm</td></tr>
-                            <tr><td>CCAC MIN 20mm</td></tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table border="1">
-                            <th>Con Fondo</th>
-                            <tr><td>pinza 15mm</td></tr>
-                            <tr><td>cola 15mm</td></tr>
-                            <tr><td>CCAC MIN 25mm</td></tr>
-                        </table>    
-                    </td>
-                    <td>
-                        <table border="1">
-                            <th>Imprimir con la Fibra</th>
-                            <tr><td>pinza 15mm</td></tr>
-                            <tr><td>cola 30mm</td></tr>
-                            <tr><td>CCAC MIN 45mm</td></tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    
-<?php //print_r($molde); //my code is here ?>
-   <table border='0' class="tablita table-no-bordered">
-       <tr>
-           <td>
-               
- <div class="control-group" id="producto">
-   <label class="control-label" for="usuario">Distancia en molde:<strong style="color: red;">(*<?php echo $distancia;?>)</strong></label>    
-   </div>  
-<div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Distancia cuchillo a cuchillo<strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-                    <?php if(sizeof($ing)>0) { ?>
-                        <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php if($ing->tamano_cuchillo_1=="" || $ing->tamano_cuchillo_1=="0"){ echo $moldes2->cuchillocuchillo; }else{ echo $ing->tamano_cuchillo_1;} ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php if($ing->tamano_cuchillo_2=="" || $ing->tamano_cuchillo_2=="0"){echo $moldes2->cuchillocuchillo2; }else{echo $ing->tamano_cuchillo_2;} ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
-                    <?php } elseif(sizeof($datos)>0) { ?>
-			<!--<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php //echo $datos->tamano_cuchillo_1; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php //echo $datos->tamano_cuchillo_2; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms.--> 
-                        <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->cuchillocuchillo;}else{echo $moldes2->cuchillocuchillo; }?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->cuchillocuchillo2;}else{echo $moldes2->cuchillocuchillo2; }?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms.
-                    <?php } else { ?>      
-			<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php echo $_POST["tamano_cuchillo_1"]; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php echo $_POST["tamano_cuchillo_2"]; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
-                    <?php }  ?>                      
-        	<div id="msg_imagen_impresion">
-                    
-		</div>    		
-                </div>
-            
-	</div>	
-   <input type="hidden" name="ccac_o" id="ccac_o" value="45">
-    <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Tamaño a imprimir <strong>Ancho por Largo </strong>(largo a cortar) :<strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-                    <?php if(sizeof($ing)>0) { ?>
-			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $ing->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $ing->tamano_a_imprimir_2; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $ing->tamano_a_imprimir_1." X ".$ing->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
-                    <?php } elseif(sizeof($datos)>0) { ?>
-			<!--<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php //echo $datos->tamano_a_imprimir_1." X ".$datos->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccac"></h3></div>-->
-			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->ancho_bobina;}else{echo $moldes2->ancho_bobina; }?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->largo_bobina;}else{echo $moldes2->largo_bobina; }?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $_POST["tamano_1"]." X ".$_POST["tamano_2"]." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
-                    <?php } else { ?>                
-			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $_POST["tamano_1"]; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $_POST["tamano_2"]; ?> ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
-                    <?php }  ?>                        
-                
-		</div>
-	</div>
-    
-   <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Calculo CCAC<strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-                    <?php if(sizeof($ing)>0) { ?>
-                    <?php if ($ing->ccac_1>0) { ?>
-                        <input id="ccac_1" type="text" value="<?php echo $ing->ccac_1; ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo $ing->ccac_2; ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                    <?php } else { ?>
-                        <?php if (($ing->tamano_cuchillo_1>0) and ($ing->tamano_cuchillo_2>0)){ ?>
-                            <input id="ccac_1" type="text" value="<?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10); ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                        <?php } else { ?>    
-                            <input id="ccac_1" type="text" value="<?php echo $ing->tamano_a_imprimir_1; ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo $ing->tamano_a_imprimir_2; ?>"" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                        <?php }  ?>                                
-                    <?php } ?>                        
-                    <?php } else { ?>   
-                        <input id="ccac_1" type="text" value="<?php echo (($_POST["tamano_1"]-$_POST["tamano_cuchillo_1"])*10); ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo (($_POST["tamano_2"]-$_POST["tamano_cuchillo_2"])*10); ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                    <?php }  ?>                         
-		</div>
-	</div>   
-           </td>
-           <td><h3 id="msgccac"></h3>
-               <ul id='rccac' style="list-style: none">
-                   <li id='fn'></li>
-                   <li id="im"></li>
-                   <li id="pr"></li>
-                   <li id="ccacmin"></li>
-               </ul>
-           </td>
-       </tr>
-   </table>
-
-    
-    
-    
     <h3>Trabajos Internos</h3>        
     
     <div class="control-group">
@@ -2994,7 +3005,7 @@ th {
 	</div>
     
     <div class="control-group" id="es_para_maquina">
-		<label class="control-label" for="usuario">Es para máquina?</label>
+		<label class="control-label" for="usuario">Es para máquina? (Pegado automatico)</label>
 		<div class="controls">
 			<select name="es_una_maquina">
                     <option value="">Seleccione......</option> 
@@ -3165,7 +3176,7 @@ th {
                     <input type="hidden" name="id" value="<?php echo $id?>" />
                     <input type="hidden" name="pagina" value="<?php echo $pagina?>" />
                     <input type="hidden" name="estado" />
-                    <input id="liberar" type="button" value="Liberar" class="btn <?php if($ing->estado==1){echo 'btn-warning';}?>"  data-toggle="modal" data-target="#comparativa_molde" onclick="comparacion(1);" />
+                    <input id="liberar" type="button" value="Liberar" class="btn <?php if($ing->estado==1){echo 'btn-warning';}?>"  data-toggle="modal" data-target="" onclick="guardarFormularioAdd2(1);" />
                 </div></div>
             <?php }else{ ?>
         <div class="control-group">
@@ -3527,6 +3538,11 @@ switch (x) {
     $("#pr").html('<h4>IMPRESION CONTRA LA FIBRA '+pr+prv+'</h4>');
     $("#ccacmin").html('<h4 style="color:green">Distancia '+ccacmin+'</h4>');
     
+    $("select[name=hay_que_troquelar]").on('change',()=>{
+        var a=$("select[name=hay_que_troquelar]").val();
+       //alert($("select[name=hay_que_troquelar]").val());
+    $("input[name=lleva_troquelado]").val(a);
+    $("input[name=hacer_troquel").val(a);
+    });
     
-   
 </script>

@@ -1,7 +1,6 @@
-<?php $this->layout->element('admin_mensaje_validacion'); 
-//exit(print_r($tapa)."holaa");
-?>
-
+<?php 
+ob_start();
+$this->layout->element('admin_mensaje_validacion'); ?>
 <div id="contenidos">
 <?php echo form_open_multipart(null, array('class' => 'form-horizontal','name'=>'form','id'=>'form')); ?>
 <!-- Migas -->
@@ -193,7 +192,7 @@
             	</div>                     
             </div>
 
-
+                <input id="datohidden" type="hidden" value='<?php echo $ordenDeCompra->id_cotizacion; ?>' />
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="height: 300px; wi">
                  <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -250,12 +249,55 @@
     </p>
     
     <br />
+    <table>
+        <tr>
+            <td>
+                
    <div class="control-group">
     <label class="control-label" for="usuario">Comentarios Fotomecanica</label>
     <div class="controls">
         <textarea id="comentario_fot" style="width: 350px" name="comentario_fotomecanica" placeholder="Comentarios"><?php echo set_value_input($fotomecanica,'comentario_fotomecanica',$fotomecanica->comentario_fotomecanica);?></textarea>     
     </div>
   </div>
+            </td>
+            <td style="width:200px">
+            </td>
+            <td>
+        <div class="control-group">
+                <label class="control-label" for="usuario">Lleva desgajado automatico:</label>
+                <div class="controls">
+                        <select name="desgajado_automatico" style="width: 150px;" onchange="">
+<!--                        <option value="">Seleccione......</option>-->
+                        <?php if (sizeof($ing)>0)  { ?>
+                            <option value="NO" <?php if($ing->desgajado_automatico=="NO"){echo 'selected="selected"';}?>>NO</option>
+                            <option value="SI" <?php if($ing->desgajado_automatico=="SI"){echo 'selected="selected"';}?>>SI</option>
+                            <option value="POR DEFINIR" <?php if($ing->desgajado_automatico=="POR DEFINIR"){echo 'selected="selected"';}?>>POR DEFINIR</option>
+                        <?php } else { ?>
+                            <option value="NO" <?php if(isset($_POST["desgajado_automatico"]) && $_POST["desgajado_automatico"]=='NO'){echo 'selected="selected"';}?>>NO</option>
+                            <option value="SI" <?php if(isset($_POST["desgajado_automatico"]) && $_POST["desgajado_automatico"]=='SI'){echo 'selected="selected"';}?>>SI</option> 
+                            <option value="POR DEFINIR" <?php if(isset($_POST["desgajado_automatico"]) && $_POST["desgajado_automatico"]=='NO'){echo 'selected="selected"';}?>>POR DEFINIR</option>
+                        <?php }  ?>                                                    
+                        </select> 			
+                </div>
+             </div>
+                <div class="control-group" id="status_linea_confeccion" <?php if($ing->desgajado_automatico=="" || $ing->desgajado_automatico=="NO" || $ing->desgajado_automatico=="POR DEFINIR"){ echo "style='display:block'";} ?>>
+                <label class="control-label" for="usuario">Status Linea Confeccion de Desgajado:</label>
+                <div class="controls">
+                        <select name="status_linea" style="width: 250px;" onchange="">
+<!--                        <option value="">Seleccione......</option>-->
+                        <?php if (sizeof($ing)>0)  { ?>
+                            <option value="MODIFICAR" <?php if($fotomecanica->status_linea=="MODIFICAR"){echo 'selected="selected"';}?>>MODIFICAR</option>
+                            <option value="LINEA DE DESGAJE HECHA" <?php if($fotomecanica->status_linea=="LINEA DE DESGAJE HECHA"){echo 'selected="selected"';}?>>LINEA DE DESGAJE HECHA</option>
+                        <?php } else { ?>
+                            <option value="MODIFICAR" <?php if(isset($_POST["status_linea"]) && $_POST["status_linea"]=='MODIFICAR'){echo 'selected="selected"';}?>>MODIFICAR</option>
+                            <option value="LINEA DE DESGAJE HECHA" <?php if(isset($_POST["status_linea"]) && $_POST["status_linea"]=='APROBADO'){echo 'selected="selected"';}?>>LINEA DE DESGAJE HECHA</option> 
+                        <?php }  ?>                                                    
+                        </select><span id="fecha_conf_status" style="color:green"><?php if($fotomecanica->fecha_conf_desg!=="" && $fotomecanica->fecha_conf_desg!=="0000-00-00"){echo " Fecha: ". $fotomecanica->fecha_conf_desg;}  ?></span> 			
+                </div>
+             </div>
+            </td>
+        </tr>
+    </table>
   
     <div class="control-group">
     <label class="control-label" for="usuario">Recepcion OT</label>
@@ -376,7 +418,7 @@
                 <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
                 <option value="En Proceso" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Proceso');?>>En Proceso</option>
                 <option value="Entregado" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'Entregado');?>>Entregado</option>
-            </select>
+      </select><span id="fecha_conf_label" style="color:green"><?php if($fotomecanica->fecha_conf_sal_pel!=="" && $fotomecanica->fecha_conf_sal_pel!=="0000-00-00"){echo " Fecha: ". $fotomecanica->fecha_conf_sal_pel;}  ?></span>
     </div>
     </div>
 
@@ -497,6 +539,7 @@
                 }
                 
             }
+         
             ?>
             
 		</div>
@@ -528,6 +571,46 @@
         }
     );
     
+    $('select[name=desgajado_automatico]').change(function() {                
+            var dato = $("#datohidden").val(); 
+            var conf = $(this).val(); 
+                if($(this).val()=="SI"){
+                    $.post('http://localhost/trabajo/produccion/desgajado_automatico',{dato:dato,conf:conf},(data) => {
+                    $('#status_linea_confeccion').show();
+                    });
+                }else{
+                    $.post(webroot+'produccion/desgajado_automatico',{dato:dato,conf:conf},(data) => {
+                    $('#status_linea_confeccion').show();
+                    });
+                }
+            });
+    $('select[name=conf_sal_pel]').change(function() {
+            var dato = $("#datohidden").val(); 
+            var conf = $(this).val(); 
+            var modo = ''; 
+            if(conf=="Entregado"){
+                modo=1;
+            }else{
+                modo=2;
+            }
+            $.post(webroot+'produccion/fecha_confeccion',{dato:dato,conf:conf,modo:modo},(data) => {
+            $("#fecha_conf_label").html(data); 
+            });
+            });
+            
+            $('select[name=status_linea]').change(function() {                
+            var dato = $("#datohidden").val(); 
+            var conf = $(this).val(); 
+            var modo = ''; 
+            if(conf=="LINEA DE DESGAJE HECHA"){
+                modo=1;
+            }else{
+                modo=2;
+            }
+            $.post(webroot+'produccion/fecha_status',{dato:dato,conf:conf,modo:modo},(data) => {
+            $("#fecha_conf_status").html(data); 
+            });
+            });
     
 </script>
 </div>

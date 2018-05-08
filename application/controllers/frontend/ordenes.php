@@ -117,6 +117,10 @@ class Ordenes extends CI_Controller {
 //	echo sizeof($cuentaProductos2);
         if($this->input->post())
         {
+//        echo $this->input->post("lleva_troquel",true);
+//        echo $this->input->post("estan_los_moldes",true);
+//       // echo $this->input->post("id_molde",true);
+//        echo $this->input->post("molde",true); exit();
             if($this->input->post("estado",true)== 1 || $this->input->post("estado",true)== 0)  //Liberado o guardado
             {
                
@@ -323,6 +327,7 @@ class Ordenes extends CI_Controller {
                             "glosa"=>$this->input->post('glosa',true),
                             "fecha_20_dias"=>$fecha_20_dias,
 			);
+                     //   print_r($data);exit();
                     }
                     else
                     { //Producto Existe
@@ -378,11 +383,11 @@ class Ordenes extends CI_Controller {
                     }
                   //  echo $this->input->post("estan_los_moldes",true);exit();
 //                    $producto_id=$this->input->post("producto_id",true);
-//                    if($this->input->post("estan_los_moldes",true)=='SI')
-//                    {
-//                        $id_molde=$this->input->post("molde",true);
-//                        $tieneMolde='SI';
-//                    }else
+                   if($this->input->post("estan_los_moldes",true)=='SI')
+                    {
+                       $id_molde=$this->input->post("molde",true);
+                        $tieneMolde='SI';
+                    }
                     if($this->input->post("estan_los_moldes",true)=='NO')
                     {
                         $id_molde=$this->input->post("molde",true); 
@@ -434,7 +439,7 @@ class Ordenes extends CI_Controller {
                         "glosa"=>$this->input->post('glosa',true),
                         "fecha_20_dias"=>$fecha_20_dias,
                     );
-                  //  exit(print_r($data));
+                   // exit(print_r($data));
                     $this->db->where('id_cotizacion', $this->input->post("id",true));
                     $this->db->update("orden_de_produccion",$data);
                     // actualizo la forma de pago del cliente
@@ -1371,10 +1376,21 @@ class Ordenes extends CI_Controller {
                     $trazado='NO';    
                 }else
                 {
-                    $trazado='SI';
+                    if($ing->archivo!=="" && $datos->trazado > 0){
+                    $trazado='SI - NRO: '.$datos->trazado;
+                    }else{
+                    $trazado='NO';    
+                    }
                 }
-                
-                if($ing->estan_los_moldes=="NO"){
+                //print_r($datos);exit();
+                if($ing->estan_los_moldes=="NO" && $datos->trazado > 0){
+                    $estan_los_moldes = "Molde por fabricar";
+                    //$nombremolde="Molde por Fabricar";
+                    $nombremolde=$nombre_molde->nombre;
+                }else if($ing->estan_los_moldes=="NO" && $orden->estan_los_moldes=="NO LLEVA"){
+                    $estan_los_moldes = "NO LLEVA";
+                    $nombremolde="NO LLEVA";
+                }else if($ing->estan_los_moldes=="NO"){
                     $estan_los_moldes = "Molde por fabricar";
                     $nombremolde="Molde por Fabricar";
                 }else{

@@ -172,7 +172,7 @@
                       <?php } else {?>
                     <input style="width: 500px;" readonly="readonly" type="text" name="producto" placeholder="Descripción del Producto" value="<?php echo set_value("producto")?>"  onblur="ValidarNombreProducto();"/>
                     <?php } ?>
-                    <!--<input type="hidden" name="producto_id" value="<?php// echo $datos_cotizacion->producto_id; ?>" />-->                        
+                    <input type="hidden" name="producto" value="<?php echo $datos_cotizacion->producto; ?>" />                        
                     <input type="hidden" name="producto_id" value="<?php echo $datos_producto->id; ?>" />                        
 		</div>
 	</div>

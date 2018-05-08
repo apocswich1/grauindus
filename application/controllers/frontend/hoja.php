@@ -310,6 +310,9 @@ class Hoja extends CI_Controller {
             //print_r($data);exit();
             $this->db->where('id_cotizacion', $this->input->post('id',true));
             $this->db->update("cotizacion_fotomecanica",$data);
+            
+            $this->db->where('id_cotizacion', $this->input->post('id',true));
+            $this->db->update("cotizacion_ingenieria",$data);
             $data2=array
             (
                 "id_cotizacion"=>$this->input->post("id",true),

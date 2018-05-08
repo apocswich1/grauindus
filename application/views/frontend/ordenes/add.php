@@ -495,6 +495,7 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
 </div>
     <?php } ?>
     <?php //echo "<h1>" . $fotomecanica->estan_los_moldes . "</h1>";
+    //echo "<h1>" . $fotomecanica->hay_que_troquelar . "</h1>";
    switch($fotomecanica->estan_los_moldes)
    {
         case 'SI':
@@ -518,8 +519,11 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
         		<label class="control-label" for="usuario">  </label>
         		<div class="controls">
                 <hr />
-                    <ul>
+                <ul><?php if($fotomecanica->hay_que_troquelar=="NO"){ ?>
+                        <li><strong>NO LLEVA MOLDE</strong></li>
+                <?php }else{ ?>
                         <li><strong>MOLDE NUEVO</strong></li>
+                <?php } ?>
                         <!--<li>Sólo se puede modificar molde, entre los ya existentes.</li>-->
                     </ul>
                 <hr />
@@ -570,7 +574,13 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
 		<label class="control-label" for="usuario">¿Están los moldes?  </label>
 		<div class="controls">
                     <?php 
-                    if($fotomecanica->estan_los_moldes=="NO" && $datos->condicion_del_producto=="Nuevo"){ $estan_los_moldes='NO';} 
+                    if($fotomecanica->estan_los_moldes=="NO" && $datos->condicion_del_producto=="Nuevo"){ 
+                        if($fotomecanica->hay_que_troquelar=="NO"){
+                        $estan_los_moldes='NO LLEVA';
+                        }else{
+                        $estan_los_moldes='NO';    
+                        }
+                    } 
                     if($fotomecanica->estan_los_moldes=="NO" && $datos->condicion_del_producto=="Repetición Sin Cambios"){$estan_los_moldes= 'SI';} 
                     if($fotomecanica->estan_los_moldes=="SI" && $datos->numero_molde=="1"){$estan_los_moldes= 'SI';} 
 //                    if($fotomecanica->estan_los_moldes=="NO" and $datos->condicion_del_producto=="Producto Genérico"){$estan_los_moldes= 'SI';} 
@@ -591,7 +601,7 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
 	<div class="control-group">
 		<label class="control-label" for="usuario">¿Están los moldes?  </label>
 		<div class="controls">
-	              <input type="text" style="width: 600px;" name="estan_los_moldes" value="<?php echo $orden->tiene_molde?>"  readonly="true"/>					
+	              <input type="text" style="width: 600px;" name="estan_los_moldes" value="<?php echo $orden->tiene_molde?>"  readonly="true"/><strong>Código Molde <ins><a href="<?php echo base_url();?>moldes/edit/<?php echo $orden->id_molde?>"><?php echo $orden->id_molde?></a></ins>					
                       <input type="hidden" name="molde" value="<?php echo $orden->id_molde?>"  readonly="true"/>				
 		</div>
 	</div>
@@ -610,7 +620,13 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
             <div class="control-group" id="crea_molde">
                 <label class="control-label" for="usuario"><strong>Nombre Molde sugerido por ingeniería</strong></label>
                 <div class="controls">
+                    <?php if($estan_los_moldes=='NO' && $datos->trazado > 0){ ?>
+                    <input type="text" style="width: 600px;" name="nombre_molde" style="width: 600px;" placeholder="Nombre Molde sugerido por ingeniería" value="<?php echo $ing->producto?>"/> 
+                    <?php } else { if($estan_los_moldes=='NO LLEVA' && $fotomecanica->hay_que_troquelar=="NO"){ ?> 
+                    <input type="text" style="width: 600px;" name="nombre_molde" style="width: 600px;" placeholder="Nombre Molde sugerido por ingeniería" value=""/> 
+                    <?php }else{ ?>
                     <input type="text" style="width: 600px;" name="nombre_molde" style="width: 600px;" placeholder="Nombre Molde sugerido por ingeniería" value="<?php echo $ing->nombre_molde?>"/> 
+                    <?php } }?>
                 </div>
             </div>
         <?php

@@ -84,6 +84,9 @@
             <li>Cotización N° : <b><?php echo $id?></b></li>
             <li>Fecha : <b><?php echo fecha($datos->fecha)?></b></li>
             <li>Vendedor : <b><?php echo $vendedor->nombre?></b></li>
+            <?php if($datos->trazado!=""){ ?>
+            <li>Nro Trazado: <b><?php echo $datos->trazado ?></b></li>
+            <?php } ?>
         </ul>
     </p>
     

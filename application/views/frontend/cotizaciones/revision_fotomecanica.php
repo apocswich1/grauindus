@@ -91,7 +91,7 @@ function getField($campo,$datos,$ing)
 <?php echo form_open_multipart(null, array('class' => 'form-horizontal','name'=>'form','id'=>'form')); ?>
 <!-- Migas -->
     <ol  class= "breadcrumb" >  
-      <li><a href="<?php echo base_url()?>cotizaciones/index/<?php echo $pagina?>">Cotizaciones &gt;&gt;</a></li>
+      <li><a href="<?php echo base_url()?>cotizaciones/index/>">Cotizaciones &gt;&gt;</a></li>
       <li><a href="<?php echo base_url()?>cotizaciones/search_cot/<?php echo $id?>">Volver&gt;&gt;</a></li>
       <li>Revisión Fotomecánica</li>
     </ol>
@@ -373,17 +373,7 @@ function getField($campo,$datos,$ing)
     </div>
         <?php } ?>    
 	
-  <div class="control-group">
-		<label class="control-label" for="usuario">Identificacion del Producto</label>
-		<div class="controls">
-		    <?php if($fotomecanica->condicion_del_producto == 'Repetición Sin Cambios'){ ?>
-                    <input readonly="readonly" style="width: 500px;" type="text" name="producto" onblur="ValidarNombreProducto();" value="<?php echo $ing->producto ?>"/>					
-                    <?php }else{ ?>
-                    <input style="width: 500px;" type="text" name="producto" onblur="ValidarNombreProducto();" value="<?php echo $ing->producto ?>"/>					
-                    <?php } ?>
-                </div>
-  </div>
-    <hr />
+  
 	<?php  if( $this->session->userdata('perfil')!=2) { ?>
                 <!-- se muestra solo si la orden esta liberada de produccion -->
                 <?php //if ($fotomecanica->estado=="1"){ ?>  
@@ -417,11 +407,11 @@ function getField($campo,$datos,$ing)
                           <a href='<?php echo base_url().$this->config->item('direccion_pdf').$trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
                         <?php }else{ ?>
 			      <a href='#'>No Existe Archivo</a>
-                        <?php } }else{ if($trazadosing->archivo!=""){ if($trazadosing->archivo!=""){ ?>
+                        <?php } }else{ if($trazadosing->archivo!=""){ ?>
                                   <a href='<?php echo base_url().$this->config->item('direccion_pdf').$trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero; ?></a>
                               <?php }else{ ?>
                                   <a href='<?php echo base_url().$this->config->item('direccion_pdf').$ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
-                              <?php }}}?>
+                              <?php }}?>
 				  
 		</div>
 	</div>
@@ -452,7 +442,17 @@ function getField($campo,$datos,$ing)
 	
 	<?php }?>
     <hr />	
-  
+  <div class="control-group">
+		<label class="control-label" for="usuario">Identificacion del Producto</label>
+		<div class="controls">
+		    <?php if($fotomecanica->condicion_del_producto == 'Repetición Sin Cambios'){ ?>
+                    <input readonly="readonly" style="width: 500px;" type="text" name="producto" onblur="ValidarNombreProducto();" value="<?php echo $ing->producto ?>"/>					
+                    <?php }else{ ?>
+                    <input style="width: 500px;" type="text" name="producto" onblur="ValidarNombreProducto();" value="<?php echo $ing->producto ?>"/>					
+                    <?php } ?>
+                </div>
+  </div>
+    <hr />
   <div class="control-group">
 		<label class="control-label" for="usuario">Condición del Producto</label>
 		<div class="controls">
@@ -485,14 +485,136 @@ function getField($campo,$datos,$ing)
 	</div>
     
      <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Cantidades a Cotizadas</label><!--onkeypress="nextOnEnter(this,event);"-->
+		<label class="control-label" for="usuario">Cantidades Cotizadas</label><!--onkeypress="nextOnEnter(this,event);"-->
 		<div class="controls">
                     <?php  if (sizeof($datos)>0) {   ?>
                     <input type="text" readonly="readonly" id="can1" name="can1" style="width: 100px;" id="can1" onkeypress="return soloNumeros(event)" placeholder="Cantidad 1" value="<?php echo $datos->cantidad_1?>" /> - <input type="text"  readonly="readonly" id="can2" name="can2" id="can2" style="width: 100px;" onkeypress="return soloNumeros(event)" placeholder="Cantidad 2" value="<?php echo $datos->cantidad_2?>" /> - <input type="text" readonly="readonly"  name="can3" id="can3" style="width: 100px;" onkeypress="return soloNumeros(event)" placeholder="Cantidad 3" value="<?php echo $datos->cantidad_3?>" /> - <input type="text"  readonly="readonly" name="can4" id="can4" style="width: 100px;" onkeypress="return soloNumeros(event)" placeholder="Cantidad 4" value="<?php echo $datos->cantidad_4?>" />
                     <?php } ?>                        
 		</div>
-	</div>    
-    
+	</div> 
+    <h3>Impresion <strong style="color: red;">(*)</strong></h3>
+    <div class="control-group">
+		<label class="control-label" for="usuario">Visto Bueno <strong>(VB)</strong> en Maquina</label>
+		<div class="controls">    
+			<input style="width: 200px;" type="text" name="vb_maquina" placeholder="Visto Bueno en Maquina" value="<?php echo $datos->vb_maquina?>" readonly="true"/> 
+		</div>
+	</div>
+	
+	
+	
+	<?php// print_r($datos);exit(); ?>
+     <div class="control-group">
+		<label class="control-label" for="usuario">Colores</label>
+		<div class="controls">
+			<select name="colores" onchange="colores_barniz(this.value);llevaBarnizFotomecanica();">
+                <?php
+                if($fotomecanica->colores=='')
+                {
+                    $colores=$ing->colores;
+                }else
+                {
+                    $colores=$fotomecanica->colores;
+                }
+                for($i=0;$i<9;$i++)
+                {
+                    ?>
+                    <option value="<?php echo $i?>" <?php if($colores==$i){echo 'selected="selected"';}?>><?php echo $i?></option>
+                    <?php
+                }
+                ?>
+                
+                
+            </select>
+            <?php echo $ing->colores ?>
+		</div>
+	</div>
+    <div class="control-group" id="producto">
+		<label class="control-label" for="usuario">Metálicos o Fluor</label>
+		<div class="controls">
+			<select name="colores_metalicos">
+                <?php
+                if(sizeof($fotomecanica)==0)
+                {
+                    $coloresmetalicos=$datos->impresion_metalicos;
+                }else
+                {
+                    $coloresmetalicos=$fotomecanica->colores_metalicos;
+                }
+                for($i=0;$i<3;$i++)
+                {
+                    ?>
+                    <option value="<?php echo $i?>" <?php if($coloresmetalicos==$i){echo 'selected="selected"';}?>><?php echo $i?></option>
+                    <?php
+                }
+                ?>
+                
+                
+            </select>
+            <?php echo $datos->impresion_metalicos ?>
+		</div>
+	</div>
+   <?php if($datos->condicion_del_producto=="Repetición Con Cambios"){ ?>
+    <?php if(sizeof($fotomecanica>0) && $fotomecanica->tiene_color_modificado=="SI"){?>
+    <div class="control-group">
+        <label class="control-label" for="usuario">Tiene Algun Color Modificado<strong style="color: red;">(*)</strong></label>
+        <div class="controls">
+            <select name="tiene_color_modificado">
+            <option value="" <?php echo set_value_select($fotomecanica,'tiene_color_modificado',$fotomecanica->tiene_color_modificado,'');?>>Seleccione</option>
+            <option value="NO" <?php echo set_value_select($fotomecanica,'tiene_color_modificado',$fotomecanica->tiene_color_modificado,'NO');?>>NO</option>
+            <option value="SI" <?php echo set_value_select($fotomecanica,'tiene_color_modificado',$fotomecanica->tiene_color_modificado,'SI');?>>SI</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group" <?php if($fotomecanica->tiene_color_modificado<>'SI'){echo 'hidden=true'; }?> id="numero_color_modificado">
+        <label class="control-label" for="usuario">Numero de Colores<strong style="color: red;">(*)</strong></label>
+        <div class="controls">
+            <select name="numero_color_modificado">
+            <option value="" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'');?>>Seleccione</option>
+            <option value="1" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'1');?>>1</option>
+            <option value="2" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'2');?>>2</option>
+            <option value="3" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'3');?>>3</option>
+            <option value="4" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'4');?>>4</option>
+            <option value="5" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'5');?>>5</option>
+            <option value="6" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'6');?>>6</option>
+            </select>
+        </div>
+    </div>
+    <?php }else{ ?>
+   <div class="control-group">
+        <label class="control-label" for="usuario">Tiene Algun Color Modificado<strong style="color: red;">(*)</strong></label>
+        <div class="controls">
+            <select name="tiene_color_modificado">
+            <option value="" <?php echo set_value_select($ing,'tiene_color_modificado',$ing->tiene_color_modificado,'');?>>Seleccione</option>
+            <option value="NO" <?php echo set_value_select($ing,'tiene_color_modificado',$ing->tiene_color_modificado,'NO');?>>NO</option>
+            <option value="SI" <?php echo set_value_select($ing,'tiene_color_modificado',$ing->tiene_color_modificado,'SI');?>>SI</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group" <?php if($ing->tiene_color_modificado<>'SI' && $_POST['tiene_color_modificado']<>'SI'){echo 'hidden=true'; }?> id="numero_color_modificado_ing">
+        <label class="control-label" for="usuario">Numero de Colores<strong style="color: red;">(*)</strong></label>
+        <div class="controls">
+            <select name="numero_color_modificado">
+             <?php if (sizeof($ing)>0)  { ?>
+            <option value="" <?php if($ing->numero_color_modificado==""){echo "selected='selected'";} ?>>Seleccione</option>
+            <option value="1" <?php if($ing->numero_color_modificado=="1"){echo "selected='selected'";} ?>>1</option>
+            <option value="2" <?php if($ing->numero_color_modificado=="2"){echo "selected='selected'";} ?>>2</option>
+            <option value="3" <?php if($ing->numero_color_modificado=="3"){echo "selected='selected'";} ?>>3</option>
+            <option value="4" <?php if($ing->numero_color_modificado=="4"){echo "selected='selected'";} ?>>4</option>
+            <option value="5" <?php if($ing->numero_color_modificado=="5"){echo "selected='selected'";} ?>>5</option>
+            <option value="6" <?php if($ing->numero_color_modificado=="6"){echo "selected='selected'";} ?>>6</option>
+             <?php } else { ?>
+            <option value="" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'');?><?php if($_POST['numero_color_modificado']==""){echo "selected=selected";} ?>>Seleccione</option>
+            <option value="1" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'1');?><?php if($_POST['numero_color_modificado']=="1"){echo "selected=selected";} ?>>1</option>
+            <option value="2" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'2');?><?php if($_POST['numero_color_modificado']=="2"){echo "selected=selected";} ?>>2</option>
+            <option value="3" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'3');?><?php if($_POST['numero_color_modificado']=="3"){echo "selected=selected";} ?>>3</option>
+            <option value="4" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'4');?><?php if($_POST['numero_color_modificado']=="4"){echo "selected=selected";} ?>>4</option>
+            <option value="5" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'5');?><?php if(isset($_POST["fondo_otro_color"]) && ($_POST['numero_color_modificado']=="5")){echo "selected=selected";} ?>>5</option>
+            <option value="6" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'6');?><?php if($_POST['numero_color_modificado']=="6"){echo "selected=selected";} ?>>6</option>
+            <?php }  ?>
+            </select>
+        </div>
+    </div>
+   <?php } }?>
      <div class="control-group">
 		<label class="control-label" for="usuario">Impresión</label>
 		<div class="controls">
@@ -517,89 +639,7 @@ function getField($campo,$datos,$ing)
         
 		</div>
 	</div>
-   <div class="control-group">
-		<label class="control-label" for="tamano_pliego">Tamaño del Pliego</label>
-		<div class="controls">
-
-		<?php
-		if(sizeof($fotomecanica)>0)
-                {
-		?>
-                    <input type="text" id="tamano_pliego" name="tamano_pliego"  value="<?php echo $fotomecanica->tamano_pliego; ?>" />
-		<?php
-                }
-		else
-                {
-		?>
-                    <input type="text" id="tamano_pliego" name="tamano_pliego"  value="" />
-		<?php
-		}                
-		?>
-		</div>
-	</div> 
-   <div class="control-group">
-		<label class="control-label" for="id_antiguo">Lleva troquelado</label>
-		<div class="controls">
-
-		<?php
-		if(sizeof($fotomecanica)>0)
-                {
-		?>
-                    <input readonly="true" type="text" id="lleva_troquelado" name="lleva_troquelado"  value="<?php echo $fotomecanica->lleva_troquelado; ?>" />
-		<?php
-                }
-		elseif(sizeof($ing)>0)
-                {
-		?>
-                    <input readonly="true" type="text" id="lleva_troquelado" name="lleva_troquelado"  value="<?php echo $ing->lleva_troquelado; ?>" />
-		<?php
-		}
-		else
-                {
-		?>
-                    <input readonly="true" type="text" id="lleva_troquelado" name="lleva_troquelado"  value="NO SE SABE" />
-		<?php
-		}                
-		?>
-		</div>
-	</div> 
-    
-    <div class="control-group" id="hacer_troquel" style="display: block;">
-		<label class="control-label" for="id_antiguo">Hacer Troquel</label>
-		<div class="controls">
-		<?php
-		if(sizeof($fotomecanica)>0)
-                {
-		?>
-                    <input readonly="true" type="text" id="hacer_troquel" name="hacer_troquel"  value="<?php echo $fotomecanica->hacer_troquel; ?>" />
-		<?php
-                }
-		elseif(sizeof($ing)>0)
-                {
-		?>
-                    <input readonly="true" type="text" id="hacer_troquel" name="hacer_troquel"  value="<?php echo $ing->hacer_troquel; ?>" />
-		<?php
-		}
-		else
-                {
-		?>
-                    <input readonly="true" type="text" id="hacer_troquel" name="hacer_troquel"  value="NO SE SABE" />
-		<?php
-		}                
-		?>
- 		</div>
-	</div> 
-<?php
-            
-//echo $reving->ing_lleva_barniz."<br />";
-//echo $reving->ing_reserva_barniz."<br />";
-//echo $reving->ing_cala_caucho."<br />";
-//echo "-----------------------------------------<br />";
-//echo $fotomecanica->fot_lleva_barniz."<br />";
-//echo $fotomecanica->fot_reserva_barniz."<br />";
-//echo $fotomecanica->fot_cala_caucho."<br />";
-?>
-       <!--********************combos de barniz - agregado pot ehndz**********************-->
+     <!--********************combos de barniz - agregado pot ehndz**********************-->
      <?php if($reving->ing_lleva_barniz != '' && $fotomecanica->fot_lleva_barniz == ''){?>
          <div class="control-group">
 		<label class="control-label" for="usuario">Tipo de Barniz</label>
@@ -719,7 +759,90 @@ function getField($campo,$datos,$ing)
    
    
    <!--***********************************************************-->
+<h3>Troquelado <strong style="color: red;">(*)</strong></h3>
+   <div class="control-group">
+		<label class="control-label" for="tamano_pliego">Tamaño del Pliego</label>
+		<div class="controls">
 
+		<?php
+		if(sizeof($fotomecanica)>0)
+                {
+		?>
+                    <input type="text" id="tamano_pliego" name="tamano_pliego"  value="<?php echo $fotomecanica->tamano_pliego; ?>" />
+		<?php
+                }
+		else
+                {
+		?>
+                    <input type="text" id="tamano_pliego" name="tamano_pliego"  value="" />
+		<?php
+		}                
+		?>
+		</div>
+	</div> 
+   <div class="control-group">
+		<label class="control-label" for="id_antiguo">Lleva troquelado</label>
+		<div class="controls">
+
+		<?php
+		if(sizeof($fotomecanica)>0)
+                {
+		?>
+                    <input readonly="true" type="text" id="lleva_troquelado" name="lleva_troquelado"  value="<?php echo $fotomecanica->lleva_troquelado; ?>" />
+		<?php
+                }
+		elseif(sizeof($ing)>0)
+                {
+		?>
+                    <input readonly="true" type="text" id="lleva_troquelado" name="lleva_troquelado"  value="<?php echo $ing->lleva_troquelado; ?>" />
+		<?php
+		}
+		else
+                {
+		?>
+                    <input readonly="true" type="text" id="lleva_troquelado" name="lleva_troquelado"  value="NO SE SABE" />
+		<?php
+		}                
+		?>
+		</div>
+	</div> 
+    
+    <div class="control-group" id="hacer_troquel" style="display: block;">
+		<label class="control-label" for="id_antiguo">Hacer Troquel</label>
+		<div class="controls">
+		<?php
+		if(sizeof($fotomecanica)>0)
+                {
+		?>
+                    <input readonly="true" type="text" id="hacer_troquel" name="hacer_troquel"  value="<?php echo $fotomecanica->hacer_troquel; ?>" />
+		<?php
+                }
+		elseif(sizeof($ing)>0)
+                {
+		?>
+                    <input readonly="true" type="text" id="hacer_troquel" name="hacer_troquel"  value="<?php echo $ing->hacer_troquel; ?>" />
+		<?php
+		}
+		else
+                {
+		?>
+                    <input readonly="true" type="text" id="hacer_troquel" name="hacer_troquel"  value="NO SE SABE" />
+		<?php
+		}                
+		?>
+ 		</div>
+	</div> 
+<?php
+            
+//echo $reving->ing_lleva_barniz."<br />";
+//echo $reving->ing_reserva_barniz."<br />";
+//echo $reving->ing_cala_caucho."<br />";
+//echo "-----------------------------------------<br />";
+//echo $fotomecanica->fot_lleva_barniz."<br />";
+//echo $fotomecanica->fot_reserva_barniz."<br />";
+//echo $fotomecanica->fot_cala_caucho."<br />";
+?>
+      
     
     <?php
     $estan="NO";
@@ -861,130 +984,6 @@ function getField($campo,$datos,$ing)
 		</div>
         </div>     
     
-	
-	
-	<div class="control-group">
-		<label class="control-label" for="usuario">Visto Bueno <strong>(VB)</strong> en Maquina</label>
-		<div class="controls">    
-			<input style="width: 200px;" type="text" name="vb_maquina" placeholder="Visto Bueno en Maquina" value="<?php echo $datos->vb_maquina?>" readonly="true"/> 
-		</div>
-	</div>
-	
-	
-	
-	<?php// print_r($datos);exit(); ?>
-     <div class="control-group">
-		<label class="control-label" for="usuario">Colores</label>
-		<div class="controls">
-			<select name="colores" onchange="colores_barniz(this.value);llevaBarnizFotomecanica();">
-                <?php
-                if($fotomecanica->colores=='')
-                {
-                    $colores=$ing->colores;
-                }else
-                {
-                    $colores=$fotomecanica->colores;
-                }
-                for($i=0;$i<9;$i++)
-                {
-                    ?>
-                    <option value="<?php echo $i?>" <?php if($colores==$i){echo 'selected="selected"';}?>><?php echo $i?></option>
-                    <?php
-                }
-                ?>
-                
-                
-            </select>
-            <?php echo $ing->colores ?>
-		</div>
-	</div>
-   <?php if($datos->condicion_del_producto=="Repetición Con Cambios"){ ?>
-    <?php if(sizeof($fotomecanica>0) && $fotomecanica->tiene_color_modificado=="SI"){?>
-    <div class="control-group">
-        <label class="control-label" for="usuario">Tiene Algun Color Modificado<strong style="color: red;">(*)</strong></label>
-        <div class="controls">
-            <select name="tiene_color_modificado">
-            <option value="" <?php echo set_value_select($fotomecanica,'tiene_color_modificado',$fotomecanica->tiene_color_modificado,'');?>>Seleccione</option>
-            <option value="NO" <?php echo set_value_select($fotomecanica,'tiene_color_modificado',$fotomecanica->tiene_color_modificado,'NO');?>>NO</option>
-            <option value="SI" <?php echo set_value_select($fotomecanica,'tiene_color_modificado',$fotomecanica->tiene_color_modificado,'SI');?>>SI</option>
-            </select>
-        </div>
-    </div>
-    <div class="control-group" <?php if($fotomecanica->tiene_color_modificado<>'SI'){echo 'hidden=true'; }?> id="numero_color_modificado">
-        <label class="control-label" for="usuario">Numero de Colores<strong style="color: red;">(*)</strong></label>
-        <div class="controls">
-            <select name="numero_color_modificado">
-            <option value="" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'');?>>Seleccione</option>
-            <option value="1" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'1');?>>1</option>
-            <option value="2" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'2');?>>2</option>
-            <option value="3" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'3');?>>3</option>
-            <option value="4" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'4');?>>4</option>
-            <option value="5" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'5');?>>5</option>
-            <option value="6" <?php echo set_value_select($fotomecanica,'numero_color_modificado',$fotomecanica->numero_color_modificado,'6');?>>6</option>
-            </select>
-        </div>
-    </div>
-    <?php }else{ ?>
-   <div class="control-group">
-        <label class="control-label" for="usuario">Tiene Algun Color Modificado<strong style="color: red;">(*)</strong></label>
-        <div class="controls">
-            <select name="tiene_color_modificado">
-            <option value="" <?php echo set_value_select($ing,'tiene_color_modificado',$ing->tiene_color_modificado,'');?>>Seleccione</option>
-            <option value="NO" <?php echo set_value_select($ing,'tiene_color_modificado',$ing->tiene_color_modificado,'NO');?>>NO</option>
-            <option value="SI" <?php echo set_value_select($ing,'tiene_color_modificado',$ing->tiene_color_modificado,'SI');?>>SI</option>
-            </select>
-        </div>
-    </div>
-    <div class="control-group" <?php if($ing->tiene_color_modificado<>'SI' && $_POST['tiene_color_modificado']<>'SI'){echo 'hidden=true'; }?> id="numero_color_modificado_ing">
-        <label class="control-label" for="usuario">Numero de Colores<strong style="color: red;">(*)</strong></label>
-        <div class="controls">
-            <select name="numero_color_modificado">
-             <?php if (sizeof($ing)>0)  { ?>
-            <option value="" <?php if($ing->numero_color_modificado==""){echo "selected='selected'";} ?>>Seleccione</option>
-            <option value="1" <?php if($ing->numero_color_modificado=="1"){echo "selected='selected'";} ?>>1</option>
-            <option value="2" <?php if($ing->numero_color_modificado=="2"){echo "selected='selected'";} ?>>2</option>
-            <option value="3" <?php if($ing->numero_color_modificado=="3"){echo "selected='selected'";} ?>>3</option>
-            <option value="4" <?php if($ing->numero_color_modificado=="4"){echo "selected='selected'";} ?>>4</option>
-            <option value="5" <?php if($ing->numero_color_modificado=="5"){echo "selected='selected'";} ?>>5</option>
-            <option value="6" <?php if($ing->numero_color_modificado=="6"){echo "selected='selected'";} ?>>6</option>
-             <?php } else { ?>
-            <option value="" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'');?><?php if($_POST['numero_color_modificado']==""){echo "selected=selected";} ?>>Seleccione</option>
-            <option value="1" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'1');?><?php if($_POST['numero_color_modificado']=="1"){echo "selected=selected";} ?>>1</option>
-            <option value="2" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'2');?><?php if($_POST['numero_color_modificado']=="2"){echo "selected=selected";} ?>>2</option>
-            <option value="3" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'3');?><?php if($_POST['numero_color_modificado']=="3"){echo "selected=selected";} ?>>3</option>
-            <option value="4" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'4');?><?php if($_POST['numero_color_modificado']=="4"){echo "selected=selected";} ?>>4</option>
-            <option value="5" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'5');?><?php if(isset($_POST["fondo_otro_color"]) && ($_POST['numero_color_modificado']=="5")){echo "selected=selected";} ?>>5</option>
-            <option value="6" <?php echo set_value_select($ing,'numero_color_modificado',$ing->numero_color_modificado,'6');?><?php if($_POST['numero_color_modificado']=="6"){echo "selected=selected";} ?>>6</option>
-            <?php }  ?>
-            </select>
-        </div>
-    </div>
-   <?php } }?>
-     <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Metálicos o Fluor</label>
-		<div class="controls">
-			<select name="colores_metalicos">
-                <?php
-                if(sizeof($fotomecanica)==0)
-                {
-                    $coloresmetalicos=$datos->impresion_metalicos;
-                }else
-                {
-                    $coloresmetalicos=$fotomecanica->colores_metalicos;
-                }
-                for($i=0;$i<3;$i++)
-                {
-                    ?>
-                    <option value="<?php echo $i?>" <?php if($coloresmetalicos==$i){echo 'selected="selected"';}?>><?php echo $i?></option>
-                    <?php
-                }
-                ?>
-                
-                
-            </select>
-            <?php echo $datos->impresion_metalicos ?>
-		</div>
-	</div>
     
     <h3>Trabajos Internos</h3>        
     
