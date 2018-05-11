@@ -1800,7 +1800,11 @@ class Cotizaciones extends CI_Controller {
             }        
         }
 
-        
+     public function borrar_items(){
+         $objetos = $this->input->post('numeros',true);
+         print_r($objetos);
+         //echo "LLego por aca";
+     }   
      public function search($valor=null)
 	{
         if($this->session->userdata('id'))

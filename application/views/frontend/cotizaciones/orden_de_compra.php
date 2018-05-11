@@ -1,7 +1,32 @@
 <link rel = "stylesheet" type = "text/css" href = "<?php echo base_url(); ?>css/datepicker.css">
 <script type = 'text/javascript' src = "<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
 <script type = 'text/javascript' src = "<?php echo base_url(); ?>js/mis_funciones.js"></script>
-<?php 
+<style>
+    .ir-arriba {
+	/*display:none;*/
+	padding:20px;
+	background:#024959;
+	font-size:20px;
+	color:#fff;
+	cursor:pointer;
+	position: fixed;
+	bottom:20px;
+	right:20px;
+}
+.ir-arriba2 {
+	/*display:none;*/
+	padding:20px;
+	background:#024959;
+	font-size:20px;
+	color:#fff;
+	cursor:pointer;
+	position: fixed;
+	top:20px;
+	right:20px;
+}
+</style>
+<span class="ir-arriba2 icon-arrow-up">↓</span>
+    <?php 
 	function getField($campo,$datos,$ing)
 	{
 		$listo=false;
@@ -765,6 +790,7 @@ $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
 	</div>
     
 </div>
+<span class="ir-arriba icon-arrow-up">↑</span>
 <script type="text/javascript">
     jQuery(document).ready
     (
@@ -776,6 +802,33 @@ $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
     );
     
 	
-    
+$('.ir-arriba').click(function(){
+		$('body, html').animate({
+			scrollTop: '0px'
+		}, 300);
+	});
+ 
+	$(window).scroll(function(){
+//		if( $(this).scrollTop() > 0 ){
+//			$('.ir-arriba').slideDown(300);
+//		} else {
+//			$('.ir-arriba').slideUp(300);
+//		}
+	});
+        
+	$('.ir-arriba2').click(function(){
+		$('body, html').animate({
+			scrollTop: '4700px'
+		}, 300);
+	});
+ 
+	$(window).scroll(function(){
+//		if( $(this).scrollTop() > 0 ){
+//			$('.ir-arriba2').slideUp(300);
+//		} else {
+//			$('.ir-arriba2').slideDown(300);
+//		}
+	});
+
 </script>
 

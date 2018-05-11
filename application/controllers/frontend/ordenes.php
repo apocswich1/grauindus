@@ -355,6 +355,7 @@ class Ordenes extends CI_Controller {
                             'quien'=>$this->session->userdata('id'),
                             'cuando'=>date("Y-m-d"),
                             "glosa"=>$this->input->post('glosa',true),
+                            "observaciones"=>$this->input->post('observaciones',true),
                             "fecha_20_dias"=>$fecha_20_dias,
                         );  
                       }
@@ -438,6 +439,7 @@ class Ordenes extends CI_Controller {
                         'cuando'=>date("Y-m-d"),
                         "glosa"=>$this->input->post('glosa',true),
                         "fecha_20_dias"=>$fecha_20_dias,
+                        "observaciones"=>$fecha_20_dias,
                     );
                    // exit(print_r($data));
                     $this->db->where('id_cotizacion', $this->input->post("id",true));
@@ -616,15 +618,17 @@ class Ordenes extends CI_Controller {
             $orden_antiguas = $this->orden_model->getOrdenesAntiguasCliente($datos->id_cliente);
             if(sizeof($datos)==0){show_404();}
             
-            if($datos->condicion_del_producto=='Nuevo')
+            if($fotomecanica->condicion_del_producto=='Nuevo')
             {
                 $repeticion="NO";
             }else
             {
-                if($ing->estan_los_moldes=="NO"){    
+                if($ing->estan_los_moldes=="NO LLEVA"){        
+                $repeticion="SI ".$fotomecanica->condicion_del_producto;
+                }else if($ing->estan_los_moldes=="NO"){    
                 $repeticion="NO";
                 }else{    
-                $repeticion="SI";
+                $repeticion="SI ".$fotomecanica->condicion_del_producto;
                 }
             }
             
@@ -1388,6 +1392,9 @@ class Ordenes extends CI_Controller {
                     //$nombremolde="Molde por Fabricar";
                     $nombremolde=$nombre_molde->nombre;
                 }else if($ing->estan_los_moldes=="NO" && $orden->estan_los_moldes=="NO LLEVA"){
+                    $estan_los_moldes = "NO LLEVA";
+                    $nombremolde="NO LLEVA";
+                }else if($ing->estan_los_moldes=="NO LLEVA" && $orden->estan_los_moldes=="NO LLEVA"){
                     $estan_los_moldes = "NO LLEVA";
                     $nombremolde="NO LLEVA";
                 }else if($ing->estan_los_moldes=="NO"){

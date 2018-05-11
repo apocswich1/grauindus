@@ -392,6 +392,7 @@ class Clientes extends CI_Controller {
                                 "fecha_ultima_compra"=>"",
                                 'id_vendedor'=>$this->input->post("vendedor",true),
                                 'cupo_maximo'=>$this->input->post('cupo_maximo',true),
+                                'contacto_cliente'=>$this->input->post('contacto_cliente',true),
                             );       
                     }else
                     {
@@ -419,6 +420,7 @@ class Clientes extends CI_Controller {
                                 'id_vendedor'=>$this->input->post("vendedor",true),
                                 'contacto'=>$this->input->post("contacto",true),
                                 'cupo_maximo'=>$this->input->post('cupo_maximo',true),
+                                'contacto_cliente'=>$this->input->post('contacto_cliente',true),
                             );       
                     }
                             
@@ -528,6 +530,7 @@ class Clientes extends CI_Controller {
                                         'bloqueado'=>$this->input->post('bloqueado',true),
                                         "quien"=>$this->session->userdata('id'),
                                         "cuando"=>date("Y-m-d"),
+                                        "contacto_cliente"=>$this->input->post('contacto_cliente',true),
                                     );       
 //                                    exit(print_r($data));
                                     $guardar=$this->clientes_model->update($data,$this->input->post("id",true));

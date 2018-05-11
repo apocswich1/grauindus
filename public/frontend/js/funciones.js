@@ -2474,6 +2474,7 @@ function desbloquear_orden(valor)
   $("#candado").hide();
 }else{
     $("#password").val('');
+    alert('Su clave es invalida');
     $("#mensajevalidacion").text('Su clave es invalida');
 }
 }
@@ -4391,6 +4392,17 @@ function cortes_de_bobina_Onda()
 //    $("input").addAttr('data-target="#comparativa_molde"');
 //}    
  }    
+ 
+$('select[name=trazados]').on('change',()=>{
+    var texto = $("select[name=trazados] option:selected").text(); 
+    let cond = $('select[name=condicion_del_producto]').val();
+    let nombre = $('input[name=producto]').val();
+    alert(cond);
+    if(cond==0 && nombre==""){    alert();
+    $('input[name=producto]').val(texto);
+    }
+});
+ 
 $("#reporte").on('click', function(){
     var valor = $(this).val();
     var cadena = $("#rutareporte").val();

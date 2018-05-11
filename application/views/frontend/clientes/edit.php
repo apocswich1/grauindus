@@ -137,6 +137,12 @@
 			<input type="text" id="tele" name="cel" value="<?php echo $datos->celular; ?>" placeholder="Celular" />
 		</div>
 	</div>
+    <div class="control-group">
+		<label class="control-label" for="usuario">Contacto Cliente</label>
+		<div class="controls">
+			<input type="text" value="<?php echo $datos->contacto_cliente; ?>" id="contacto_cliente" name="contacto_cliente" placeholder="Contacto Cliente" />
+		</div>
+	</div>
     
     <div class="control-group">
 		<label class="control-label" for="usuario">Fax</label>

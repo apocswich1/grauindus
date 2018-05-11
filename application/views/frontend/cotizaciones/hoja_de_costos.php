@@ -3892,9 +3892,9 @@ page[size="A4"][layout="portrait"] {
                                 <td class="celda_3">TOTAL</td>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3"><?php echo number_format($totalTotal, 0, '', '.') ?></td>
-                                <td class="celda_3">VALOR EMPRESA</td>
+                                <td class="celda_3"><h5>VALOR EMPRESA</h5></td>
                                 <td class="celda_3">&nbsp;</td>
-                                <td class="celda_3"><?php
+                                <td class="celda_3"><h5><?php
                                     if (sizeof($hoja) == 0) {
                                         if ($valorEmpresa == 0) {
                                             echo number_format($valorFinanciado, 0, '', '.');
@@ -3927,7 +3927,7 @@ page[size="A4"][layout="portrait"] {
                                     } else {
                                        echo $hoja->valor_empresa;
                                     }
-                                    ?>" /></td>
+                                    ?>" /></h5></td>
                             </tr>
                             <tr>
                                 <td class="celda_3">&nbsp;</td>
@@ -8116,10 +8116,10 @@ if(sizeof($hoja)>=1)
                         <table id="tabla_detalle">
                             
                             <tr>
-                                <td class="celda_3">CANTIDAD 2</td>
-                                <td class="celda_3"><?php if($datoscantidad2 == 1){ echo 0;}else{echo number_format($datoscantidad2,0,"",".");}?> 
+                                <td class="celda_3"><h5>CANTIDAD 2</h5></td>
+                                <td class="celda_3"><h5><?php if($datoscantidad2 == 1){ echo 0;}else{echo number_format($datoscantidad2,0,"",".");}?> 
                                 <!--<a href="<?php //echo base_url()?>hoja/cantidad2/<?php //echo $id?>/2" class="fancybox fancybox.ajax"><img src="<?php //echo base_url()?>public/frontend/images/edit.png" class="img_16" /></a></td>-->
-                                <?php if($hoja->impreso!=1){echo "<a href='".base_url()."hoja/cantidad2/".$id."/2' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{echo "<a href='".base_url()."hoja2/cantidad2/".$id."/2' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";} ?>
+                                <?php if($hoja->impreso!=1){echo "<a href='".base_url()."hoja/cantidad2/".$id."/2' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{echo "<a href='".base_url()."hoja2/cantidad2/".$id."/2' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a></h5></td>";} ?>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3"><?php if($datoscantidad3 == 1){ echo 0;}else{ number_format($datoscantidad3,0,"",".");}?></td>
                                 <td class="celda_3">&nbsp;</td>
@@ -8224,9 +8224,9 @@ if(sizeof($hoja)>=1)
                             
                             ?>
                             <tr>
-                                <td class="celda_3">VALOR EMPRESA 2</td>
+                                <td class="celda_3"><h5>VALOR EMPRESA 2</h5></td>
                                 <!--<td class="celda_3"><?php //if(sizeof($hoja)==0){if($datoscantidad2 == 1){echo 0;}else{if( $valorEmpresa2 == 0){echo number_format($valorFinanciado2,0,'','.');}else{echo $vfinanciero2;}}}else{echo number_format($hoja->valor_empresa_2,0,'','.');}?> <a href="<?php //echo base_url()?>hoja/valor_empresa_2/<?php //echo $id?>/2" class="fancybox fancybox.ajax"><img src="<?php //echo base_url()?>public/frontend/images/edit.png" class="img_16" /></a></td>-->
-                                 <td class="celda_3"><?php
+                                 <td class="celda_3"><h5><?php
                                     if (sizeof($hoja) == 0) {
                                         if ($valorEmpresa == 0) {
                                             echo number_format($valorFinanciado, 0, '', '.');
@@ -8253,7 +8253,7 @@ if(sizeof($hoja)>=1)
                                         echo $hoja->valor_empresa_2;
                                         $valorEmpresa = $hoja->valor_empresa_2;
                                     }
-                                    ?>" /></td><input type="hidden" id="ve2" name="ve2" value="<?php echo $valorEmpresa; ?>">
+                                    ?>" /></h5></td><input type="hidden" id="ve2" name="ve2" value="<?php echo $valorEmpresa; ?>">
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3"><?php if(sizeof($hoja)==0){if($datoscantidad3 == 1){echo 0;}else{if( $valorEmpresa3 == 0){ number_format($valorFinanciado3,0,'','.');}else{ $vfinanciero3;}}}else{ number_format($hoja->valor_empresa_3,0,'','.');}?> </td>
                                 <td class="celda_3">&nbsp;</td>
@@ -11253,10 +11253,10 @@ if(sizeof($hoja)>=1)
                         <table id="tabla_detalle">
                             
                             <tr>
-                                <td class="celda_3">CANTIDAD 3</td>
-                                <td class="celda_3"><?php if($datoscantidad3 == 1){ echo 0;}else{echo number_format($datoscantidad3,0,"",".");}?> 
+                                <td class="celda_3"><h5>CANTIDAD 3</h5></td>
+                                <td class="celda_3"><h5><?php if($datoscantidad3 == 1){ echo 0;}else{echo number_format($datoscantidad3,0,"",".");}?> 
                                 <!--<a href="<?php //echo base_url()?>hoja/cantidad3/<?php//echo $id?>/3" class="fancybox fancybox.ajax"><img src="<?php //echo base_url()?>public/frontend/images/edit.png" class="img_16" /></a></td>-->
-                                <?php if($hoja->impreso!=1){echo "<a href='".base_url()."hoja/cantidad3/".$id."/3' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{echo "<a href='".base_url()."hoja2/cantidad3/".$id."/3' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";} ?>
+                                <?php if($hoja->impreso!=1){echo "<a href='".base_url()."hoja/cantidad3/".$id."/3' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{echo "<a href='".base_url()."hoja2/cantidad3/".$id."/3' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a></h5>";} ?>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3"><?php if($datoscantidad3 == 1){ echo 0;}else{ number_format($datoscantidad3,0,"",".");}?></td>
                                 <td class="celda_3">&nbsp;</td>
@@ -11366,9 +11366,9 @@ if(sizeof($hoja)>=1)
                             
                             ?>
                             <tr>
-                                <td class="celda_3">VALOR EMPRESA 3</td>
+                                <td class="celda_3"><h5>VALOR EMPRESA 3</h5></td>
                                 <!--<td class="celda_3"><?php //if(sizeof($hoja)==0){if($datoscantidad3 == 1){echo 0;}else{if( $valorEmpresa2 == 0){echo number_format($valorFinanciado2,0,'','.');}else{echo $vfinanciero2;}}}else{echo number_format($hoja->valor_empresa_3,0,'','.');}?> <a href="<?php //echo base_url()?>hoja/valor_empresa_3/<?php //echo $id?>/2" class="fancybox fancybox.ajax"><img src="<?php //echo base_url()?>public/frontend/images/edit.png" class="img_16" /></a></td>-->
-                                 <td class="celda_3"><?php
+                                 <td class="celda_3"><h5><?php
                                     if (sizeof($hoja) == 0) {
                                         if ($valorEmpresa == 0) {
                                             echo number_format($valorFinanciado3, 0, '', '.');
@@ -11395,7 +11395,7 @@ if(sizeof($hoja)>=1)
                                         echo $hoja->valor_empresa_3;
                                         $valorEmpresa = $hoja->valor_empresa_3;
                                     }
-                                    ?>" /></td><input type="hidden" id="ve3" name="ve3" value="<?php echo $valorEmpresa; ?>"/>
+                                    ?>" /></h5></td><input type="hidden" id="ve3" name="ve3" value="<?php echo $valorEmpresa; ?>"/>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3"><?php if(sizeof($hoja)==0){if($datoscantidad3 == 1){echo 0;}else{if( $valorEmpresa3 == 0){ number_format($valorFinanciado3,0,'','.');}else{ $vfinanciero3;}}}else{ number_format($hoja->valor_empresa_3,0,'','.');}?> </td>
                                 <td class="celda_3">&nbsp;</td>
@@ -14396,10 +14396,10 @@ if(sizeof($hoja)>=1)
                         <table id="tabla_detalle">
                             
                             <tr>
-                                <td class="celda_3">CANTIDAD 4</td>
-                                <td class="celda_3"><?php if($datoscantidad4 == 1){ echo 0;}else{echo number_format($datoscantidad4,0,"",".");}?> 
+                                <td class="celda_3"><h5>CANTIDAD 4</h5></td>
+                                <td class="celda_3"><h5><?php if($datoscantidad4 == 1){ echo 0;}else{echo number_format($datoscantidad4,0,"",".");}?> 
                                 <!--<a href="<?php //echo base_url()?>hoja/cantidad4/<?php //echo $id?>/4" class="fancybox fancybox.ajax"><img src="<?php //echo base_url()?>public/frontend/images/edit.png" class="img_16" /></a></td>-->
-                                <?php if($hoja->impreso!=1){echo "<a href='".base_url()."hoja/cantidad4/".$id."/4' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{echo "<a href='".base_url()."hoja2/cantidad4/".$id."/4' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";} ?>
+                                <?php if($hoja->impreso!=1){echo "<a href='".base_url()."hoja/cantidad4/".$id."/4' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{echo "<a href='".base_url()."hoja2/cantidad4/".$id."/4' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a></h5>";} ?>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3"><?php if($datoscantidad3 == 1){ echo 0;}else{ number_format($datoscantidad3,0,"",".");}?> </td>
                                 <td class="celda_3">&nbsp;</td>
@@ -14507,9 +14507,9 @@ if(sizeof($hoja)>=1)
                             
                             ?>
                             <tr>
-                                <td class="celda_3">VALOR EMPRESA 4</td>
+                                <td class="celda_3"><h5>VALOR EMPRESA 4</h5></td>
                                 <!--<td class="celda_3"><?php //if(sizeof($hoja)==0){if($datoscantidad4 == 1){echo 0;}else{if( $valorEmpresa2 == 0){echo number_format($valorFinanciado2,0,'','.');}else{echo $vfinanciero2;}}}else{echo number_format($hoja->valor_empresa_4,0,'','.');}?> <a href="<?php //echo base_url()?>hoja/valor_empresa_4/<?php //echo $id?>/2" class="fancybox fancybox.ajax"><img src="<?php //echo base_url()?>public/frontend/images/edit.png" class="img_16" /></a></td>-->
-                                 <td class="celda_3"><?php
+                                 <td class="celda_3"><h5><?php
                                     if (sizeof($hoja) == 0) {
                                         if ($valorEmpresa == 0) {
                                             echo number_format($valorFinanciado4, 0, '', '.');
@@ -14536,7 +14536,7 @@ if(sizeof($hoja)>=1)
                                         echo $hoja->valor_empresa_4;
                                         $valorEmpresa = $hoja->valor_empresa_4;
                                     }
-                                    ?>" /></td>
+                                    ?>" /></h5></td>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3"><?php if(sizeof($hoja)==0){if($datoscantidad3 == 1){echo 0;}else{if( $valorEmpresa3 == 0){ number_format($valorFinanciado3,0,'','.');}else{ $vfinanciero3;}}}else{ number_format($hoja->valor_empresa_3,0,'','.');}?></td>
                                 <td class="celda_3">&nbsp;</td>

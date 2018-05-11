@@ -1419,7 +1419,7 @@ th {
             <div class="control-group">
                 <label class="control-label" for="usuario">Lleva Troquel por atrás (reverso):</label>
                 <div class="controls">
-                        <select name="troquel_por_atras" style="width: 250px;" onchange="llevafondo2(this.value);">
+                        <select name="troquel_por_atras" style="width: 260px;" onchange="llevafondo2(this.value);">
                         <option value="">Seleccione......</option>
                         <?php if (sizeof($ing)>0)  { ?>
                             <option value="SI" <?php if($ing->troquel_por_atras=="SI"){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option>
@@ -1768,7 +1768,7 @@ th {
 	</div>	
    <input type="hidden" name="ccac_o" id="ccac_o" value="45">
     <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Tamaño a imprimir <strong>Ancho por Largo </strong>(largo a cortar) :<strong style="color: red;">(*)</strong></label>
+		<label class="control-label" for="usuario">Largo a cortar por Tamaño a cortar:<strong style="color: red;">(*)</strong></label>
 		<div class="controls">
                     <?php if(sizeof($ing)>0) { ?>
 			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $ing->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $ing->tamano_a_imprimir_2; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $ing->tamano_a_imprimir_1." X ".$ing->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
@@ -3544,5 +3544,16 @@ switch (x) {
     $("input[name=lleva_troquelado]").val(a);
     $("input[name=hacer_troquel").val(a);
     });
+    
+    $('#lleva_fondo_negro').on('change',()=>{
+       if($('#lleva_fondo_negro').val()=="SI"){
+        $('select[name=troquel_por_atras]').val('NO')
+    }
+    });
+    
+    if($('#lleva_fondo_negro').val()=="SI"){
+        $('select[name=troquel_por_atras]').val('NO')
+    }
+    
     
 </script>

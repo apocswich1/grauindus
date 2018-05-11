@@ -44,10 +44,11 @@
 		<tr>
             <th>Número</th>
             <th>Fecha solicitud</th>
-			<th>Cliente</th>
+	    <th>Cliente</th>
              <th>Producto</th>
              <th>Recotizar</th>
              <th>Revisión</th>
+             <th>PDF</th>
              <th>Hoja de Costos</th>
              <th>Cotización de Cliente</th>
              <th>Crear OP</th>
@@ -92,7 +93,11 @@
         }
         $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($dato->id);
         $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($dato->id);
+        $estadoCotizacion=$this->cotizaciones_model->getEstadoCotizacion($dato->id);
         $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($dato->id);
+        $orden=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($dato->id);
+        $orden_produccion=$this->orden_model->getOrdenesPorCotizacion($dato->id);        
+        $trazadosing=$this->trazados_model->getTrazadosPorId($dato->trazado);      
             
     ?>
     <tr>
@@ -157,6 +162,35 @@
             <a href="<?php echo base_url()?>cotizaciones/orden_de_compra/<?php echo $dato->id?>/<?php echo $pagina?>" title="Orden de Compra"><span style="font-size: 10px;<?php if(sizeof($orden)>=1){echo 'color:#ff0000; font-weight: bold;';}?>">Orden de Compra</span><i class="icon-shopping-cart"></i></a>
             
         </td>
+         <td style="text-align: center; width: 10px;">		
+            <?php if ($fotomecanica->pdf_imagen_imprimir!=""){ ?>
+		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen_imprimir ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Imagen a Imprimir" title="PDF Cliente"></a>
+            <?php } else { ?>    
+		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de Imagen a Imprimir" title="No existe PDF de Imagen a Imprimir">
+            <?php } ?>                <br />
+            <?php if ($archivo_cliente->archivo!=""){ ?>
+		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$archivo_cliente->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Cliente" title="PDF Cliente"></a>
+            <?php } else { ?>    
+		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de  Cliente" title="No existe PDF de  Cliente">
+            <?php } ?>                <br />
+            <?php if($ing->archivo!=""){ if($trazadosing->archivo!=""){?>
+		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$trazadosing->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Revisión Ingenieria" title="PDF Revisión Ingenieria"></a>
+            <?php }else{ ?>
+                <a href='<?php echo base_url().$this->config->item('direccion_pdf').$ing->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Revisión Ingenieria" title="PDF Revisión Ingenieria"></a>
+            <?php } } else { ?>    
+		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de  Revisión Ingenieria" title="No existe PDF de  Revisión Ingenieria">
+            <?php } ?>                <br />
+            <?php if ($orden->archivo!=""){ ?>
+		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$orden->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Orden de Compra" title="PDF Orden de Compra"></i></a>
+            <?php } else { ?>    
+		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de Orden de Compra" title="No existe PDF de Orden de Compra">
+            <?php } ?>  
+            <?php if ($orden_produccion->id!=""){ ?>
+		<a href="<?php echo base_url()?>ordenes/pdf_orden/<?php echo $orden->id_cotizacion?>/<?php echo $orden->id?>" target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Orden de Producción" title="PDF Orden de Producción"></i></a>
+            <?php } else { ?>    
+		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de PDF Orden de Producción" title="No existe PDF de Orden de Producción">
+            <?php } ?>  	                          
+        </td>        
          <td style="text-align: center;">
             <?php
             if(sizeof($ing)==0 or sizeof($fotomecanica)==0)

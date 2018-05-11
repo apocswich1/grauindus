@@ -393,6 +393,12 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
 			<input type="text" style="width: 600px;" id="titulo" name="nombre_producto_normal" value="<?php echo $ing->producto?>" placeholder="nombre_producto" <?php if($datos->condicion_del_producto=='Repetición Con Cambios'){echo '';}else{echo '';}?> /> <strong>(<?php echo $datos->condicion_del_producto?>)</strong>
 		</div>
 	</div>
+        <div class="control-group">
+		<label class="control-label" for="usuario">Observaciones</label>
+		<div class="controls">
+			<input type="text" style="width: 600px;" id="titulo" name="observaciones" value="<?php echo $_POST['observaciones'] ?>" placeholder="Observaciones"/>
+		</div>
+	</div>
 	
     <div class="control-group">
 		<label class="control-label" for="usuario">Cantidad Pedida</label>

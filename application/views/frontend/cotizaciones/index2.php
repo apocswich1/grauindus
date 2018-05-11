@@ -42,6 +42,7 @@
             </select>
             
 		</div>
+
 	</div>
         <h3>Estatus de Actividades</h3>
                  
@@ -69,8 +70,9 @@
 	</div>
     </div>
 </div>
+        
 <div>
-	<a class="btn btn-success pull-left" href="<?php echo base_url()?>cotizaciones/add">Agregar Solicitud de Cotización</a>
+    <a class="btn btn-success pull-left" href="<?php echo base_url()?>cotizaciones/add">Agregar Solicitud de Cotización</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-warning" id="borrar" data-target="#exampleModal">Borrar Cotizaciones</a>
    <br /><br />
 	<!-- Buscador -->
         <div class="centrar" style="text-align: center; color:#ffffff;; margin:0px auto; width: 400px; font-size: 16px; font-weight: bold; background-color: green;">
@@ -78,6 +80,7 @@
                 if($busqueda->estado==3 || $busqueda->estado==4){echo "La cotizacion se encuentra en ordenes cerradas en el sistema rojo";}
             }} ?></span>
     </div>
+        
     <div class="pull-right">
 	<?php echo form_open(base_url()."cotizaciones/search", array('class' => 'form-search pull-right')); ?>
         <input type="text" id="buscar_text" class="input-medium search-query" name="buscar" placeholder="Buscar" />
@@ -102,6 +105,7 @@
             <th>Cotización Cliente</th>
             <th>Detalle</th>
             <th>Acciones</th>
+            <th>Del</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -497,7 +501,7 @@
                                                     if($dato->condicion_del_producto == 'Repetición Sin Cambios' or $dato->condicion_del_producto == 'Repetición Con Cambios')
                                                     {
                                                             ?>
-                                                            <a href="javascript:void(0);" title="Editar" onclick="alert('No se puede modificar ya ques es Repetición Con o Sin Cambio');"><i class="icon-remove-sign"></i></a>	
+                                                            <a href="javascript:void(0);" title="Editar" onclick="alert('No se puede modificar ya que es Repetición Con o Sin Cambio');"><i class="icon-remove-sign"></i></a>	
                                                             <?php 
                                                     }else{	
                                                     ?>
@@ -520,6 +524,7 @@
 					?>				
                	
             </td>
+            <th><input type="checkbox" name="todos" class="todos" id="<?php echo $dato->id?>"/></th>
 		
 			<?php
     }
@@ -535,7 +540,28 @@
 </table>
           </div>
         </div>
-    </div>   
+    </div>
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Autorizar Borrado de Cotizaciones</h5>
+        <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <input  autocomplete="off" type="password" id="password" title="password" name="pass" value="" placeholder="Indique el Password"/>
+          <span id="mensajevalidacion" style="color:red;font-weight: bold"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button id="confirmado" type="button" class="btn btn-primary" oncllllick="borrar_cotizaciones(<?php echo $datos->id ?>);">Borrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript" src="<?php echo base_url()?>public/frontend/js/chosen.jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>public/frontend/js/prism.js"></script>
 <script type="text/javascript">
@@ -563,7 +589,35 @@ $(document).ready(function() {
             alert(x);
             window.location=webroot+"cotizaciones/orden/"+x;
         });
-
+        
+            
+        $("#borrar").on('click',function(){    
+        var cotizaciones=[];
+        $("input:checkbox:checked").each(function(i) {
+             cotizaciones.push($(this).attr('id'));
+        });
+             if(cotizaciones.length===0){    
+             alert('Debe seleccionar al menos una cotizacion...');
+             }else{    
+             $('#exampleModal').modal({
+                show: 'true'
+             }); 
+             
+             }
+         });
+        
+        $("#confirmado").on('click',function(){
+        var cotizaciones=[];
+        $("input:checkbox:checked").each(function(i) {
+             cotizaciones.push($(this).attr('id'));
+        });
+        var ruta = webroot+'cotizaciones/borrar_items';
+        $.post(ruta,{numeros:cotizaciones},(data)=>{
+            alert(data);
+        });
+        $('#exampleModal').modal('hide');
+        //alert(cotizaciones);
+             });
 });
 
 </script>

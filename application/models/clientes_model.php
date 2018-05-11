@@ -15,7 +15,7 @@ class clientes_model extends CI_Model{
         {
             case 'limit':
                 $query=$this->db
-                ->select("c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.id_vendedor,c.estado,c.fast,c.cupo_maximo,c.quien,c.cuando")
+                ->select("c.contacto_cliente,c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.id_vendedor,c.estado,c.fast,c.cupo_maximo,c.quien,c.cuando")
                 ->from("clientes as c")
                 //->join("formas_pago as f","c.id_forma_pago=f.id","inner")
                 ->order_by("c.rut","desc")
@@ -71,7 +71,7 @@ class clientes_model extends CI_Model{
         {
             case 'limit':
                 $query=$this->db
-                ->select("c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.estado,c.fast,c.id_vendedor,c.cupo_maximo")
+                ->select("c.contacto_cliente,c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.estado,c.fast,c.id_vendedor,c.cupo_maximo")
                 ->from("clientes as c")
                 ->join("region as r","c.id_region=r.id","inner")
                 ->join("ciudades as ci","c.id_ciudad=ci.id","inner")
@@ -104,7 +104,7 @@ class clientes_model extends CI_Model{
         {
             case 'limit':
                 $query=$this->db
-                ->select("c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.estado,c.fast,c.id_vendedor,c.cupo_maximo")
+                ->select("c.contacto_cliente,c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.estado,c.fast,c.id_vendedor,c.cupo_maximo")
                 ->from("clientes as c")
                 ->like('c.rut', $valor, 'both')
                 ->or_like('c.razon_social', $valor, 'both')
@@ -136,7 +136,7 @@ class clientes_model extends CI_Model{
         {
             case 'limit':
                 $query=$this->db
-                ->select("c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.estado,c.fast,c.id_vendedor,c.cupo_maximo")
+                ->select("c.contacto_cliente,c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.estado,c.fast,c.id_vendedor,c.cupo_maximo")
                 ->from("clientes as c")
                 ->join("region as r","c.id_region=r.id","inner")
                 ->join("ciudades as ci","c.id_ciudad=ci.id","inner")
@@ -170,7 +170,7 @@ class clientes_model extends CI_Model{
     public function getClientePorId($id)
     {
          $query=$this->db              
-		->select(" cid.nombre AS ciudad_despacho,rd.region AS region_despacho,cod.nombre AS comuna_despacho,c.id,c.rut,c.razon_social,u.nombre as nombre_vendedor,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.id_vendedor,c.estado,id_region_despacho,id_ciudad_despacho,id_comuna_despacho,r.region,ci.nombre as ciudad,co.nombre as comuna,c.fast,c.contacto,c.id_vendedor,c.cupo_maximo,c.deuda_total,c.deuda_vigente")
+		->select("c.contacto_cliente,cid.nombre AS ciudad_despacho,rd.region AS region_despacho,cod.nombre AS comuna_despacho,c.id,c.rut,c.razon_social,u.nombre as nombre_vendedor,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.id_vendedor,c.estado,id_region_despacho,id_ciudad_despacho,id_comuna_despacho,r.region,ci.nombre as ciudad,co.nombre as comuna,c.fast,c.contacto,c.id_vendedor,c.cupo_maximo,c.deuda_total,c.deuda_vigente")
                 ->from("clientes as c")
                 ->join("region as r","c.id_region=r.id","left")
                 ->join("region as rd","c.id_region_despacho=rd.id","left")
@@ -189,7 +189,7 @@ class clientes_model extends CI_Model{
 	public function getClientePorIdSinJoin($id)
     {
          $query=$this->db
-		->select("id,rut,razon_social,nombre_fantasia,id_region,id_ciudad,id_comuna,direccion,correo,telefono,celular,id_forma_pago,direccion_despacho,id_region_despacho,id_ciudad_despacho,id_comuna_despacho,horario_despacho,observaciones,fecha_ingreso,fecha_ultima_compra,id_vendedor,deuda_vigente,deuda_total,estado,monto_inventario,fast,contacto,cupo_maximo,bloqueado")
+		->select("contacto_cliente,id,rut,razon_social,nombre_fantasia,id_region,id_ciudad,id_comuna,direccion,correo,telefono,celular,id_forma_pago,direccion_despacho,id_region_despacho,id_ciudad_despacho,id_comuna_despacho,horario_despacho,observaciones,fecha_ingreso,fecha_ultima_compra,id_vendedor,deuda_vigente,deuda_total,estado,monto_inventario,fast,contacto,cupo_maximo,bloqueado")
                 ->from("clientes")
                 ->where(array("id"=>$id))
                 ->get();
@@ -239,7 +239,7 @@ class clientes_model extends CI_Model{
     public function getClientesNormal()
     {
          $query=$this->db
-                ->select("c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.id_vendedor,c.estado,id_region_despacho,id_ciudad_despacho,id_comuna_despacho")
+                ->select("c.contacto_cliente,c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.id_vendedor,c.estado,id_region_despacho,id_ciudad_despacho,id_comuna_despacho")
                 ->from("clientes as c")
                 //->where(array("c.estado"=>'0'))
                 ->join("region as r","c.id_region=r.id","left")
@@ -254,7 +254,7 @@ class clientes_model extends CI_Model{
     public function getClientesNormalsinfiltro()
     {
          $query=$this->db
-                ->select("c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.id_vendedor,c.estado")
+                ->select("c.contacto_cliente,c.id,c.rut,c.razon_social,c.nombre_fantasia,c.id_region,c.id_ciudad,c.id_comuna,c.direccion,c.correo,c.telefono,c.celular,c.id_forma_pago,c.direccion_despacho,c.id_comuna_despacho,c.horario_despacho,c.observaciones,c.fecha_ingreso,c.fecha_ultima_compra,c.id_vendedor,c.estado")
                 ->from("clientes as c")
                 ->get();
                 echo $query;$this->db->last_query();
@@ -295,7 +295,7 @@ class clientes_model extends CI_Model{
 	public function getClientesAll()
     {
          $query=$this->db
-                ->select("id,rut,razon_social,nombre_fantasia")
+                ->select("contacto_cliente,id,rut,razon_social,nombre_fantasia")
                 ->from("clientes")
                 ->get();
                 //echo $this->db->last_query();exit;

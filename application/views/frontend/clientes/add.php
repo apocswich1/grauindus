@@ -140,6 +140,12 @@
 
 			</div> 
 	</div>
+        <div class="control-group">
+		<label class="control-label" for="usuario">Contacto Cliente</label>
+		<div class="controls">
+			<input type="text" value="<?php echo $_POST['contacto_cliente'];?>" id="contacto_cliente" name="contacto_cliente" placeholder="Contacto Cliente" />
+		</div>
+	</div>
                     </td>
                     <td align="top" width="200px">
                     </td>
@@ -194,7 +200,7 @@
 	 <div class="control-group"> 
 		<label class="control-label" for="usuario">Dirección</label>
 		<div class="controls">
-			<input type="text" id="dir" name="dir"  placeholder="Dirección" />
+                    <input type="text" id="dir" name="dir"  placeholder="Dirección" value="<?php echo $_POST["dir"] ?>"/>
 		</div>
 	</div>
     
@@ -232,7 +238,7 @@
 <div class="control-group">
 		<label class="control-label" for="usuario">Contacto</label>
 		<div class="controls">
-			<input type="text" id="link" name="contacto" value="<?php echo set_value_input(array(),'contacto','contacto'); ?>" placeholder="Contacto" />
+			<input type="text" id="link" name="contacto" value="<?php echo $_POST["contacto"] ?>" placeholder="Contacto" />
 		</div>
 	</div>
 
