@@ -332,7 +332,7 @@
           <input type="hidden" <?php $db_fecha_rechazada = set_value_input($fotomecanica,'fecha_rechazada_recepcion_OT',$fotomecanica->fecha_rechazada_recepcion_OT) ?>>
           <?php      
 
-            if ($db_fecha_rechazada != '0000-00-00') {
+            if ($db_fecha_rechazada != '0000-00-00' && $db_fecha_rechazada != NULL) {
               //fecha base de datos
               echo '<span class="btn btn-success boton_exito" style="width:170px">Notificado el '.date("d-m-Y", strtotime($db_fecha_rechazada)).'</span>';
             } else {
@@ -365,7 +365,7 @@
       <input type="hidden" name="input_fecha_trazado_aprobado" value="<?php echo $db_fecha_trazado_aprobado = $fotomecanica->revision_trazado_fecha ?>">
         <?php      
 
-          if ($db_fecha_trazado_aprobado != '0000-00-00') {
+          if ($db_fecha_trazado_aprobado != '0000-00-00' && $db_fecha_trazado_aprobado != NULL) {
             //fecha base de datos
             echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_trazado_aprobado)).'</span>';
           }
@@ -395,7 +395,7 @@
         
         <input type="hidden" name="input_fecha_maqueta_aprobado" value="<?php echo $db_fecha_maqueta_aprobado = $fotomecanica->recepcion_maqueta_fecha ?>">
           <?php      
-            if ($db_fecha_maqueta_aprobado != '0000-00-00') {
+            if ($db_fecha_maqueta_aprobado != '0000-00-00' && $db_fecha_maqueta_aprobado != NULL) {
               //fecha base de datos
               echo '<span class="btn btn-success boton_exito" style="width:240px">Recepcion aprobada el '.date("d-m-Y", strtotime($db_fecha_maqueta_aprobado)).'</span>';
             }
@@ -418,7 +418,7 @@
         <input type="hidden" name="input_fecha_imagen_aprobado" value="<?php echo $db_fecha_imagen_aprobado = $fotomecanica->revision_de_imagen_fecha ?>">
         <?php      
 
-          if ($db_fecha_imagen_aprobado != '0000-00-00') {
+          if ($db_fecha_imagen_aprobado != '0000-00-00' && $db_fecha_imagen_aprobado != NULL) {
             //fecha base de datos
             echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_imagen_aprobado)).'</span>';
           }
@@ -440,7 +440,7 @@
       <input type="hidden" name="input_fecha_montaje_aprobado" value="<?php echo $db_fecha_montaje_aprobado = $fotomecanica->montaje_digital_fecha ?>">
         <?php      
 
-          if ($db_fecha_montaje_aprobado != '0000-00-00') {
+          if ($db_fecha_montaje_aprobado != '0000-00-00' && $db_fecha_montaje_aprobado != NULL) {
             //fecha base de datos
             echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_montaje_aprobado)).'</span>';
           }
@@ -464,7 +464,7 @@
       <input type="hidden" name="input_fecha_prueba_color_aprobado" value="<?php echo $db_fecha_prueba_color_aprobado = $fotomecanica->prueba_color_fecha ?>">
         <?php      
 
-          if ($db_fecha_prueba_color_aprobado != '0000-00-00') {
+          if ($db_fecha_prueba_color_aprobado != '0000-00-00' && $db_fecha_prueba_color_aprobado != NULL) {
             //fecha base de datos
             echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_prueba_color_aprobado)).'</span>';
           }
@@ -487,7 +487,7 @@
       </select>
       <input type="hidden" name="input_fecha_arte_diseno_aprobado" value="<?php echo $db_fecha_arte_diseno_aprobado = $fotomecanica->arte_diseno_fecha ?>">
       <?php      
-        if ($db_fecha_arte_diseno_aprobado != '0000-00-00') {
+        if ($db_fecha_arte_diseno_aprobado != '0000-00-00' && $db_fecha_arte_diseno_aprobado != NULL) {
           //fecha base de datos
           echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_arte_diseno_aprobado)).'</span>';
         }
@@ -509,7 +509,7 @@
       </select>
       <input type="hidden" name="input_fecha_conf_sal_pel_aprobado" value="<?php echo $db_fecha_conf_sal_pel_aprobado = $fotomecanica->conf_sal_pel_fecha ?>">
       <?php      
-        if ($db_fecha_conf_sal_pel_aprobado != '0000-00-00') {
+        if ($db_fecha_conf_sal_pel_aprobado != '0000-00-00' && $db_fecha_conf_sal_pel_aprobado != NULL) {
           //fecha base de datos
           echo '<span class="btn btn-success boton_exito" style="width:170px">Entregado el '.date("d-m-Y", strtotime($db_fecha_conf_sal_pel_aprobado)).'</span>';
         }
@@ -531,7 +531,7 @@
       </select>
       <input type="hidden" name="input_fecha_sobre_desarrollo_aprobado" value="<?php echo $db_fecha_sobre_desarrollo_aprobado = $fotomecanica->sobre_desarrollo_fecha ?>">
       <?php      
-        if ($db_fecha_sobre_desarrollo_aprobado != '0000-00-00') {
+        if ($db_fecha_sobre_desarrollo_aprobado != '0000-00-00' && $db_fecha_sobre_desarrollo_aprobado != NULL) {
           //fecha base de datos
           echo '<span class="btn btn-success boton_exito" style="width:170px">Entregado el '.date("d-m-Y", strtotime($db_fecha_sobre_desarrollo_aprobado)).'</span>';
         }
