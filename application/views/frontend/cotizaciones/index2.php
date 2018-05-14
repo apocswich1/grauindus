@@ -159,7 +159,7 @@
 
        
     ?>
-    <tr> 
+        <tr elemento="<?php echo $dato->id ?>"> 
         <td><?php if(sizeof($ing)>=1 || sizeof($fotomecanica)>=1){echo "<a href='".base_url()."cotizaciones/view/".$dato->id."#'>".$dato->id."</a>";}else{echo "<a href='".base_url()."cotizaciones/editar_cotizacion/".$dato->id."#'>".$dato->id."</a>";}?></td>
         <td><?php echo $dato->ot_antigua?></td>       
         <td><?php echo $dato->ot_migrada?></td>                
@@ -610,6 +610,9 @@ $(document).ready(function() {
         var cotizaciones=[];
         $("input:checkbox:checked").each(function(i) {
              cotizaciones.push($(this).attr('id'));
+        });
+        $("input:checkbox:checked").each(function(i) {
+             alert($(this).parent().parent().css('background-color', 'red'));
         });
         var ruta = webroot+'cotizaciones/borrar_items';
         $.post(ruta,{numeros:cotizaciones},(data)=>{
