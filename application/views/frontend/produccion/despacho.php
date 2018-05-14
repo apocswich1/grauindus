@@ -21,7 +21,7 @@
 <?php
 function cuantas_etiquetas($cant_caja, $paquetes){
     $dato = $cant_caja / $paquetes;
-    $pag = $dato / 6 ;
+    $pag = $dato / 8 ;
     $cu = $dato ." ($pag Paginas)";
     return $dato;
 }
@@ -107,20 +107,20 @@ return $valor;
             <div class="page-header"><h3>Despacho - Orden de Producción N° <?php echo $ordenDeCompra->id ?></h3></div>
             <ul>
                 <?php
-                $cli=$this->clientes_model->getClientePorId($datos->id_cliente);
-                $cliente=$cli->razon_social;
-                $vendedor=$this->vendedores_model->getVendedorPorId($datos->id_vendedor);
-                if($orden->tiene_molde=='NO')
-                {
-                    $moldeNuevo='Molde Antiguo';
-                }else
-                {
-                    $moldeNuevo='Molde nuevo';
-                }
-                $molde=$this->moldes_model->getMoldesPorId($orden->id_molde);
-                $materialidad_1=$this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_1);
-                $materialidad_2=$this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_2);
-                $materialidad_3=$this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_3);
+                    $cli=$this->clientes_model->getClientePorId($datos->id_cliente);
+                    $cliente=$cli->razon_social;
+                    $vendedor=$this->vendedores_model->getVendedorPorId($datos->id_vendedor);
+                    if($orden->tiene_molde=='NO')
+                    {
+                        $moldeNuevo='Molde Antiguo';
+                    }else
+                    {
+                        $moldeNuevo='Molde nuevo';
+                    }
+                    $molde=$this->moldes_model->getMoldesPorId($orden->id_molde);
+                    $materialidad_1=$this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_1);
+                    $materialidad_2=$this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_2);
+                    $materialidad_3=$this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_3);
                 ?>
                 <table width="100%" border="0">
                     <tr>
@@ -129,20 +129,20 @@ return $valor;
                     </tr>
                     <tr>
                         <td width="58%"></td>
-                        <td><li>Cantidad a Despachar: </li></td>
-                        <td><input type="text" style="" name="paquetede1" id="paquetede1" value="<?php echo $ordenDeCompra->cantidad_de_cajas?>" />
+                        <td><li>Cantidad a Despachar: </li></td>                            
+                        <td><input type="number" style="" name="paquetede1" id="paquetede1" value="<?php echo $ordenDeCompra->cantidad_de_cajas?>" />
 de <?php echo $ordenDeCompra->cantidad_de_cajas?>                        
                     </tr>
 
                     <tr>
                         <td><li>Descripción : <b><?php echo $datos->producto?></b></li></td>
                         <td><li>Paquetes de: </li></td>
-                <td><input type="text" style="" name="paquetede" value="<?php echo '25'; ?>" id="paquetede"/></td>
+                <td><input type="number" style="" name="paquetede" value="<?php echo '25'; ?>" id="paquetede"/></td>
                     </tr>
                     <tr>
                         <td><li>Cantidad de Cajas Solicitadas: <b><?php echo $ordenDeCompra->cantidad_de_cajas?></b></li></td>
                         <td><li>¿Cuantas Etiquetas ?</li></td>
-                        <td><input type="text" style="" name="cuantoetiqueta" value="<?php echo cuantas_etiquetas($ordenDeCompra->cantidad_de_cajas, 25) ?>" id="cuantoetiqueta" readonly="true"/>
+                        <td><input type="number" style="" name="cuantoetiqueta" value="<?php echo cuantas_etiquetas($ordenDeCompra->cantidad_de_cajas, 25) ?>" id="cuantoetiqueta"/>
 <span class="pagina"></span>
                         </td>
                         
@@ -474,17 +474,28 @@ de <?php echo $ordenDeCompra->cantidad_de_cajas?>
            function cuantaetiquetas(){
             var paquetede1 = $('#paquetede1').val();   //7200
             var paquetede = $('#paquetede').val();   //25
-            var etiqueta = Math.round(paquetede1 / paquetede);
-            var pagina = Math.round(etiqueta / 6)+" Paginas";
-            $('.pagina').html(pagina);
-            $('#cuantoetiqueta').val(Math.round(paquetede1 / paquetede));  
+            $('#cuantoetiqueta').val(Math.round(paquetede1 / paquetede));
         }
+        function cantidad_a_despachar(){
+            var cuantoetiqueta = $('#cuantoetiqueta').val();
+            var paquetede = $('#paquetede').val();   //25
+            $('#paquetede1').val(Math.round(cuantoetiqueta * paquetede));
+        }
+
+        function pagina(){
+            var paquetede = $('#paquetede').val();
+            var paquetede1 = $('#paquetede1').val();
+            var total = Math.round(paquetede1 / paquetede);
+            var pagina = Math.ceil(total / 8)+" Paginas";
+            $('.pagina').html(pagina);
+        }
+
         
             document.form.reset();
   
         //imprimir etiquetas
             $(".ver-etiqueta").click(function() {                   
-                var cantidad = Math.round($('#cuantoetiqueta').val() / 6);
+                var cantidad = Math.ceil($('#cuantoetiqueta').val() / 8);
                 url = '<?php echo base_url()?>produccion/etiquetas_despacho/<?php echo $id ?>/'+$('#paquetede').val()+'/'+$('#codigoproducto').val()+'/'+cantidad+'/'+$('#empresa option:selected').val();
                 window.open(url, '_blank');
                 return false;                
@@ -493,12 +504,27 @@ de <?php echo $ordenDeCompra->cantidad_de_cajas?>
 
             $('#paquetede1').keyup(function(){                
                 cuantaetiquetas();
+                pagina();
             });            
 
             $('#paquetede').keyup(function(){                
                 $('.paq').html($('#paquetede').val());
                 cuantaetiquetas();
+                pagina();
+            }); 
+
+            //multiplicar cantidad de etiquetas * paquetes
+            $('#cuantoetiqueta').keyup(function(){                
+                cantidad_a_despachar();
+                pagina();
             });            
+
+            $('#paquetede').keyup(function(){                
+                $('.paq').html($('#paquetede').val());
+                cantidad_a_despachar();
+                pagina();
+            }); 
+            //---------------------------------------//           
 
             $('#codigoproducto').keyup(function(){
              $('.cod').html($('#codigoproducto').val());

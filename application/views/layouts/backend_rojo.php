@@ -99,7 +99,7 @@
         			
                      Todos los derechos reservados a Empresas Grau <?php echo date("Y")?>
                     <br />
-                    Desarrollado por <a href="#" target="_blank" title="Web Master" style="color: #ffffff;text-decoration: none;">Web Master</a>
+                    Desarrollado por <a href="#" target="_blank" title="Web Master" style="color: #ffffff;text-decoration: none;">Web M1aster</a>
                     
         		</div>
         	

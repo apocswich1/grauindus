@@ -971,21 +971,87 @@ class Produccion extends CI_Controller {
                                             //$file_name = $pf->pdf_imagen;
                                       }
 									 
-									 
-                   if($this->input->post('revision_trazado',true)=="SI")
-                   {
-                       $revision_trazado=date("Y-m-d");
-                   }else
-                   {
-                       $revision_trazado="0000-00-00"; 
+				   if($this->input->post('revision_trazado',true)=="Aprobada") {
+                    if ($this->input->post('input_fecha_trazado_aprobado',true)=='0000-00-00') {
+                        $revision_trazado=date("Y-m-d");
+                    } else {
+                        $revision_trazado=$this->input->post('input_fecha_trazado_aprobado',true); 
+                    }
+                   } else {
+                        $revision_trazado="0000-00-00";
                    }
-                   if($this->input->post('revision_de_imagen',true)=="SI")
-                   {
-                       $revision_de_imagen=date("Y-m-d");
-                   }else
-                   {
-                       $revision_de_imagen="0000-00-00"; 
+
+                   if($this->input->post('recepcion_maqueta',true)=="Recepcion Aprobada") {
+                    if ($this->input->post('input_fecha_maqueta_aprobado',true)=='0000-00-00') {
+                        $fecha_recepcion_maqueta=date("Y-m-d");
+                    } else {
+                        $fecha_recepcion_maqueta=$this->input->post('input_fecha_maqueta_aprobado',true); 
+                    }
+                   } else {
+                        $fecha_recepcion_maqueta="0000-00-00";
                    }
+
+                   if($this->input->post('revision_de_imagen',true)=="Aprobado") {
+                    if ($this->input->post('input_fecha_imagen_aprobado',true)=='0000-00-00') {
+                        $revision_de_imagen=date("Y-m-d");
+                    } else {
+                        $revision_de_imagen=$this->input->post('input_fecha_imagen_aprobado',true); 
+                    }
+                   } else {
+                        $revision_de_imagen="0000-00-00";
+                   }
+
+                   if($this->input->post('montaje_digital',true)=="Aprobado") {
+                    if ($this->input->post('input_fecha_montaje_aprobado',true)=='0000-00-00') {
+                        $montaje_digital_fecha=date("Y-m-d");
+                    } else {
+                        $montaje_digital_fecha=$this->input->post('input_fecha_montaje_aprobado',true); 
+                    }
+                   } else {
+                        $montaje_digital_fecha="0000-00-00";
+                   }
+
+                   if($this->input->post('prueba_color',true)=="Aprobado") {
+                    if ($this->input->post('input_fecha_prueba_color_aprobado',true)=='0000-00-00') {
+                        $prueba_color_fecha=date("Y-m-d");
+                    } else {
+                        $prueba_color_fecha=$this->input->post('input_fecha_prueba_color_aprobado',true); 
+                    }
+                   } else {
+                        $prueba_color_fecha="0000-00-00";
+                   }
+                   
+                   if($this->input->post('arte_diseno',true)=="Aprobado") {
+                    if ($this->input->post('input_fecha_arte_diseno_aprobado',true)=='0000-00-00') {
+                        $arte_diseno_fecha=date("Y-m-d");
+                    } else {
+                        $arte_diseno_fecha=$this->input->post('input_fecha_arte_diseno_aprobado',true); 
+                    }
+                   } else {
+                        $arte_diseno_fecha="0000-00-00";
+                   }
+                   
+                   if($this->input->post('conf_sal_pel',true)=="Entregado") {
+                    if ($this->input->post('input_fecha_conf_sal_pel_aprobado',true)=='0000-00-00') {
+                        $conf_sal_pel_fecha=date("Y-m-d");
+                    } else {
+                        $conf_sal_pel_fecha=$this->input->post('input_fecha_conf_sal_pel_aprobado',true); 
+                    }
+                   } else {
+                        $conf_sal_pel_fecha="0000-00-00";
+                   }
+
+                   if($this->input->post('sobre_desarrollo',true)=="Entregado") {
+                    if ($this->input->post('input_fecha_sobre_desarrollo_aprobado',true)=='0000-00-00') {
+                        $sobre_desarrollo_fecha=date("Y-m-d");
+                    } else {
+                        $sobre_desarrollo_fecha=$this->input->post('input_fecha_sobre_desarrollo_aprobado',true); 
+                    }
+                   } else {
+                        $sobre_desarrollo_fecha="0000-00-00";
+                   }
+
+
                    if($this->input->post('preparacion_de_archivos',true)=="SI")
                    {
                        $preparacion_de_archivos=date("Y-m-d");
@@ -1208,13 +1274,19 @@ class Produccion extends CI_Controller {
                        "sobre_desarrollo"       =>$this->input->post('sobre_desarrollo',true),
                        "para_maquina"           =>$this->input->post('para_maquina',true),
                        "correcciones"           =>$this->input->post('correcciones',true),
-
-/*
-                       
                        "revision_trazado_fecha"=>$revision_trazado,
-                       "revision_trazado_id_usuario"=>$this->session->userdata('id'),
-                       "revision_de_imagen"=>$this->input->post('revision_de_imagen',true),
+                       "recepcion_maqueta_fecha"=>$fecha_recepcion_maqueta,
+
                        "revision_de_imagen_fecha"=>$revision_de_imagen,
+                       "montaje_digital_fecha"=>$montaje_digital_fecha,
+                       "prueba_color_fecha"=>$prueba_color_fecha,
+                       "arte_diseno_fecha"=>$arte_diseno_fecha,
+                       "conf_sal_pel_fecha"=>$conf_sal_pel_fecha,
+                       "sobre_desarrollo_fecha"=>$sobre_desarrollo_fecha,
+                       
+/*                     "revision_trazado_id_usuario"=>$this->session->userdata('id'),
+                       "revision_de_imagen"=>$this->input->post('revision_de_imagen',true),
+                       
                        "revision_de_imagen_id_usuario"=>$this->session->userdata('id'),
                        "preparacion_de_archivos"=>$this->input->post('preparacion_de_archivos',true),
                        "preparacion_de_archivos_fecha"=>$preparacion_de_archivos,
@@ -8315,7 +8387,7 @@ class Produccion extends CI_Controller {
 					
 		//Parcial				
 					
-		   $data2=array
+		    $data2=array
                     (              
                         "id_usuario"=>$this->session->userdata('id'),
                         "tipo"=>$this->input->post('tipo',true),
@@ -8432,7 +8504,7 @@ class Produccion extends CI_Controller {
                                 $mliner = $this->materiales_model->getMaterialesPorNombre($datos_cotizacion->id_mat_liner3);
                                 //$onda = $tapa->materiales_tipo.''.$tapa->gramaje;
                                 
-//                              $hoja   = $this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($dato->id_cotizacion);
+                                //$hoja   = $this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($dato->id_cotizacion);
                                 //$placakilo = $hoja->placa_kilo.' '.$hoja->kilos_placa;
                                 // $placakilos = $hoja->kilos_placa;
 
@@ -8480,32 +8552,141 @@ class Produccion extends CI_Controller {
         {
             redirect(base_url().'usuarios/login',  301);
         }
+    } 
+
+    public function listado_programa_confeccion()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoProgramaConfeccionMolde();
+
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">PROGRAMA DE CONFECCION DE MOLDE</p></h3>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td>OT</td>
+                                <td>Fecha OT</td>
+                                <td>Fecha Lib, FOMECA</td>
+                                <td>Cliente</td>
+                                <td>Trabajo</td>
+                                <td>Desgaje Autom.</td>
+                                <td>Trazado Desgajado</td>
+                                <td>Pegado Autom.</td>
+                                <td>Molde Numero</td>
+                                <td>Repeticion</td>
+                                <td>Numero Trazado</td>
+                                <td>Numero Asignado</td>
+                                <td>Fecha confeccion</td>
+                                <td>CCAC1 Ancho</td>
+                                <td>CCAC2 Largo</td>
+                                <td>Micro corrugado</td>
+                                <td>Tipo de Troquelado</td>
+                                <td>F, recepcion muestra</td>
+                                <td>Cant. Golpes</td>
+                                <td>Estado</td>
+                            </tr>';
+             
+            foreach ($datos as $dato) {
+                            $valores = $this->orden_model->getOndaCotizacion($dato->id_cotizacion);
+                            //$onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
+                            //$liner     = $dato->tipo.' - ('.$valores->gramaje.' '.$valores->reverso.")";
+
+                            $datos_cotizacion = $this->cotizaciones_model->getCotizacionPorId($dato->id_cotizacion);
+                            echo '<pre>';
+
+                            if (strcasecmp($dato->tipo, 'Cartulina-cartulina') != 0){
+                                $onda =$this->cotizaciones_model->getOndaCompleto($datos_cotizacion->materialidad_2);
+                                $linder =$this->cotizaciones_model->getOndaCompleto($datos_cotizacion->materialidad_3);
+
+                            }else{
+                                //$onda =$this->cotizaciones_model->getOndaCompletoCartulina($datos_cotizacion->id_mat_placa1);
+                                //$linder =$this->cotizaciones_model->getOndaCompletoCartulina($datos_cotizacion->id_mat_placa1);
+
+                                $tapa = $this->materiales_model->getMaterialesPorNombre($datos_cotizacion->id_mat_placa1);
+                                $monda = $this->materiales_model->getMaterialesPorNombre($datos_cotizacion->id_mat_onda2);
+                                $mliner = $this->materiales_model->getMaterialesPorNombre($datos_cotizacion->id_mat_liner3);
+                                //$onda = $tapa->materiales_tipo.''.$tapa->gramaje;
+                                
+                                //$hoja   = $this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($dato->id_cotizacion);
+                                //$placakilo = $hoja->placa_kilo.' '.$hoja->kilos_placa;
+                                // $placakilos = $hoja->kilos_placa;
+
+                                $onda   = $monda->materiales_tipo.' '.$monda->gramaje.' ('.$monda->reverso.')';
+                                $linder = $tapa->materiales_tipo.'-'.$mliner->materiales_tipo.' '.$mliner->gramaje.' ('.$monda->reverso.')';
+                                //print_r($tapa);
+                                //exit();
+                            }                                                
+                            //print_r($onda);
+                            //exit();
+
+                            //Cantidad de Despacho
+                            $despacho = $this->despachos_model->getDespachosUltimoRegistro($dato->id_cotizacion);
+
+                            $cuerpo .='<tr>
+                                <td>'.$dato->ot.'</td>
+                                <td>'.$dato->razon_socia.'</td>
+                                <td>'.$dato->producto.'</td>
+                                <td>'.$dato->ancho.'</td>
+                                <td>'.$dato->largo.'</td>
+                                <td>'.$dato->tamano_cuchillo_1.'</td>
+                                <td>'.$dato->tamano_cuchillo_2.'</td>                                
+                                <td>'.$linder.'</td>
+                                <td>'.(($valores->nombre)? $onda : '').'</td>
+                                <td>'.$dato->tipo.'</td>
+                                <td align="right">'.$dato->cantidad.'</td>
+                                <td align="right">'.$despacho->cantidad_faltante.'</td>
+                                <td align="right">'.($dato->cantidad - $despacho->cantidad_faltante).'</td>
+                                <td>'.$linder.'</td>
+                                <td>'.(($valores->nombre)? $onda : '').'</td>
+                                <td>'.$dato->tipo.'</td>
+                                <td align="right">'.$dato->cantidad.'</td>
+                                <td align="right">'.$despacho->cantidad_faltante.'</td>
+                                <td align="right">'.($dato->cantidad - $despacho->cantidad_faltante).'</td>
+                                <td align="right">'.($dato->cantidad - $despacho->cantidad_faltante).'</td>
+                            </tr>';
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+        
+            $this->mpdf->SetDisplayMode('fullpage');
+            $this->mpdf->AddPage('L');
+            $css1 = file_get_contents('public/frontend/css/despacho.css');
+            $css2 = file_get_contents('bootstrap/bootstrap.css');
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+            $this->mpdf->WriteHTML($cuerpo);
+            $this->mpdf->Output();
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
     }    
 
     public function ajaxguardar(){
-       $data = array(
-            'comentario_rechazo' => $this->input->post("valor1",true),
-       );
+        $data = array(
+            'id_nodo'                      => $this->input->post("id_nodo",true),
+            'recepcion_ot'                 => $this->input->post("recepcion_ot",true),
+            'comentario_rechazo'           => $this->input->post("comentario_rechazo",true),
+            'fecha_rechazada_recepcion_OT' => $this->input->post("fecha_rechazada_recepcion_OT",true),
+        );
+        $id_nodo                      = $this->input->post("id_nodo",true);
+        $fecha_rechazada_recepcion_OT = $this->input->post("fecha_rechazada_recepcion_OT",true);
 
-        $this->db->where('id_nodo', $this->input->post('valor2', true));
+        $this->db->where('id_nodo', $id_nodo);
         $this->db->update("produccion_fotomecanica", $data);
 
-/*
-       //$vendedor=$this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
-       $config['mailtype'] = 'html';
-       $this->email->initialize($config);
-       //$this->email->from("contacto@grauindus.cl", 'Cartonajes Grau');
-       $this->email->from("jesuslobaton@gmail.com", 'Cartonajes Grau');
-       $this->email->to("jesuslobaton@gmail.com", 'Cartonajes Grau');
-       //$this->email->to($vendedor->correo); 
-      // $this->email->bcc('respaldocorreos@grauindus.cl');
-       $this->email->subject('Mensaje de Cartonajes Grau');
-       $html='<h2>Nuevo Mensaje:</h2>';
-//       $html.='La cotización N°'.$this->input->post('id',true).' ha recibido el VB del vendedor '.$vendedor->nombre.', con la glosa:<br/>'.$this->input->post("glosa",true);
-       $this->email->message($html);   
-       $this->email->send();
-       */
-        ///return ".";
+        echo "Notificado el ".$fecha_rechazada_recepcion_OT;
+
     }
 
     public function listado_programa_fotomecanica()

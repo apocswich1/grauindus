@@ -29,12 +29,12 @@
 class CI_Email {
 
 	var	$useragent		= "CodeIgniter";
-	var	$mailpath		= "/usr/sbin/sendmail";	// Sendmail path
-	var	$protocol		= "mail";	// mail/sendmail/smtp
-	var	$smtp_host		= "";		// SMTP Server.  Example: mail.earthlink.net
-	var	$smtp_user		= "";		// SMTP Username
+	var	$mailpath		= "C:/xampp/sendmail/sendmail.exe/";	// Sendmail path
+	var	$protocol		= "sendmail";	// mail/sendmail/smtp
+	var	$smtp_host		= "ssl://smtp.gmail.com";		// SMTP Server.  Example: mail.earthlink.net
+	var	$smtp_user		= "jesuslobaton@gmail.com";		// SMTP Username
 	var	$smtp_pass		= "";		// SMTP Password
-	var	$smtp_port		= "25";		// SMTP Port
+	var	$smtp_port		= "465";		// SMTP Port
 	var	$smtp_timeout	= 5;		// SMTP Timeout in seconds
 	var	$smtp_crypto	= "";		// SMTP Encryption. Can be null, tls or ssl.
 	var	$wordwrap		= TRUE;		// TRUE/FALSE  Turns word-wrap on/off
@@ -43,7 +43,7 @@ class CI_Email {
 	var	$charset		= "utf-8";	// Default char set: iso-8859-1 or us-ascii
 	var	$multipart		= "mixed";	// "mixed" (in the body) or "related" (separate)
 	var $alt_message	= '';		// Alternative message for HTML emails
-	var	$validate		= FALSE;	// TRUE/FALSE.  Enables email validation
+	var	$validate		= false;	// TRUE/FALSE.  Enables email validation
 	var	$priority		= "3";		// Default priority (1 - 5)
 	var	$newline		= "\n";		// Default newline. "\r\n" or "\n" (Use "\r\n" to comply with RFC 822)
 	var $crlf			= "\n";		// The RFC 2045 compliant CRLF for quoted-printable is "\r\n".  Apparently some servers,
