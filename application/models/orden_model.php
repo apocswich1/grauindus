@@ -909,7 +909,45 @@ echo $query->num_rows();
                 //print_r($query->result());
                 //exit;
                 return $query->result();
-    }        
+    }
+
+    public function getListadoProgramaConfeccionMolde(){
+        //$id = $id=6;
+        $query=$this->db
+                ->select("i.id,
+                            cl.razon_social,
+                            oc.id AS ot,
+                            c.producto, 
+                            op.fecha AS fecha,
+                            i.tamano_a_imprimir_1 AS ancho,
+                            i.tamano_a_imprimir_2 AS largo,
+                            m.nombre as liner,
+                            i.unidades_por_pliego as unidad_pliego,
+                            op.id_cotizacion as id_cotizacion,
+
+                            op.cantidad_pedida AS cantidad,
+                            i.materialidad_datos_tecnicos AS tipo,
+                            m.gramaje, m.reverso,
+                            i.tamano_cuchillo_1, i.tamano_cuchillo_2
+                            ")
+                ->from("orden_de_produccion op")
+                ->join("cotizaciones as c","c.id = op.id_cotizacion","left")                
+                ->join("clientes as cl","cl.id=c.id_cliente","left")                
+                ->join("cotizaciones_orden_de_compra as oc","oc.id_cotizacion=op.id_cotizacion","left")                
+                ->join("cotizacion_ingenieria as i","i.id_cotizacion = op.id_cotizacion","left")                
+                ->join("hoja_de_costos_datos as h","h.id_cotizacion=op.id_cotizacion","left")                
+                ->join("materiales as m","m.id= c.id_mat_liner3","left")      
+
+                ->where("op.estado <> 2 AND op.estado <> 0 AND op.estado <> '3' AND op.estado <> '4' AND op.fecha>'2017-12-12'")
+                ->order_by("oc.id","asc")
+
+                ->get();
+
+                //echo '<pre>';
+                //print_r($query->result());
+                //exit;
+                return $query->result();
+    }   
 
     public function getOndaCotizacion($id_cotizacion){
         $query=$this->db

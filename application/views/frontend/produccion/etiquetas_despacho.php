@@ -14,7 +14,7 @@ $fecha = date("Y-m-d");
 
     <body>
         <div id="dina4">
-            <?php for($i=1;$i<=6;$i++){?>
+            <?php for($i=1;$i<=8;$i++){?>
             <div class="divp">  
                 <div class="imagen">    
                     <img width="110px" src="<?php echo $logo; ?>" />
@@ -46,7 +46,7 @@ $fecha = date("Y-m-d");
                     Paquete de: 
                 </div>
                 <div class="cantidad">    
-                    <span style="font-size: 32px"><?php echo $paquetede; ?></span> Unidades
+                    <span style="font-size: 20px"><?php echo $paquetede; ?></span> Unidades
                 </div>
                 <div class="fecha">    
                     <?php echo date('d-m-Y'); ?>

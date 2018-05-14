@@ -260,135 +260,285 @@
     <div class="control-group">
     <label class="control-label" for="usuario">Recepcion OT</label>
     <div class="controls">
+      
       <select name="recepcion_ot" id="recepcion_ot">
-                <option value="">Seleccione</option>
-                <option value="Por Revisar" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot  ,'Por Revisar');?>>Por Revisar</option>        
-                <option value="Aprobada" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot ,'Aprobada');?>>Aprobada</option>
-                <option value="Rechazada" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot  ,'Rechazada');?>>Rechazada</option>
-            </select>            
+          <option value="">Seleccione</option>
+          <option value="Por Revisar" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot  ,'Por Revisar');?>>Por Revisar</option>        
+          <option value="Aprobada" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot ,'Aprobada');?>>Aprobada</option>
+          <option value="Rechazada" <?php echo $db_select_rechazada = set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot  ,'Rechazada');?>>Rechazada</option>
+      </select>            
     </div>
   </div>
+  <script>
+    //Seleccionar valor de Select option revision OT
+    $('#recepcion_ot').on('change',function(){
+        var valor_select = $(this).val();
+        var fecha=$('#fecha_hoy').val();
+        if (valor_select=='Rechazada') {
+            $('#fecha_rechazada_recepcion_OT').val(fecha);
+        }else{
+             $('#fecha_rechazada_recepcion_OT').val('');
+        }
+    });
 
+    
+  </script>
+    
     <div class="control-group coment">
+      <label class="control-label" for="usuario">Observacion <strong style="color: red;">(*)</strong></label>
+      <div class="controls">     
+          <style>
+            #coment1{
+              float: left;
+            }
+            .div_fecha_aprobada{
+              display: none;
+              padding: 5px;
+              vertical-align: top;          
+            }
+            .span_fecha_rechazado{
+              padding: 15px;
+            }
+            .span_fecha_rechazado_verde{
+              padding: 15px;
+              background-color: #7bb33d;
+              text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+              padding: 4px 14px;
+              margin: 10px;
+              font-size: 14px;
+              line-height: 20px;
+              text-align: center;
+              vertical-align: middle;
+              cursor: pointer;
+              color: white;
+              border-radius: 5px;
+              width: 200px;
+            }
+            .text_notificado{
+              border: 1px solid red;
+              padding: 15px;
+            }
+            
+            .boton_notificar,.boton_exito{
+              margin: 10px;
+              display: block;
+            }
+            .boton_exito{
+              display: inline-block;
+            }
+          </style>      
+          <textarea id="coment1" style="width: 350px" name="comentario_rechazo"><?php echo set_value_input($fotomecanica,'comentario_rechazo',$fotomecanica->comentario_rechazo);?></textarea>
+          <input type="hidden" id="id_nodo" value="<?php echo $fotomecanica->id_nodo; ?>">
+          <input type="hidden" <?php $db_fecha_rechazada = set_value_input($fotomecanica,'fecha_rechazada_recepcion_OT',$fotomecanica->fecha_rechazada_recepcion_OT) ?>>
+          <?php      
 
-    <label class="control-label" for="usuario">Observacion <strong style="color: red;">(*)</strong></label>
-    <div class="controls">             
-        <textarea id="coment1" name="coment1" style="width: 350px" name="coment"><?php echo set_value_input($fotomecanica,'comentario_rechazo',$fotomecanica->comentario_rechazo);?></textarea>
-        <input type="button" value="Guardar" class="btn btn-warning" onclick="carga_ajax_revision_fotomecanica('<?php echo base_url();?>produccion/ajaxguardar',$('#coment1').val(),'<?php echo $id;?>','mensaje')" />
-    <div class="mensaje" id="mensaje"  style="color: white;
-            background-color: blue;
-            padding: 5px;
-            padding-left: 20px;
-            width: 97px;" >Guardado ...</div>
-    </div>
+            if ($db_fecha_rechazada != '0000-00-00') {
+              //fecha base de datos
+              echo '<span class="btn btn-success boton_exito" style="width:170px">Notificado el '.date("d-m-Y", strtotime($db_fecha_rechazada)).'</span>';
+            } else {
+                //fecha  diaria
+                echo "<span id='texto_notificado' class='span_fecha_rechazado'>".date("d-m-Y")."</span>";
+                echo '<input type="hidden" id="fecha_hoy" name="fecha_hoy" readonly value="'.date('Y-m-d').'">';
+                echo '<input type="hidden" id="fecha_rechazada_recepcion_OT" name="fecha_rechazada_recepcion_OT" readonly value="">';
+                echo '<input type="button" value="Notificar" id="id_boton_rechazar" class="btn btn-warning boton_notificar" onclick="revision_ot()" />';
+            }
+          ?>
+          
+          
+          <div class="mensaje" id="mensaje"  style="color: white;
+              background-color: blue;
+              padding: 5px;
+              padding-left: 20px;
+              width: 97px;" ></div>
+          </div>
     </div>
 
 
     <div class="control-group">
 		<label class="control-label" for="usuario">Revisión Trazado</label>
 		<div class="controls">
-			<select name="revision_trazado">
-          <?php
-          
-          ?>
+			<select name="revision_trazado" id="revision_trazado">
           <option value="">Seleccione</option>          
           <option value="Modificando" <?php echo set_value_select($fotomecanica,'revision_trazado',$fotomecanica->revision_trazado,'Modificando');?>>Modificando</option>
           <option value="Aprobada" <?php echo set_value_select($fotomecanica,'revision_trazado',$fotomecanica->revision_trazado,'Aprobada');?>>Aprobada</option>
       </select>
+      <input type="hidden" name="input_fecha_trazado_aprobado" value="<?php echo $db_fecha_trazado_aprobado = $fotomecanica->revision_trazado_fecha ?>">
+        <?php      
+
+          if ($db_fecha_trazado_aprobado != '0000-00-00') {
+            //fecha base de datos
+            echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_trazado_aprobado)).'</span>';
+          }
+        ?>
+      <div id="div_fecha_revision_aprobada" class="div_fecha_aprobada">
+        <span><?php echo date("d-m-Y") ?></span>
+      </div>
     </div>
 	  </div>
 
+
     <div class="control-group">
-    <label class="control-label" for="usuario">Recepcion de Maqueta</label>
-    <div class="controls">
-      <select name="recepcion_maqueta">
-          <?php
-          
+      <label class="control-label" for="usuario">Recepcion de Maqueta</label>
+      <div class="controls">
+        <select name="recepcion_maqueta" id="recepcion_maqueta">
+            <option value="">Seleccione</option>          
+            <option value="En Espera" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'En Espera');?>>En Espera</option>
+            <option value="Confeccion o Fabricacion" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Confeccion o Fabricacion');?>>Confeccion o Fabricacion</option>
+            <option value="Recepcionado Con Observaciones Del Cliente" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Recepcionado Con Observaciones Del Cliente');?>>Recepcionado Con Observaciones Del Cliente</option>
+            <option value="Pendiente (Falta Material)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Pendiente (Falta Material)');?>>Pendiente (Falta Material)</option>
+            <option value="Enviada a Cliente (1er Visto)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Enviada a Cliente (1er Visto)');?>>Enviada a Cliente (1er Visto)</option>
+            <option value="Enviada a Cliente (2do Visto)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Enviada a Cliente (2do Visto)');?>>Enviada a Cliente (2do Visto)</option>
+            <option value="Enviada a Cliente (3er Visto)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Enviada a Cliente (3er Visto)');?>>Enviada a Cliente (3er Visto)</option>
+            <option value="Aprobada (Espera de Maqueta Fisica)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Aprobada (Espera de Maqueta Fisica)');?>>Aprobada (Espera de Maqueta Fisica)</option>                    
+            <option value="Recepcion Aprobada" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Recepcion Aprobada');?>>Recepcion Aprobada</option>                    
+        </select>
+        
+        <input type="hidden" name="input_fecha_maqueta_aprobado" value="<?php echo $db_fecha_maqueta_aprobado = $fotomecanica->recepcion_maqueta_fecha ?>">
+          <?php      
+            if ($db_fecha_maqueta_aprobado != '0000-00-00') {
+              //fecha base de datos
+              echo '<span class="btn btn-success boton_exito" style="width:240px">Recepcion aprobada el '.date("d-m-Y", strtotime($db_fecha_maqueta_aprobado)).'</span>';
+            }
           ?>
-          <option value="">Seleccione</option>          
-          <option value="En Espera" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'En Espera');?>>En Espera</option>
-          <option value="Confeccion o Fabricacion" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Confeccion o Fabricacion');?>>Confeccion o Fabricacion</option>
-          <option value="Recepcionado Con Observaciones Del Cliente" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Recepcionado Con Observaciones Del Cliente');?>>Recepcionado Con Observaciones Del Cliente</option>
-          <option value="Pendiente (Falta Material)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Pendiente (Falta Material)');?>>Pendiente (Falta Material)</option>
-          <option value="Enviada a Cliente (1er Visto)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Enviada a Cliente (1er Visto)');?>>Enviada a Cliente (1er Visto)</option>
-          <option value="Enviada a Cliente (2do Visto)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Enviada a Cliente (2do Visto)');?>>Enviada a Cliente (2do Visto)</option>
-          <option value="Enviada a Cliente (3er Visto)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Enviada a Cliente (3er Visto)');?>>Enviada a Cliente (3er Visto)</option>
-          <option value="Aprobada (Espera de Maqueta Fisica)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Aprobada (Espera de Maqueta Fisica)');?>>Aprobada (Espera de Maqueta Fisica)</option>                    
-          <option value="Recepcion Aprobada" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Recepcion Aprobada');?>>Recepcion Aprobada</option>                    
-      </select>
-    </div>
+        <div id="div_fecha_recepcion_maqueta_aprobada" class="div_fecha_aprobada">
+          <span><?php echo date("d-m-Y") ?></span>
+        </div>
+      </div>
     </div>
     
     <div class="control-group">
-		<label class="control-label" for="usuario">Revisión de Imagen</label>
-		<div class="controls">
-			<select name="revision_de_imagen">
-          <option value="">Seleccione</option>                  
-          <option value="En Espera de Informacion" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_imagen,'En Espera de Informacion');?>>En Espera de Informacion</option>
-          <option value="En Consulta del Cliente" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_imagen,'En Consulta del Cliente');?>>En Consulta del Cliente</option>
-          <option value="Aprobado" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_imagen,'Aprobado');?>>Aprobado</option>
-      </select>            
-		</div>
+  		<label class="control-label" for="usuario">Revisión de Imagen</label>
+  		<div class="controls">
+  			<select name="revision_de_imagen" id="revision_de_imagen">
+            <option value="">Seleccione</option>                  
+            <option value="En Espera de Informacion" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_imagen,'En Espera de Informacion');?>>En Espera de Informacion</option>
+            <option value="En Consulta del Cliente" <?php echo set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_imagen,'En Consulta del Cliente');?>>En Consulta del Cliente</option>
+            <option value="Aprobado" <?php echo $db_fecha_imagen_aprobado = set_value_select($fotomecanica,'revision_de_imagen',$fotomecanica->revision_imagen,'Aprobado');?>>Aprobado</option>
+        </select>       
+        <input type="hidden" name="input_fecha_imagen_aprobado" value="<?php echo $db_fecha_imagen_aprobado = $fotomecanica->revision_de_imagen_fecha ?>">
+        <?php      
+
+          if ($db_fecha_imagen_aprobado != '0000-00-00') {
+            //fecha base de datos
+            echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_imagen_aprobado)).'</span>';
+          }
+        ?>
+        <div id="div_fecha_imagen_aprobada" class="div_fecha_aprobada">
+          <span><?php echo date("d-m-Y") ?></span>
+        </div>
+  		</div>
 	  </div>
         
     <div class="control-group">
     <label class="control-label" for="usuario">Montaje Digital</label>
     <div class="controls">
-      <select name="montaje_digital">
+      <select name="montaje_digital" id="montaje_digital">
           <option value="">Seleccione</option>                  
           <option value="En Proceso" <?php echo set_value_select($fotomecanica,'montaje_digital',$fotomecanica->montaje_digital,'En Proceso');?>>En Proceso</option>
-          <option value="Aprobado" <?php echo set_value_select($fotomecanica,'montaje_digital',$fotomecanica->montaje_digital,'Aprobado');?>>Aprobado</option>
-      </select>            
+          <option value="Aprobado" <?php echo $db_fecha_montaje_aprobado= set_value_select($fotomecanica,'montaje_digital',$fotomecanica->montaje_digital,'Aprobado');?>>Aprobado</option>
+      </select>
+      <input type="hidden" name="input_fecha_montaje_aprobado" value="<?php echo $db_fecha_montaje_aprobado = $fotomecanica->montaje_digital_fecha ?>">
+        <?php      
+
+          if ($db_fecha_montaje_aprobado != '0000-00-00') {
+            //fecha base de datos
+            echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_montaje_aprobado)).'</span>';
+          }
+        ?>
+        <div id="div_fecha_montaje_aprobada" class="div_fecha_aprobada">
+          <span><?php echo date("d-m-Y") ?></span>
+        </div>           
     </div>
     </div>
 
     <div class="control-group">
     <label class="control-label" for="usuario">Prueba de Color</label>
     <div class="controls">
-      <select name="prueba_color">
+      <select name="prueba_color" id="prueba_color">
           <option value="">Seleccione</option>                  
           <option value="En Proceso" <?php echo set_value_select($fotomecanica,'prueba_color',$fotomecanica->prueba_color,'En Proceso');?>>En Proceso</option>
           <option value="Enviado (Visto Bueno)" <?php echo set_value_select($fotomecanica,'prueba_color',$fotomecanica->prueba_color,'Enviado (Visto Bueno)');?>>Enviado (Visto Bueno)</option>
           <option value="En Espera de Prueba de Color Fisica" <?php echo set_value_select($fotomecanica,'prueba_color',$fotomecanica->prueba_color,'En Espera de Prueba de Color Fisica');?>>En Espera de Prueba de Color Fisica</option>
-          <option value="Aprobado" <?php echo set_value_select($fotomecanica,'prueba_color',$fotomecanica->prueba_color,'Aprobado');?>>Aprobado</option>
-      </select>            
+          <option value="Aprobado" <?php echo $db_fecha_prueba_color_aprobado = set_value_select($fotomecanica,'prueba_color',$fotomecanica->prueba_color,'Aprobado');?>>Aprobado</option>
+      </select>
+      <input type="hidden" name="input_fecha_prueba_color_aprobado" value="<?php echo $db_fecha_prueba_color_aprobado = $fotomecanica->prueba_color_fecha ?>">
+        <?php      
+
+          if ($db_fecha_prueba_color_aprobado != '0000-00-00') {
+            //fecha base de datos
+            echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_prueba_color_aprobado)).'</span>';
+          }
+        ?>
+        <div id="div_fecha_prueba_color_aprobada" class="div_fecha_aprobada">
+          <span><?php echo date("d-m-Y") ?></span>
+        </div>            
     </div>
     </div>
 
     <div class="control-group">
 		<label class="control-label" for="usuario">Arte y Diseño</label>
 		<div class="controls">
-			<select name="arte_diseno">
-                <option value="">Seleccione</option>                  
-                <option value="En Proceso" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Proceso');?>>En Proceso</option>
-                <option value="En Espera" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Espera');?>>En Espera</option>
-                <option value="En Espera de Prueba de Color Fisica" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Espera de Prueba de Color Fisica');?>>En Espera de Prueba de Color Fisica</option>
-                <option value="Aprobado" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'Aprobado');?>>Aprobado</option>
-            </select>
+			<select name="arte_diseno" id="arte_diseno">
+          <option value="">Seleccione</option>                  
+          <option value="En Proceso" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Proceso');?>>En Proceso</option>
+          <option value="En Espera" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Espera');?>>En Espera</option>
+          <option value="En Espera de Prueba de Color Fisica" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Espera de Prueba de Color Fisica');?>>En Espera de Prueba de Color Fisica</option>
+          <option value="Aprobado" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'Aprobado');?>>Aprobado</option>
+      </select>
+      <input type="hidden" name="input_fecha_arte_diseno_aprobado" value="<?php echo $db_fecha_arte_diseno_aprobado = $fotomecanica->arte_diseno_fecha ?>">
+      <?php      
+        if ($db_fecha_arte_diseno_aprobado != '0000-00-00') {
+          //fecha base de datos
+          echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_arte_diseno_aprobado)).'</span>';
+        }
+      ?>
+      <div id="div_fecha_arte_diseno_aprobada" class="div_fecha_aprobada">
+        <span><?php echo date("d-m-Y") ?></span>
+      </div> 
 		</div>
 	  </div>
         
     <div class="control-group">
     <label class="control-label" for="usuario">Confeccion Salida de Pelicula</label>
     <div class="controls">
-      <select name="conf_sal_pel">
+      <select name="conf_sal_pel" id="conf_sal_pel">
           <option value="">Seleccione</option>                  
-                <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
-                <option value="En Proceso" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Proceso');?>>En Proceso</option>
-                <option value="Entregado" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'Entregado');?>>Entregado</option>
-            </select>
+          <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
+          <option value="En Proceso" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Proceso');?>>En Proceso</option>
+          <option value="Entregado" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'Entregado');?>>Entregado</option>
+      </select>
+      <input type="hidden" name="input_fecha_conf_sal_pel_aprobado" value="<?php echo $db_fecha_conf_sal_pel_aprobado = $fotomecanica->conf_sal_pel_fecha ?>">
+      <?php      
+        if ($db_fecha_conf_sal_pel_aprobado != '0000-00-00') {
+          //fecha base de datos
+          echo '<span class="btn btn-success boton_exito" style="width:170px">Entregado el '.date("d-m-Y", strtotime($db_fecha_conf_sal_pel_aprobado)).'</span>';
+        }
+      ?>
+      <div id="div_fecha_conf_sal_pel_aprobada" class="div_fecha_aprobada">
+        <span><?php echo date("d-m-Y") ?></span>
+      </div> 
     </div>
     </div>
 
     <div class="control-group">
     <label class="control-label" for="usuario">Sobre de Desarrollo</label>
     <div class="controls">
-      <select name="sobre_desarrollo">
+      <select name="sobre_desarrollo" id="sobre_desarrollo">
           <option value="">Seleccione</option>                  
-                <option value="Montaje" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'Montaje');?>>Montaje</option>
-                <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
-                <option value="Entregado" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'Entregado');?>>Entregado</option>
-            </select>
+          <option value="Montaje" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'Montaje');?>>Montaje</option>
+          <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
+          <option value="Entregado" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'Entregado');?>>Entregado</option>
+      </select>
+      <input type="hidden" name="input_fecha_sobre_desarrollo_aprobado" value="<?php echo $db_fecha_sobre_desarrollo_aprobado = $fotomecanica->sobre_desarrollo_fecha ?>">
+      <?php      
+        if ($db_fecha_sobre_desarrollo_aprobado != '0000-00-00') {
+          //fecha base de datos
+          echo '<span class="btn btn-success boton_exito" style="width:170px">Entregado el '.date("d-m-Y", strtotime($db_fecha_sobre_desarrollo_aprobado)).'</span>';
+        }
+      ?>
+      <div id="div_fecha_sobre_desarrollo_aprobada" class="div_fecha_aprobada">
+        <span><?php echo date("d-m-Y") ?></span>
+      </div> 
     </div>
     </div>
     
@@ -472,18 +622,18 @@
             <input type="hidden" name="tipo" value="<?php echo $tipo?>" />
             <input type="hidden" name="pagina" value="<?php echo $pagina?>" />
             <input type="hidden" name="id" value="<?php echo $id?>" />
-			<input type="hidden" name="indicador" />
+			      <input type="hidden" name="indicador" />
             <input type="hidden" name="estado" />
-			<input type="button" value="Guardar" class="btn <?php if($fotomecanica->estado==0){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('0');" />
-                    <input type="button" value="Rechazar" <?php if($fotomecanica->situacion=="Liberada"){echo "disabled=true";}?> class="btn <?php if($fotomecanica->estado==2){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('2');" />
+			      <input type="button" value="Guardar" class="btn <?php if($fotomecanica->estado==0){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('0');" />
+            <input type="button" value="Rechazar" <?php if($fotomecanica->situacion=="Liberada"){echo "disabled=true";}?> class="btn <?php if($fotomecanica->estado==2){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('2');" />
             <?php
-           if($fotomecanica->estado==1)
-           {
-                ?>
+              if($fotomecanica->estado==1)
+              {
+              ?>
                 <input type="button" value="Liberar" class="btn <?php if($fotomecanica->estado==1){echo 'btn-warning';}?>" onclick="alert('Ya fué liberada');" />
                 <?php
-            }else
-            {
+              }else
+              {
                 if($archivoFotomecanica=='SI' and $archivoIng='SI')
                 {
                     ?>
@@ -513,7 +663,8 @@
             $('.mensaje').hide();
 
             if($('#recepcion_ot option:selected').val() == 'Rechazada') {
-              $('.coment').show();                  
+              $('.coment').show();    
+              var contador_liberar = TRUE;
             }else{
               $('.coment').hide();  
             }
@@ -525,6 +676,80 @@
                   $('.coment').show();
                 }
             });
+
+            $('#revision_trazado').change(function() {                
+                if($('#revision_trazado option:selected').val() != 'Aprobada') {
+                  $('#div_fecha_revision_aprobada').hide();
+                }else{
+                  
+                  $("#div_fecha_revision_aprobada").show().css("display", "inline-block");
+                }
+            });
+
+            $('#recepcion_maqueta').change(function() {                
+                if($('#recepcion_maqueta option:selected').val() != 'Recepcion Aprobada') {
+                  $('#div_fecha_recepcion_maqueta_aprobada').hide();
+                }else{
+                  
+                  $("#div_fecha_recepcion_maqueta_aprobada").show().css("display", "inline-block");
+                }
+            });
+
+            $('#revision_de_imagen').change(function() {                
+                if($('#revision_de_imagen option:selected').val() != 'Aprobado') {
+                  $('#div_fecha_imagen_aprobada').hide();
+                }else{
+                  
+                  $("#div_fecha_imagen_aprobada").show().css("display", "inline-block");
+                }
+            });
+            
+            $('#montaje_digital').change(function() {                
+                if($('#montaje_digital option:selected').val() != 'Aprobado') {
+                  $('#div_fecha_montaje_aprobada').hide();
+                }else{
+                  
+                  $("#div_fecha_montaje_aprobada").show().css("display", "inline-block");
+                }
+            });
+
+            $('#prueba_color').change(function() {                
+                if($('#prueba_color option:selected').val() != 'Aprobado') {
+                  $('#div_fecha_prueba_color_aprobada').hide();
+                }else{
+                  
+                  $("#div_fecha_prueba_color_aprobada").show().css("display", "inline-block");
+                }
+            });
+
+            $('#arte_diseno').change(function() {                
+                if($('#arte_diseno option:selected').val() != 'Aprobado') {
+                  $('#div_fecha_arte_diseno_aprobada').hide();
+                }else{
+                  
+                  $("#div_fecha_arte_diseno_aprobada").show().css("display", "inline-block");
+                }
+            });
+            
+            $('#conf_sal_pel').change(function() {                
+                if($('#conf_sal_pel option:selected').val() != 'Entregado') {
+                  $('#div_fecha_conf_sal_pel_aprobada').hide();
+                }else{
+                  
+                  $("#div_fecha_conf_sal_pel_aprobada").show().css("display", "inline-block");
+                }
+            });
+
+            $('#sobre_desarrollo').change(function() {                
+                if($('#sobre_desarrollo option:selected').val() != 'Entregado') {
+                  $('#div_fecha_sobre_desarrollo_aprobada').hide();
+                }else{
+                  
+                  $("#div_fecha_sobre_desarrollo_aprobada").show().css("display", "inline-block");
+                }
+            });
+
+            
         }
     );
     

@@ -16,7 +16,7 @@ html, body {
 body { 
     background: #fff; 
     font-family: Arial; 
-    font-size: 13px; 
+    font-size: 10px; 
     line-height: 1.6; 
     font-size: 12px;
     font-weight:bold;
@@ -34,7 +34,7 @@ body {
     margin-left:5px;
     margin-bottom:10px;
     width:500px;
-    height: 178px;
+    height: 78px; /*178px*/
     float: left;
     border: 1px solid #D2D2D2; 
 }
@@ -50,28 +50,28 @@ body {
 .ot{
    float: left;
    background-color: #ccc;
-   height: 50px;
+   height: 40px;
    width: 130px;
 }
 
 .ot div{
     text-align: center;
-    font-size: 15px;
+    font-size: 12px;
     border-bottom:  1px solid #333333; 
 }
 .codigo div{
     text-align: center;
-    font-size: 15px;
+    font-size: 12px;
     border-bottom:  1px solid #333333; 
 }
 .codigo{
    float: left;    
    background-color: #eee;
-   height: 50px;
+   height: 40px;
    width: 210px;
 }
 .titulo{
-   font-size: 15px;
+   font-size: 12px;
    padding-top: 1px;
    padding-left: 5px;
    float: left;    
@@ -81,7 +81,7 @@ body {
    vertical-align: center;
 }
 .cliente{
-   font-size: 15px;
+   font-size: 12px;
    padding-top: 1px;
    padding-left: 5px;
    float: left;    
@@ -92,7 +92,7 @@ body {
 }
 .nombre_cliente{
    font-weight: normal;
-   font-size: 15px;
+   font-size: 12px;
    padding-top: 1px;
    padding-left: 5px;
    float: left;    
@@ -102,7 +102,7 @@ body {
    vertical-align: center;
 }
 .articulo{
-   font-size: 15px;
+   font-size: 12px;
    padding-top: 1px;
    padding-left: 5px;
    float: left;    
@@ -113,7 +113,7 @@ body {
 }
 .nombre_articulo{
    font-weight: normal;
-   font-size: 15px;
+   font-size: 12px;
    padding-top: 1px;
    padding-left: 5px;
    float: left;    
@@ -123,7 +123,7 @@ body {
    vertical-align: center;
 }
 .paquete{
-   font-size: 15px;
+   font-size: 12px;
    padding-top: 20px;
    padding-left: 5px;
    float: left;    
@@ -133,7 +133,7 @@ body {
    vertical-align: center;
 }
 .cantidad{
-   font-size: 15px;
+   font-size: 12px;
    padding-top: 1px;
    padding-left: 5px;
    float: left;    
@@ -143,8 +143,8 @@ body {
    text-align: center;
 }
 .fecha{
-   font-size: 15px;
-   padding-top: 20px;
+   font-size: 12px;
+   padding-top: 10px;
    padding-left: 5px;
    float: left;    
    background-color: #eee;

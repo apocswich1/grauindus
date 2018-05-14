@@ -970,17 +970,18 @@ function guardarFormularioAdd(valor)
     
     
     if(document.form.estatus_trazado){
-    if(form.estatus_trazado.value=="Provisorio"){
-    //var confirm = confirm("Desea continuar con el trazado como provisorio ??");
-    if(confirm("Desea continuar con el trazado como provisorio ??")){
-    form.submit();
+      if(form.estatus_trazado.value=="Provisorio"){
+        //var confirm = confirm("Desea continuar con el trazado como provisorio ??");
+        if(confirm("Desea continuar con el trazado como provisorio ??")){
+        form.submit();
+        }
+      }else{
+      form.submit();
+      }
+    }else{
+      form.submit();
     }
-}else{
-    form.submit();
 }
-}else{
-    form.submit();
-}}
 function guardarFormularioAddconfirm(valor)
 {
     
@@ -3895,6 +3896,8 @@ function carga_ajax_vendedor(id)
 {
    window.location=webroot+'produccion/cotizaciones_vendedor/'+id;
 }
+//funcion enviar datos de revision ot
+
 
 function  verificar_color()
 {   
@@ -5074,7 +5077,29 @@ function comprobar_monto(valor){
          var regla=$('.adicional').length;
         $("#regla").val(regla);
     }
-
+    function revision_ot() {
+          var todo_correcto = true;
+         
+          if(document.getElementById('coment1').value.length < 4 ){
+            todo_correcto = false;
+          }else {
+              var recepcion_ot = document.getElementById('recepcion_ot').value;
+              var comentario_rechazo = document.getElementById('coment1').value;
+              var fecha_rechazada_recepcion_OT = document.getElementById('fecha_rechazada_recepcion_OT').value;
+              var id_nodo = document.getElementById('id_nodo').value;
+          }
+          if(!todo_correcto){
+            alert('El campo Observacion debe tener minimo 4 caracteres');
+          }else {
+            var ruta = webroot+'produccion/ajaxguardar/';    
+            $.post(ruta,{id_nodo:id_nodo,comentario_rechazo:comentario_rechazo,fecha_rechazada_recepcion_OT:fecha_rechazada_recepcion_OT,recepcion_ot:recepcion_ot},function(resp){
+              $("#texto_notificado").html(resp);
+              $("#texto_notificado").addClass('span_fecha_rechazado_verde');
+              $("#id_boton_rechazar").hide();
+            });
+          }
+          return todo_correcto;
+        }
     function mostraria(x){
         if(x=="SI"){
         $("#ocultillo").show();
