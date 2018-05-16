@@ -1,3 +1,41 @@
+<style>
+	.confeccion {
+    border: solid rgba(0,0,0,0.7);
+    border-width: 0 2px 2px 0;
+    float: left;
+    margin-left: -15px;
+    margin-top: 5px;
+    padding: 3px;
+    width: 1px;
+    height: 1px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transition: 0.5s;
+}
+	.dropdown-menu li ul {
+		display:none;		
+		transition: 0.5s;
+		vertical-align: top;
+	}
+	.dropdown-menu li ul li {		
+		float: left;
+		width: 100%;
+		vertical-align: top;
+	}
+	.dropdown-menu li ul li:first-child {		
+		margin-top: -15px;
+	}
+	.dropdown-menu li:hover > ul {
+		display:inline-block;
+		transition: 0.5s;
+
+	}
+	.dropdown-menu li:hover a > .confeccion{
+		transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transition: 0.5s;
+	}
+</style>
 <div class="navbar admin-menu">
 	<div class="navbar-inner">
 		<ul class="nav">
@@ -131,10 +169,18 @@ if( $this->session->userdata('perfil')==1)
 					<li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_cerradas" id="dropdown_ususarios" title="Listado de Producción Cerradas">Listado de Ordenes Cerradas</a></li>
           <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_fotomecanica" id="dropdown_ususarios" title="Listado de Programa de Fotomecanica">Listado de Programa de Fotomecanica</a></li>
           <li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_cartulina_liberar" id="dropdown_ususarios" title="Listado de Control de Cartulina por Liberar">Listado de Control de Cartulina por Liberar</a></li>
-          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_confeccion" id="dropdown_ususarios" title="Listado de Programa de Confeccion de Molde">Listado de Programa de Confeccion de Molde</a></li>
           <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" id="dropdown_ususarios" title="Listado de Programa de Corrugado">Listado de Programa de Corrugado</a></li>          
           <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" id="dropdown_ususarios" title="Listado de Programa de Emplacado">Listado de Programa de Emplacado</a></li>
           <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_troquelado" id="dropdown_ususarios" title="Listado de Programa de Troquelado">Listado de Programa de Troquelado</a></li>
+          <li>
+          	<a><i class="confeccion"></i>Listado de Programa de Confeccion de Molde</a>
+          	<ul>
+            	<li><a href="<?php echo  base_url(); ?>produccion/listado_programa_confeccion_revision_sin_liberar_fotomecanica" 	id="dropdown_ususarios">Revision sin liberar fotomecanica			</a></li>
+              <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_confeccion_revision_liberada_fotomecanica" 		id="dropdown_ususarios">Revision liberada fotomecanica				</a></li>
+              <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_confeccion_fabricar_sin_liberar_fotomecanica" 	id="dropdown_ususarios">Por fabricar sin liberar fotomecanica </a></li>
+              <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_confeccion_fabricar_liberada_fotomecanica" 		id="dropdown_ususarios">Por fabricar liberada fotomecanica		</a></li>
+          </ul>
+          </li>
 				</ul>
 			</li>
             <?php

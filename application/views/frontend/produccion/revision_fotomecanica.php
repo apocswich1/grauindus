@@ -187,8 +187,8 @@
                      <li>Metros de Cuchillo : <strong><?php echo $ing->metros_de_cuchillo;  ?> Cms</strong></li>        
                      <li>Descripción de la placa : <strong><?php echo $materialidad_1->nombre?></strong></li>
                      <li>Gramaje de la placa : <strong><?php echo $materialidad_1->gramaje?></strong></li>
-                     <li>CCAC1 : <strong><?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?> Cms</strong></li>
-                     <li>CCAC2 : <strong><?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10) ?> Cms</strong></li>                     
+                     <li>CCAC1 : <strong><?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?> Mms</strong></li>
+                     <li>CCAC2 : <strong><?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10) ?> Mms</strong></li>                     
                 </ul>
             	</div>                     
             </div>
@@ -256,7 +256,46 @@
         <textarea id="comentario_fot" style="width: 350px" name="comentario_fotomecanica" placeholder="Comentarios"><?php echo set_value_input($fotomecanica,'comentario_fotomecanica',$fotomecanica->comentario_fotomecanica);?></textarea>     
     </div>
   </div>
-  
+    <style>
+      #coment1{
+        float: left;
+      }
+      .div_fecha_aprobada{
+        display: none;
+        padding: 5px;
+        vertical-align: top;          
+      }
+      .span_fecha_rechazado{
+        padding: 15px;
+      }
+      .span_fecha_rechazado_verde{
+        padding: 15px;
+        background-color: #7bb33d;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+        padding: 4px 14px;
+        margin: 10px;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        color: white;
+        border-radius: 5px;
+        width: 200px;
+      }
+      .text_notificado{
+        border: 1px solid red;
+        padding: 15px;
+      }
+      
+      .boton_notificar,.boton_exito{
+        margin: 10px;
+        display: block;
+      }
+      .boton_exito{
+        display: inline-block;
+      }
+    </style>   
     <div class="control-group">
     <label class="control-label" for="usuario">Recepcion OT</label>
     <div class="controls">
@@ -264,9 +303,19 @@
       <select name="recepcion_ot" id="recepcion_ot">
           <option value="">Seleccione</option>
           <option value="Por Revisar" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot  ,'Por Revisar');?>>Por Revisar</option>        
-          <option value="Aprobada" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot ,'Aprobada');?>>Aprobada</option>
+          <option value="Aprobada" <?php echo $db_select_aprobada_ot = set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot ,'Aprobada');?>>Aprobada</option>
           <option value="Rechazada" <?php echo $db_select_rechazada = set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot  ,'Rechazada');?>>Rechazada</option>
-      </select>            
+      </select>    
+      <input type="hidden" name="input_fecha_recepcion_ot_aprobado" value="<?php echo $db_fecha_recepcion_ot_aprobado = $fotomecanica->recepcion_ot_aprobado_fecha ?>">
+      <?php      
+          if ($db_fecha_recepcion_ot_aprobado != '0000-00-00' && $db_fecha_recepcion_ot_aprobado != NULL) {
+            //fecha base de datos
+            echo '<span class="btn btn-success boton_exito" style="width:170px">Aprobado el '.date("d-m-Y", strtotime($db_fecha_recepcion_ot_aprobado)).'</span>';
+          }
+        ?>
+      <div id="div_fecha_recepcion_ot_aprobada" class="div_fecha_aprobada">
+        <span><?php echo date("d-m-Y") ?></span>
+      </div>     
     </div>
   </div>
   <script>
@@ -280,6 +329,7 @@
              $('#fecha_rechazada_recepcion_OT').val('');
         }
     });
+    
 
     
   </script>
@@ -287,46 +337,7 @@
     <div class="control-group coment">
       <label class="control-label" for="usuario">Observacion <strong style="color: red;">(*)</strong></label>
       <div class="controls">     
-          <style>
-            #coment1{
-              float: left;
-            }
-            .div_fecha_aprobada{
-              display: none;
-              padding: 5px;
-              vertical-align: top;          
-            }
-            .span_fecha_rechazado{
-              padding: 15px;
-            }
-            .span_fecha_rechazado_verde{
-              padding: 15px;
-              background-color: #7bb33d;
-              text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-              padding: 4px 14px;
-              margin: 10px;
-              font-size: 14px;
-              line-height: 20px;
-              text-align: center;
-              vertical-align: middle;
-              cursor: pointer;
-              color: white;
-              border-radius: 5px;
-              width: 200px;
-            }
-            .text_notificado{
-              border: 1px solid red;
-              padding: 15px;
-            }
-            
-            .boton_notificar,.boton_exito{
-              margin: 10px;
-              display: block;
-            }
-            .boton_exito{
-              display: inline-block;
-            }
-          </style>      
+             
           <textarea id="coment1" style="width: 350px" name="comentario_rechazo"><?php echo set_value_input($fotomecanica,'comentario_rechazo',$fotomecanica->comentario_rechazo);?></textarea>
           <input type="hidden" id="id_nodo" value="<?php echo $fotomecanica->id_nodo; ?>">
           <input type="hidden" <?php $db_fecha_rechazada = set_value_input($fotomecanica,'fecha_rechazada_recepcion_OT',$fotomecanica->fecha_rechazada_recepcion_OT) ?>>
@@ -345,6 +356,7 @@
           ?>
           
           
+          
           <div class="mensaje" id="mensaje"  style="color: white;
               background-color: blue;
               padding: 5px;
@@ -360,7 +372,7 @@
 			<select name="revision_trazado" id="revision_trazado">
           <option value="">Seleccione</option>          
           <option value="Modificando" <?php echo set_value_select($fotomecanica,'revision_trazado',$fotomecanica->revision_trazado,'Modificando');?>>Modificando</option>
-          <option value="Aprobada" <?php echo set_value_select($fotomecanica,'revision_trazado',$fotomecanica->revision_trazado,'Aprobada');?>>Aprobada</option>
+          <option value="Aprobada" <?php echo $db_select_aprobada_trazado = set_value_select($fotomecanica,'revision_trazado',$fotomecanica->revision_trazado,'Aprobada');?>>Aprobada</option>
       </select>
       <input type="hidden" name="input_fecha_trazado_aprobado" value="<?php echo $db_fecha_trazado_aprobado = $fotomecanica->revision_trazado_fecha ?>">
         <?php      
@@ -390,7 +402,7 @@
             <option value="Enviada a Cliente (2do Visto)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Enviada a Cliente (2do Visto)');?>>Enviada a Cliente (2do Visto)</option>
             <option value="Enviada a Cliente (3er Visto)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Enviada a Cliente (3er Visto)');?>>Enviada a Cliente (3er Visto)</option>
             <option value="Aprobada (Espera de Maqueta Fisica)" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Aprobada (Espera de Maqueta Fisica)');?>>Aprobada (Espera de Maqueta Fisica)</option>                    
-            <option value="Recepcion Aprobada" <?php echo set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Recepcion Aprobada');?>>Recepcion Aprobada</option>                    
+            <option value="Recepcion Aprobada" <?php echo $db_select_aprobada_maqueta = set_value_select($fotomecanica,'recepcion_maqueta',$fotomecanica->recepcion_maqueta,'Recepcion Aprobada');?>>Recepcion Aprobada</option>                    
         </select>
         
         <input type="hidden" name="input_fecha_maqueta_aprobado" value="<?php echo $db_fecha_maqueta_aprobado = $fotomecanica->recepcion_maqueta_fecha ?>">
@@ -483,7 +495,7 @@
           <option value="En Proceso" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Proceso');?>>En Proceso</option>
           <option value="En Espera" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Espera');?>>En Espera</option>
           <option value="En Espera de Prueba de Color Fisica" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'En Espera de Prueba de Color Fisica');?>>En Espera de Prueba de Color Fisica</option>
-          <option value="Aprobado" <?php echo set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'Aprobado');?>>Aprobado</option>
+          <option value="Aprobado" <?php echo $db_select_aprobado_arte_diseno = set_value_select($fotomecanica,'arte_diseno',$fotomecanica->arte_diseno,'Aprobado');?>>Aprobado</option>
       </select>
       <input type="hidden" name="input_fecha_arte_diseno_aprobado" value="<?php echo $db_fecha_arte_diseno_aprobado = $fotomecanica->arte_diseno_fecha ?>">
       <?php      
@@ -499,6 +511,7 @@
 	  </div>
         
     <div class="control-group">
+<<<<<<< HEAD
     <label class="control-label" for="usuario">Confeccion Salida de Pelicula</label>
     <div class="controls">
       <select name="conf_sal_pel" id="conf_sal_pel">
@@ -517,7 +530,49 @@
       <div id="div_fecha_conf_sal_pel_aprobada" class="div_fecha_aprobada">
         <span><?php echo date("d-m-Y") ?></span>
       </div> 
+=======
+      <label class="control-label" for="usuario">Confeccion Salida de Pelicula</label>
+      <div class="controls">
+        <select name="conf_sal_pel" id="conf_sal_pel">
+            <option value="">Seleccione</option>                  
+            <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
+            <option value="En Proceso" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Proceso');?>>En Proceso</option>
+            <option value="Entregado" <?php echo $db_select_entregado_conf = set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'Entregado');?>>Entregado</option>
+        </select>
+        <input type="hidden" name="input_fecha_conf_sal_pel_aprobado" value="<?php echo $db_fecha_conf_sal_pel_aprobado = $fotomecanica->conf_sal_pel_fecha ?>">
+        <?php      
+          if ($db_fecha_conf_sal_pel_aprobado != '0000-00-00' && $db_fecha_conf_sal_pel_aprobado != NULL) {
+            //fecha base de datos
+            echo '<span class="btn btn-success boton_exito" style="width:170px">Entregado el '.date("d-m-Y", strtotime($db_fecha_conf_sal_pel_aprobado)).'</span>';
+          }
+        ?>
+        <div id="div_fecha_conf_sal_pel_aprobada" class="div_fecha_aprobada">
+          <span><?php echo date("d-m-Y") ?></span>
+        </div>
+      </div>
+>>>>>>> b8bacfdb54de52118d1c4784f6ccc19a818fd696
     </div>
+
+    <div class="control-group">
+      <label class="control-label" for="usuario">Confeccion Salida de Pelicula para Desgajado Automatico</label>
+      <div class="controls">
+        <select name="conf_sal_pel_desgajado" id="conf_sal_pel_desgajado">
+            <option value="">Seleccione</option>                  
+            <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'conf_sal_pel_desgajado',$fotomecanica->conf_sal_pel_desgajado,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
+            <option value="En Proceso" <?php echo set_value_select($fotomecanica,'conf_sal_pel_desgajado',$fotomecanica->conf_sal_pel_desgajado,'En Proceso');?>>En Proceso</option>
+            <option value="Entregado" <?php echo $db_select_entregado_conf = set_value_select($fotomecanica,'conf_sal_pel_desgajado',$fotomecanica->conf_sal_pel_desgajado,'Entregado');?>>Entregado</option>
+        </select>
+        <input type="hidden" name="input_fecha_conf_sal_pel_desgajado_aprobado" value="<?php echo $db_fecha_conf_sal_pel_desgajado_aprobado = $fotomecanica->conf_sal_pel_desgajado_fecha ?>">
+        <?php      
+          if ($db_fecha_conf_sal_pel_desgajado_aprobado != '0000-00-00' && $db_fecha_conf_sal_pel_desgajado_aprobado != NULL) {
+            //fecha base de datos
+            echo '<span class="btn btn-success boton_exito" style="width:170px">Entregado el '.date("d-m-Y", strtotime($db_fecha_conf_sal_pel_desgajado_aprobado)).'</span>';
+          }
+        ?>
+        <div id="div_fecha_conf_sal_pel_desgajado_aprobada" class="div_fecha_aprobada">
+          <span><?php echo date("d-m-Y") ?></span>
+        </div>
+      </div>
     </div>
 
     <div class="control-group">
@@ -527,7 +582,7 @@
           <option value="">Seleccione</option>                  
           <option value="Montaje" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'Montaje');?>>Montaje</option>
           <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
-          <option value="Entregado" <?php echo set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'Entregado');?>>Entregado</option>
+          <option value="Entregado" <?php echo $db_select_entregado_sobre = set_value_select($fotomecanica,'sobre_desarrollo',$fotomecanica->sobre_desarrollo,'Entregado');?>>Entregado</option>
       </select>
       <input type="hidden" name="input_fecha_sobre_desarrollo_aprobado" value="<?php echo $db_fecha_sobre_desarrollo_aprobado = $fotomecanica->sobre_desarrollo_fecha ?>">
       <?php      
@@ -634,7 +689,7 @@
                 <?php
               }else
               {
-                if($archivoFotomecanica=='SI' and $archivoIng='SI')
+                if($db_select_aprobada_ot && $db_select_aprobada_trazado && $db_select_aprobada_maqueta && $db_fecha_imagen_aprobado && $db_fecha_montaje_aprobado && $db_fecha_prueba_color_aprobado && $db_select_aprobado_arte_diseno && $db_select_entregado_conf && $db_select_entregado_sobre)
                 {
                     ?>
                 <input type="button" value="Liberar" class="btn <?php if($fotomecanica->estado==1){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('1');" />
@@ -642,11 +697,13 @@
                 }else
                 {
                     ?>
-                <input type="button" value="Liberar" class="btn <?php if($fotomecanica->estado==1){echo 'btn-warning';}?>" onclick="alert('No están los archivos de Ingeniería y Fotomecánica');" />
+                <input type="hidden" value="Liberar" class="btn <?php if($fotomecanica->estado==1){echo 'btn-warning';}?>" onclick="alert('No están los archivos de Ingeniería y Fotomecánica');" />
                 <?php
                 }
+                ?>
+
                 
-            }
+            <?php }
             ?>
             
 		</div>
@@ -654,17 +711,18 @@
 </form>
 
 <script type="text/javascript">
+
      jQuery(document).ready
     (
         function ()
         {
+            
             document.form.reset();
             
             $('.mensaje').hide();
 
             if($('#recepcion_ot option:selected').val() == 'Rechazada') {
               $('.coment').show();    
-              var contador_liberar = TRUE;
             }else{
               $('.coment').hide();  
             }
@@ -677,11 +735,20 @@
                 }
             });
 
+            
+            $('#recepcion_ot').change(function() {                
+                if($('#recepcion_ot option:selected').val() != 'Aprobada') {
+                  $('#div_fecha_recepcion_ot_aprobada').hide();
+                }else{
+                  $("#div_fecha_recepcion_ot_aprobada").show().css("display", "inline-block");
+                }
+            });
+           
+
             $('#revision_trazado').change(function() {                
                 if($('#revision_trazado option:selected').val() != 'Aprobada') {
                   $('#div_fecha_revision_aprobada').hide();
                 }else{
-                  
                   $("#div_fecha_revision_aprobada").show().css("display", "inline-block");
                 }
             });
@@ -690,7 +757,6 @@
                 if($('#recepcion_maqueta option:selected').val() != 'Recepcion Aprobada') {
                   $('#div_fecha_recepcion_maqueta_aprobada').hide();
                 }else{
-                  
                   $("#div_fecha_recepcion_maqueta_aprobada").show().css("display", "inline-block");
                 }
             });
@@ -699,7 +765,6 @@
                 if($('#revision_de_imagen option:selected').val() != 'Aprobado') {
                   $('#div_fecha_imagen_aprobada').hide();
                 }else{
-                  
                   $("#div_fecha_imagen_aprobada").show().css("display", "inline-block");
                 }
             });
@@ -708,7 +773,6 @@
                 if($('#montaje_digital option:selected').val() != 'Aprobado') {
                   $('#div_fecha_montaje_aprobada').hide();
                 }else{
-                  
                   $("#div_fecha_montaje_aprobada").show().css("display", "inline-block");
                 }
             });
@@ -717,7 +781,6 @@
                 if($('#prueba_color option:selected').val() != 'Aprobado') {
                   $('#div_fecha_prueba_color_aprobada').hide();
                 }else{
-                  
                   $("#div_fecha_prueba_color_aprobada").show().css("display", "inline-block");
                 }
             });
@@ -726,7 +789,6 @@
                 if($('#arte_diseno option:selected').val() != 'Aprobado') {
                   $('#div_fecha_arte_diseno_aprobada').hide();
                 }else{
-                  
                   $("#div_fecha_arte_diseno_aprobada").show().css("display", "inline-block");
                 }
             });
@@ -735,8 +797,15 @@
                 if($('#conf_sal_pel option:selected').val() != 'Entregado') {
                   $('#div_fecha_conf_sal_pel_aprobada').hide();
                 }else{
-                  
                   $("#div_fecha_conf_sal_pel_aprobada").show().css("display", "inline-block");
+                }
+            });
+
+            $('#conf_sal_pel_desgajado').change(function() {                
+                if($('#conf_sal_pel_desgajado option:selected').val() != 'Entregado') {
+                  $('#div_fecha_conf_sal_pel_desgajado_aprobada').hide();
+                }else{
+                  $("#div_fecha_conf_sal_pel_desgajado_aprobada").show().css("display", "inline-block");
                 }
             });
 
@@ -744,12 +813,9 @@
                 if($('#sobre_desarrollo option:selected').val() != 'Entregado') {
                   $('#div_fecha_sobre_desarrollo_aprobada').hide();
                 }else{
-                  
                   $("#div_fecha_sobre_desarrollo_aprobada").show().css("display", "inline-block");
                 }
             });
-
-            
         }
     );
     
