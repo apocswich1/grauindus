@@ -61,21 +61,21 @@
   <li role="presentation" class="active"><a href="<?php echo base_url()?>produccion/cotizaciones">Órdenes de Producción</a></li>
   <li role="presentation"><a href="<?php echo base_url()?>produccion/fast">Fast Track</a></li>
 </ul>
-<div class="page-header"><h3>Órdenes de Producción ( <?php echo $cuantos?> en total)</h3></div>
+<div class="page-header"><h3>Órdenes de Producción ( <?php echo $cuantos?> en total)<span style="padding-left: 150px">Ultima Órden Rechazada ( <?php $ult = $this->produccion_model->getUltimaRechazada(); if($ult->ot==""){echo "No hay ot rechazadas";}else{echo "Ot : ". $ult->ot;} ?> )</span></h3></div>
 <div class="container-fluid">
 <table class="table table-bordered table-striped indice" id="datatable">
     <thead>
         <tr>
              <th>OT</th>
              <th>Cotización</th>
-             <th>OP</th>
+             <!--<th>OP</th>-->
              <th>Fecha solicitud</th>
          <th>Cliente</th>
              <th>Producto</th>
              <th>Revisión</th>
              <th>Pdf</th>
              <th>Fotomecánica</th>
-             <th>Status</th>
+             <!--<th>Status</th>-->
              <th>Acción</th>
         </tr>
     </thead>
@@ -127,7 +127,7 @@
     <tr>
         <td><?php echo $not->id_ot?></td>
         <td><?php echo $dato->id?></td>
-        <td><?php echo $dato->id_op?></td>
+        <!--<td><?php //echo $dato->id_op?></td>-->
         <td><?php echo fecha($dato->fecha)?></td>
         <td><?php echo $cliente?>
             <br/>
@@ -600,31 +600,32 @@
              <td style="text-align: center;">
             <a href="<?php echo base_url()?>produccion/pendientes_fotomecanica/<?php echo $dato->id?>" title="Pendientes Fotomecánica" class="fancybox fancybox.ajax">Pendientes Fotomecánica</a>   
             </td>
-             <td style="text-align: center;">
+<!--             <td style="text-align: center;">
                  <?php
-                  if($dato->vigencia==0){
-                  echo '<label style="background:red;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Nula</label>';    
-                  }
-                  if($dato->vigencia==1){
-                  echo '<label style="background:green;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Activa</label>';    
-                  }
-                  if($dato->vigencia==2){
-                  echo '<label style="background:orange;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Caduca</label>';   
-                  }
-                  if($dato->vigencia==3){
-                  echo '<label style="background:blue;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Prueba</label>';     
-                  }
-                  if($dato->vigencia==4){
-                  echo '<label style="background:black;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Cerrada por PT</label>';    
-                  }
+//                  if($dato->vigencia==0){
+//                  echo '<label style="background:red;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Nula</label>';    
+//                  }
+//                  if($dato->vigencia==1){
+//                  echo '<label style="background:green;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Activa</label>';    
+//                  }
+//                  if($dato->vigencia==2){
+//                  echo '<label style="background:orange;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Caduca</label>';   
+//                  }
+//                  if($dato->vigencia==3){
+//                  echo '<label style="background:blue;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Prueba</label>';     
+//                  }
+//                  if($dato->vigencia==4){
+//                  echo '<label style="background:black;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px"  data-toggle="modal" data-target="#myModal">Cerrada por PT</label>';    
+//                  }
                   ?>
-            </td>
+            </td>-->
              <td style="text-align: center;">
                  <?php  if($fotomecanica->situacion=="Liberada" || sizeof($control_cartulina) > 0 || sizeof($control_liner) > 0 || sizeof($control_onda) > 0 || sizeof($confeccion_molde_troquel) > 0 || sizeof($corte_cartulina) > 0 || sizeof($imprenta_programacion) > 0 || sizeof($imprenta_produccion) > 0 || sizeof($servicios) > 0 || sizeof($corrugado) > 0 || sizeof($emplacado) > 0 || sizeof($troquelado) > 0 || sizeof($desgajado) > 0 || sizeof($talleres_externos) > 0 || sizeof($pegado) > 0 || sizeof($bodega) > 0){ 
-                 echo '<label style="background:green;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px">Mod</label>'; ?>
+                 //echo '<label style="background:green;color:white; height: 20px;text-align: center; vertical-align: center;width: 50px">Mod</label>'; ?>
                  <?php }else{ ?>
-                 <button type="button" class="" style="background-color: #ffcc33; border-radius: 5px; border-style: none" data-toggle="modal" data-target="#myModal" onclick="reversar(<?php echo $dato->id ?>)">Rev</button>
+                 <!--<button type="button" class="" style="background-color: #ffcc33; border-radius: 5px; border-style: none" data-toggle="modal" data-target="#myModal" onclick="reversar(<?php //echo $dato->id ?>)">Rev</button>-->
            <?php } ?>
+                 <button type="button" class="" style="background-color: #ffcc33; border-radius: 5px; border-style: none" data-toggle="modal" data-target="#myModal" onclick="reversar(<?php echo $dato->id ?>)">Rev</button>
              </td>
         </tr>
             <?php 

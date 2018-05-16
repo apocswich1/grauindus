@@ -32,6 +32,20 @@ class produccion_model extends CI_Model{
                 return $query->row();
     }
     
+    public function getUltimaRechazada()
+    {
+         $query=$this->db
+                ->select("pf.id_nodo,pf.fecha_rechazada_recepcion_OT,pf.comentario_rechazo,oc.id as ot")
+                ->from("produccion_fotomecanica pf")
+                ->join("cotizaciones_orden_de_compra oc","pf.id_nodo = oc.id_cotizacion","left")
+                ->where("pf.fecha_rechazada_recepcion_OT <> '0000-00-00'")
+                ->order_by("pf.fecha_rechazada_recepcion_OT DESC")
+                ->limit(1)
+                ->get();
+//                echo $this->db->last_query();
+                return $query->row();
+    }
+    
     public function getFotomecanicaArchivo($id)
     {
          $query=$this->db

@@ -129,6 +129,14 @@
 		</div>
 	</div>
     
+    <?php //echo $fotomecanica->producto; ?>
+    <div class="control-group">
+		<label class="control-label" for="usuario">Nombre Producto para cliente</label>
+		<div class="controls">
+                        <input type="text" style="width: 600px;" id="titulo" name="nombre_producto_cliente" value="<?php if($orden->nombre_producto_cliente==""){echo $fotomecanica->producto;}else{echo $orden->nombre_producto_cliente;}?>" placeholder="nombre_producto_cliente" /> 
+		</div>
+	</div>
+    
     
    <?php if(sizeof($orden) == 0) {   ?>
     <div class="control-group" id="producto">
@@ -142,7 +150,7 @@
     <div class="control-group" id="producto">
 		<label class="control-label" for="usuario">Orden de Compra Cliente <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" name="orden_de_compra" placeholder="Orden de Compra Cliente" value="<?php echo $orden->orden_de_compra_cliente?>" onkeypress="return alpha_con_numeros(event)" />
+                    <input type="text" name="orden_de_compra" placeholder="Orden de Compra Cliente" value="<?php if(sizeof($orden)>0){echo $orden->orden_de_compra_cliente;}else{echo $_POST['orden_de_compra'];}?>" onkeypress="return alpha_con_numeros(event)" />
 		</div>
 	</div>    
 	 
@@ -153,13 +161,13 @@
 		<div class="controls">
                     <input type="date" name="fecha_orden_cliente" placeholder="Introduzca Fecha" value="<?php if($orden->fecha_orden_cliente!=""){$invert = explode("-",$orden->fecha_orden_cliente);
                     $fecha_invert = $invert[2]."-".$invert[1]."-".$invert[0];
-                    echo invertirFecha($orden->fecha_orden_cliente);  } ?>">
+                    echo invertirFecha($orden->fecha_orden_cliente);  }else{echo $_POST['fecha_orden_cliente'];} ?>">
 		</div>
         </div>	
 	<div class="control-group" id="producto">
 		<label class="control-label" for="usuario">Codigo producto del Cliente:<strong style="color: red;"></strong></label>
 		<div class="controls">
-			<input type="text" style="width: 600px;" name="codigo_de_compra_cliente" placeholder="Codigo Orden de Compra Cliente" value="<?php echo $orden->codigo_de_compra_cliente?>"  />
+			<input type="text" style="width: 600px;" name="codigo_de_compra_cliente" placeholder="Codigo Orden de Compra Cliente" value="<?php if(sizeof($orden)>0){echo $orden->codigo_de_compra_cliente;}else{echo $_POST['codigo_de_compra_cliente'];}?>"  />
 		</div>
 	</div>
     
@@ -829,6 +837,7 @@ $('.ir-arriba').click(function(){
 //			$('.ir-arriba2').slideDown(300);
 //		}
 	});
+        
 
 </script>
 

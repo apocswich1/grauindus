@@ -164,7 +164,7 @@
         <td><?php echo $dato->ot_antigua?></td>       
         <td><?php echo $dato->ot_migrada?></td>                
         <td><?php echo $dato->fecha//echo fecha($dato->fecha)?></td>
-        <td><?php echo $cliente?> <?php if($cli->estado==2){echo '(BLOQUEADO)';}?><br /><?php echo "Colores: ".$ing->colores?><br /><?php echo "Molde: ".$dato->numero_molde?></td>
+        <td><?php echo $cliente?> <?php if($cli->estado==2){echo '(BLOQUEADO)';}?><br /><?php echo "Colores: ".$ing->colores?><br /><?php echo "Molde: ".$dato->numero_molde."<br />T1: ".$ing->tamano_a_imprimir_1." T2: ".$ing->tamano_a_imprimir_2?></td>
         <!--<td><?php //echo $dato->producto?></td> -->
         <td><?php if(sizeof($ing)>=1 || sizeof($fotomecanica)>=1){
             echo $ing->producto;
@@ -611,16 +611,24 @@ $(document).ready(function() {
         $("input:checkbox:checked").each(function(i) {
              cotizaciones.push($(this).attr('id'));
         });
-        $("input:checkbox:checked").each(function(i) {
-             alert($(this).parent().parent().css('background-color', 'red'));
-        });
+        if($("#password").val()!=='999999'){
+            alert("Clave erronea");
+        }else{
         var ruta = webroot+'cotizaciones/borrar_items';
         $.post(ruta,{numeros:cotizaciones},(data)=>{
-            alert(data);
+        
+        if(data==0){
+        alert("No se puede eliminar el registro porque ya existe una hoja de costos");
+        }else{
+        $("input:checkbox:checked").each(function(i) {
+             $(this).parent().parent('tr').remove();
+        });    
+        alert(data);
+        }
+                
         });
         $('#exampleModal').modal('hide');
-        //alert(cotizaciones);
-             });
+    } });
 });
 
 </script>

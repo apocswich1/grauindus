@@ -134,7 +134,9 @@
         <td><?php echo fecha($dato->fecha)?></td>
         <td><?php echo $cliente?></td>
         <td id="<?php echo $dato->id ?>"><?php echo $vendedor->nombre?></td>
-        <td><?php echo $dato->producto;?></td>
+        <td><?php echo $dato->producto;?><br /><?php echo "Molde: ".$dato->id_molde;?>
+            <br />Cantidad:<?php echo $dato->cantidad_pedida;?>&nbsp;Precio: <?php echo $dato->precio;?>
+            <br />Tamaño: <?php if($dato->tamano_a_imprimir_1=="" && $dato->tamano_a_imprimir_2==""){ echo "Sin medidas definidas";}else{echo $dato->tamano_a_imprimir_1.' x '.$dato->tamano_a_imprimir_2;}?></td>
          <td style="text-align: center;">
            
   <?php if ($fotomecanica->pdf_imagen!=""){ ?>

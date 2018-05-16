@@ -2930,18 +2930,37 @@ page[size="A4"][layout="portrait"] {
                             $mostrarboton = 0;
                         }
                         ?>
+                        <?php 
+                        $ancho=72;
+                        $largo=102;
+                        
+                        if($tamano1<$tamano2){
+                            $anchomenor = $tamano1; 
+                            $anchomayor = $tamano2; 
+                        }else{
+                            $anchomayor = $tamano1; 
+                            $anchomenor = $tamano2; 
+                        }
+//                        echo "<h1>Ancho menor: $anchomenor</h1>";
+//                        echo "<h1>Ancho mayor: $anchomayor</h1>";
+                        if(($anchomenor <= $ancho) && ($anchomayor <= $largo)){
+                            $condicionado="Se Puede Imprimir afuera";
+                        }else{
+                            $condicionado="No Puede Imprimir afuera";
+                        }
+                        ?>
                         <tr>
                                 <td class="celda_3">TAPA KILO<?php echo number_format($valorPlacaKilo,0,'','.');/*echo $sum;*/?></td>
                                 <td class="celda_3"><?php echo number_format($costoPlacaKilo,0,'','.')?></td>
                                 <td class="celda_3"><?php echo number_format($totalPlacaKilo,0,'','.')?></td>
                                 <td class="celda_3 valign_top padding_left_10" colspan="3" rowspan="30">
                                     <!--producción--><?php //echo "<h1>" . $mostrarboton . "</h1>"; //my code is here  ?>
-                                    <table id="tabla_produccion">
+                                    <table id="tabla_produccion" style="width: 550px">
                                         <tr>
                                             <td class="celda_33">TIRAJE</td>
                                             <td class="celda_33"><?php echo $factor_rango?></td>
                                             <td class="celda_33"><?php if($mostrarboton != 1){echo number_format($tiraje,0,'','.');}else{if($hoja->tiraje1!=""){$tiraje=$hoja->tiraje1; echo number_format($hoja->tiraje1,0,'','.');}else{echo number_format($tiraje,0,'','.');}}?>
-                                            <?php if($hoja->impreso!=1 && $mostrarboton == 1){echo "<a href='".base_url()."hoja/tiraje1/".$id."/4' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{if($hoja->impreso!=1){echo "Condicionado por tamaño (Mayor a 72 - 102)";}else{echo "<a href='".base_url()."hoja2/tiraje1/".$id."/4' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}} ?>
+                                            <?php if($hoja->impreso!=1 && $mostrarboton == 1){echo $condicionado; echo "<a href='".base_url()."hoja/tiraje1/".$id."/4' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{if($hoja->impreso!=1){echo $condicionado;}else{echo $condicionado;echo "<a href='".base_url()."hoja2/tiraje1/".$id."/4' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}} ?>
                                             </td>
                                             <!--<td class="celda_33"><?php// echo $hoja->tiraje1."-Dato prueba" ?></td>-->
                                         </tr>

@@ -1802,8 +1802,52 @@ class Cotizaciones extends CI_Controller {
 
      public function borrar_items(){
          $objetos = $this->input->post('numeros',true);
-         print_r($objetos);
-         //echo "LLego por aca";
+         //print_r($objetos);exit();
+         for($i=0; $i<sizeof($objetos); $i++ ) {
+            $cot = $this->cotizaciones_model->getCotizacionPorId($objetos[$i]);
+            $cot_ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($objetos[$i]);
+	    $cot_fot=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($objetos[$i]);
+	    $cot_hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($objetos[$i]);
+	    $cot_oc=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($objetos[$i]);
+	    $cot_op=$this->cotizaciones_model->getOrdenDeProduccionPorCotizacion($objetos[$i]);
+            
+            if(sizeof($cot_hoja)>0){
+            $arr = array(
+                'error'=>1,
+                'mensaje'=>'No se puede eliminar porque ya posee hoja de costos'
+            );
+            echo 0;
+            }else{
+                if(sizeof($cot)>0){
+                    
+                $guardar=$this->cotizaciones_model->insertar_bl($cot);
+               // echo $cot;exit();
+                $delete=$this->cotizaciones_model->delete_bl($cot->id);
+            }
+            if(sizeof($cot_ing)>0){
+                $guardar=$this->cotizaciones_model->insertar_ing_bl($cot_ing);
+                $delete=$this->cotizaciones_model->delete_ing_bl($cot_ing->id_cotizacion);
+            }
+            if(sizeof($cot_fot)>0){
+                $guardar=$this->cotizaciones_model->insertar_fot_bl($cot_fot);
+                $delete=$this->cotizaciones_model->delete_fot_bl($cot_fot->id_cotizacion);
+            }
+            if(sizeof($cot_oc)>0){
+                $guardar=$this->cotizaciones_model->insertar_oc_bl($cot_oc);
+                $delete=$this->cotizaciones_model->delete_oc_bl($cot_oc->id_cotizacion);
+            }
+            if(sizeof($cot_hoja)>0){
+                $guardar=$this->cotizaciones_model->insertar_hc_bl($cot_hoja);
+               $delete=$this->cotizaciones_model->delete_hc_bl($cot_hoja->id_cotizacion);
+            }
+            if(sizeof($cot_op)>0){
+                $guardar=$this->cotizaciones_model->insertar_op_bl($cot_op);
+                $delete=$this->cotizaciones_model->delete_op_bl($cot_op->id_cotizacion);
+            }
+            echo "Registros eliminados con exito";
+          }
+        }
+         
      }   
      public function search($valor=null)
 	{
@@ -8017,6 +8061,12 @@ $cuerpo2.='<table class="tabla">';
                                         $condicion="Producto Genérico";
                                     break;
                                }
+                               
+                               if($condicion!=='Repetición Sin Cambios' && $this->input->post("select_estan_los_moldes",true)=='SI'){
+                                   $condicion = 'Repetición Con Cambios';
+                               }else{
+                                   $condicion = $condicion;
+                               }
                                if($this->input->post("estado",true)==2)
                                {
                                  $glosa=$this->input->post("glosa",true);  
@@ -9425,18 +9475,11 @@ $cuerpo2.='<table class="tabla">';
             $matenombre=$this->materiales_model->getMaterialesSelectCartulinaAudi($datos->materialidad_1);
             $moldes2=$this->moldes_model->getMoldesPorId($datos->numero_molde);
             $nombreProducto=$this->productos_model->getProductosPorNombre($datos->producto);
-            // $matenombre2=$this->materiales_model->getMaterialesSelectCartulinaAudi($datos->materialidad_2);
-            //$matenombre3=$this->materiales_model->getMaterialesSelectCartulinaAudi($datos->materialidad_3);
-            //print_r($matenombre);
             
-           // $materialidad_ant1="$matenombre->gramaje ( $matenombre->materiales_tipo - $ $matenombre->precio ) ( $matenombre->reverso )";
-            //echo $materialidad_ant2="$matenombre2->gramaje ( $matenombre2->materiales_tipo - $ $matenombre2->precio ) ( $matenombre2->reverso )<br>";
-            //echo $materialidad_ant3="$matenombre2->gramaje ( $matenombre3->materiales_tipo - $ $matenombre3->precio ) ( $matenombre3->reverso )<br>";
-           // exit();
             if($this->input->post())
             {
-               //echo $datos->numero_molde."<br />";
-             //  echo $this->input->post('nombre_molde',true)."<br />";exit();
+            //echo $datos->numero_molde."<br />";
+              //echo $this->input->post('nombre_molde',true)."<br />";exit();
                
                 if($this->input->post("nm",true)!=11 && $this->input->post("nm",true)!=12 && $this->input->post("nm",true)!=13 && $this->input->post("nm",true)!=14 && $this->input->post("nm",true)!=15){
                 if($datos->numero_molde!=$this->input->post("nm",true) && $datos->condicion_del_producto=='Nuevo'){
@@ -9456,11 +9499,17 @@ $cuerpo2.='<table class="tabla">';
                 $archivo_a_borrar_cliente=$arreglo_archivo_cliente->archivo;
                
                 if($condicion=="Nuevo")
-                {
-                    $valida="ad_cotizacion_ingenieria2";
+                {   if($this->input->post("hay_que_troquelar",true)=="NO"){
+                $valida="ad_cotizacion_ingenieria_st2";
+                }else{
+                $valida="ad_cotizacion_ingenieria2";    
+                }
                 }else
-                {
-                    $valida="ad_cotizacion_ingenieria";
+                {if($this->input->post("hay_que_troquelar",true)=="NO"){
+                $valida="ad_cotizacion_ingenieria_st";
+                }else{
+                $valida="ad_cotizacion_ingenieria";    
+                }
                 }
                 if($this->form_validation->run($valida))
                 {
@@ -9700,6 +9749,9 @@ $cuerpo2.='<table class="tabla">';
                         $unidades_por_pliego = $this->input->post('unidades_por_pliego_ing',true);
                         $piezas_totales=$this->input->post('piezas_totales_ing',true);   
                         }
+                        
+                       // echo $this->input->post('nombre_molde',true)."<br />";exit();
+                        
                         $data=array
                         (
                             "id_usuario"=>$this->session->userdata('id'),
@@ -9761,7 +9813,7 @@ $cuerpo2.='<table class="tabla">';
                             "tipo_fondo"=>$this->input->post("tipo_fondo",true),
                             "lleva_aletas"=>$this->input->post("lleva_aletas",true),
                             "total_aplicaciones_adhesivo"=>$this->input->post("total_aplicaciones_adhesivo",true),
-                            "id_molde"=>1,
+                            "id_molde"=>1,//alerta con este campo ehndz
                             "aleta_pegado"=>$this->input->post("aleta_pegado",true),
                             "ancho_1"=>$this->input->post("ancho_1",true),
                             "ancho_2"=>$this->input->post("ancho_2",true),
@@ -10096,10 +10148,18 @@ $cuerpo2.='<table class="tabla">';
                             $this->db->update("cotizacion_fotomecanica",$data_fotomecanica);                            
                             
                                 
+                            if($datos->trazado != 0 || $datos->trazado!=""){
+                                $data_ing_nombre=array(
+                                    "nombre_molde"=>$this->input->post('nombre_molde',true),
+                                );
+                            }else{
                             $nombre_molde = $this->moldes_model->getMoldesPorId($numeroMolde);
                                 $data_ing_nombre=array(
                                     "nombre_molde"=>$nombre_molde->nombre,
                                 );
+                            }
+                            
+                            
                             $this->db->where('id_cotizacion', $this->input->post('id',true));
                             $this->db->update("cotizacion_ingenieria",$data_ing_nombre); 
                                 
@@ -10394,6 +10454,7 @@ $cuerpo2.='<table class="tabla">';
                            "cuando"=>$cuando,
                            "glosa"=>$this->input->post("glosa",true),
                            "nombre_producto"=>$this->input->post("nombre_producto",true),
+                           "nombre_producto_cliente"=>$this->input->post("nombre_producto_cliente",true),
                            "codigo_de_compra_cliente"=>$this->input->post("codigo_de_compra_cliente",true),
                            "tiene_molde"=>$this->input->post("tiene_molde",true),
                            "id_molde"=>$this->input->post("id_molde",true),
@@ -10502,6 +10563,7 @@ $cuerpo2.='<table class="tabla">';
                            "nota"=>$this->input->post('obs3',true),
                            "archivo"=>$file_name,
                            "nombre_producto"=>$this->input->post("nombre_producto",true),
+                           "nombre_producto_cliente"=>$this->input->post("nombre_producto_cliente",true),
                            "cantidad_de_cajas"=>$this->input->post("cantidad_de_cajas",true),
                            "codigo_de_compra_cliente"=>$this->input->post("codigo_de_compra_cliente",true),
                            "proveedores"=>$proveedores,
@@ -11346,7 +11408,7 @@ $cuerpo2.='<table class="tabla">';
             $produccion=$this->produccion_model->getFotomecanicaPorTipo(1,$id);
             $maximo=$this->cotizaciones_model->obtenerMaximoId();
             $idnuevo=$maximo->id_max+1;
-          
+            
             /****************Bloqueo por falta de materialidad*******************/
             if($ing->materialidad_datos_tecnicos=="Microcorrugado" || $ing->materialidad_datos_tecnicos=="Corrugado"){
                 $m1=$ing->materialidad_1;$m2=$ing->materialidad_2;$m3=$ing->materialidad_3;
@@ -11402,7 +11464,7 @@ $cuerpo2.='<table class="tabla">';
             echo "Se ha creado la cotizacion ". $idnuevo." con exito!!!";
                 }
              
-            }else{
+            }else{          
                 if($ing->materialidad_datos_tecnicos=="Cartulina-cartulina"){
                 $m1=$ing->materialidad_1;$m2=$ing->materialidad_2;$m3=$ing->materialidad_3;
                 $p1=$ing->id_mat_placa1;$o2=$ing->id_mat_onda2;$l3=$ing->id_mat_liner3;
@@ -11473,10 +11535,19 @@ $cuerpo2.='<table class="tabla">';
             $datos->cantidad_3 = $cantidad3;
             $datos->cantidad_4 = $cantidad4;
             
+            if(sizeof($fotomecanica)>0){    
             unset($ing->id);
             $ing->id_cotizacion = $idnuevo;
+            $this->cotizaciones_model->insertarIngenieria($ing);
+            }
+            
+            if(sizeof($fotomecanica)>0){    
             unset($fotomecanica->id);
             $fotomecanica->id_cotizacion = $idnuevo;
+            $this->cotizaciones_model->insertarFotomecanica($fotomecanica);
+            }
+           
+            if(sizeof($hoja)>0){
             unset($hoja->id);
             $hoja->id_cotizacion = $idnuevo;
             $hoja->valor_empresa = "";
@@ -11484,16 +11555,15 @@ $cuerpo2.='<table class="tabla">';
             $hoja->valor_empresa_3 = "";
             $hoja->valor_empresa_4 = "";
             $hoja->codigo_duplicado = "";
-            $hoja->impreso = "";
-           
+            $hoja->impreso = ""; 
+            $this->db->insert("hoja_de_costos_datos",$hoja);
+           }
+           //echo "AAA";exit();
             //Creacion de registros en cotizacion;
             $guardar=$this->cotizaciones_model->insertar($datos);
             //Creacion de registros en ingenieria;
-            $this->cotizaciones_model->insertarIngenieria($ing);
             //Creacion de registros en fotomecanica;
-            $this->cotizaciones_model->insertarFotomecanica($fotomecanica);
             //Creacion de registros en hoja de costos;
-            $this->db->insert("hoja_de_costos_datos",$hoja);
                        
             echo "Se ha creado la cotizacion ". $idnuevo." con exito!!!";
                     }}
@@ -11501,7 +11571,7 @@ $cuerpo2.='<table class="tabla">';
                 }
             }
             
-
+            echo "No posee Ingenieria y fotomecanica";
         } 
     }
 

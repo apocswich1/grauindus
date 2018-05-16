@@ -820,6 +820,55 @@ class cotizaciones_model extends CI_Model{
         return false;
         
     }
+     
+    public function insertar_bl($data=array())
+    {
+        $query =  $this->db->insert("cot_bl",$data);
+        if($query)
+            return $this->db->insert_id();
+        else
+        return false;
+    }
+    public function insertar_ing_bl($data=array())
+    {
+        $query =  $this->db->insert("cot_ing_bl",$data);
+        if($query)
+            return $this->db->insert_id();
+        else
+        return false;
+    }
+    public function insertar_fot_bl($data=array())
+    {
+        $query =  $this->db->insert("cot_fot_bl",$data);
+        if($query)
+            return $this->db->insert_id();
+        else
+        return false;
+    }
+    public function insertar_oc_bl($data=array())
+    {
+        $query =  $this->db->insert("cot_oc_bl",$data);
+        if($query)
+            return $this->db->insert_id();
+        else
+        return false;
+    }
+    public function insertar_op_bl($data=array())
+    {
+        $query =  $this->db->insert("cot_op_bl",$data);
+        if($query)
+            return $this->db->insert_id();
+        else
+        return false;
+    }
+    public function insertar_hc_bl($data=array())
+    {
+        $query =  $this->db->insert("cot_hc_bl",$data);
+        if($query)
+            return $this->db->insert_id();
+        else
+        return false;
+    }
  
        public function insertarEstadoCotizacion($data=array())
     {
@@ -954,6 +1003,43 @@ class cotizaciones_model extends CI_Model{
          $this->db->update("cotizaciones",$data);
         return true;
     }
+    public function delete_bl($id)
+    {
+         $this->db->where('id', $id);
+         $this->db->delete("cotizaciones");
+         
+         return true;
+    }
+    public function delete_fot_bl($id)
+    {
+         $this->db->where('id_cotizacion', $id);
+         $this->db->delete("cotizacion_fotomecanica");
+         return true;
+    }
+    public function delete_ing_bl($id)
+    {
+         $this->db->where('id_cotizacion', $id);
+         $this->db->delete("cotizacion_ingenieria");
+         return true;
+    }
+    public function delete_oc_bl($id)
+    {
+         $this->db->where('id_cotizacion', $id);
+         $this->db->delete("cotizaciones_orden_de_compra");
+         return true;
+    }
+    public function delete_hc_bl($id)
+    {
+         $this->db->where('id_cotizacion', $id);
+         $this->db->delete("hoja_de_costos_datos");
+         return true;
+    }
+    public function delete_op_bl($id)
+    {
+         $this->db->where('id_cotizacion', $id);
+         $this->db->delete("orden_de_produccion");
+         return true;
+    }
      public function getMaterialesTipo()
     {
          $query=$this->db
@@ -1074,7 +1160,7 @@ class cotizaciones_model extends CI_Model{
      public function getOrdenDeCompraPorCotizacion($id)
     {
 		 $query=$this->db
-                ->select("nota,fecha_orden_cliente,fecha_despacho_solicitado_cliente,id,fecha,id_usuario,id_cotizacion,estado,orden_de_compra_cliente,precio,id_forma_pago,fecha_despacho,horario_despacho,total_o_parcial,cantidad_1,cantidad_2,cantidad_3,obs_facturar,obs_condiciones_cobranza,fecha,archivo,cantidad_de_cajas,cantidad_pedida,tiene_molde,id_molde,nombre_producto,codigo_de_compra_cliente,proveedores")
+                ->select("nombre_producto_cliente,nota,fecha_orden_cliente,fecha_despacho_solicitado_cliente,id,fecha,id_usuario,id_cotizacion,estado,orden_de_compra_cliente,precio,id_forma_pago,fecha_despacho,horario_despacho,total_o_parcial,cantidad_1,cantidad_2,cantidad_3,obs_facturar,obs_condiciones_cobranza,fecha,archivo,cantidad_de_cajas,cantidad_pedida,tiene_molde,id_molde,nombre_producto,codigo_de_compra_cliente,proveedores")
                 ->from("cotizaciones_orden_de_compra")
                 ->where(array("id_cotizacion"=>$id))
                 ->get();

@@ -298,6 +298,17 @@ $config = array(
            array('field' => 'datos_tecnicos','label' => 'Datos Técnicos','rules' => 'required|trim|xss_clean|validaSelect'),
           // array('field' => 'ing_lleva_barniz','label' => 'Tipo de Barniz','rules' => 'required|trim|xss_clean|validaSelect'),
             ),
+	'ad_cotizacion_ingenieria_st'
+		=> array(
+            
+           array('field' => 'producto','label' => 'Descripción de Producto','rules' => 'required|trim|xss_clean|max_length[100]'),
+           array('field' => 'unidades_por_pliego','label' => 'Unidades por Pliego','rules' => 'required|trim|xss_clean|max_length[100]'),
+           array('field' => 'piezas_totales_en_el_pliego','label' => 'Piezas totales en el pliego','rules' => 'required|trim|xss_clean|max_length[100]'),
+           array('field' => 'tamano_1','label' => 'Tamaño a imprimir','rules' => 'required|trim|xss_clean|max_length[100]'), 
+            array('field' => 'tamano_2','label' => 'Tamaño a imprimir','rules' => 'required|trim|xss_clean|max_length[100]'),
+            array('field' => 'datos_tecnicos','label' => 'Datos Técnicos','rules' => 'required|trim|xss_clean|validaSelect'),
+          // array('field' => 'ing_lleva_barniz','label' => 'Tipo de Barniz','rules' => 'required|trim|xss_clean|validaSelect'),
+            ),
              /**
 	 * ad_cotizacion_ingenieria2
 	 */
@@ -312,6 +323,18 @@ $config = array(
             array('field' => 'tamano_2','label' => 'Tamaño a imprimir','rules' => 'required|trim|xss_clean|max_length[100]'),
             array('field' => 'tamano_cuchillo_1','label' => 'Distancia cuchillo a cuchillo','rules' => 'required|trim|xss_clean|max_length[100]'), 
             array('field' => 'tamano_cuchillo_2','label' => 'Distancia cuchillo a cuchillo','rules' => 'required|trim|xss_clean|max_length[100]'),
+           array('field' => 'datos_tecnicos','label' => 'Datos Técnicos','rules' => 'required|trim|xss_clean|validaSelect'),
+         //   array('field' => 'ing_lleva_barniz','label' => 'Tipo de Barniz','rules' => 'required|trim|xss_clean|validaSelect'),
+            ),
+	'ad_cotizacion_ingenieria2'
+		=> array(
+            
+           array('field' => 'producto','label' => 'Descripción de Producto','rules' => 'required|trim|xss_clean|max_length[100]'),
+           array('field' => 'unidades_por_pliego','label' => 'Unidades por Pliego','rules' => 'required|trim|xss_clean|max_length[100]'),
+           array('field' => 'piezas_totales_en_el_pliego','label' => 'Piezas totales en el pliego','rules' => 'required|trim|xss_clean|max_length[100]'),
+           //array('field' => 'metros_de_cuchillo','label' => 'Metros de Cuchillo','rules' => 'required|trim|xss_clean|max_length[100]'),
+            array('field' => 'tamano_1','label' => 'Tamaño a imprimir','rules' => 'required|trim|xss_clean|max_length[100]'), 
+            array('field' => 'tamano_2','label' => 'Tamaño a imprimir','rules' => 'required|trim|xss_clean|max_length[100]'),
            array('field' => 'datos_tecnicos','label' => 'Datos Técnicos','rules' => 'required|trim|xss_clean|validaSelect'),
          //   array('field' => 'ing_lleva_barniz','label' => 'Tipo de Barniz','rules' => 'required|trim|xss_clean|validaSelect'),
             ),

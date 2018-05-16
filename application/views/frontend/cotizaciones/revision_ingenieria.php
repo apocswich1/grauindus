@@ -248,7 +248,8 @@ function getField($campo,$datos,$ing)
             <li>Cliente Secundario: <?php echo $cliente_sec ?></li>
             <?php } ?>
             <li>Cotización número : <?php echo $id ?></li>
-            <li>Condicion de Producto : <?php echo $datos->condicion_del_producto ?></li>
+            <!--<li>Condicion de Producto : <?php //echo $datos->condicion_del_producto." <a data-toggle='modal' data-target='#cambiar_condicion' class='fancybox fancybox.ajax'><img width='25px' src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>" ?></li>-->
+            <li>Condicion de Producto : <?php echo $datos->condicion_del_producto; ?></li>
             <li>Fecha : <?php echo fecha($datos->fecha) ?></li>
             <li>Vendedor : <?php echo $vendedor->nombre ?></li>
             <?php if($datos->trazado!=""){ ?>
@@ -750,6 +751,53 @@ th {
     
         <div class="modal-footer">
             <button type="button" id="crear" style="" class="btn btn-primary" onclick="crear_grupo_cotizacion()">Crear</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+    <div id="cambiar_condicion" class="modal fade">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Cambiar Condicion de Producto </h4>
+        </div>
+           <style>
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #444;
+    color: white;
+    height: 5px !important;
+}
+</style>
+    <div class="modal-body">
+    <div class="container-fluid">
+        <table width="500px">
+            <tr><td><strong id="mensaje_grupo">Condicion</strong></td></tr>
+                        <tr><td><select style="width:400px">
+                                    <option value="Nuevo" <?php if($datos->condicion_del_producto == 'Nuevo'){echo 'selected="selected"';} ?>>Nuevo</option>
+                                    <option value="Repetición Sin Cambios" <?php if($datos->condicion_del_producto == 'Repetición Sin Cambios'){echo 'selected="selected"';} ?>>Repetición Sin Cambios</option>
+                                    <option value="Repetición Con Cambios" <?php if($datos->condicion_del_producto == 'Repetición Con Cambios'){echo 'selected="selected"';} ?>>Repetición Con Cambios</option>
+                    </select></td></tr>
+        </table><br />
+        
+    </div>
+    </div>
+    </div>
+    
+        <div class="modal-footer">
+            <button type="button" id="crear" style="" class="btn btn-primary" onclick="cambiar_condicion(<?php echo $id ?>)">Cambiar</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -1424,9 +1472,13 @@ th {
                         <?php if (sizeof($ing)>0)  { ?>
                             <option value="SI" <?php if($ing->troquel_por_atras=="SI"){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option>
                             <option value="NO" <?php if($ing->troquel_por_atras=="NO"){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
+                            <option value="" <?php if($ing->troquel_por_atras==""){echo 'selected="selected"';}?>>Por definir</option>
+                            <option value="NO LLEVA" <?php if($ing->troquel_por_atras=="NO LLEVA"){echo 'selected="selected"';}?>>No lleva</option>
                         <?php } else { ?>
-                            <option value="SI" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='SI'){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option> 
-                            <option value="NO" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='NO'){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
+                            <option value="SI" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='SI'){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option> 
+                            <option value="NO" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='NO'){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
+                            <option value="" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]==''){echo 'selected="selected"';}?>>Por definir</option>
+                            <option value="NO LLEVA" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='NO LLEVA'){echo 'selected="selected"';}?>>No lleva</option>
                         <?php }  ?>                                                    
                         </select> 			
                 </div>
@@ -1447,9 +1499,13 @@ th {
                         <?php if (sizeof($ing)>0)  { ?>
                             <option value="SI" <?php if($ing->troquel_por_atras=="SI"){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option>
                             <option value="NO" <?php if($ing->troquel_por_atras=="NO"){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
+                            <option value="" <?php if($ing->troquel_por_atras==""){echo 'selected="selected"';}?>>Por definir</option>
+                            <option value="NO LLEVA" <?php if($ing->troquel_por_atras==""){echo 'selected="selected"';}?>>No lleva</option>
                         <?php } else { ?>
-                            <option value="SI" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='SI'){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option> 
-                            <option value="NO" <?php if(isset($_POST["troquel_por_atras"]) and $_POST["troquel_por_atras"]=='NO'){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
+                            <option value="SI" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='SI'){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option> 
+                            <option value="NO" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='NO'){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
+                            <option value="" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]==''){echo 'selected="selected"';}?>>Por definir</option>
+                            <option value="NO LLEVA" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='NO LLEVA'){echo 'selected="selected"';}?>>No lleva</option>
                         <?php }  ?>                                                    
                         </select> 
                 
@@ -1647,15 +1703,26 @@ th {
     if(sizeof($ing)==0)
     {
         ?>
-        <div class="control-group" id="crea_molde" style="display: <?php if($datos->estan_los_moldes=="NO" and $datos->condicion_del_producto=="Nuevo"){echo 'block';}else{echo 'none';}?>;">
+        <div class="control-group" id="crea_molde" style="display: <?php if($datos->estan_los_moldes=="NO" && $datos->condicion_del_producto=="Nuevo"){echo 'block';}else{echo 'none';}?>;">
 		<label class="control-label" for="usuario"><strong>Nombre Molde sugerido:</strong><strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input style="width: 400px;" type="text" name="nombre_molde" placeholder="Nombre Molde sugerido" value="<?php echo $datos->nombre_molde?>" /> 
+                    <?php if($datos->trazado!=0 || $datos->trazado!=""){
+                        $trazados=$this->trazados_model->getTrazados2();
+                                foreach($trazados as $traza)
+                                {
+                                    if($datos->trazado==$traza->id){ ?>
+                                    <input style="width: 400px;" type="text" name="nombre_molde" placeholder="Nombre Molde sugerido" value="<?php echo $traza->nombre;?>" /> 
+                                    <?php }
+                                }
+                    }else{ ?>
+                       <input style="width: 400px;" type="text" name="nombre_molde" placeholder="Nombre Molde sugerido" value="<?php echo $datos->nombre_molde; ?>" /> 
+                    <?php } ?>    
+                    
 		</div>
 		</div>
         <?php
     }
-    elseif(sizeof($ing)>=0)
+    else if(sizeof($ing)>0)
     {
         if($ing->estan_los_moldes=="NO" && $datos->condicion_del_producto=="Nuevo"){?>        
         <div class="control-group" id="crea_molde">
@@ -3543,6 +3610,18 @@ switch (x) {
        //alert($("select[name=hay_que_troquelar]").val());
     $("input[name=lleva_troquelado]").val(a);
     $("input[name=hacer_troquel").val(a);
+    if(a=='NO'){
+    $("select[name=troquel_por_atras").val('NO LLEVA');
+    $("select[name=troquel_por_atras").prop('disabled',true);
+    $("select[name=select_estan_los_moldes").val('NO LLEVA');
+    $("select[name=select_estan_los_moldes").prop('disabled',true);
+    }else{
+    $("select[name=troquel_por_atras").prop('disabled',false);
+    $("select[name=troquel_por_atras").val('');
+    $("select[name=select_estan_los_moldes").val('');
+    $("select[name=select_estan_los_moldes_genericos").val('NO');
+    $("select[name=select_estan_los_moldes").prop('disabled',false);
+    }
     });
     
     $('#lleva_fondo_negro').on('change',()=>{

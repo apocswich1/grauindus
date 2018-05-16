@@ -40,7 +40,8 @@ class orden_model extends CI_Model{
                 ->join("cotizaciones c","c.id=o.id_cotizacion","inner")
                 ->join("cotizaciones_orden_de_compra oc","oc.id_cotizacion=o.id_cotizacion","inner")
                 ->where(array('c.id_cliente'=>$cliente,'o.id_molde'=>$molde))
-                ->order_by("o.id","asc")
+                ->order_by("o.id","desc")
+                //->limit(15)
                 ->get();
               //  echo $this->db->last_query();exit();
                 return $query->result();
@@ -66,6 +67,7 @@ class orden_model extends CI_Model{
                 ->from("cotizaciones c")
                 ->where("c.id_cliente = $cliente and ot_migrada <> $vacio")
                 ->order_by("c.id","asc")
+                ->limit(15)
                 ->get();
               //  echo $this->db->last_query();exit();
                 return $query->result();
@@ -112,11 +114,12 @@ class orden_model extends CI_Model{
         {
             case 'limit':
                  $query=$this->db
-                ->select("oc.id as ot,c.id_vendedor,o.id as id_op,o.id_cotizacion as id,o.valor,o.fecha_entrega,o.tipo_entrega,o.id_forma_pago,o.fecha,o.quien_autoriza,o.estado,o.cantidad_pedida,o.tiene_molde,o.id_molde,o.can_despacho_1,o.can_despacho_2,o.can_despacho_3,o.id_forma_pago,o.quien_autoriza,o.fecha,o.estado,o.cantidad_pedida,o.tiene_molde,o.id_molde,o.nombre_producto_normal,o.producto_id,o.id_antiguo,c.id_cliente,c.condicion_del_producto,c.producto,c.fecha as fecha_cotizacion,v.id_vigencia as vigencia")
+                ->select("ci.tamano_a_imprimir_1,ci.tamano_a_imprimir_2,oc.precio,oc.id as ot,c.id_vendedor,o.id as id_op,o.id_cotizacion as id,o.valor,o.fecha_entrega,o.tipo_entrega,o.id_forma_pago,o.fecha,o.quien_autoriza,o.estado,o.cantidad_pedida,o.tiene_molde,o.id_molde,o.can_despacho_1,o.can_despacho_2,o.can_despacho_3,o.id_forma_pago,o.quien_autoriza,o.fecha,o.estado,o.cantidad_pedida,o.tiene_molde,o.id_molde,o.nombre_producto_normal,o.producto_id,o.id_antiguo,c.id_cliente,c.condicion_del_producto,c.producto,c.fecha as fecha_cotizacion,v.id_vigencia as vigencia")
                 ->from("orden_de_produccion as o")
                 ->join("cotizaciones as c","c.id=o.id_cotizacion","inner")
                 ->join("vigencia_cotizacion as v","c.id=v.id_cotizacion","left")
                 ->join("cotizaciones_orden_de_compra as oc","c.id=oc.id_cotizacion","inner")
+                ->join("cotizacion_ingenieria as ci","ci.id_cotizacion=oc.id_cotizacion","left")
                 //->join("cotizaciones_orden_de_compra as oc","oc.id_cotizacion=o.id_cotizacion","left")
                 ->where("o.estado = 3 or o.estado = 4")
                 //->order_by("c.id","asc")
@@ -951,7 +954,7 @@ echo $query->num_rows();
 
     public function getOndaCotizacion($id_cotizacion){
         $query=$this->db
-                ->select("cot.materialidad_2 as nombre, mat.gramaje, mat.reverso, mat.precio ")
+                ->select("cot.materialidad_2 as nombre, mat.gramaje, mat.reverso, mat.getOrdenesConCotizacionPaginacionCerradas ")
                 ->from("materiales mat")
                 ->join("cotizaciones cot","mat.nombre = cot.materialidad_2","left")                
                 ->where(array("cot.id"=>$id_cotizacion))

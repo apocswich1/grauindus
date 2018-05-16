@@ -142,6 +142,7 @@ function sumaGrameje()
                document.form.tamano_2.value=myObj.largo_bobina;
                $("#anumeromolde").html(myObj.id);
                $("#anombremolde").html(myObj.nombre);
+               $("input[name=nombre_molde]").val(myObj.nombre);
                document.form.unidades_por_pliego_molde.value=myObj.unidades_productos_completos;
                document.form.piezas_totales_molde.value=myObj.piezas_totales;
                document.form.mcm1.value=myObj.medidas_de_las_cajas;
@@ -4902,7 +4903,7 @@ function generar() {
               var ruta = webroot + 'cotizaciones/ajax_recotizar';
             //document.getElementById(div).style.display = 'block';
             $.post(ruta, {valor1: valor1,valor2: valor2,valor3: valor3,valor4: valor4,num: num}, function (resp)
-            {
+            {//alert(resp);
                 //$("#centrar").attr('display','block');
                 //$("#" + div + "").html(resp);
                 $('.modal').modal('hide');

@@ -807,7 +807,7 @@ class Ordenes extends CI_Controller {
                         <td colspan="4" class="celda_15">CANTIDAD DE PLIEGOS</td><td colspan="3" class="celda_15"><span class="borde"><strong>'.number_format($ordenDeCompra->cantidad_de_cajas,0,'','.').'</strong></span><br /></td>
                     </tr>
                     <tr>
-                        <td class="celda_15"><span class="borde"><strong>'.number_format($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego).'</strong></span></td>
+                        <td class="celda_25"><span class="borde"><strong>'.number_format($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego).'</strong>MERMA: '.$hoja->total_merma.'</span></td>
                     </tr>
                 </table>
                 <!--separador 50-->
@@ -1388,7 +1388,7 @@ class Ordenes extends CI_Controller {
                 }
                 //print_r($datos);exit();
                 if($ing->estan_los_moldes=="NO" && $datos->trazado > 0){
-                    $estan_los_moldes = "Molde por fabricar";
+                    $estan_los_moldes = "$nombre_molde->numero Molde por fabricar";
                     //$nombremolde="Molde por Fabricar";
                     $nombremolde=$nombre_molde->nombre;
                 }else if($ing->estan_los_moldes=="NO" && $orden->estan_los_moldes=="NO LLEVA"){
@@ -1397,11 +1397,14 @@ class Ordenes extends CI_Controller {
                 }else if($ing->estan_los_moldes=="NO LLEVA" && $orden->estan_los_moldes=="NO LLEVA"){
                     $estan_los_moldes = "NO LLEVA";
                     $nombremolde="NO LLEVA";
+                }else if($ing->estan_los_moldes=="NO" && $fotomecanica->hay_que_troquelar=="NO"){
+                    $estan_los_moldes = "NO LLEVA";
+                    $nombremolde="NO LLEVA";
                 }else if($ing->estan_los_moldes=="NO"){
-                    $estan_los_moldes = "Molde por fabricar";
+                    $estan_los_moldes = "$nombre_molde->numero Molde por fabricar";
                     $nombremolde="Molde por Fabricar";
                 }else{
-                    $estan_los_moldes = "";
+                    $estan_los_moldes = $nombre_molde->numero;
                     $nombremolde=$nombre_molde->nombre;
                 }
                 $cuerpo.='
@@ -1427,7 +1430,7 @@ class Ordenes extends CI_Controller {
                 <!--/separador 10--> 
                 <table id="tabla_detalle">
                     <tr>
-                        <td class="celda_40">CÓDIGO MOLDE <span class="borde">'.$nombre_molde->numero.'</span> '.$estan_los_moldes.'</td>
+                        <td class="celda_40">CÓDIGO MOLDE <span class="borde"></span> '.$estan_los_moldes.'</td>
                         <td class="celda_20">&nbsp;</td>
                         <td class="celda_40">MOLDE <span class="borde">'.$nombremolde.'</span></td>
                     </tr>
