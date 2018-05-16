@@ -895,7 +895,21 @@ class Produccion extends CI_Controller {
                                             $file_name = $ima['file_name'];
                                             //$file_name = $pf->pdf_imagen;
                                       }
-									 
+							
+                    if($this->input->post('recepcion_ot',true)=="Aprobada") {
+                        if ($this->input->post('input_fecha_recepcion_ot_aprobado',true)=='0000-00-00') {
+                            $recepcion_ot_aprobado_fecha=date("Y-m-d");
+                            $comentario_rechazo           = '';
+                            $fecha_rechazada_recepcion_OT = '';
+                        } else {
+                            $recepcion_ot_aprobado_fecha=$this->input->post('input_fecha_recepcion_ot_aprobado',true); 
+                            $comentario_rechazo           = '';
+                            $fecha_rechazada_recepcion_OT = '';
+                        }
+                    } else {
+                        $recepcion_ot_aprobado_fecha="0000-00-00";
+                    }
+                            		 
 				   if($this->input->post('revision_trazado',true)=="Aprobada") {
                     if ($this->input->post('input_fecha_trazado_aprobado',true)=='0000-00-00') {
                         $revision_trazado=date("Y-m-d");
@@ -964,6 +978,16 @@ class Produccion extends CI_Controller {
                     }
                    } else {
                         $conf_sal_pel_fecha="0000-00-00";
+                   }
+
+                   if($this->input->post('conf_sal_pel_desgajado',true)=="Entregado") {
+                    if ($this->input->post('input_fecha_conf_sal_pel_desgajado_aprobado',true)=='0000-00-00') {
+                        $conf_sal_pel_desgajado_fecha=date("Y-m-d");
+                    } else {
+                        $conf_sal_pel_desgajado_fecha=$this->input->post('input_fecha_conf_sal_pel_desgajado_aprobado',true); 
+                    }
+                   } else {
+                        $conf_sal_pel_desgajado_fecha="0000-00-00";
                    }
 
                    if($this->input->post('sobre_desarrollo',true)=="Entregado") {
@@ -1167,119 +1191,148 @@ class Produccion extends CI_Controller {
                      }
                    }
 
+
                  //  echo $situacion;
-                   $data=array
-                   (
-                       "id_usuario"=>$this->session->userdata('id'),
-                       "tipo"=>$this->input->post('tipo',true),
-                       "id_nodo"=>$this->input->post('id',true),
-                       
-                       "situacion"          =>$situacion,
-                       "fecha_pendiente"    =>$fecha_pendiente,
-                       "fecha_liberada"     =>$fecha_liberada,
-                       "fecha_activa"       =>$fecha_activa,
-                       "fecha_orden_cerrada"=>$fecha_orden_cerrada,
-                       "estado"             =>$this->input->post('estado',true),
-                       "fecha"              =>date("Y-m-d"),
-                       'quien'              =>$this->session->userdata('id'),
-                       'cuando'             =>date("Y-m-d"),
-                       "correcciones_fecha" =>date("Y-m-d"),
-                       "pdf_imagen"         =>$file_name,
-                       "correcciones_id_usuario"=>$this->session->userdata('id'),
-                       "peliculas_para_imprimir"=>$this->input->post('peliculas_para_imprimir',true),
-                       "comentario_fotomecanica"=>$this->input->post('comentario_fotomecanica',true),
-                       "recepcion_ot"           =>$this->input->post('recepcion_ot',true),
-                       "revision_trazado"       =>$this->input->post('revision_trazado',true),
-                       "recepcion_maqueta"      =>$this->input->post('recepcion_maqueta',true),
-                       "revision_imagen"        =>$this->input->post('revision_de_imagen',true),
-                       "montaje_digital"        =>$this->input->post('montaje_digital',true),
-                       "prueba_color"           =>$this->input->post('prueba_color',true),
-                       "arte_diseno"            =>$this->input->post('arte_diseno',true),
-                       "conf_sal_pel"           =>$this->input->post('conf_sal_pel',true),
-                       "sobre_desarrollo"       =>$this->input->post('sobre_desarrollo',true),
-                       "para_maquina"           =>$this->input->post('para_maquina',true),
-                       "correcciones"           =>$this->input->post('correcciones',true),
-                       "revision_trazado_fecha"=>$revision_trazado,
-                       "recepcion_maqueta_fecha"=>$fecha_recepcion_maqueta,
+                    if($this->input->post('recepcion_ot',true)=="Aprobada") {
+                        if ($this->input->post('input_fecha_recepcion_ot_aprobado',true)=='0000-00-00') {
+                            $data=array
+                            (
+                               "id_usuario"=>$this->session->userdata('id'),
+                               "tipo"=>$this->input->post('tipo',true),
+                               "id_nodo"=>$this->input->post('id',true),
+                               
+                               "situacion"          =>$situacion,
+                               "fecha_pendiente"    =>$fecha_pendiente,
+                               "fecha_liberada"     =>$fecha_liberada,
+                               "fecha_activa"       =>$fecha_activa,
+                               "fecha_orden_cerrada"=>$fecha_orden_cerrada,
+                               "estado"             =>$this->input->post('estado',true),
+                               "fecha"              =>date("Y-m-d"),
+                               'quien'              =>$this->session->userdata('id'),
+                               'cuando'             =>date("Y-m-d"),
+                               "correcciones_fecha" =>date("Y-m-d"),
+                               "pdf_imagen"         =>$file_name,
+                               "correcciones_id_usuario"=>$this->session->userdata('id'),
+                               "peliculas_para_imprimir"=>$this->input->post('peliculas_para_imprimir',true),
+                               "comentario_fotomecanica"=>$this->input->post('comentario_fotomecanica',true),
+                               "recepcion_ot"           =>$this->input->post('recepcion_ot',true),
+                               "revision_trazado"       =>$this->input->post('revision_trazado',true),
+                               "recepcion_maqueta"      =>$this->input->post('recepcion_maqueta',true),
+                               "revision_imagen"        =>$this->input->post('revision_de_imagen',true),
+                               "montaje_digital"        =>$this->input->post('montaje_digital',true),
+                               "prueba_color"           =>$this->input->post('prueba_color',true),
+                               "arte_diseno"            =>$this->input->post('arte_diseno',true),
+                               "conf_sal_pel"           =>$this->input->post('conf_sal_pel',true),
+                               "sobre_desarrollo"       =>$this->input->post('sobre_desarrollo',true),
+                               "para_maquina"           =>$this->input->post('para_maquina',true),
+                               "correcciones"           =>$this->input->post('correcciones',true),
+                               "recepcion_ot_aprobado_fecha"=>$recepcion_ot_aprobado_fecha,
+                               "revision_trazado_fecha"=>$revision_trazado,
+                               "recepcion_maqueta_fecha"=>$fecha_recepcion_maqueta,
 
-                       "revision_de_imagen_fecha"=>$revision_de_imagen,
-                       "montaje_digital_fecha"=>$montaje_digital_fecha,
-                       "prueba_color_fecha"=>$prueba_color_fecha,
-                       "arte_diseno_fecha"=>$arte_diseno_fecha,
-                       "conf_sal_pel_fecha"=>$conf_sal_pel_fecha,
-                       "sobre_desarrollo_fecha"=>$sobre_desarrollo_fecha,
-                       
-/*                     "revision_trazado_id_usuario"=>$this->session->userdata('id'),
-                       "revision_de_imagen"=>$this->input->post('revision_de_imagen',true),
-                       
-                       "revision_de_imagen_id_usuario"=>$this->session->userdata('id'),
-                       "preparacion_de_archivos"=>$this->input->post('preparacion_de_archivos',true),
-                       "preparacion_de_archivos_fecha"=>$preparacion_de_archivos,
-                       "preparacion_de_archivos_id_usuario"=>$this->session->userdata('id'),
-					   
-                       "envio_vb_cliente"=>$this->input->post('envio_vb_cliente',true),
-                       "envio_vb_cliente_fecha"=>$envio_vb_cliente,
-                       "envio_vb_cliente_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "recepcion_vb_cliente_1"=>$this->input->post('recepcion_vb_cliente_1',true),
-                       "recepcion_vb_cliente_1_fecha"=>$recepcion_vb_cliente_1,
-                       "recepcion_vb_cliente_1_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "envio_vb_cliente_2"=>$this->input->post('envio_vb_cliente_2',true),
-                       "envio_vb_cliente_2_fecha"=>$envio_vb_cliente_2,
-                       "envio_vb_cliente_2_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "envio_vb_cliente_3"=>$this->input->post('envio_vb_cliente_3',true),
-                       "envio_vb_cliente_3_fecha"=>$envio_vb_cliente_3,
-                       "envio_vb_cliente_3_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "envio_vb_vendedor"=>$this->input->post('envio_vb_vendedor',true),
-                       "envio_vb_vendedor_fecha"=>$envio_vb_vendedor,
-                       "envio_vb_vendedor_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "recepcion_vb_vendedor_1"=>$this->input->post('recepcion_vb_vendedor_1',true),
-                       "recepcion_vb_vendedor_1_fecha"=>$recepcion_vb_vendedor_1,
-                       "recepcion_vb_vendedor_1_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "envio_vb_vendedor_2"=>$this->input->post('envio_vb_vendedor_2',true),
-                       "envio_vb_vendedor_2_fecha"=>$envio_vb_vendedor_2,
-                       "envio_vb_vendedor_2_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "envio_vb_vendedor_3"=>$this->input->post('envio_vb_vendedor_3',true),
-                       "envio_vb_vendedor_3_fecha"=>$envio_vb_vendedor_3,
-                       "envio_vb_vendedor_3_id_usuario"=>$this->session->userdata('id'),
-                       
+                               "revision_de_imagen_fecha"=>$revision_de_imagen,
+                               "montaje_digital_fecha"=>$montaje_digital_fecha,
+                               "prueba_color_fecha"=>$prueba_color_fecha,
+                               "arte_diseno_fecha"=>$arte_diseno_fecha,
+                               "conf_sal_pel_fecha"=>$conf_sal_pel_fecha,
+                               "conf_sal_pel_desgajado"=>$conf_sal_pel_desgajado,
+                               "conf_sal_pel_fecha_desgajado"=>$conf_sal_pel_fecha_desgajado,
+                               "sobre_desarrollo_fecha"=>$sobre_desarrollo_fecha,
+                               "comentario_rechazo"=>'',
+                               "fecha_rechazada_recepcion_OT"=>'',
+                            );  
+                        } else {
+                            $data=array
+                            (
+                               "id_usuario"=>$this->session->userdata('id'),
+                               "tipo"=>$this->input->post('tipo',true),
+                               "id_nodo"=>$this->input->post('id',true),
+                               
+                               "situacion"          =>$situacion,
+                               "fecha_pendiente"    =>$fecha_pendiente,
+                               "fecha_liberada"     =>$fecha_liberada,
+                               "fecha_activa"       =>$fecha_activa,
+                               "fecha_orden_cerrada"=>$fecha_orden_cerrada,
+                               "estado"             =>$this->input->post('estado',true),
+                               "fecha"              =>date("Y-m-d"),
+                               'quien'              =>$this->session->userdata('id'),
+                               'cuando'             =>date("Y-m-d"),
+                               "correcciones_fecha" =>date("Y-m-d"),
+                               "pdf_imagen"         =>$file_name,
+                               "correcciones_id_usuario"=>$this->session->userdata('id'),
+                               "peliculas_para_imprimir"=>$this->input->post('peliculas_para_imprimir',true),
+                               "comentario_fotomecanica"=>$this->input->post('comentario_fotomecanica',true),
+                               "recepcion_ot"           =>$this->input->post('recepcion_ot',true),
+                               "revision_trazado"       =>$this->input->post('revision_trazado',true),
+                               "recepcion_maqueta"      =>$this->input->post('recepcion_maqueta',true),
+                               "revision_imagen"        =>$this->input->post('revision_de_imagen',true),
+                               "montaje_digital"        =>$this->input->post('montaje_digital',true),
+                               "prueba_color"           =>$this->input->post('prueba_color',true),
+                               "arte_diseno"            =>$this->input->post('arte_diseno',true),
+                               "conf_sal_pel"           =>$this->input->post('conf_sal_pel',true),
+                               "sobre_desarrollo"       =>$this->input->post('sobre_desarrollo',true),
+                               "para_maquina"           =>$this->input->post('para_maquina',true),
+                               "correcciones"           =>$this->input->post('correcciones',true),
+                               "recepcion_ot_aprobado_fecha"=>$recepcion_ot_aprobado_fecha,
+                               "revision_trazado_fecha"=>$revision_trazado,
+                               "recepcion_maqueta_fecha"=>$fecha_recepcion_maqueta,
 
-                       "glosa"=>$this->input->post('glosa',true),
-                       "confeccion_de_peliculas"=>$this->input->post('confeccion_de_peliculas',true),
-                       "confeccion_de_peliculas_fecha"=>$confeccion_de_peliculas,
-                       "confeccion_de_peliculas_id_usuario"=>$this->session->userdata('id'),
-                       "confeccion_de_planchas"=>$this->input->post('confeccion_de_planchas',true),
-                       "confeccion_de_planchas_fecha"=>$confeccion_de_planchas,
-                       "confeccion_de_planchas_id_usuario"=>$this->session->userdata('id'),
-                       "recepcion_parcial"=>$this->input->post('recepcion_parcial',true),
-                       "recepcion_parcial_fecha"=>$recepcion_parcial,
-                       "recepcion_parcial_id_usuario"=>$this->session->userdata('id'),
-                       "recepcion_total"=>$this->input->post('recepcion_total',true),
-                       "recepcion_total_fecha"=>$recepcion_total,
-                       "recepcion_total_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "envio_vb_maqueta"=>$this->input->post('envio_vb_maqueta',true),
-                       "envio_vb_maqueta_fecha"=>$envio_vb_maqueta,
-                       "envio_vb_maqueta_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "envio_vb_color"=>$this->input->post('envio_vb_color',true),
-                       "envio_vb_color_fecha"=>$envio_vb_color,
-                       "envio_vb_color_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "envio_vb_estructura"=>$this->input->post('envio_vb_estructura',true),
-                       "envio_vb_estructura_fecha"=>$envio_vb_color,
-                       "envio_vb_estructura_id_usuario"=>$this->session->userdata('id'),
-                       
-                       "entrega_a_fabricacion_a_linea_de_troquel"=>$this->input->post('entrega_a_fabricacion_a_linea_de_troquel',true),
-                       "tiene_fondo_negro"=>$this->input->post('tiene_fondo_negro',true),
-                       */
-                    );                      
+                               "revision_de_imagen_fecha"=>$revision_de_imagen,
+                               "montaje_digital_fecha"=>$montaje_digital_fecha,
+                               "prueba_color_fecha"=>$prueba_color_fecha,
+                               "arte_diseno_fecha"=>$arte_diseno_fecha,
+                               "conf_sal_pel_fecha"=>$conf_sal_pel_fecha,
+                               "conf_sal_pel_fecha_desgajado"=>$conf_sal_pel_fecha_desgajado,
+                               "sobre_desarrollo_fecha"=>$sobre_desarrollo_fecha,
+                               "comentario_rechazo"=>'',
+                               "fecha_rechazada_recepcion_OT"=>'',
+                            );  
+                        }
+                    } else {
+                        $data=array
+                        (
+                           "id_usuario"=>$this->session->userdata('id'),
+                           "tipo"=>$this->input->post('tipo',true),
+                           "id_nodo"=>$this->input->post('id',true),
+                           
+                           "situacion"          =>$situacion,
+                           "fecha_pendiente"    =>$fecha_pendiente,
+                           "fecha_liberada"     =>$fecha_liberada,
+                           "fecha_activa"       =>$fecha_activa,
+                           "fecha_orden_cerrada"=>$fecha_orden_cerrada,
+                           "estado"             =>$this->input->post('estado',true),
+                           "fecha"              =>date("Y-m-d"),
+                           'quien'              =>$this->session->userdata('id'),
+                           'cuando'             =>date("Y-m-d"),
+                           "correcciones_fecha" =>date("Y-m-d"),
+                           "pdf_imagen"         =>$file_name,
+                           "correcciones_id_usuario"=>$this->session->userdata('id'),
+                           "peliculas_para_imprimir"=>$this->input->post('peliculas_para_imprimir',true),
+                           "comentario_fotomecanica"=>$this->input->post('comentario_fotomecanica',true),
+                           "recepcion_ot"           =>$this->input->post('recepcion_ot',true),
+                           "revision_trazado"       =>$this->input->post('revision_trazado',true),
+                           "recepcion_maqueta"      =>$this->input->post('recepcion_maqueta',true),
+                           "revision_imagen"        =>$this->input->post('revision_de_imagen',true),
+                           "montaje_digital"        =>$this->input->post('montaje_digital',true),
+                           "prueba_color"           =>$this->input->post('prueba_color',true),
+                           "arte_diseno"            =>$this->input->post('arte_diseno',true),
+                           "conf_sal_pel"           =>$this->input->post('conf_sal_pel',true),
+                           "sobre_desarrollo"       =>$this->input->post('sobre_desarrollo',true),
+                           "para_maquina"           =>$this->input->post('para_maquina',true),
+                           "correcciones"           =>$this->input->post('correcciones',true),
+                           "recepcion_ot_aprobado_fecha"=>$recepcion_ot_aprobado_fecha,
+                           "revision_trazado_fecha"=>$revision_trazado,
+                           "recepcion_maqueta_fecha"=>$fecha_recepcion_maqueta,
+
+                           "revision_de_imagen_fecha"=>$revision_de_imagen,
+                           "montaje_digital_fecha"=>$montaje_digital_fecha,
+                           "prueba_color_fecha"=>$prueba_color_fecha,
+                           "arte_diseno_fecha"=>$arte_diseno_fecha,
+                           "conf_sal_pel_fecha"=>$conf_sal_pel_fecha,
+                           "conf_sal_pel_fecha_desgajado"=>$conf_sal_pel_fecha_desgajado,
+                           "sobre_desarrollo_fecha"=>$sobre_desarrollo_fecha,
+                        );  
+                    }
 			}				
 
 //ALTER TABLE `p7000190_grau`.`produccion_fotomecanica` ADD COLUMN `recepcion_ot` VARCHAR(45) NULL  AFTER `comentario_fotomecanica` , ADD COLUMN `recepcion_trazado` VARCHAR(100) NULL  AFTER `recepcion_ot` , ADD COLUMN `revision_imagen` VARCHAR(100) NULL  AFTER `recepcion_trazado` , ADD COLUMN `montaje_digital` VARCHAR(45) NULL  AFTER `revision_imagen` , ADD COLUMN `prueba_color` VARCHAR(45) NULL  AFTER `montaje_digital` , ADD COLUMN `arte_diseno` VARCHAR(100) NULL  AFTER `prueba_color` , ADD COLUMN `conf_sal_pel` VARCHAR(100) NULL  AFTER `arte_diseno` , ADD COLUMN `sobre_desarrollo` VARCHAR(100) NULL  AFTER `conf_sal_pel` ;
@@ -8479,12 +8532,13 @@ class Produccion extends CI_Controller {
         }
     } 
 
-    public function listado_programa_confeccion()
+    public function listado_programa_confeccion_revision_sin_liberar_fotomecanica()
     {
         if($this->session->userdata('id'))
         {
             $datos=$this->orden_model->getListadoProgramaConfeccionMolde();
-
+            $contador = 0;
+            $lineasPorHoja=10;
             $cuerpo=' <!DOCTYPE html>
             <html>
                         <head>
@@ -8493,95 +8547,129 @@ class Produccion extends CI_Controller {
                         </head>
                         <body>
                         <h3><p class="text-center">PROGRAMA DE CONFECCION DE MOLDE</p></h3>
+                        <h6><p class="text-center">REVISION SIN LIBERAR FOTOMECANICA</p></h6>
                     <p class="text-right">Fecha: '.date('d-m-Y').'</p>
 
                          <table border="1" width="100%">
                             <tr>
-                                <td>OT</td>
-                                <td>Fecha OT</td>
-                                <td>Fecha Lib, FOMECA</td>
-                                <td>Cliente</td>
-                                <td>Trabajo</td>
-                                <td>Desgaje Autom.</td>
-                                <td>Trazado Desgajado</td>
-                                <td>Pegado Autom.</td>
-                                <td>Molde Numero</td>
-                                <td>Repeticion</td>
-                                <td>Numero Trazado</td>
-                                <td>Numero Asignado</td>
-                                <td>Fecha confeccion</td>
-                                <td>CCAC1 Ancho</td>
-                                <td>CCAC2 Largo</td>
-                                <td>Micro corrugado</td>
-                                <td>Tipo de Troquelado</td>
-                                <td>F, recepcion muestra</td>
-                                <td>Cant. Golpes</td>
-                                <td>Estado</td>
+                                <td align="center"><b>OT</b></td>
+                                <td align="center"><b>Fecha OT</b></td>
+                                <td align="center"><b>Fecha Liberacion FOMECA</b></td>
+                                <td align="center"><b>Cliente</b></td>
+                                <td align="center"><b>Trabajo</b></td>
+                                <td align="center"><b>Desgaje Autom.</b></td>
+                                <td align="center"><b>Trazado Desgajado</b></td>
+                                <td align="center"><b>Pegado Autom.</b></td>
+                                <td align="center"><b>Molde Numero</b></td>
+                                <td align="center"><b>Repeticion</b></td>
+                                <td align="center"><b>Numero Trazado</b></td>
+                                <td align="center"><b>Numero Asignado</b></td>
+                                <td align="center"><b>Fecha confeccion maqueta</b></td>
+                                <td align="center"><b>CCAC1 Ancho</b></td>
+                                <td align="center"><b>CCAC2 Largo</b></td>
+                                <td align="center"><b>Cuchillo a Cuchillo</b></td>
+                                <td align="center"><b>Micro corrugado</b></td>
+                                <td align="center"><b>Tipo de Troquelado</b></td>
+                                <td align="center"><b>Fecha recepcion muestra</b></td>
+                                <td align="center"><b>Cant. Golpes</b></td>
+                                <td align="center"><b>Estado</b></td>
                             </tr>';
              
             foreach ($datos as $dato) {
-                            $valores = $this->orden_model->getOndaCotizacion($dato->id_cotizacion);
-                            //$onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
-                            //$liner     = $dato->tipo.' - ('.$valores->gramaje.' '.$valores->reverso.")";
+                            
+                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto!='Nuevo' && ($dato->fecha_liberada==NULL or $dato->fecha_liberada=='0000-00-00 00:00:00')) {
 
-                            $datos_cotizacion = $this->cotizaciones_model->getCotizacionPorId($dato->id_cotizacion);
-                            echo '<pre>';
+                                if ($dato->estado == 1) {
+                                    $estado_op= "Activa";
+                                }
+                            
+                                $fecha_liberada='Sin liberar';
 
-                            if (strcasecmp($dato->tipo, 'Cartulina-cartulina') != 0){
-                                $onda =$this->cotizaciones_model->getOndaCompleto($datos_cotizacion->materialidad_2);
-                                $linder =$this->cotizaciones_model->getOndaCompleto($datos_cotizacion->materialidad_3);
+                                if ($dato->desgajado_automatico==NULL) {
+                                    $desgajado_automatico='NO';
+                                }else{
+                                    $desgajado_automatico= $dato->desgajado_automatico;
+                                }
 
-                            }else{
-                                //$onda =$this->cotizaciones_model->getOndaCompletoCartulina($datos_cotizacion->id_mat_placa1);
-                                //$linder =$this->cotizaciones_model->getOndaCompletoCartulina($datos_cotizacion->id_mat_placa1);
+                                if ($dato->es_una_maquina==NULL) {
+                                    $es_una_maquina='NO';
+                                }else{
+                                    $es_una_maquina= $dato->es_una_maquina;
+                                }
 
-                                $tapa = $this->materiales_model->getMaterialesPorNombre($datos_cotizacion->id_mat_placa1);
-                                $monda = $this->materiales_model->getMaterialesPorNombre($datos_cotizacion->id_mat_onda2);
-                                $mliner = $this->materiales_model->getMaterialesPorNombre($datos_cotizacion->id_mat_liner3);
-                                //$onda = $tapa->materiales_tipo.''.$tapa->gramaje;
+                                if ($dato->troquel_por_atras=="SI") {
+                                    $troquel_por_atras= "Por atrás, margen izquierdo, retiro";
+                                }elseif($dato->troquel_por_atras=="NO"){
+                                    $troquel_por_atras='Por adelante, margen derecho, tiro';
+                                }else{
+                                    $troquel_por_atras='Por definir';
+                                }
+
+                                $cuerpo .='<tr>
+                                    <td align="center">'.$dato->ot.'   POR FABRICAR</td>
+                                    <td align="center">'.$dato->fecha.'</td>
+                                    <td align="center">'.$fecha_liberada.'</td>
+                                    <td align="center">'.$dato->razon_social.'</td>
+                                    <td align="center">'.$dato->producto.'</td>
+                                    <td align="center">'.$desgajado_automatico.'</td>
+                                    <td align="center">PENDIENTE</td>
+                                    <td align="center">'.$es_una_maquina.'</td>
+                                    <td align="center">'.$dato->id_molde.'</td>
+                                    <td align="center">'.$dato->condicion_del_producto.'</td>
+                                    <td align="center">'.$dato->trazado.'</td>
+                                    <td align="center">'.$dato->mg_id.'</td>
+                                    <td align="center">'.$dato->conf_sal_pel_fecha.'</td>
+                                    <td align="center">'.$dato->ccac_1.' Mms</td>
+                                    <td align="center">'.$dato->ccac_2.' Mms</td>
+                                    <td align="center">'.$dato->tamano_cuchillo_1.' X '.$dato->tamano_cuchillo_2.' Cms</td>
+                                    <td align="center">'.$dato->materialidad_datos_tecnicos.'</td>
+                                    <td align="center">'.$troquel_por_atras.'</td>
+                                    <td align="center">'.$dato->recepcion_maqueta_fecha.'</td>
+                                    <td align="center">'.($dato->cantidad_de_cajas)/($dato->unidades_por_pliego).'</td>
+                                    <td align="center">'.$estado_op.'</td>
+                                </tr>';
                                 
-                                //$hoja   = $this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($dato->id_cotizacion);
-                                //$placakilo = $hoja->placa_kilo.' '.$hoja->kilos_placa;
-                                // $placakilos = $hoja->kilos_placa;
+                                $contador = $contador+1;
+                                if ($contador==$lineasPorHoja) {
+                                    
+                                    $cuerpo .= "</table>
+                                
+                                    <br><table style='page-break-after:always;'></table><br>
+                                    <table border='1' width='100%'>
 
-                                $onda   = $monda->materiales_tipo.' '.$monda->gramaje.' ('.$monda->reverso.')';
-                                $linder = $tapa->materiales_tipo.'-'.$mliner->materiales_tipo.' '.$mliner->gramaje.' ('.$monda->reverso.')';
-                                //print_r($tapa);
-                                //exit();
-                            }                                                
-                            //print_r($onda);
-                            //exit();
-
-                            //Cantidad de Despacho
-                            $despacho = $this->despachos_model->getDespachosUltimoRegistro($dato->id_cotizacion);
-
-                            $cuerpo .='<tr>
-                                <td>'.$dato->ot.'</td>
-                                <td>'.$dato->razon_socia.'</td>
-                                <td>'.$dato->producto.'</td>
-                                <td>'.$dato->ancho.'</td>
-                                <td>'.$dato->largo.'</td>
-                                <td>'.$dato->tamano_cuchillo_1.'</td>
-                                <td>'.$dato->tamano_cuchillo_2.'</td>                                
-                                <td>'.$linder.'</td>
-                                <td>'.(($valores->nombre)? $onda : '').'</td>
-                                <td>'.$dato->tipo.'</td>
-                                <td align="right">'.$dato->cantidad.'</td>
-                                <td align="right">'.$despacho->cantidad_faltante.'</td>
-                                <td align="right">'.($dato->cantidad - $despacho->cantidad_faltante).'</td>
-                                <td>'.$linder.'</td>
-                                <td>'.(($valores->nombre)? $onda : '').'</td>
-                                <td>'.$dato->tipo.'</td>
-                                <td align="right">'.$dato->cantidad.'</td>
-                                <td align="right">'.$despacho->cantidad_faltante.'</td>
-                                <td align="right">'.($dato->cantidad - $despacho->cantidad_faltante).'</td>
-                                <td align="right">'.($dato->cantidad - $despacho->cantidad_faltante).'</td>
-                            </tr>';
+                                        <tr>
+                                            <td align='center'><b>OT</b></td>
+                                            <td align='center'><b>Fecha OT</b></td>
+                                            <td align='center'><b>Fecha Liberacion FOMECA</b></td>
+                                            <td align='center'><b>Cliente</b></td>
+                                            <td align='center'><b>Trabajo</b></td>
+                                            <td align='center'><b>Desgaje Autom.</b></td>
+                                            <td align='center'><b>Trazado Desgajado</b></td>
+                                            <td align='center'><b>Pegado Autom.</b></td>
+                                            <td align='center'><b>Molde Numero</b></td>
+                                            <td align='center'><b>Repeticion</b></td>
+                                            <td align='center'><b>Numero Trazado</b></td>
+                                            <td align='center'><b>Numero Asignado</b></td>
+                                            <td align='center'><b>Fecha confeccion</b></td>
+                                            <td align='center'><b>CCAC1 Ancho</b></td>
+                                            <td align='center'><b>CCAC2 Largo</b></td>
+                                            <td align='center'><b>Cuchillo a Cuchillo</b></td>
+                                            <td align='center'><b>Micro corrugado</b></td>
+                                            <td align='center'><b>Tipo de Troquelado</b></td>
+                                            <td align='center'><b>Fecha recepcion muestra</b></td>
+                                            <td align='center'><b>Cant. Golpes</b></td>
+                                            <td align='center'><b>Estado</b></td>
+                                        </tr>";
+                                        $contador=0;
+                                        $lineasPorHoja=13;
+                                        
+                                } 
+                            }
+                            
             }
             $cuerpo .='</table></body>
                       </html>';
 
-        
             $this->mpdf->SetDisplayMode('fullpage');
             $this->mpdf->AddPage('L');
             $css1 = file_get_contents('public/frontend/css/despacho.css');
@@ -8590,19 +8678,492 @@ class Produccion extends CI_Controller {
             $this->mpdf->WriteHTML($css1,1);
             $this->mpdf->WriteHTML($cuerpo);
             $this->mpdf->Output();
+            
+            
             exit;
         }else
         {
             redirect(base_url().'usuarios/login',  301);
         }
-    }    
+    } 
+
+    public function listado_programa_confeccion_revision_liberada_fotomecanica()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoProgramaConfeccionMolde();
+            $contador = 0;
+            $lineasPorHoja=10;
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">PROGRAMA DE CONFECCION DE MOLDE</p></h3>
+                        <h6><p class="text-center">REVISION LIBERADA FOTOMECANICA</p></h6>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td align="center"><b>OT</b></td>
+                                <td align="center"><b>Fecha OT</b></td>
+                                <td align="center"><b>Fecha Liberacion FOMECA</b></td>
+                                <td align="center"><b>Cliente</b></td>
+                                <td align="center"><b>Trabajo</b></td>
+                                <td align="center"><b>Desgaje Autom.</b></td>
+                                <td align="center"><b>Trazado Desgajado</b></td>
+                                <td align="center"><b>Pegado Autom.</b></td>
+                                <td align="center"><b>Molde Numero</b></td>
+                                <td align="center"><b>Repeticion</b></td>
+                                <td align="center"><b>Numero Trazado</b></td>
+                                <td align="center"><b>Numero Asignado</b></td>
+                                <td align="center"><b>Fecha confeccion maqueta</b></td>
+                                <td align="center"><b>CCAC1 Ancho</b></td>
+                                <td align="center"><b>CCAC2 Largo</b></td>
+                                <td align="center"><b>Cuchillo a Cuchillo</b></td>
+                                <td align="center"><b>Micro corrugado</b></td>
+                                <td align="center"><b>Tipo de Troquelado</b></td>
+                                <td align="center"><b>Fecha recepcion muestra</b></td>
+                                <td align="center"><b>Cant. Golpes</b></td>
+                                <td align="center"><b>Estado</b></td>
+                            </tr>';
+             
+            foreach ($datos as $dato) {
+                            //INICIO DEL IF POR FABRICAR
+                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto!='Nuevo' && ($dato->fecha_liberada!=NULL or $dato->fecha_liberada!='0000-00-00 00:00:00')) {
+
+                                if ($dato->estado == 1) {
+                                    $estado_op= "Activa";
+                                }
+                                
+                                $fecha_liberada= $dato->fecha_liberada;
+                                
+
+                                if ($dato->desgajado_automatico==NULL) {
+                                    $desgajado_automatico='NO';
+                                }else{
+                                    $desgajado_automatico= $dato->desgajado_automatico;
+                                }
+
+                                if ($dato->es_una_maquina==NULL) {
+                                    $es_una_maquina='NO';
+                                }else{
+                                    $es_una_maquina= $dato->es_una_maquina;
+                                }
+
+                                if ($dato->troquel_por_atras=="SI") {
+                                    $troquel_por_atras= "Por atrás, margen izquierdo, retiro";
+                                }elseif($dato->troquel_por_atras=="NO"){
+                                    $troquel_por_atras='Por adelante, margen derecho, tiro';
+                                }else{
+                                    $troquel_por_atras='Por definir';
+                                }
+
+                                $cuerpo .='<tr>
+                                    <td align="center">'.$dato->ot.'   POR FABRICAR</td>
+                                    <td align="center">'.$dato->fecha.'</td>
+                                    <td align="center">'.$fecha_liberada.'</td>
+                                    <td align="center">'.$dato->razon_social.'</td>
+                                    <td align="center">'.$dato->producto.'</td>
+                                    <td align="center">'.$desgajado_automatico.'</td>
+                                    <td align="center">PENDIENTE</td>
+                                    <td align="center">'.$es_una_maquina.'</td>
+                                    <td align="center">'.$dato->id_molde.'</td>
+                                    <td align="center">'.$dato->condicion_del_producto.'</td>
+                                    <td align="center">'.$dato->trazado.'</td>
+                                    <td align="center">'.$dato->mg_id.'</td>
+                                    <td align="center">'.$dato->conf_sal_pel_fecha.'</td>
+                                    <td align="center">'.$dato->ccac_1.' Mms</td>
+                                    <td align="center">'.$dato->ccac_2.' Mms</td>
+                                    <td align="center">'.$dato->tamano_cuchillo_1.' X '.$dato->tamano_cuchillo_2.' Cms</td>
+                                    <td align="center">'.$dato->materialidad_datos_tecnicos.'</td>
+                                    <td align="center">'.$troquel_por_atras.'</td>
+                                    <td align="center">'.$dato->recepcion_maqueta_fecha.'</td>
+                                    <td align="center">'.($dato->cantidad_de_cajas)/($dato->unidades_por_pliego).'</td>
+                                    <td align="center">'.$estado_op.'</td>
+                                </tr>';
+                                
+                                $contador = $contador+1;
+                                if ($contador==$lineasPorHoja) {
+                                    
+                                    $cuerpo .= "</table>
+                                
+                                    <br><table style='page-break-after:always;'></table><br>
+                                    <table border='1' width='100%'>
+
+                                        <tr>
+                                            <td align='center'><b>OT</b></td>
+                                            <td align='center'><b>Fecha OT</b></td>
+                                            <td align='center'><b>Fecha Liberacion FOMECA</b></td>
+                                            <td align='center'><b>Cliente</b></td>
+                                            <td align='center'><b>Trabajo</b></td>
+                                            <td align='center'><b>Desgaje Autom.</b></td>
+                                            <td align='center'><b>Trazado Desgajado</b></td>
+                                            <td align='center'><b>Pegado Autom.</b></td>
+                                            <td align='center'><b>Molde Numero</b></td>
+                                            <td align='center'><b>Repeticion</b></td>
+                                            <td align='center'><b>Numero Trazado</b></td>
+                                            <td align='center'><b>Numero Asignado</b></td>
+                                            <td align='center'><b>Fecha confeccion</b></td>
+                                            <td align='center'><b>CCAC1 Ancho</b></td>
+                                            <td align='center'><b>CCAC2 Largo</b></td>
+                                            <td align='center'><b>Cuchillo a Cuchillo</b></td>
+                                            <td align='center'><b>Micro corrugado</b></td>
+                                            <td align='center'><b>Tipo de Troquelado</b></td>
+                                            <td align='center'><b>Fecha recepcion muestra</b></td>
+                                            <td align='center'><b>Cant. Golpes</b></td>
+                                            <td align='center'><b>Estado</b></td>
+                                        </tr>";
+                                        $contador=0;
+                                        $lineasPorHoja=13;
+                                } 
+                            }
+                            //FIN DEL IF 'POR FABRICAR'
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+           
+                $this->mpdf->SetDisplayMode('fullpage');
+                $this->mpdf->AddPage('L');
+                $css1 = file_get_contents('public/frontend/css/despacho.css');
+                $css2 = file_get_contents('bootstrap/bootstrap.css');
+                $this->mpdf->WriteHTML($css2,1);
+                $this->mpdf->WriteHTML($css1,1);
+                $this->mpdf->WriteHTML($cuerpo);
+                $this->mpdf->Output();
+            
+            
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    }
+
+    public function listado_programa_confeccion_fabricar_sin_liberar_fotomecanica()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoProgramaConfeccionMolde();
+            $contador = 0;
+            $lineasPorHoja=10;
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">PROGRAMA DE CONFECCION DE MOLDE</p></h3>
+                        <h6><p class="text-center">POR FABRICAR SIN LIBERAR FOTOMECANICA</p></h6>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td align="center"><b>OT</b></td>
+                                <td align="center"><b>Fecha OT</b></td>
+                                <td align="center"><b>Fecha Liberacion FOMECA</b></td>
+                                <td align="center"><b>Cliente</b></td>
+                                <td align="center"><b>Trabajo</b></td>
+                                <td align="center"><b>Desgaje Autom.</b></td>
+                                <td align="center"><b>Trazado Desgajado</b></td>
+                                <td align="center"><b>Pegado Autom.</b></td>
+                                <td align="center"><b>Molde Numero</b></td>
+                                <td align="center"><b>Repeticion</b></td>
+                                <td align="center"><b>Numero Trazado</b></td>
+                                <td align="center"><b>Numero Asignado</b></td>
+                                <td align="center"><b>Fecha confeccion maqueta</b></td>
+                                <td align="center"><b>CCAC1 Ancho</b></td>
+                                <td align="center"><b>CCAC2 Largo</b></td>
+                                <td align="center"><b>Cuchillo a Cuchillo</b></td>
+                                <td align="center"><b>Micro corrugado</b></td>
+                                <td align="center"><b>Tipo de Troquelado</b></td>
+                                <td align="center"><b>Fecha recepcion muestra</b></td>
+                                <td align="center"><b>Cant. Golpes</b></td>
+                                <td align="center"><b>Estado</b></td>
+                            </tr>';
+             
+            foreach ($datos as $dato) {
+                            
+                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto=='Nuevo' && ($dato->fecha_liberada==NULL or $dato->fecha_liberada=='0000-00-00 00:00:00')) {
+
+                                if ($dato->estado == 1) {
+                                    $estado_op= "Activa";
+                                }
+                                
+                                $fecha_liberada='Sin liberar';
+                                
+
+                                if ($dato->desgajado_automatico==NULL) {
+                                    $desgajado_automatico='NO';
+                                }else{
+                                    $desgajado_automatico= $dato->desgajado_automatico;
+                                }
+
+                                if ($dato->es_una_maquina==NULL) {
+                                    $es_una_maquina='NO';
+                                }else{
+                                    $es_una_maquina= $dato->es_una_maquina;
+                                }
+
+                                if ($dato->troquel_por_atras=="SI") {
+                                    $troquel_por_atras= "Por atrás, margen izquierdo, retiro";
+                                }elseif($dato->troquel_por_atras=="NO"){
+                                    $troquel_por_atras='Por adelante, margen derecho, tiro';
+                                }else{
+                                    $troquel_por_atras='Por definir';
+                                }
+
+                                $cuerpo .='<tr>
+                                    <td align="center">'.$dato->ot.'   POR FABRICAR</td>
+                                    <td align="center">'.$dato->fecha.'</td>
+                                    <td align="center">'.$fecha_liberada.'</td>
+                                    <td align="center">'.$dato->razon_social.'</td>
+                                    <td align="center">'.$dato->producto.'</td>
+                                    <td align="center">'.$desgajado_automatico.'</td>
+                                    <td align="center">PENDIENTE</td>
+                                    <td align="center">'.$es_una_maquina.'</td>
+                                    <td align="center">'.$dato->id_molde.'</td>
+                                    <td align="center">'.$dato->condicion_del_producto.'</td>
+                                    <td align="center">'.$dato->trazado.'</td>
+                                    <td align="center">'.$dato->mg_id.'</td>
+                                    <td align="center">'.$dato->conf_sal_pel_fecha.'</td>
+                                    <td align="center">'.$dato->ccac_1.' Mms</td>
+                                    <td align="center">'.$dato->ccac_2.' Mms</td>
+                                    <td align="center">'.$dato->tamano_cuchillo_1.' X '.$dato->tamano_cuchillo_2.' Cms</td>
+                                    <td align="center">'.$dato->materialidad_datos_tecnicos.'</td>
+                                    <td align="center">'.$troquel_por_atras.'</td>
+                                    <td align="center">'.$dato->recepcion_maqueta_fecha.'</td>
+                                    <td align="center">'.($dato->cantidad_de_cajas)/($dato->unidades_por_pliego).'</td>
+                                    <td align="center">'.$estado_op.'</td>
+                                </tr>';
+                                
+                                $contador = $contador+1;
+                                if ($contador==$lineasPorHoja) {
+                                    
+                                    $cuerpo .= "</table>
+                                
+                                    <br><table style='page-break-after:always;'></table><br>
+                                    <table border='1' width='100%'>
+
+                                        <tr>
+                                            <td align='center'><b>OT</b></td>
+                                            <td align='center'><b>Fecha OT</b></td>
+                                            <td align='center'><b>Fecha Liberacion FOMECA</b></td>
+                                            <td align='center'><b>Cliente</b></td>
+                                            <td align='center'><b>Trabajo</b></td>
+                                            <td align='center'><b>Desgaje Autom.</b></td>
+                                            <td align='center'><b>Trazado Desgajado</b></td>
+                                            <td align='center'><b>Pegado Autom.</b></td>
+                                            <td align='center'><b>Molde Numero</b></td>
+                                            <td align='center'><b>Repeticion</b></td>
+                                            <td align='center'><b>Numero Trazado</b></td>
+                                            <td align='center'><b>Numero Asignado</b></td>
+                                            <td align='center'><b>Fecha confeccion</b></td>
+                                            <td align='center'><b>CCAC1 Ancho</b></td>
+                                            <td align='center'><b>CCAC2 Largo</b></td>
+                                            <td align='center'><b>Cuchillo a Cuchillo</b></td>
+                                            <td align='center'><b>Micro corrugado</b></td>
+                                            <td align='center'><b>Tipo de Troquelado</b></td>
+                                            <td align='center'><b>Fecha recepcion muestra</b></td>
+                                            <td align='center'><b>Cant. Golpes</b></td>
+                                            <td align='center'><b>Estado</b></td>
+                                        </tr>";
+                                        $contador=0;
+                                        $lineasPorHoja=13;
+                                        
+                                } 
+                            }
+                            
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+           
+                $this->mpdf->SetDisplayMode('fullpage');
+                $this->mpdf->AddPage('L');
+                $css1 = file_get_contents('public/frontend/css/despacho.css');
+                $css2 = file_get_contents('bootstrap/bootstrap.css');
+                $this->mpdf->WriteHTML($css2,1);
+                $this->mpdf->WriteHTML($css1,1);
+                $this->mpdf->WriteHTML($cuerpo);
+                $this->mpdf->Output();
+            
+            
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    } 
+
+    public function listado_programa_confeccion_fabricar_liberada_fotomecanica()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoProgramaConfeccionMolde();
+            $contador = 0;
+            $lineasPorHoja=10;
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">PROGRAMA DE CONFECCION DE MOLDE</p></h3>
+                        <h6><p class="text-center">POR FABRICAR LIBERADA FOTOMECANICA</p></h6>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td align="center"><b>OT</b></td>
+                                <td align="center"><b>Fecha OT</b></td>
+                                <td align="center"><b>Fecha Liberacion FOMECA</b></td>
+                                <td align="center"><b>Cliente</b></td>
+                                <td align="center"><b>Trabajo</b></td>
+                                <td align="center"><b>Desgaje Autom.</b></td>
+                                <td align="center"><b>Trazado Desgajado</b></td>
+                                <td align="center"><b>Pegado Autom.</b></td>
+                                <td align="center"><b>Molde Numero</b></td>
+                                <td align="center"><b>Repeticion</b></td>
+                                <td align="center"><b>Numero Trazado</b></td>
+                                <td align="center"><b>Numero Asignado</b></td>
+                                <td align="center"><b>Fecha confeccion maqueta</b></td>
+                                <td align="center"><b>CCAC1 Ancho</b></td>
+                                <td align="center"><b>CCAC2 Largo</b></td>
+                                <td align="center"><b>Cuchillo a Cuchillo</b></td>
+                                <td align="center"><b>Micro corrugado</b></td>
+                                <td align="center"><b>Tipo de Troquelado</b></td>
+                                <td align="center"><b>Fecha recepcion muestra</b></td>
+                                <td align="center"><b>Cant. Golpes</b></td>
+                                <td align="center"><b>Estado</b></td>
+                            </tr>';
+             
+            foreach ($datos as $dato) {
+                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto=='Nuevo' && ($dato->fecha_liberada==NULL or $dato->fecha_liberada=='0000-00-00 00:00:00')) {
+
+                                if ($dato->estado == 1) {
+                                    $estado_op= "Activa";
+                                }
+                                
+                                $fecha_liberada= $dato->fecha_liberada;
+
+                                if ($dato->desgajado_automatico==NULL) {
+                                    $desgajado_automatico='NO';
+                                }else{
+                                    $desgajado_automatico= $dato->desgajado_automatico;
+                                }
+
+                                if ($dato->es_una_maquina==NULL) {
+                                    $es_una_maquina='NO';
+                                }else{
+                                    $es_una_maquina= $dato->es_una_maquina;
+                                }
+
+                                if ($dato->troquel_por_atras=="SI") {
+                                    $troquel_por_atras= "Por atrás, margen izquierdo, retiro";
+                                }elseif($dato->troquel_por_atras=="NO"){
+                                    $troquel_por_atras='Por adelante, margen derecho, tiro';
+                                }else{
+                                    $troquel_por_atras='Por definir';
+                                }
+
+                                $cuerpo .='<tr>
+                                    <td align="center">'.$dato->ot.'   POR FABRICAR</td>
+                                    <td align="center">'.$dato->fecha.'</td>
+                                    <td align="center">'.$fecha_liberada.'</td>
+                                    <td align="center">'.$dato->razon_social.'</td>
+                                    <td align="center">'.$dato->producto.'</td>
+                                    <td align="center">'.$desgajado_automatico.'</td>
+                                    <td align="center">PENDIENTE</td>
+                                    <td align="center">'.$es_una_maquina.'</td>
+                                    <td align="center">'.$dato->id_molde.'</td>
+                                    <td align="center">'.$dato->condicion_del_producto.'</td>
+                                    <td align="center">'.$dato->trazado.'</td>
+                                    <td align="center">'.$dato->mg_id.'</td>
+                                    <td align="center">'.$dato->conf_sal_pel_fecha.'</td>
+                                    <td align="center">'.$dato->ccac_1.' Mms</td>
+                                    <td align="center">'.$dato->ccac_2.' Mms</td>
+                                    <td align="center">'.$dato->tamano_cuchillo_1.' X '.$dato->tamano_cuchillo_2.' Cms</td>
+                                    <td align="center">'.$dato->materialidad_datos_tecnicos.'</td>
+                                    <td align="center">'.$troquel_por_atras.'</td>
+                                    <td align="center">'.$dato->recepcion_maqueta_fecha.'</td>
+                                    <td align="center">'.($dato->cantidad_de_cajas)/($dato->unidades_por_pliego).'</td>
+                                    <td align="center">'.$estado_op.'</td>
+                                </tr>';
+                                
+                                $contador = $contador+1;
+                                if ($contador==$lineasPorHoja) {
+                                    
+                                    $cuerpo .= "</table>
+                                
+                                    <br><table style='page-break-after:always;'></table><br>
+                                    <table border='1' width='100%'>
+
+                                        <tr>
+                                            <td align='center'><b>OT</b></td>
+                                            <td align='center'><b>Fecha OT</b></td>
+                                            <td align='center'><b>Fecha Liberacion FOMECA</b></td>
+                                            <td align='center'><b>Cliente</b></td>
+                                            <td align='center'><b>Trabajo</b></td>
+                                            <td align='center'><b>Desgaje Autom.</b></td>
+                                            <td align='center'><b>Trazado Desgajado</b></td>
+                                            <td align='center'><b>Pegado Autom.</b></td>
+                                            <td align='center'><b>Molde Numero</b></td>
+                                            <td align='center'><b>Repeticion</b></td>
+                                            <td align='center'><b>Numero Trazado</b></td>
+                                            <td align='center'><b>Numero Asignado</b></td>
+                                            <td align='center'><b>Fecha confeccion</b></td>
+                                            <td align='center'><b>CCAC1 Ancho</b></td>
+                                            <td align='center'><b>CCAC2 Largo</b></td>
+                                            <td align='center'><b>Cuchillo a Cuchillo</b></td>
+                                            <td align='center'><b>Micro corrugado</b></td>
+                                            <td align='center'><b>Tipo de Troquelado</b></td>
+                                            <td align='center'><b>Fecha recepcion muestra</b></td>
+                                            <td align='center'><b>Cant. Golpes</b></td>
+                                            <td align='center'><b>Estado</b></td>
+                                        </tr>";
+                                        $contador=0;
+                                        $lineasPorHoja=13;
+                                        
+                                } 
+                            }
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+           
+                $this->mpdf->SetDisplayMode('fullpage');
+                $this->mpdf->AddPage('L');
+                $css1 = file_get_contents('public/frontend/css/despacho.css');
+                $css2 = file_get_contents('bootstrap/bootstrap.css');
+                $this->mpdf->WriteHTML($css2,1);
+                $this->mpdf->WriteHTML($css1,1);
+                $this->mpdf->WriteHTML($cuerpo);
+                $this->mpdf->Output();
+            
+            
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    } 
+
+
 
     public function ajaxguardar(){
+
         $data = array(
             'id_nodo'                      => $this->input->post("id_nodo",true),
             'recepcion_ot'                 => $this->input->post("recepcion_ot",true),
             'comentario_rechazo'           => $this->input->post("comentario_rechazo",true),
             'fecha_rechazada_recepcion_OT' => $this->input->post("fecha_rechazada_recepcion_OT",true),
+            'recepcion_ot_aprobado_fecha'  => '0000-00-00',
         );
         $id_nodo                      = $this->input->post("id_nodo",true);
         $fecha_rechazada_recepcion_OT = $this->input->post("fecha_rechazada_recepcion_OT",true);
