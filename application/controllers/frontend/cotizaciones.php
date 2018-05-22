@@ -6455,7 +6455,7 @@ $cuerpo2.='<table class="tabla">';
                        {
                              $error=false;							   
                              $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                             $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif';
+                             $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif|msg';
                              //$config['max_size'] = '10240';
                              $config['max_size'] = '40960';
                              $config['encrypt_name'] = true; 
@@ -7163,7 +7163,7 @@ $cuerpo2.='<table class="tabla">';
                        {
                              $error=false;							   
                              $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                             $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif';
+                             $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif|msg';
                              //$config['max_size'] = '10240';
                              $config['max_size'] = '40960';
                              $config['encrypt_name'] = true; 
@@ -7879,7 +7879,7 @@ $cuerpo2.='<table class="tabla">';
                        {
                              $error=false;							   
                              $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                             $config['allowed_types'] = 'pdf';
+                             $config['allowed_types'] = 'pdf|msg';
                              //$config['max_size'] = '10240';
                              $config['max_size'] = '20000';
                              $config['encrypt_name'] = true; 
@@ -8129,20 +8129,27 @@ $cuerpo2.='<table class="tabla">';
 						   
                                if($this->input->post("select_estan_los_moldes",true)=='NO')
                                {
-                                    $numeroMolde = 1;
+                                    $numeroMolde = 21;
                                     $estanlosmoldes = 'NO';
                                     $hacer_troquel="NO";
                                     $lleva_troquelado="NO";                                    
-				}
+                                }
+                               if($this->input->post("select_estan_los_moldes",true)=='NO' && $this->input->post("hay_que_troquelar",true)=='NO')
+                               {
+                                    $numeroMolde = 21;
+                                    $estanlosmoldes = 'NO';
+                                    $hacer_troquel="NO";
+                                    $lleva_troquelado="NO";                                    
+                                }
 								
-                               if (($this->input->post("select_estan_los_moldes",true)=='MOLDE GENERICO') and ($this->input->post("select_estan_los_moldes_genericos",true)=='SI'))
+                               if (($this->input->post("select_estan_los_moldes",true)=='MOLDE GENERICO') && ($this->input->post("select_estan_los_moldes_genericos",true)=='SI'))
                                {
                                     $numeroMolde = $this->input->post("molde_generico",true);
                                     $estanlosmoldes = 'MOLDE GENERICO';
                                     $hacer_troquel="NO";
                                     $lleva_troquelado="SI";
                                 }
-                                elseif (($this->input->post("select_estan_los_moldes",true)=='MOLDE REGISTRADOS DEL CLIENTE') and ($this->input->post("select_estan_los_moldes_no_genericos_clientes",true)=='SI'))
+                                elseif (($this->input->post("select_estan_los_moldes",true)=='MOLDE REGISTRADOS DEL CLIENTE') && ($this->input->post("select_estan_los_moldes_no_genericos_clientes",true)=='SI'))
                                 {
                                     $numeroMolde = $this->input->post("molde_registrado",true);
                                     $estanlosmoldes = 'MOLDE REGISTRADOS DEL CLIENTE';
@@ -8506,7 +8513,9 @@ $cuerpo2.='<table class="tabla">';
                                               
                                                    $this->cotizaciones_model->insertarIngenieria($dataIngenieria);
                                         }
-                                        $this->session->set_flashdata('ControllerMessage', 'Se ha agregado el registro exitosamente.'.  $checks);
+                                        $maximo=$this->cotizaciones_model->obtenerMaximoId();
+                                        $idnuevo=$maximo->id_max;
+                                        $this->session->set_flashdata('ControllerMessage', 'Se ha agregado el registro '.$idnuevo.' exitosamente.'.  $checks);
                                                            redirect(base_url().'cotizaciones',  301); 
                                     }else
                                     {
@@ -8555,6 +8564,8 @@ $cuerpo2.='<table class="tabla">';
                    
                 )
             );    
+            
+            
             $tipos=$this->materiales_model->getMaterialesTipo();
             $vendedores=$this->usuarios_model->getVendedores();
             $acInternos= $this->acabados_model->getAcabadosInternos();
@@ -9478,10 +9489,16 @@ $cuerpo2.='<table class="tabla">';
             
             if($this->input->post())
             {
-            //echo $datos->numero_molde."<br />";
+//                echo $this->input->post("hacer_troquel",true);
+//                echo $this->input->post("lleva_troquelado",true);
+//                echo $this->input->post("select_estan_los_moldes",true);
+//                                echo $hacer_troquel;
+//                                echo    $lleva_troquelado;  exit();
+//            echo $datos->numero_molde."<br />";
+//            echo $this->input->post('nm',true)."<br />";exit();
               //echo $this->input->post('nombre_molde',true)."<br />";exit();
                
-                if($this->input->post("nm",true)!=11 && $this->input->post("nm",true)!=12 && $this->input->post("nm",true)!=13 && $this->input->post("nm",true)!=14 && $this->input->post("nm",true)!=15){
+                if($this->input->post("nm",true)!=11 && $this->input->post("nm",true)!=12 && $this->input->post("nm",true)!=13 && $this->input->post("nm",true)!=14 && $this->input->post("nm",true)!=15 && $this->input->post("nm",true)!=21){
                 if($datos->numero_molde!=$this->input->post("nm",true) && $datos->condicion_del_producto=='Nuevo'){
                     $condicion_del_producto='Repetición Con Cambios';
                     
@@ -9491,8 +9508,7 @@ $cuerpo2.='<table class="tabla">';
                 }}else{
                 $condicion_del_producto=$datos->condicion_del_producto;
                 }
-//               echo $condicion_del_producto;
-  
+               
               //  exit();
                 $arreglo_archivo_cliente=$this->cotizaciones_model->getCampoArchivoClientePorId($id);
                 $archivo_a_borrar_trazado=$ing->archivo;
@@ -9527,7 +9543,7 @@ $cuerpo2.='<table class="tabla">';
                         {
                            $error=NULL;
                            $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                           $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif';
+                           $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif|msg';
                            //$config['max_size'] = '10240';
                            $config['max_size'] = '2048';
                            $config['encrypt_name'] = true; 
@@ -9569,7 +9585,7 @@ $cuerpo2.='<table class="tabla">';
                         {
                              $error=NULL;							   
                              $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                             $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif';
+                             $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif|msg';
                              //$config['max_size'] = '10240';
                              $config['max_size'] = '1024';
                              $config['encrypt_name'] = true; 
@@ -9641,11 +9657,13 @@ $cuerpo2.='<table class="tabla">';
                                     $lleva_troquelado="SI";                                    
                                }
                                
-                               if($this->input->post("select_estan_los_moldes",true)=='NO LLEVA')
+                               
+                               if($this->input->post("select_estan_los_moldes",true)=='NO LLEVA' && $this->input->post("hay_que_troquelar",true)=='NO')
                                {
-                             //  echo $this->input->post("molde_generico",true);
+                               //echo $this->input->post("molde_generico",true);exit(aaa);
                                //echo $this->input->post("select_estan_los_moldes",true);exit();
-                                    $numeroMolde = $this->input->post("molde_generico",true);
+                                    //$numeroMolde = $this->input->post("molde_generico",true);
+                                    $numeroMolde = $this->input->post("nm",true);
                                     $estanlosmoldes = 'NO LLEVA';
                                     $hacer_troquel="NO";
                                     $lleva_troquelado="NO";                                       
@@ -9666,30 +9684,42 @@ $cuerpo2.='<table class="tabla">';
                                     $hacer_troquel="SI";
                                     $lleva_troquelado="SI";                                      
 				}
+                               if($this->input->post("select_estan_los_moldes",true)=='' && $this->input->post("hay_que_troquelar",true)=='SI')
+                               {
+                                    $numeroMolde = 21;
+                                    $estanlosmoldes = 'NO';
+                                    $hacer_troquel="SI";
+                                    $lleva_troquelado="SI";                                      
+				}
                                if($this->input->post("select_estan_los_moldes",true)=='NO' && $this->input->post("hay_que_troquelar",true)=='NO')
                                {
-                                    $numeroMolde = 1;
+                                    $numeroMolde = 21;
                                     $estanlosmoldes = 'NO';
                                     $hacer_troquel="NO";
                                     $lleva_troquelado="NO";                                      
 				}
 //                                echo $this->input->post("select_estan_los_moldes",true)."holaaa";
 								
-                               if (($this->input->post("select_estan_los_moldes",true)=='MOLDE GENERICO') and ($this->input->post("select_estan_los_moldes_genericos",true)=='SI'))
+                               if (($this->input->post("select_estan_los_moldes",true)=='MOLDE GENERICO') && ($this->input->post("select_estan_los_moldes_genericos",true)=='SI'))
                                {
                                     $numeroMolde = $this->input->post("molde_generico",true);
                                     $estanlosmoldes = 'MOLDE GENERICO';
                                     $hacer_troquel="NO";
                                     $lleva_troquelado="SI";                                    
                                 }
-                                elseif (($this->input->post("select_estan_los_moldes",true)=='MOLDE REGISTRADOS DEL CLIENTE') and ($this->input->post("select_estan_los_moldes_no_genericos_clientes",true)=='SI'))
+                                elseif (($this->input->post("select_estan_los_moldes",true)=='MOLDE REGISTRADOS DEL CLIENTE') && ($this->input->post("select_estan_los_moldes_no_genericos_clientes",true)=='SI'))
                                 {
                                     $numeroMolde = $this->input->post("molde_registrado",true);
                                     $estanlosmoldes = 'MOLDE REGISTRADOS DEL CLIENTE';
                                     $hacer_troquel="NO";
                                     $lleva_troquelado="SI";                                       
-                                }       
-                          
+                                }  
+                                
+//                          echo $condicion_del_producto;
+//                          echo $numeroMolde;
+//              echo $datos->numero_molde."<br />";
+//            echo $this->input->post('nm',true)."<br />";exit();
+            
                         $suma_largo_aleta=$this->input->post("ancho_1",true)+$this->input->post("ancho_2",true)+$this->input->post("largo_1",true)+$this->input->post("largo_2",true)+$this->input->post("aleta_pegado",true);
                         
                         $matnombre1 = $this->materiales_model->getMaterialesNombrePorId($this->input->post("materialidad_1",true));
@@ -9750,8 +9780,14 @@ $cuerpo2.='<table class="tabla">';
                         $piezas_totales=$this->input->post('piezas_totales_ing',true);   
                         }
                         
-                       // echo $this->input->post('nombre_molde',true)."<br />";exit();
-                        
+                       // echo $this->input->post('estado',true)."<br />";exit();
+                        if($this->input->post('ccac_1',true)=="" || $this->input->post('ccac_2',true)==""){
+                            $ccac1=($cuchillo1-$this->input->post('tamano_1',true))*10;
+                            $ccac2=($cuchillo2-$this->input->post('tamano_2',true))*10;
+                        }else{
+                            $ccac1=$this->input->post('ccac_1',true);
+                            $ccac1=$this->input->post('ccac_2',true);
+                        }
                         $data=array
                         (
                             "id_usuario"=>$this->session->userdata('id'),
@@ -9829,8 +9865,10 @@ $cuerpo2.='<table class="tabla">';
                             "ancho_mica"=>$this->input->post("ancho_mica",true),  
                             "lleva_fondo_negro"=>$this->input->post("lleva_fondo_negro",true),
                             "fondo_otro_color"=>$this->input->post("fondo_otro_color",true),
-                            "ccac_1"=>$this->input->post("ccac_1",true),
-                            "ccac_2"=>$this->input->post("ccac_2",true),
+                           // "ccac_1"=>$this->input->post("ccac_1",true),
+                           // "ccac_2"=>$this->input->post("ccac_2",true),
+                            "ccac_1"=>$ccac1,
+                            "ccac_2"=>$ccac2,
                             "imagen_impresion"=>$this->input->post("imagen_impresion",true), 
                             "procesos_especiales_folia"=>$this->input->post("folia",true),
                             "procesos_especiales_folia_valor"=>$this->input->post("folia_se",true),
@@ -9911,7 +9949,7 @@ $cuerpo2.='<table class="tabla">';
                                     //fin de guardar auditoria materialidad
                         
                             if(sizeof($ing)==0)
-                            {
+                            { 
                                    $guardar=$this->cotizaciones_model->insertarIngenieria($data);
                                    if($this->input->post("estado",true)==2)
                                    {
@@ -10089,6 +10127,8 @@ $cuerpo2.='<table class="tabla">';
                                 "existe_trazado"=>$this->input->post("existe_trazado",true),
                                 "id_cliente"=>$this->input->post("cliente",true),
                                 "condicion_del_producto"=>$condicion_del_producto,
+                                "acepta_excedentes"=>$this->input->post("acepta_excedentes",true),
+                                "acepta_excedentes_extra"=>$this->input->post("acepta_excedentes_extra",true),
                             );
                             //print_r($data_cotizacion);exit();
                             $this->db->where('id', $this->input->post('id',true));
@@ -10211,7 +10251,11 @@ $cuerpo2.='<table class="tabla">';
                             $fileerror = $this->input->post("fileerror",true);
                             //echo $fileerror;exit();
                             $this->session->set_flashdata('fileerror', $fileerror);
+                            if($this->input->post("estado",true)==1){
+                            $this->session->set_flashdata('ControllerMessage', 'Se ha Liberado el registro exitosamente.');
+                            }else{    
                             $this->session->set_flashdata('ControllerMessage', 'Se ha Guardado el registro exitosamente.');
+                            }
                             redirect(base_url().'cotizaciones/revision_ingenieria/'.$this->input->post("id",true).'/'.$this->input->post("pagina",true),  301); 
 //                            redirect(base_url().'cotizaciones/index/'.$this->input->post("pagina",true),  301);
                 }
@@ -10295,7 +10339,7 @@ $cuerpo2.='<table class="tabla">';
                     }else{
                         $file_name2=$_FILES["file2"]["name"];
                         $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                        $config['allowed_types'] = 'jpg|jpeg|png|pdf|xls|xlsx|csv|docx|doc';
+                        $config['allowed_types'] = 'jpg|jpeg|png|pdf|xls|xlsx|csv|docx|doc|msg';
                         //$config['max_size'] = '10240'; //550 x 138
                         $config['max_size'] = '81920'; //550 x 138
                         $config['encrypt_name'] = true; 
@@ -10338,7 +10382,7 @@ $cuerpo2.='<table class="tabla">';
                     }else
                     {
                         $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                        $config['allowed_types'] = 'jpg|jpeg|png|pdf|xls|xlsx|csv|docx|doc';
+                        $config['allowed_types'] = 'jpg|jpeg|png|pdf|xls|xlsx|csv|docx|doc|msg';
                         //$config['max_size'] = '10240'; //550 x 138
                         $config['max_size'] = '81920'; //550 x 138
                         $config['encrypt_name'] = true; 
@@ -10645,7 +10689,7 @@ $cuerpo2.='<table class="tabla">';
                                         $error=NULL;
                                        //valido la foto
                                         $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                                        $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif';
+                                        $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif|msg';
                                        // $config['max_size'] = '10240'; //550 x 138
                                         $config['max_size'] = '40960'; //550 x 138
                                         $config['encrypt_name'] = true; 
@@ -11088,7 +11132,11 @@ $cuerpo2.='<table class="tabla">';
                                    //exit();
                                     $this->db->where('id_cotizacion', $this->input->post('id',true));
                                     $this->db->update("cotizacion_ingenieria",$data_cotizacion_revision);                                    
-                                   $this->session->set_flashdata('ControllerMessage', 'Se ha Guardado el registro exitosamente.');
+                                    if($this->input->post("estado",true)==1){
+                                    $this->session->set_flashdata('ControllerMessage', 'Se ha Liberado el registro exitosamente.');
+                                    }else{    
+                                    $this->session->set_flashdata('ControllerMessage', 'Se ha Guardado el registro exitosamente.');
+                                    }
                                    redirect(base_url().'cotizaciones/revision_fotomecanica/'.$this->input->post("id",true).'/'.$this->input->post("pagina",true),  301); 
 //                                   redirect(base_url().'cotizaciones/index/'.$this->input->post("pagina",true),  301);
                 }
@@ -11267,7 +11315,7 @@ $cuerpo2.='<table class="tabla">';
                 
                                    //valido la foto
                                     $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                                    $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif';
+                                    $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif|msg';
                                     //$config['max_size'] = '10240'; //550 x 138
                                     $config['max_size'] = '40960'; //550 x 138
                                     $config['encrypt_name'] = true; 
@@ -11325,7 +11373,7 @@ $cuerpo2.='<table class="tabla">';
                 
                                     unlink('./'.$this->config->item('direccion_pdf').$archivo->archivo);
                                     $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                                    $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif';
+                                    $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif|msg';
                                     //$config['max_size'] = '10240';
                                     $config['max_size'] = '40960';
                                      $this->load->library('upload', $config);
@@ -12605,7 +12653,7 @@ $cuerpo2.='<table class="tabla">';
                                     $error=NULL;
                                    //valido la foto
                                     $config['upload_path'] = './'.$this->config->item('direccion_pdf');
-                                    $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif';
+                                    $config['allowed_types'] = 'pdf|jpg|png|jpeg|gif|msg';
                                     $config['max_size'] = '40960';
                                     $config['encrypt_name'] = true; 
                                      $this->load->library('upload', $config);

@@ -2348,6 +2348,12 @@ function ControlGranajeSeleccionado2(id)
 	   carga_ajax15(webroot+'produccion/BuscarKilosCartulina',id,document.getElementById("gramaje_seleccionado2").value,document.getElementById("ancho_seleccionado_de_bobina2").value,'hola');			
 }	
 
+function ControlGranajeSeleccionado3(id)
+{
+  //carga_ajax(webroot+'produccion/BuscarKilosCartulina',id,document.getElementById("gramaje_seleccionado").value,'hola');  
+     carga_ajax15(webroot+'produccion/BuscarKilosCartulina',id,document.getElementById("gramaje_seleccionado3").value,document.getElementById("ancho_seleccionado_de_bobina3").value,'hola');     
+} 
+
 
 //control onda Estado seleccion de gramaje
 function ControlGramajeSeleccionadoOnda(id)
@@ -2671,6 +2677,38 @@ function carga_ajax_obtenerGramaje2(valor,div)
         $("#quien_sabe_ubicacion_de_la_bobina").val("");
     }else{
    var ruta=webroot+'produccion/ajax_obtenerGramaje2';
+   $.post(ruta,{valor:valor,div:div},function(resp)
+   {
+        $("#"+div+"").html(resp);
+   });
+    }
+}
+
+function carga_ajax_obtenerGramaje3(valor,div) 
+{
+    if(valor=="no_hay"){
+       // alert(valor);
+        $("#gramaje_seleccionado").val("0");
+        $("#kilos_bobina_seleccionada").val("0");
+        $("#ancho_seleccionado_de_bobina").val("0");
+        $("#hay_que_bobinar").val("");
+        $("#bobinar_ancho_cartulina1").val("");
+        $("#bobinar_ancho_cartulina2").val("");
+        $("#bobinar_ancho_cartulina3").val("");
+        $("#segunda_bobina_adicional_ancho").val("");
+        $("#segunda_bobina_adicional_kilos").val("");
+        $("#tercera_bobina_adicional_ancho").val("");
+        $("#tercera_bobina_adicional_ancho").val("");
+        $("#cuarta_bobina_adicional_ancho").val("");
+        $("#cuarta_bobina_adicional_ancho").val("");
+        $("#kilos_orden_a_bobinar").val("");
+        $("#total_metros").val("");
+        $("#unidades_por_pliego").val("");
+        $("#numero_de_bobina").val("");
+        $("#total_de_bobinas").val("");
+        $("#quien_sabe_ubicacion_de_la_bobina").val("");
+    }else{
+   var ruta=webroot+'produccion/ajax_obtenerGramaje3';
    $.post(ruta,{valor:valor,div:div},function(resp)
    {
         $("#"+div+"").html(resp);
@@ -4386,16 +4424,6 @@ function cortes_de_bobina_Onda()
  } 
  
  $(document).ready(function(){
- function alertdata(){
-  //alert();
-//var lleva = $("#ing_lleva_barniz").val();
-//if(lleva==""){
-//    alert("Debe indicar si lleva barniz");
-//    $("input").removeAttr('data-target');
-//}else{
-//    $("input").addAttr('data-target="#comparativa_molde"');
-//}    
- }    
  
 $('select[name=trazados]').on('change',()=>{
     var texto = $("select[name=trazados] option:selected").text(); 
@@ -5099,13 +5127,15 @@ function comprobar_monto(valor){
               var recepcion_ot = document.getElementById('recepcion_ot').value;
               var comentario_rechazo = document.getElementById('coment1').value;
               var fecha_rechazada_recepcion_OT = document.getElementById('fecha_rechazada_recepcion_OT').value;
+              var id_cotizacion_rechazo = document.getElementById('id_cotizacion_rechazo').value;
+              var tipo = document.getElementById('tipo').value;
               var id_nodo = document.getElementById('id_nodo').value;
           }
           if(!todo_correcto){
             alert('El campo Observacion debe tener minimo 4 caracteres');
           }else {
             var ruta = webroot+'produccion/ajaxguardar/';    
-            $.post(ruta,{id_nodo:id_nodo,comentario_rechazo:comentario_rechazo,fecha_rechazada_recepcion_OT:fecha_rechazada_recepcion_OT,recepcion_ot:recepcion_ot},function(resp){
+            $.post(ruta,{id_nodo:id_nodo,comentario_rechazo:comentario_rechazo,fecha_rechazada_recepcion_OT:fecha_rechazada_recepcion_OT,recepcion_ot:recepcion_ot,id_cotizacion_rechazo:id_cotizacion_rechazo,tipo:tipo},function(resp){
               $("#texto_notificado").html(resp);
               $("#texto_notificado").addClass('span_fecha_rechazado_verde');
               $("#id_boton_rechazar").hide();

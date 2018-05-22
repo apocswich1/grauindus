@@ -33,6 +33,7 @@
       {
         case '1':
             ?>
+
             <div onclick="ver_informacion('informacion')"  class="page-header"><h3>Fotomecánica Orden de Producción N° <?php echo $ordenDeCompra->id?></h3></div>
             <p style="text-align: center;"><strong>Para liberar deben estar en SI : VB Maqueta, VB Color, VB Estructura, Entrega a fabricación a línea de troquel y Confección de Planchas</strong><hr /></p>
             <div id="informacion" style="margin-left: 0px;width:100%;float:left;height: 380px;">
@@ -127,7 +128,7 @@
                              {
                                 case 'Liberada':
                                     ?>
-                                    Situación : <strong>Liberada el <?php echo fecha_con_hora($fotomecanica->fecha_liberada);?></strong>
+                                    Situación : <h4 style="display: inline-block;"><strong>Liberada el <?php echo fecha_con_hora($fotomecanica->fecha_liberada);?></strong></h4>
                                     <?php
                                 break;
                                 case 'Activa':
@@ -351,8 +352,10 @@
                 echo "<span id='texto_notificado' class='span_fecha_rechazado'>".date("d-m-Y")."</span>";
                 echo '<input type="hidden" id="fecha_hoy" name="fecha_hoy" readonly value="'.date('Y-m-d').'">';
                 echo '<input type="hidden" id="fecha_rechazada_recepcion_OT" name="fecha_rechazada_recepcion_OT" readonly value="">';
+                echo '<input type="hidden" id="id_cotizacion_rechazo" name="id_cotizacion_rechazo" value="'.$datos->id.'">';
                 echo '<input type="button" value="Notificar" id="id_boton_rechazar" class="btn btn-warning boton_notificar" onclick="revision_ot()" />';
             }
+
           ?>
           
           
@@ -511,26 +514,6 @@
 	  </div>
         
     <div class="control-group">
-<<<<<<< HEAD
-    <label class="control-label" for="usuario">Confeccion Salida de Pelicula</label>
-    <div class="controls">
-      <select name="conf_sal_pel" id="conf_sal_pel">
-          <option value="">Seleccione</option>                  
-          <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
-          <option value="En Proceso" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'En Proceso');?>>En Proceso</option>
-          <option value="Entregado" <?php echo set_value_select($fotomecanica,'conf_sal_pel',$fotomecanica->conf_sal_pel,'Entregado');?>>Entregado</option>
-      </select>
-      <input type="hidden" name="input_fecha_conf_sal_pel_aprobado" value="<?php echo $db_fecha_conf_sal_pel_aprobado = $fotomecanica->conf_sal_pel_fecha ?>">
-      <?php      
-        if ($db_fecha_conf_sal_pel_aprobado != '0000-00-00' && $db_fecha_conf_sal_pel_aprobado != NULL) {
-          //fecha base de datos
-          echo '<span class="btn btn-success boton_exito" style="width:170px">Entregado el '.date("d-m-Y", strtotime($db_fecha_conf_sal_pel_aprobado)).'</span>';
-        }
-      ?>
-      <div id="div_fecha_conf_sal_pel_aprobada" class="div_fecha_aprobada">
-        <span><?php echo date("d-m-Y") ?></span>
-      </div> 
-=======
       <label class="control-label" for="usuario">Confeccion Salida de Pelicula</label>
       <div class="controls">
         <select name="conf_sal_pel" id="conf_sal_pel">
@@ -550,28 +533,33 @@
           <span><?php echo date("d-m-Y") ?></span>
         </div>
       </div>
->>>>>>> b8bacfdb54de52118d1c4784f6ccc19a818fd696
     </div>
 
     <div class="control-group">
       <label class="control-label" for="usuario">Confeccion Salida de Pelicula para Desgajado Automatico</label>
       <div class="controls">
-        <select name="conf_sal_pel_desgajado" id="conf_sal_pel_desgajado">
-            <option value="">Seleccione</option>                  
-            <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'conf_sal_pel_desgajado',$fotomecanica->conf_sal_pel_desgajado,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
-            <option value="En Proceso" <?php echo set_value_select($fotomecanica,'conf_sal_pel_desgajado',$fotomecanica->conf_sal_pel_desgajado,'En Proceso');?>>En Proceso</option>
-            <option value="Entregado" <?php echo $db_select_entregado_conf = set_value_select($fotomecanica,'conf_sal_pel_desgajado',$fotomecanica->conf_sal_pel_desgajado,'Entregado');?>>Entregado</option>
-        </select>
-        <input type="hidden" name="input_fecha_conf_sal_pel_desgajado_aprobado" value="<?php echo $db_fecha_conf_sal_pel_desgajado_aprobado = $fotomecanica->conf_sal_pel_desgajado_fecha ?>">
-        <?php      
-          if ($db_fecha_conf_sal_pel_desgajado_aprobado != '0000-00-00' && $db_fecha_conf_sal_pel_desgajado_aprobado != NULL) {
-            //fecha base de datos
-            echo '<span class="btn btn-success boton_exito" style="width:170px">Entregado el '.date("d-m-Y", strtotime($db_fecha_conf_sal_pel_desgajado_aprobado)).'</span>';
-          }
-        ?>
-        <div id="div_fecha_conf_sal_pel_desgajado_aprobada" class="div_fecha_aprobada">
-          <span><?php echo date("d-m-Y") ?></span>
-        </div>
+        <?php
+
+          if ($ing->desgajado_automatico=='SI') { ?>
+            <select name="conf_sal_pel_desgajado" id="conf_sal_pel_desgajado">
+                <option value="">Seleccione</option>                  
+                <option value="En Espera (Materiales)" <?php echo set_value_select($fotomecanica,'conf_sal_pel_desgajado',$fotomecanica->conf_sal_pel_desgajado,'En Espera (Materiales)');?>>En Espera (Materiales)</option>
+                <option value="En Proceso" <?php echo set_value_select($fotomecanica,'conf_sal_pel_desgajado',$fotomecanica->conf_sal_pel_desgajado,'En Proceso');?>>En Proceso</option>
+                <option value="Entregado" <?php echo $db_select_entregado_conf_desgajado = set_value_select($fotomecanica,'conf_sal_pel_desgajado',$fotomecanica->conf_sal_pel_desgajado,'Entregado');?>>Entregado</option>
+            </select>
+            <input type="hidden" name="input_fecha_conf_sal_pel_desgajado_aprobado" value="<?php echo $db_fecha_conf_sal_pel_desgajado_aprobado = $fotomecanica->conf_sal_pel_desgajado_fecha ?>">
+            <?php      
+              if ($db_fecha_conf_sal_pel_desgajado_aprobado != '0000-00-00' && $db_fecha_conf_sal_pel_desgajado_aprobado != NULL) {
+                //fecha base de datos
+                echo '<span class="btn btn-success boton_exito" style="width:170px">Entregado el '.date("d-m-Y", strtotime($db_fecha_conf_sal_pel_desgajado_aprobado)).'</span>';
+              }
+            ?>
+            <div id="div_fecha_conf_sal_pel_desgajado_aprobada" class="div_fecha_aprobada">
+              <span><?php echo date("d-m-Y") ?></span>
+            </div>
+          <?php } else { ?>
+            <input type="text" readonly="readonly" value="No corresponde">
+          <?php } ?>
       </div>
     </div>
 
@@ -674,7 +662,7 @@
     
 	<div class="control-group">
 		<div class="form-actions">
-            <input type="hidden" name="tipo" value="<?php echo $tipo?>" />
+            <input type="hidden" name="tipo" id="tipo" value="<?php echo $tipo?>" />
             <input type="hidden" name="pagina" value="<?php echo $pagina?>" />
             <input type="hidden" name="id" value="<?php echo $id?>" />
 			      <input type="hidden" name="indicador" />
@@ -682,6 +670,11 @@
 			      <input type="button" value="Guardar" class="btn <?php if($fotomecanica->estado==0){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('0');" />
             <input type="button" value="Rechazar" <?php if($fotomecanica->situacion=="Liberada"){echo "disabled=true";}?> class="btn <?php if($fotomecanica->estado==2){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('2');" />
             <?php
+            
+              if($fotomecanica2->colores>0 && $fotomecanica->pdf_imagen==""){
+                  echo "No puede Liberar porque no tiene el pdf de la imagen y posee colores";
+              }else{
+                  
               if($fotomecanica->estado==1)
               {
               ?>
@@ -703,7 +696,7 @@
                 ?>
 
                 
-            <?php }
+              <?php }}
             ?>
             
 		</div>

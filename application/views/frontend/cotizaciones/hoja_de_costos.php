@@ -1577,7 +1577,7 @@ page[size="A4"][layout="portrait"] {
                     </div>
                     <div id="cantidad">
                     <!--Valor por : <?php //echo number_format($datoscantidad1,0,"",".")?> <a href="<?php// echo base_url()?>hoja/cantidad/<?php //echo $id?>/<?php// echo $pagina?>" class="fancybox fancybox.ajax"><img src="<?php// echo base_url()?>public/frontend/images/edit.png" class="img_16" /></a>-->
-                    Valor por : <?php echo number_format($datoscantidad1,0,"",".")?> <?php if($hoja->impreso!=1){echo "<a href='".base_url()."hoja/cantidad/".$id."/".$pagina."' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{echo "<a href='".base_url()."hoja2/cantidad/".$id."/".$pagina."' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";} ?>
+                    <h5>Valor por : <?php echo number_format($datoscantidad1,0,"",".")?> <?php if($hoja->impreso!=1){echo "<a href='".base_url()."hoja/cantidad/".$id."/".$pagina."' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";}else{echo "<a href='".base_url()."hoja2/cantidad/".$id."/".$pagina."' class='fancybox fancybox.ajax'><img src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>";} ?></h5>
                     </div>
                   
                     <!--separador 20-->
@@ -3795,9 +3795,9 @@ page[size="A4"][layout="portrait"] {
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3">&nbsp;</td>
-                                <td class="celda_3"><span class="subrayado">VALOR POR</span></td>
+                                <td class="celda_3"><span class="subrayado"><h5>VALOR POR</h5></span></td>
                                 <td class="celda_3">&nbsp;</td>
-                                <td class="celda_3"><?php echo number_format($datoscantidad1,0,'','.')?></td>
+                                <td class="celda_3"><h5><?php echo number_format($datoscantidad1,0,'','.')?></h5></td>
                             </tr>                                
                           <tr>
                                 <td class="celda_3">SUBTOTAL TOTAL</td>

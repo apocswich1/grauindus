@@ -177,6 +177,18 @@ $config = array(
             array('field' => 'rut','label' => 'RUT','rules' => 'required|is_string|trim|xss_clean|max_length[20]|esRut|is_unique[proveedores.rut]'),
             ),
    /**
+    /**
+	 * ad_proveedores
+	 */
+	'ed_proveedores'
+		=> array(
+			array('field' => 'nom','label' => 'Proveedor','rules' => 'required|is_string|trim|xss_clean|max_length[100]'),
+           array('field' => 'telefono','label' => 'Teléfono','rules' => 'required|is_string|trim|xss_clean|max_length[100]'),
+            array('field' => 'correo','label' => 'E-Mail','rules' => 'required|is_string|trim|xss_clean|valid_email'),
+            array('field' => 'rubro','label' => 'Rubro','rules' => 'required|is_string|trim|xss_clean|max_length[100]'),
+            array('field' => 'rut','label' => 'RUT','rules' => 'required|is_string|trim|xss_clean|max_length[20]|esRut'),
+            ),
+   /**
 	 * ad_materiales
 	 */
 	'ad_materiales'

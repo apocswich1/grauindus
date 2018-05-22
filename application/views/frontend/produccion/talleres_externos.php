@@ -353,17 +353,23 @@ return $valor;
     </div>
 <div id="total" style="<?php if($control->parcial!=""){echo "display:none";}?>">
      <div class="control-group">
-		<label class="control-label" for="usuario">Proveedor</label>
+		<label class="control-label" for="usuario">Proveedor <br> (Talleres de pegado, talleres externo troquelado, otros talleres)</label>
+        
 		<div class="controls">
                     <select name="proveedor" onchange="llenar_datos_proveedor(this.value);">
+                        <option value="">Seleccione</option>
                 <?php
                 $proves=$this->proveedores_model->getProveedores();
-                foreach($proves as $prove)
-                {
-                    ?>
-                    <option value="<?php echo $prove->id?>" <?php if($control->proveedor==$prove->id){echo 'selected="true"';}?>><?php echo $prove->nombre?></option>
-                    <?php
-                }
+
+                    foreach($proves as $prove)
+                    {
+                        if ($prove->rubro=='1' || $prove->rubro=='2' || $prove->rubro=='4') {
+                            ?>
+
+                            <option value="<?php echo $prove->id?>" <?php if($control->proveedor==$prove->id){echo 'selected="true"';}?>><?php echo $prove->nombre?></option>
+                            <?php
+                        }
+                    }
                 ?>
                 
             </select>

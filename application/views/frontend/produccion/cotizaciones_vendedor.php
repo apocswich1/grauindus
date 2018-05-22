@@ -72,8 +72,8 @@
              <th>Cotización</th>
              <th>OP</th>
              <th>Fecha solicitud</th>
-	     <th>Cliente</th>
-	     <th>Vendedor</th>
+	           <th>Cliente</th>
+	           <th>Vendedor</th>
              <th>Producto</th>
              <th>V</th>
              <th>O</th>

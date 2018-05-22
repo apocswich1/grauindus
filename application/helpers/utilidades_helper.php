@@ -428,7 +428,12 @@ return round($diff / 86400);
         	$mes="Diciembre";
         	break;
         }
-        $fecha=$diaSemana." ".$dia." de ".$mes." de ".date("Y")." a las ".$hora;
+        if ($fecha=='0000-00-00 00:00:00') {
+          $fecha="No ha sido liberada.";
+        }else{
+          $fecha=$diaSemana." ".$dia." de ".$mes." de ".date("Y") /*." a las ".$hora*/;
+        }
+        
         return $fecha; 
        
     }

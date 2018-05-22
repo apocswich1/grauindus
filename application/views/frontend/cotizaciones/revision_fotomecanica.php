@@ -453,6 +453,7 @@ function getField($campo,$datos,$ing)
                 </div>
   </div>
     <hr />
+    <input type="hidden" name="nm" id="nm" value="<?php echo $ing->numero_molde ?>"/>
   <div class="control-group">
 		<label class="control-label" for="usuario">Condición del Producto</label>
 		<div class="controls">
@@ -465,18 +466,20 @@ function getField($campo,$datos,$ing)
         {
             $condicionFull=$fotomecanica->condicion_del_producto;
         }
-        ?>
+        ?><?php //echo $ing->numero_molde //my code is here  ?>
 	    <select name="condicion_del_producto" >
                 <?php
-                foreach($condicions as $key=>$condicion)
+                if($ing->numero_molde!=1 && $ing->numero_molde!=11 && $ing->numero_molde!=12 && $ing->numero_molde!=13 && $ing->numero_molde!=14 && $ing->numero_molde!=15 && $ing->numero_molde!=21){
+                    echo "<option value='Repetición Con Cambios' selected='selected'>Repetición Con Cambios</option>";
+                    echo "<option value='Repetición Sin Cambios'>Repetición Sin Cambios</option>";
+                    echo "<option value='Nuevo'>Nuevo</option>";
+                }else{
+                foreach($condicions as $condicion)
                 {
                     ?>
-                     <!--<option value="<?php// echo $key?>" <?php// if($condicionFull==$condicion and $condicion !=""){echo 'selected="selected"';}?>><?php //if($condicionFull==$condicion){//echo $condicion;} ?></option>-->
-                     <option value="<?php echo $key?>" <?php if($condicionFull==$condicion and $condicion !=""){echo 'selected="selected"';}?>><?php echo $condicion; ?></option>
+                     <option value="<?php echo $condicion?>" <?php if($condicionFull==$condicion && $condicion !=""){echo 'selected="selected"';}?>><?php echo $condicion; ?></option>
                     <?php
-					//if($condicionFull==$condicion)
-					//{break;}
-                }
+                }}
                 ?>
                
             </select>
@@ -788,7 +791,7 @@ function getField($campo,$datos,$ing)
 		if(sizeof($fotomecanica)>0)
                 {
 		?>
-                    <input readonly="true" type="text" id="lleva_troquelado" name="lleva_troquelado"  value="<?php echo $fotomecanica->lleva_troquelado; ?>" />
+                    <input  type="text" id="lleva_troquelado" name="lleva_troquelado"  value="<?php if($fotomecanica->lleva_troquelado!=""){echo $fotomecanica->lleva_troquelado;}else{echo "aa";} ?>" />
 		<?php
                 }
 		elseif(sizeof($ing)>0)
@@ -814,19 +817,19 @@ function getField($campo,$datos,$ing)
 		if(sizeof($fotomecanica)>0)
                 {
 		?>
-                    <input readonly="true" type="text" id="hacer_troquel" name="hacer_troquel"  value="<?php echo $fotomecanica->hacer_troquel; ?>" />
+                    <input type="text" id="hacer_troquel2" name="hacer_troquel"  value="<?php echo $fotomecanica->hacer_troquel; ?>" />
 		<?php
                 }
 		elseif(sizeof($ing)>0)
                 {
 		?>
-                    <input readonly="true" type="text" id="hacer_troquel" name="hacer_troquel"  value="<?php echo $ing->hacer_troquel; ?>" />
+                    <input type="text" id="hacer_troquel2" name="hacer_troquel"  value="<?php echo $ing->hacer_troquel; ?>" />
 		<?php
 		}
 		else
                 {
 		?>
-                    <input readonly="true" type="text" id="hacer_troquel" name="hacer_troquel"  value="NO SE SABE" />
+                    <input type="text" id="hacer_troquel2" name="hacer_troquel"  value="NO SE SABE" />
 		<?php
 		}                
 		?>
@@ -2833,6 +2836,7 @@ function getField($campo,$datos,$ing)
             document.form.reset();
         //document.form.cliente.focus();
         }
+            
     );
   
     
@@ -2881,5 +2885,32 @@ function priceFormatter(value) {
 //			$('.ir-arriba2').slideDown(300);
 //		}
 	});
- 
+        
+        //alert($("select[name=hay_que_troquelar]").val());
+            
+     
+    
+</script>
+<script type="text/javascript">
+$(document).ready(()=>{
+       if($("select[name=hay_que_troquelar]").val()=="NO"){
+     $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").attr("selected","true");
+     $("#lleva_troquelado").val("NO");
+     $("#hacer_troquel2").val("NO"); 
+    }else{
+        if($("select[name=hay_que_troquelar]").val()=="SI" && $("input[name=nm]").val()==""){
+            $("select[name=select_estan_los_moldes]").val("");
+            $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").removeAttr("selected");
+            $("#lleva_troquelado").val("SI");
+            $("#hacer_troquel2").val("SI"); 
+        }else{
+            if($("select[name=hay_que_troquelar]").val()=="SI" && $("input[name=nm]").val()!==""){
+                $("select[name=select_estan_los_moldes]").val("");
+                $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").removeAttr("selected");
+                $("#lleva_troquelado").val("SI");
+                $("#hacer_troquel2").val("NO"); 
+            }
+        }
+     }
+});
 </script>

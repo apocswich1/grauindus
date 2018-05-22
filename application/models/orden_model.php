@@ -846,7 +846,7 @@ echo $query->num_rows();
                 WHERE op.estado <> 2 AND op.estado <> 0 AND op.estado <> '3' AND op.estado <> '4' AND op.`fecha`>'2017-12-12'";        
          */
         $query=$this->db
-                ->select("oc.id AS ot,op.`fecha` AS fecha,cl.`razon_social`,i.`tamano_a_imprimir_1` AS ancho,i.`tamano_a_imprimir_2` AS largo,
+                ->select("c.id as id_cotizacion, oc.id AS ot,op.`fecha` AS fecha,cl.`razon_social`,i.tamano_a_imprimir_1,i.tamano_a_imprimir_2,i.unidades_por_pliego,h.total_merma,i.`tamano_a_imprimir_1` AS ancho,i.`tamano_a_imprimir_2` AS largo,
                 op.`cantidad_pedida` AS cantidad,h.`placa_kilo` AS kilos,i.`materialidad_datos_tecnicos` AS materialidad,cc.`situacion`,c.`producto`,  , m.`nombre` as cartulina, m.`gramaje`, m.reverso")
                 ->from("orden_de_produccion op")
                 ->join("cotizaciones as c","c.id=op.id_cotizacion","left")
@@ -920,6 +920,7 @@ echo $query->num_rows();
                                                 op.fecha,
                                                 op.id_cotizacion,
                                                 pf.fecha_liberada,
+                                                pf.situacion,
                                                 cl.razon_social,
                                                 c.producto,
                                                 ci.desgajado_automatico,
@@ -932,6 +933,7 @@ echo $query->num_rows();
                                                 cf.hay_que_troquelar,
                                                 mg.id as mg_id,
                                                 pf.conf_sal_pel_fecha,
+                                                pf.conf_sal_pel_desgajado,
                                                 ci.ccac_1,
                                                 ci.ccac_2,
                                                 ci.materialidad_datos_tecnicos,
@@ -972,34 +974,39 @@ echo $query->num_rows();
     
     public function getListadoProgramaFotomecanica(){
         //$id = $id=6;
-        $query=$this->db
-                ->select("oc.id AS ot, oc.fecha, cc.fecha_liberada,
-                            cl.razon_social,c.producto,
-                            c.condicion_del_producto as condicion, 
-                            c.impresion_colores as colores,
-                            i.tamano_a_imprimir_1 AS ancho,
-                            i.tamano_a_imprimir_2 AS largo,
-                            m.nombre as liner,
-                            i.unidades_por_pliego as unidad_pliego,
-                            i.materialidad_datos_tecnicos AS tipo,
-                            op.cantidad_pedida AS cantidad,
-                            m.gramaje, m.reverso,
-                            c.id as id_cotizacion, cc.*
-                            ")
 
-                ->from("orden_de_produccion op")
-                ->join("cotizaciones as c","c.id = op.id_cotizacion","left")                
-                ->join("produccion_fotomecanica as cc","op.id_cotizacion=cc.id_nodo","left")                                
-                ->join("clientes as cl","cl.id=c.id_cliente","left")                
-                ->join("cotizaciones_orden_de_compra as oc","oc.id_cotizacion=op.id_cotizacion","left")                
-                ->join("cotizacion_ingenieria as i","i.id_cotizacion = op.id_cotizacion","left")                
-                ->join("hoja_de_costos_datos as h","h.id_cotizacion=op.id_cotizacion","left")                
-                ->join("materiales as m","m.id= c.id_mat_liner3","left")                
+        $query=$this->db->query("SELECT 
+                                    coc.id as ot,
+                                    coc.fecha,
+                                    pf.fecha_liberada,
+                                    cl.razon_social,
+                                    c.producto,
+                                    cf.hay_que_troquelar,
+                                    c.condicion_del_producto as condicion,
+                                    c.impresion_colores as colores,
+                                    ci.tamano_a_imprimir_1 AS ancho,
+                                    ci.tamano_a_imprimir_2 AS largo,
+                                    ma.nombre as liner,
+                                    ci.unidades_por_pliego as unidad_pliego,
+                                    ci.materialidad_datos_tecnicos AS tipo,
+                                    op.cantidad_pedida AS cantidad,
+                                    ma.gramaje,
+                                    ma.reverso,
+                                    c.id as id_cotizacion_c
+                                    FROM orden_de_produccion op
+                                    LEFT JOIN produccion_fotomecanica pf        ON pf.id_nodo = op.id_cotizacion
+                                    LEFT JOIN cotizaciones c                    ON c.id = op.id_cotizacion
+                                    LEFT JOIN clientes cl                       ON cl.id = c.id_cliente
+                                    LEFT JOIN cotizacion_ingenieria ci          ON ci.id_cotizacion = op.id_cotizacion
+                                    LEFT JOIN cotizacion_fotomecanica cf        ON cf.id_cotizacion = op.id_cotizacion
+                                    LEFT JOIN cotizaciones_orden_de_compra coc  ON coc.id_cotizacion = op.id_cotizacion
+                                    LEFT JOIN hoja_de_costos_datos hcd          ON hcd.id_cotizacion = op.id_cotizacion
+                                    LEFT JOIN materiales ma                     ON ma.id = c.id_mat_liner3
+                                    WHERE op.estado <> 2 AND op.estado <> 0 AND op.estado <> '3' AND op.estado <> '4' AND op.fecha>'2017-12-12'
+                                    ORDER BY coc.id");
 
-                ->where("op.estado <> 2 AND op.estado <> 0 AND op.estado <> '3' AND op.estado <> '4' AND op.fecha>'2017-12-12' and cc.situacion <> 'Liberada'")
-                ->order_by("oc.id","asc")
 
-                ->get();
+        
 
                 //echo '<pre>';
                 //print_r($query->last_result());

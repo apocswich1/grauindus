@@ -40,10 +40,10 @@ class produccion_model extends CI_Model{
                 ->join("cotizaciones_orden_de_compra oc","pf.id_nodo = oc.id_cotizacion","left")
                 ->where("pf.fecha_rechazada_recepcion_OT <> '0000-00-00'")
                 ->order_by("pf.fecha_rechazada_recepcion_OT DESC")
-                ->limit(1)
+                ->limit(3)
                 ->get();
 //                echo $this->db->last_query();
-                return $query->row();
+                return $query->result();
     }
     
     public function getFotomecanicaArchivo($id)
@@ -135,6 +135,16 @@ class produccion_model extends CI_Model{
                 return $query->row();
     }
 	
+    public function getConfeccionModelTroquel($id)
+    {
+         $query=$this->db
+                ->select("*")
+                ->from("produccion_confeccion_molde_troquel")
+                ->where("id_nodo = $id")
+                ->get();
+//                echo $this->db->last_query();
+                return $query->row();
+    }
 	//fin control onda y liner
     public function getConfeccionModelTroquelPorTipo($tipo,$id)
     {

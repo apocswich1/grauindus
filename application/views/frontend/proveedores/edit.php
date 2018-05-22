@@ -28,7 +28,8 @@
     	<div class="control-group">
 		<label class="control-label" for="usuario">Rut</label>
 		<div class="controls">
-			<input type="text" id="rut" name="rut" value="<?php echo $datos->rut?>" placeholder="Numero de Rut"  onblur="ValidarRut(this.value,this.id);"/>
+			<!--<input type="text" id="rut" name="rut" value="<?php //echo $datos->rut?>" placeholder="Numero de Rut"  onblur="ValidarRut(this.value,this.id);"/>-->
+			<input type="text" id="rut" name="rut" value="<?php echo $datos->rut?>" placeholder="Numero de Rut"  onblur=""/>
 		</div>
 	</div>        
     

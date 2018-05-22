@@ -61,7 +61,14 @@
   <li role="presentation" class="active"><a href="<?php echo base_url()?>produccion/cotizaciones">Órdenes de Producción</a></li>
   <li role="presentation"><a href="<?php echo base_url()?>produccion/fast">Fast Track</a></li>
 </ul>
-<div class="page-header"><h3>Órdenes de Producción ( <?php echo $cuantos?> en total)<span style="padding-left: 150px">Ultima Órden Rechazada ( <?php $ult = $this->produccion_model->getUltimaRechazada(); if($ult->ot==""){echo "No hay ot rechazadas";}else{echo "Ot : ". $ult->ot;} ?> )</span></h3></div>
+<div class="page-header"><h3>Órdenes de Producción ( <?php echo $cuantos?> en total)<span style="padding-left: 150px">Ultima Órden Rechazada ( <?php $ult = $this->produccion_model->getUltimaRechazada(); 
+if(sizeof($ult>0)){
+    foreach ($ult as $value) {
+        echo "Ot : ". $value->ot."&nbsp;&nbsp;";
+    }
+    }else{
+        echo "No hay ot rechazadas";
+    } ?>)</span></h3></div>
 <div class="container-fluid">
 <table class="table table-bordered table-striped indice" id="datatable">
     <thead>
@@ -329,15 +336,34 @@
             
             
              <?php 
-            if(sizeof($confeccion_molde_troquel)==0)
+
+             if(sizeof($confeccion_molde_troquel)>0)
             {
+                switch($confeccion_molde_troquel->estado)
+                {
+                    case '':
+                        $colorConfeccionMolde='red';
+                    break;
+                    case '1':
+                        $colorConfeccionMolde='green';
+                    break;
+                    case '0':
+                        $colorConfeccionMolde='red';
+                    break;
+                    case '2':
+                        $colorConfeccionMolde='red';
+                    break;
+                }
+
+
+            
                 ?>
-               <a href="<?php echo base_url()?>produccion/confeccion_molde_troquel/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Confección Molde de troquel"><span style="font-size: 10px;color:red; font-weight: bold;">Confección Molde de troquel</span><i class="icon-film"></i></a><br />
+               <a href="<?php echo base_url()?>produccion/confeccion_molde_troquel/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Confección Molde de troquel"><span style="font-size: 10px;color:<?php echo $colorConfeccionMolde?>; font-weight: bold;">Confección Molde de troquel</span><i class="icon-film"></i></a><br />
                 <?php
             }else
             {
                 ?>
-                <a href="<?php echo base_url()?>produccion/confeccion_molde_troquel/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Confección Molde de troquel"><span style="font-size: 10px;color:green; font-weight: bold;">Confección Molde de troquel</span><i class="icon-film"></i></a><br />
+                <a href="<?php echo base_url()?>produccion/confeccion_molde_troquel/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Confección Molde de troquel"><span style="font-size: 10px;color:red; font-weight: bold;">Confección Molde de troquel</span><i class="icon-film"></i></a><br />
                 
                 <?php
             }

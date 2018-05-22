@@ -397,9 +397,12 @@
                       if($ing->estado==1 && $fotomecanica->estado==1){
                           if($ing->archivo!=""){ ?>
                               <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
-                         <?php }else{ ?>
+                         <?php }else{
+                             if($ing->estan_los_moldes=="NO LLEVA" && $ing->hay_que_troquelar=="NO"){ ?>
+                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                             <?php }else{ ?>
                               <a href="javascript:void(0);" onclick="alert('Debe Incluir en Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
-                         <?php }
+                         <?php } }
                       }else{ ?>
                           <a href="javascript:void(0);" onclick="alert('Debe Completar Ingeniería y Fotomecanica');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
                      <?php }
@@ -408,9 +411,12 @@
                       if($ing->estado==1 && $fotomecanica->estado==1){
                           if($ing->archivo!=""){ ?>
                               <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
-                         <?php }else{ ?>
+                         <?php }else{
+                             if($ing->estan_los_moldes=="NO LLEVA" && $ing->hay_que_troquelar=="NO"){ ?>
+                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                             <?php }else{ ?>
                               <a href="javascript:void(0);" onclick="alert('Debe Incluir en Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
-                         <?php }
+                         <?php } }
                       }else{ ?>
                           <a href="javascript:void(0);" onclick="alert('Debe Completar Ingeniería y Fotomecanica');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
                   <?php }
@@ -419,9 +425,12 @@
                       if($ing->estado==1 && $fotomecanica->estado==1){
                           if($ing->archivo!=""){ ?>
                               <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
-                         <?php }else{ ?>
+                         <?php }else{
+                             if($ing->estan_los_moldes=="NO LLEVA" && $ing->hay_que_troquelar=="NO"){ ?>
+                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                             <?php }else{ ?>
                               <a href="javascript:void(0);" onclick="alert('Debe Incluir en Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
-                         <?php }
+                         <?php } }
                       }else{ ?>
                           <a href="javascript:void(0);" onclick="alert('Debe Completar Ingeniería y Fotomecanica');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
                   <?php }
@@ -430,9 +439,12 @@
                       if($ing->estado==1 && $fotomecanica->estado==1){
                           if($ing->archivo!=""){ ?>
                               <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
-                         <?php }else{ ?>
+                         <?php }else{
+                             if($ing->estan_los_moldes=="NO LLEVA" && $ing->hay_que_troquelar=="NO"){ ?>
+                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                             <?php }else{ ?>
                               <a href="javascript:void(0);" onclick="alert('Debe Incluir en Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
-                         <?php }
+                         <?php } }
                       }else{ ?>
                           <a href="javascript:void(0);" onclick="alert('Debe Completar Ingeniería y Fotomecanica');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
                   <?php }
@@ -441,9 +453,12 @@
                       if($ing->estado==1 && $fotomecanica->estado==1){
                           if($ing->archivo!=""){ ?>
                               <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
-                         <?php }else{ ?>
+                         <?php }else{
+                             if($ing->estan_los_moldes=="NO LLEVA" && $ing->hay_que_troquelar=="NO"){ ?>
+                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                             <?php }else{ ?>
                               <a href="javascript:void(0);" onclick="alert('Debe Incluir en Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
-                         <?php }
+                         <?php } }
                       }else{ ?>
                           <a href="javascript:void(0);" onclick="alert('Debe Completar Ingeniería y Fotomecanica');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
                   <?php }

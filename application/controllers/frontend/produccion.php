@@ -225,34 +225,35 @@ class Produccion extends CI_Controller {
             
             
             if($id==""){
-            foreach ($datos as $value) {
-                $vendedores=$this->vendedores_model->getVendedorPorId($value->id_vendedor);
-                $nombrevendedor=$vendedores->nombre;
-                $cli=$this->clientes_model->getClientePorId($value->id_cliente);
-                $cliente=$cli->razon_social; 
-                $not=$this->orden_model->getNumeroOt($value->id); 
-                $estatus = $this->orden_model->getDescripcionTrabajo($value->id);
-                $ult=$this->despachos_model->getDespachosUltimoRegistro($value->id); 
-                $cantidadfaltante = "";
-                if($ult->cantidad_faltante!=''){$cantidadfaltante = $ult->cantidad_faltante;}
-                $cuerpo.="<tr><td align='center'>$not->id_ot</td>"
-                    . "<td align='center'>$value->id</td>"
-                    . "<td align='center'>$value->id_op</td>"
-                    . "<td align='center'>$value->fecha</td>"
-                    . "<td>$cliente</td>"
-                    . "<td>$nombrevendedor</td>"
-                    . "<td>$value->nombre_producto_normal</td>"
-                    . "<td>$value->cantidad_pedida</td>"
-                    . "<td>".$cantidadfaltante."</td>"
-                    . "<td>$value->valor</td>"
-                    . "<td>$ult->cierra_la_orden</td>"
-                    . "<td>".($stock = $value->cantidad_pedida - $cantidadfaltante)."</td>"
-                    . "<td>".fecha_con_slash($value->fecha_entrega)."</td>"
-                    . "<td>$estatus->descripcion_del_trabajo</td></tr>";                
+                foreach ($datos as $value) {
+                    $vendedores=$this->vendedores_model->getVendedorPorId($value->id_vendedor);
+                    $nombrevendedor=$vendedores->nombre;
+                    $cli=$this->clientes_model->getClientePorId($value->id_cliente);
+                    $cliente=$cli->razon_social; 
+                    $not=$this->orden_model->getNumeroOt($value->id); 
+                    $estatus = $this->orden_model->getDescripcionTrabajo($value->id);
+                    $ult=$this->despachos_model->getDespachosUltimoRegistro($value->id); 
+                    $cantidadfaltante = "";
+                    if($ult->cantidad_faltante!=''){$cantidadfaltante = $ult->cantidad_faltante;}
+                    $cuerpo.="<tr><td align='center'>$not->id_ot</td>"
+                        . "<td align='center'>$value->id</td>"
+                        . "<td align='center'>$value->id_op</td>"
+                        . "<td align='center'>$value->fecha</td>"
+                        . "<td>$cliente</td>"
+                        . "<td>$nombrevendedor</td>"
+                        . "<td>$value->nombre_producto_normal</td>"
+                        . "<td>$value->cantidad_pedida</td>"
+                        . "<td>".$cantidadfaltante."</td>"
+                        . "<td>$value->valor</td>"
+                        . "<td>$ult->cierra_la_orden</td>"
+                        . "<td>".($stock = $value->cantidad_pedida - $cantidadfaltante)."</td>"
+                        . "<td>".fecha_con_slash($value->fecha_entrega)."</td>"
+                        . "<td>$estatus->descripcion_del_trabajo</td></tr>";                
 
-                    if (($stock) > 0){
+                   // if (($stock) > 0){
                         $monto += ($value->valor) * ($cantidadfaltante);
-                    }                                            
+                        
+                   // }                                            
                 }
                 
             }else{
@@ -262,36 +263,36 @@ class Produccion extends CI_Controller {
                // exit();  
 
                 foreach ($datos as $value) {
-                $vendedores=$this->vendedores_model->getVendedorPorId($value->id_vendedor);
-                $nombrevendedor=$vendedores->nombre;
-                $cli=$this->clientes_model->getClientePorId($value->id_cliente);
-                $cliente=$cli->razon_social; 
-                $not=$this->orden_model->getNumeroOt($value->id); 
-                $estatus = $this->orden_model->getDescripcionTrabajo($value->id);
-                //echo '<pre>';
-                //echo $estatus->descripcion_del_trabajo;
-               //print_r($value);
-               // exit();               
-                $ult=$this->despachos_model->getDespachosUltimoRegistro($value->id); 
-                $cantidadfaltante = "";
-                if($ult->cantidad_faltante!=''){$cantidadfaltante = $ult->cantidad_faltante;}else{$cantidadfaltante = $value->cantidad_pedida;}
-                $cuerpo.="<tr><td align='center'>$not->id_ot</td>"
-                    . "<td align='center'>$value->id</td>"
-                    . "<td align='center'>$value->id_op</td>"
-                    . "<td align='center'>".fecha_con_slash($value->fecha)."</td>"
-                    . "<td>$cliente</td>"
-                    . "<td>$value->nombre_producto_normal</td>"
-                    . "<td>$value->cantidad_pedida</td>"
-                    . "<td>".$cantidadfaltante."</td>"
-                    . "<td>$value->valor</td>"
-                    . "<td>$ult->cierra_la_orden</td></tr>"
-                    . "<td>".($stock = $value->cantidad_pedida - $cantidadfaltante)."</td>"
-                    . "<td>".fecha_con_slash($value->fecha_entrega)."</td>"
-                    . "<td>$estatus->descripcion_del_trabajo</td></tr>";                
+                    $vendedores=$this->vendedores_model->getVendedorPorId($value->id_vendedor);
+                    $nombrevendedor=$vendedores->nombre;
+                    $cli=$this->clientes_model->getClientePorId($value->id_cliente);
+                    $cliente=$cli->razon_social; 
+                    $not=$this->orden_model->getNumeroOt($value->id); 
+                    $estatus = $this->orden_model->getDescripcionTrabajo($value->id);
+                    //echo '<pre>';
+                    //echo $estatus->descripcion_del_trabajo;
+                   //print_r($value);
+                   // exit();               
+                    $ult=$this->despachos_model->getDespachosUltimoRegistro($value->id); 
+                    $cantidadfaltante = "";
+                    if($ult->cantidad_faltante!=''){$cantidadfaltante = $ult->cantidad_faltante;}else{$cantidadfaltante = $value->cantidad_pedida;}
+                    $cuerpo.="<tr><td align='center'>$not->id_ot</td>"
+                        . "<td align='center'>$value->id</td>"
+                        . "<td align='center'>$value->id_op</td>"
+                        . "<td align='center'>".fecha_con_slash($value->fecha)."</td>"
+                        . "<td>$cliente</td>"
+                        . "<td>$value->nombre_producto_normal</td>"
+                        . "<td>$value->cantidad_pedida</td>"
+                        . "<td>".$cantidadfaltante."</td>"
+                        . "<td>$value->valor</td>"
+                        . "<td>$ult->cierra_la_orden</td></tr>"
+                        . "<td>".($stock = $value->cantidad_pedida - $cantidadfaltante)."</td>"
+                        . "<td>".fecha_con_slash($value->fecha_entrega)."</td>"
+                        . "<td>$estatus->descripcion_del_trabajo</td></tr>";                
 
-                    if (($stock) > 0){
-                        $monto += ($value->valor) * ($cantidadfaltante);
-                    }                                
+                    //if ($stock > 0){
+                        $monto += $value->valor*$cantidadfaltante;
+                    //}                                
                 }            
             }
 
@@ -926,6 +927,8 @@ class Produccion extends CI_Controller {
             $materialidad_2=$this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_2);
             $materialidad_3=$this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_3);            
 //            exit(print_r($tapa));
+
+
             
             //print_r($fotomecanica);exit;
             if(sizeof($datos)==0){show_404();}
@@ -1318,8 +1321,8 @@ class Produccion extends CI_Controller {
                                "prueba_color_fecha"=>$prueba_color_fecha,
                                "arte_diseno_fecha"=>$arte_diseno_fecha,
                                "conf_sal_pel_fecha"=>$conf_sal_pel_fecha,
-                               "conf_sal_pel_desgajado"=>$conf_sal_pel_desgajado,
-                               "conf_sal_pel_fecha_desgajado"=>$conf_sal_pel_fecha_desgajado,
+                               "conf_sal_pel_desgajado"=>$this->input->post('conf_sal_pel_desgajado',true),
+                               "conf_sal_pel_desgajado_fecha"=>$conf_sal_pel_desgajado_fecha,
                                "sobre_desarrollo_fecha"=>$sobre_desarrollo_fecha,
                                "comentario_rechazo"=>'',
                                "fecha_rechazada_recepcion_OT"=>'',
@@ -1359,13 +1362,13 @@ class Produccion extends CI_Controller {
                                "recepcion_ot_aprobado_fecha"=>$recepcion_ot_aprobado_fecha,
                                "revision_trazado_fecha"=>$revision_trazado,
                                "recepcion_maqueta_fecha"=>$fecha_recepcion_maqueta,
-
                                "revision_de_imagen_fecha"=>$revision_de_imagen,
                                "montaje_digital_fecha"=>$montaje_digital_fecha,
                                "prueba_color_fecha"=>$prueba_color_fecha,
                                "arte_diseno_fecha"=>$arte_diseno_fecha,
                                "conf_sal_pel_fecha"=>$conf_sal_pel_fecha,
-                               "conf_sal_pel_fecha_desgajado"=>$conf_sal_pel_fecha_desgajado,
+                               "conf_sal_pel_desgajado"=>$this->input->post('conf_sal_pel_desgajado',true),
+                               "conf_sal_pel_desgajado_fecha"=>$conf_sal_pel_desgajado_fecha,
                                "sobre_desarrollo_fecha"=>$sobre_desarrollo_fecha,
                                "comentario_rechazo"=>'',
                                "fecha_rechazada_recepcion_OT"=>'',
@@ -1412,7 +1415,8 @@ class Produccion extends CI_Controller {
                            "prueba_color_fecha"=>$prueba_color_fecha,
                            "arte_diseno_fecha"=>$arte_diseno_fecha,
                            "conf_sal_pel_fecha"=>$conf_sal_pel_fecha,
-                           "conf_sal_pel_fecha_desgajado"=>$conf_sal_pel_fecha_desgajado,
+                           "conf_sal_pel_desgajado"=>$this->input->post('conf_sal_pel_desgajado',true),
+                           "conf_sal_pel_desgajado_fecha"=>$conf_sal_pel_desgajado_fecha,
                            "sobre_desarrollo_fecha"=>$sobre_desarrollo_fecha,
                         );  
                     }
@@ -3366,7 +3370,7 @@ class Produccion extends CI_Controller {
                             $fecha_orden_cerrada='0000-00-00';
                    }else
                    {
-                     switch($control->estado)
+                     switch($this->input->post('estado',true))
                      {
                         case '1':
                             $situacion='Liberada';
@@ -3376,17 +3380,17 @@ class Produccion extends CI_Controller {
                             $fecha_orden_cerrada='0000-00-00';
                         break;
                         case '0':
-                            $situacion='Activa';
+                            $situacion='Guardar';
                             $fecha_pendiente='0000-00-00';
                             $fecha_liberada='0000-00-00';
-                            $fecha_activa=date('Y-m-d H:i:s');
+                            $fecha_activa= date('Y-m-d H:i:s');
                             $fecha_orden_cerrada='0000-00-00';
                         break;
                         case '2':
-                            $situacion='Activa';
+                            $situacion='Rechazar';
                             $fecha_pendiente='0000-00-00';
                             $fecha_liberada='0000-00-00';
-                            $fecha_activa=date('Y-m-d H:i:s');
+                            $fecha_activa='0000-00-00';//date('Y-m-d H:i:s');
                             $fecha_orden_cerrada='0000-00-00';
                         break;
 						case '':
@@ -3411,13 +3415,13 @@ class Produccion extends CI_Controller {
                         "calado"=>$this->input->post('calado',true),
                         "confeccion_de_chuchillo"=>$this->input->post('confeccion_de_chuchillo',true),
                         "armado_de_molde"=>$this->input->post('armado_de_molde',true),
-                        "armado_de_molde"=>$this->input->post('armado_de_molde',true),
+                        "molde_listo"=>$this->input->post('molde_listo',true),
                         "existe_pdf_ingenieria"=>$this->input->post("existe_pdf_ingenieria",true),
                         "estado"=>$this->input->post('estado',true),
                         "quien"=>$this->session->userdata('id'),
                         "cuando"=>date("Y-m-d"),
                         "glosa"=>$this->input->post('glosa',true),
-                        "hay_que_hacer_molde"=>$this->input->post("hay_que_hacer_molde",true),
+                        //"hay_que_hacer_molde"=>$this->input->post("hay_que_hacer_molde",true),
                         "tamano_cuchillo_1"=>$this->input->post('tamano_cuchillo_1',true),
                         "tamano_cuchillo_2"=>$this->input->post('tamano_cuchillo_2',true),
                         "tamano_cuchillo_2"=>$this->input->post('tamano_cuchillo_2',true),
@@ -8210,6 +8214,17 @@ class Produccion extends CI_Controller {
         $datos=$this->materiales_model->getMaterialesGramajePorLike($this->input->post("valor",true));
         $this->layout->view('ajax_obtenerGramaje2',compact("datos","div")); 
     }     
+
+    public function ajax_obtenerGramaje3()
+    {
+//        exit($this->input->post("valor",true).'hola');
+        $div=$this->input->post("div",true);
+        $this->load->library('javascript');
+        $this->load->library('javascript', array('js_library_driver' => 'scripto', 'autoload' => FALSE));
+        $this->layout->setLayout('template_ajax');
+        $datos=$this->materiales_model->getMaterialesGramajePorLike($this->input->post("valor",true));
+        $this->layout->view('ajax_obtenerGramaje3',compact("datos","div")); 
+    }     
 	
     
     public function cotizaciones_cartulina_liberar()
@@ -8225,7 +8240,7 @@ class Produccion extends CI_Controller {
                             <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
                         </head>
                         <body>
-                        <h3><p class="text-center">RESUMEN CONTROL CARTULINA POR LIBERAR</p></h3>
+                        <h3><p class="text-center">RESUMEN CORTE CARTULINA POR LIBERAR</p></h3>
                     <p class="text-right">Fecha: '.date('d-m-Y').'</p>
 
                          <table border="1" width="100%">
@@ -8240,13 +8255,30 @@ class Produccion extends CI_Controller {
                                 <td>Ancho</td>
                                 <td>Largo</td>
                                 <td>Cantidad</td>
+                                <td>Merma</td>
+                                <td>Total Pliegos</td>
                                 <td>Kilos</td>
                                 <td>Estatus</td>
                                 <td>Despacho Parciales</td>                                                                
                             </tr>';
              
             foreach ($datos as $dato) {
-                            
+/*
+                            if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_1){
+                                $merma = $hoja->total_merma;
+                            }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_2){
+                                $merma = $hoja->total_merma2;
+                            }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_3){
+                                $merma = $hoja->total_merma3;
+                            }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_4){
+                                $merma = $hoja->total_merma3;
+                            }*/
+
+                            $total_pliegos = ($dato->cantidad)/($dato->unidades_por_pliego) + $dato->total_merma;
+
+                            $kilos_total = round(($total_pliegos * $dato->gramaje * $dato->ancho * $dato->largo) / 10000000);
+
+
                             $cuerpo .='<tr>
                                 <td>'.$dato->ot.'</td>
                                 <td>'.$dato->fecha.'</td>
@@ -8257,8 +8289,10 @@ class Produccion extends CI_Controller {
                                 <td>'.$dato->gramaje.'</td>
                                 <td>'.$dato->ancho.'</td>
                                 <td>'.$dato->largo.'</td>
-                                <td>'.$dato->cantidad.'</td>
-                                <td>'.$dato->kilos.'</td>
+                                <td>'.($dato->cantidad)/($dato->unidades_por_pliego).'</td>
+                                <td>'.$dato->total_merma.'</td>
+                                <td>'.$total_pliegos.'</td>
+                                <td>'.$kilos_total.'</td>
                                 <td></td>                                    
                                 <td></td>                                    
                             </tr>';
@@ -8276,6 +8310,224 @@ class Produccion extends CI_Controller {
             $this->mpdf->WriteHTML($cuerpo);
             $this->mpdf->Output();
     		exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    }
+
+    public function resumen_control_liner($id=null)
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getResumenControlCartulinaPorLiberar();
+            
+
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">RESUMEN CONTROL LINER</p></h3>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td>OT</td>
+                                <td width="80px">Fecha</td>
+                                <td >Cliente</td>
+                                <td>Producto</td>
+                                <td>Tipo de material</td>
+                                <td>Reverso</td>
+                                <td>Gramaje</td>
+                                <td>Ancho</td>
+                                <td>Largo</td>
+                                <td>Cantidad</td>
+                                <td>Merma</td>
+                                <td>Total Pliegos</td>
+                                <td>Kilos</td>
+                                <td>Estatus</td>
+                                <td>Despacho Parciales</td>                                                                
+                            </tr>';
+            foreach ($datos as $dato) {
+                    $id=$dato->id_cotizacion;
+                    $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+                    $ordenDeCompra=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($id);
+                    $mliner = $this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_liner3);
+                    $monda = $this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_onda2);
+                    
+                        /*
+                        if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_1){
+                            $merma = $hoja->total_merma;
+                        }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_2){
+                            $merma = $hoja->total_merma2;
+                        }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_3){
+                            $merma = $hoja->total_merma3;
+                        }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_4){
+                            $merma = $hoja->total_merma3;
+                        }*/
+
+                        $total_pliegos = ($dato->cantidad)/($dato->unidades_por_pliego) + $dato->total_merma;
+
+                        $kilos_total = round(($total_pliegos * $dato->gramaje * $dato->ancho * $dato->largo) / 10000000);
+
+                        //$mermaonda=(($ordenDeCompra->cantidad_de_cajas/$dato->unidades_por_pliego)*0.04)+104;
+                        $mermaonda=(($ordenDeCompra->cantidad_de_cajas/$dato->unidades_por_pliego)*0.04)+104;
+                        $pliegosliner=($ordenDeCompra->cantidad_de_cajas/$dato->unidades_por_pliego)+(($ordenDeCompra->cantidad_de_cajas/$dato->unidades_por_pliego)*0.04)+104;
+                        $pliegosonda=($ordenDeCompra->cantidad_de_cajas/$dato->unidades_por_pliego)+(($ordenDeCompra->cantidad_de_cajas/$dato->unidades_por_pliego)*0.04)+104;
+                        $kiloliner = number_format((($dato->tamano_a_imprimir_1 * $dato->tamano_a_imprimir_2 * $monda->gramaje * $pliegosonda)/10000000),0,"",".");
+                        /*
+                            
+                                <td align="center">'.$mliner->materiales_tipo.'</td>'
+                                        . '<td align="center">'.$mliner->gramaje.'</td>'
+                                        . '<td align="center">'.$ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego.'</td>'
+                                        . '<td align="center">'.$mermaliner.'</td>'
+                                        . '<td align="center">'.$pliegosliner.'</td>'
+                                        . '<td align="center">'.$kiloliner.'</td>
+                                <tr>';
+                        */
+
+                        $cuerpo .='<tr>
+                            <td>'.$dato->ot.'</td>
+                            <td>'.$dato->fecha.'</td>
+                            <td>'.$dato->razon_social.'</td>
+                            <td>'.$dato->producto.'</td>
+                            <td>'.$mliner->materiales_tipo.'</td>
+                            <td>'.$dato->reverso.'</td>
+                            <td>'.$mliner->gramaje.'</td>
+                            <td>'.$dato->ancho.'</td>
+                            <td>'.$dato->largo.'</td>
+                            <td>'.($dato->cantidad)/($dato->unidades_por_pliego).'</td>
+                            <td>'.$mermaonda.'</td>
+                            <td>'.$kilos_total.'</td>
+                            <td>'.$kiloliner.'</td>
+                            <td></td>                                    
+                            <td></td>                                    
+                        </tr>';
+                    
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+        
+            $this->mpdf->SetDisplayMode('fullpage');
+            $this->mpdf->AddPage('L');
+            $css1 = file_get_contents('public/frontend/css/despacho.css');
+            $css2 = file_get_contents('bootstrap/bootstrap.css');
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+            $this->mpdf->WriteHTML($cuerpo);
+            $this->mpdf->Output();
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    }
+
+    public function resumen_control_onda($id=null)
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getResumenControlCartulinaPorLiberar();
+            
+
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">RESUMEN CONTROL ONDA</p></h3>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td>OT</td>
+                                <td width="80px">Fecha</td>
+                                <td >Cliente</td>
+                                <td>Producto</td>
+                                <td>Tipo de material</td>
+                                <td>Reverso</td>
+                                <td>Gramaje</td>
+                                <td>Ancho</td>
+                                <td>Largo</td>
+                                <td>Cantidad</td>
+                                <td>Merma</td>
+                                <td>Total Pliegos</td>
+                                <td>Kilos</td>
+                                <td>Estatus</td>
+                                <td>Despacho Parciales</td>                                                                
+                            </tr>';
+            foreach ($datos as $dato) {
+                    $id=$dato->id_cotizacion;
+                    $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+                    $ordenDeCompra=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($id);
+                    $monda = $this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_onda2);
+                    
+                        /*
+                        if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_1){
+                            $merma = $hoja->total_merma;
+                        }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_2){
+                            $merma = $hoja->total_merma2;
+                        }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_3){
+                            $merma = $hoja->total_merma3;
+                        }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_4){
+                            $merma = $hoja->total_merma3;
+                        }*/
+
+                        $total_pliegos = ($dato->cantidad)/($dato->unidades_por_pliego) + $dato->total_merma;
+
+                        $kilos_total = round(($total_pliegos * $dato->gramaje * $dato->ancho * $dato->largo) / 10000000);
+
+                        //$mermaonda=(($ordenDeCompra->cantidad_de_cajas/$dato->unidades_por_pliego)*0.04)+104;
+                        $mermaonda=(($ordenDeCompra->cantidad_de_cajas/$dato->unidades_por_pliego)*0.04)+104;
+                        $pliegosonda=($ordenDeCompra->cantidad_de_cajas/$dato->unidades_por_pliego)+(($ordenDeCompra->cantidad_de_cajas/$dato->unidades_por_pliego)*0.04)+104;
+                        $kiloonda = number_format((($dato->tamano_a_imprimir_1 * $dato->tamano_a_imprimir_2 * $monda->gramaje * $pliegosonda)/10000000)*1.37,0,"",".");
+                        /*
+                            <td align="center">'.$monda->materiales_tipo.'</td>'
+                                . '<td align="center">'.$monda->gramaje.'</td>'
+                                . '<td align="center">'.$ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego.'</td>'
+                                . '<td align="center">'.$mermaonda.'</td>'
+                                . '<td align="center">'.$pliegosonda.'</td>'
+                                . '<td align="center">'.$kiloonda.'</td>
+                        */
+
+                        $cuerpo .='<tr>
+                            <td>'.$dato->ot.'</td>
+                            <td>'.$dato->fecha.'</td>
+                            <td>'.$dato->razon_social.'</td>
+                            <td>'.$dato->producto.'</td>
+                            <td>'.$monda->materiales_tipo.'</td>
+                            <td>'.$dato->reverso.'</td>
+                            <td>'.$monda->gramaje.'</td>
+                            <td>'.$dato->ancho.'</td>
+                            <td>'.$dato->largo.'</td>
+                            <td>'.($dato->cantidad)/($dato->unidades_por_pliego).'</td>
+                            <td>'.$mermaonda.'</td>
+                            <td>'.$kilos_total.'</td>
+                            <td>'.$kiloonda.'</td>
+                            <td></td>                                    
+                            <td></td>                                    
+                        </tr>';
+                    
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+        
+            $this->mpdf->SetDisplayMode('fullpage');
+            $this->mpdf->AddPage('L');
+            $css1 = file_get_contents('public/frontend/css/despacho.css');
+            $css2 = file_get_contents('bootstrap/bootstrap.css');
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+            $this->mpdf->WriteHTML($cuerpo);
+            $this->mpdf->Output();
+            exit;
         }else
         {
             redirect(base_url().'usuarios/login',  301);
@@ -8660,7 +8912,7 @@ class Produccion extends CI_Controller {
              
             foreach ($datos as $dato) {
                             
-                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto!='Nuevo' && ($dato->fecha_liberada==NULL or $dato->fecha_liberada=='0000-00-00 00:00:00')) {
+                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto!='Nuevo' && ($dato->fecha_liberada=='' || $dato->fecha_liberada=='0000-00-00')) {
 
                                 if ($dato->estado == 1) {
                                     $estado_op= "Activa";
@@ -8672,6 +8924,12 @@ class Produccion extends CI_Controller {
                                     $desgajado_automatico='NO';
                                 }else{
                                     $desgajado_automatico= $dato->desgajado_automatico;
+                                }
+
+                                if ($dato->desgajado_automatico==NULL || $dato->desgajado_automatico=='NO') {
+                                    $trazado_desgajado='NO';
+                                }elseif ($dato->desgajado_automatico=='SI'){
+                                    $trazado_desgajado=$dato->conf_sal_pel_desgajado;
                                 }
 
                                 if ($dato->es_una_maquina==NULL) {
@@ -8688,31 +8946,44 @@ class Produccion extends CI_Controller {
                                     $troquel_por_atras='Por definir';
                                 }
 
+                                if ($dato->conf_sal_pel_fecha=='' || $dato->conf_sal_pel_fecha=='0000-00-00' || $dato->conf_sal_pel_fecha==null) {
+                                    $conf_sal_pel_fecha='SIN CONFECCION';
+                                }else{
+                                    $conf_sal_pel_fecha=$dato->conf_sal_pel_fecha;
+                                }
+
+                                if ($dato->recepcion_maqueta_fecha=='' || $dato->recepcion_maqueta_fecha=='0000-00-00' || $dato->recepcion_maqueta_fecha==null) {
+                                    $recepcion_maqueta_fecha='SIN RECEPCION';
+                                }else{
+                                    $recepcion_maqueta_fecha=$dato->recepcion_maqueta_fecha;
+                                }
+
                                 $cuerpo .='<tr>
-                                    <td align="center">'.$dato->ot.'   POR FABRICAR</td>
+                                    <td align="center">'.$dato->ot.'</td>
                                     <td align="center">'.$dato->fecha.'</td>
                                     <td align="center">'.$fecha_liberada.'</td>
                                     <td align="center">'.$dato->razon_social.'</td>
                                     <td align="center">'.$dato->producto.'</td>
                                     <td align="center">'.$desgajado_automatico.'</td>
-                                    <td align="center">PENDIENTE</td>
+                                    <td align="center">'.$trazado_desgajado.'</td>
                                     <td align="center">'.$es_una_maquina.'</td>
                                     <td align="center">'.$dato->id_molde.'</td>
                                     <td align="center">'.$dato->condicion_del_producto.'</td>
                                     <td align="center">'.$dato->trazado.'</td>
                                     <td align="center">'.$dato->mg_id.'</td>
-                                    <td align="center">'.$dato->conf_sal_pel_fecha.'</td>
+                                    <td align="center">'.$conf_sal_pel_fecha.'</td>
                                     <td align="center">'.$dato->ccac_1.' Mms</td>
                                     <td align="center">'.$dato->ccac_2.' Mms</td>
                                     <td align="center">'.$dato->tamano_cuchillo_1.' X '.$dato->tamano_cuchillo_2.' Cms</td>
                                     <td align="center">'.$dato->materialidad_datos_tecnicos.'</td>
                                     <td align="center">'.$troquel_por_atras.'</td>
-                                    <td align="center">'.$dato->recepcion_maqueta_fecha.'</td>
+                                    <td align="center">'.$recepcion_maqueta_fecha.'</td>
                                     <td align="center">'.($dato->cantidad_de_cajas)/($dato->unidades_por_pliego).'</td>
                                     <td align="center">'.$estado_op.'</td>
                                 </tr>';
                                 
                                 $contador = $contador+1;
+
                                 if ($contador==$lineasPorHoja) {
                                     
                                     $cuerpo .= "</table>
@@ -8744,7 +9015,7 @@ class Produccion extends CI_Controller {
                                             <td align='center'><b>Estado</b></td>
                                         </tr>";
                                         $contador=0;
-                                        $lineasPorHoja=13;
+                                        $lineasPorHoja=12;
                                         
                                 } 
                             }
@@ -8772,9 +9043,11 @@ class Produccion extends CI_Controller {
 
     public function listado_programa_confeccion_revision_liberada_fotomecanica()
     {
+
         if($this->session->userdata('id'))
         {
             $datos=$this->orden_model->getListadoProgramaConfeccionMolde();
+            
             $contador = 0;
             $lineasPorHoja=10;
             $cuerpo=' <!DOCTYPE html>
@@ -8814,8 +9087,11 @@ class Produccion extends CI_Controller {
                             </tr>';
              
             foreach ($datos as $dato) {
-                            //INICIO DEL IF POR FABRICAR
-                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto!='Nuevo' && ($dato->fecha_liberada!=NULL or $dato->fecha_liberada!='0000-00-00 00:00:00')) {
+                //Para filtrar por confeccion de molde liberadas
+                $confeccion_molde_troquel=$this->produccion_model->getConfeccionModelTroquel($dato->id_cotizacion);
+
+                            //INICIO DEL IF POR FABRICAR      
+                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto!='Nuevo' && $dato->fecha_liberada!='0000-00-00' && $confeccion_molde_troquel->estado!=1 && $dato->situacion=='Liberada') {
 
                                 if ($dato->estado == 1) {
                                     $estado_op= "Activa";
@@ -8828,6 +9104,12 @@ class Produccion extends CI_Controller {
                                     $desgajado_automatico='NO';
                                 }else{
                                     $desgajado_automatico= $dato->desgajado_automatico;
+                                }
+
+                                if ($dato->desgajado_automatico==NULL || $dato->desgajado_automatico=='NO') {
+                                    $trazado_desgajado='NO';
+                                }elseif ($dato->desgajado_automatico=='SI'){
+                                    $trazado_desgajado=$dato->conf_sal_pel_desgajado;
                                 }
 
                                 if ($dato->es_una_maquina==NULL) {
@@ -8845,13 +9127,13 @@ class Produccion extends CI_Controller {
                                 }
 
                                 $cuerpo .='<tr>
-                                    <td align="center">'.$dato->ot.'   POR FABRICAR</td>
+                                    <td align="center">'.$dato->ot.'</td>
                                     <td align="center">'.$dato->fecha.'</td>
                                     <td align="center">'.$fecha_liberada.'</td>
                                     <td align="center">'.$dato->razon_social.'</td>
                                     <td align="center">'.$dato->producto.'</td>
                                     <td align="center">'.$desgajado_automatico.'</td>
-                                    <td align="center">PENDIENTE</td>
+                                    <td align="center">'.$trazado_desgajado.'</td>
                                     <td align="center">'.$es_una_maquina.'</td>
                                     <td align="center">'.$dato->id_molde.'</td>
                                     <td align="center">'.$dato->condicion_del_producto.'</td>
@@ -8900,7 +9182,7 @@ class Produccion extends CI_Controller {
                                             <td align='center'><b>Estado</b></td>
                                         </tr>";
                                         $contador=0;
-                                        $lineasPorHoja=13;
+                                        $lineasPorHoja=12;
                                 } 
                             }
                             //FIN DEL IF 'POR FABRICAR'
@@ -8971,7 +9253,7 @@ class Produccion extends CI_Controller {
              
             foreach ($datos as $dato) {
                             
-                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto=='Nuevo' && ($dato->fecha_liberada==NULL or $dato->fecha_liberada=='0000-00-00 00:00:00')) {
+                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto=='Nuevo' && ($dato->fecha_liberada=='0000-00-00' || $dato->fecha_liberada=='')) {
 
                                 if ($dato->estado == 1) {
                                     $estado_op= "Activa";
@@ -8984,6 +9266,12 @@ class Produccion extends CI_Controller {
                                     $desgajado_automatico='NO';
                                 }else{
                                     $desgajado_automatico= $dato->desgajado_automatico;
+                                }
+
+                                if ($dato->desgajado_automatico==NULL || $dato->desgajado_automatico=='NO') {
+                                    $trazado_desgajado='NO';
+                                }elseif ($dato->desgajado_automatico=='SI'){
+                                    $trazado_desgajado=$dato->conf_sal_pel_desgajado;
                                 }
 
                                 if ($dato->es_una_maquina==NULL) {
@@ -9001,13 +9289,13 @@ class Produccion extends CI_Controller {
                                 }
 
                                 $cuerpo .='<tr>
-                                    <td align="center">'.$dato->ot.'   POR FABRICAR</td>
+                                    <td align="center">'.$dato->ot.'</td>
                                     <td align="center">'.$dato->fecha.'</td>
                                     <td align="center">'.$fecha_liberada.'</td>
                                     <td align="center">'.$dato->razon_social.'</td>
                                     <td align="center">'.$dato->producto.'</td>
                                     <td align="center">'.$desgajado_automatico.'</td>
-                                    <td align="center">PENDIENTE</td>
+                                    <td align="center">'.$trazado_desgajado.'</td>
                                     <td align="center">'.$es_una_maquina.'</td>
                                     <td align="center">'.$dato->id_molde.'</td>
                                     <td align="center">'.$dato->condicion_del_producto.'</td>
@@ -9056,7 +9344,7 @@ class Produccion extends CI_Controller {
                                             <td align='center'><b>Estado</b></td>
                                         </tr>";
                                         $contador=0;
-                                        $lineasPorHoja=13;
+                                        $lineasPorHoja=12;
                                         
                                 } 
                             }
@@ -9127,7 +9415,7 @@ class Produccion extends CI_Controller {
                             </tr>';
              
             foreach ($datos as $dato) {
-                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto=='Nuevo' && ($dato->fecha_liberada==NULL or $dato->fecha_liberada=='0000-00-00 00:00:00')) {
+                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto=='Nuevo' && $dato->fecha_liberada!=NULL && $dato->fecha_liberada!='0000-00-00') {
 
                                 if ($dato->estado == 1) {
                                     $estado_op= "Activa";
@@ -9139,6 +9427,12 @@ class Produccion extends CI_Controller {
                                     $desgajado_automatico='NO';
                                 }else{
                                     $desgajado_automatico= $dato->desgajado_automatico;
+                                }
+
+                                if ($dato->desgajado_automatico==NULL || $dato->desgajado_automatico=='NO') {
+                                    $trazado_desgajado='NO';
+                                }elseif ($dato->desgajado_automatico=='SI'){
+                                    $trazado_desgajado=$dato->conf_sal_pel_desgajado;
                                 }
 
                                 if ($dato->es_una_maquina==NULL) {
@@ -9156,13 +9450,13 @@ class Produccion extends CI_Controller {
                                 }
 
                                 $cuerpo .='<tr>
-                                    <td align="center">'.$dato->ot.'   POR FABRICAR</td>
+                                    <td align="center">'.$dato->ot.'</td>
                                     <td align="center">'.$dato->fecha.'</td>
                                     <td align="center">'.$fecha_liberada.'</td>
                                     <td align="center">'.$dato->razon_social.'</td>
                                     <td align="center">'.$dato->producto.'</td>
                                     <td align="center">'.$desgajado_automatico.'</td>
-                                    <td align="center">PENDIENTE</td>
+                                    <td align="center">'.$trazado_desgajado.'</td>
                                     <td align="center">'.$es_una_maquina.'</td>
                                     <td align="center">'.$dato->id_molde.'</td>
                                     <td align="center">'.$dato->condicion_del_producto.'</td>
@@ -9211,7 +9505,7 @@ class Produccion extends CI_Controller {
                                             <td align='center'><b>Estado</b></td>
                                         </tr>";
                                         $contador=0;
-                                        $lineasPorHoja=13;
+                                        $lineasPorHoja=12;
                                         
                                 } 
                             }
@@ -9240,19 +9534,32 @@ class Produccion extends CI_Controller {
 
 
     public function ajaxguardar(){
-
-        $data = array(
-            'id_nodo'                      => $this->input->post("id_nodo",true),
-            'recepcion_ot'                 => $this->input->post("recepcion_ot",true),
-            'comentario_rechazo'           => $this->input->post("comentario_rechazo",true),
-            'fecha_rechazada_recepcion_OT' => $this->input->post("fecha_rechazada_recepcion_OT",true),
-            'recepcion_ot_aprobado_fecha'  => '0000-00-00',
-        );
-        $id_nodo                      = $this->input->post("id_nodo",true);
+        $id_nodo = $this->input->post("id_nodo",true);
+       
+        
+        if ($id_nodo==NULL) {
+            $data = array(
+                "id_usuario"                   =>$this->session->userdata('id'),
+                "tipo"                         =>$this->input->post('tipo',true),
+                "id_nodo"                      => $this->input->post('id_cotizacion_rechazo',true),
+                'recepcion_ot'                 => $this->input->post("recepcion_ot",true),
+                'comentario_rechazo'           => $this->input->post("comentario_rechazo",true),
+                'fecha_rechazada_recepcion_OT' => $this->input->post("fecha_rechazada_recepcion_OT",true),
+                'recepcion_ot_aprobado_fecha'  => '0000-00-00',
+            );
+            $this->db->insert("produccion_fotomecanica",$data);
+        } else {
+            $data = array(
+                'id_nodo'                      => $this->input->post("id_nodo",true),
+                'recepcion_ot'                 => $this->input->post("recepcion_ot",true),
+                'comentario_rechazo'           => $this->input->post("comentario_rechazo",true),
+                'fecha_rechazada_recepcion_OT' => $this->input->post("fecha_rechazada_recepcion_OT",true),
+                'recepcion_ot_aprobado_fecha'  => '0000-00-00',
+            );
+            $this->db->where('id_nodo', $id_nodo);
+            $this->db->update("produccion_fotomecanica", $data);
+        }
         $fecha_rechazada_recepcion_OT = $this->input->post("fecha_rechazada_recepcion_OT",true);
-
-        $this->db->where('id_nodo', $id_nodo);
-        $this->db->update("produccion_fotomecanica", $data);
 
         echo "Notificado el ".$fecha_rechazada_recepcion_OT;
 
@@ -9271,7 +9578,8 @@ class Produccion extends CI_Controller {
                             <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
                         </head>
                         <body>
-                        <h3><p class="text-center">PROGRAMA DE FOTOMECANICA</p></h3>
+                        <h3><p class="text-center">PROGRAMA DE FOTOMECANICA SIN LIBERAR</p></h3>
+                        
                     <p class="text-right">Fecha: '.date('d-m-Y').'</p>
 
                          <table border="1" width="100%">
@@ -9296,104 +9604,105 @@ class Produccion extends CI_Controller {
             foreach ($datos as $dato) {
                             //$valores = $this->orden_model->getOndaCotizacion($dato->id_cotizacion);
 
-/////
-                            $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($dato->id_cotizacion);
-                            $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
+                if ($dato->hay_que_troquelar=='SI' && ($dato->fecha_liberada=='0000-00-00' || $dato->fecha_liberada=='')) {
+                        
+                    $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($dato->id_cotizacion);
+                    $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
 
-                                if ($ing->archivo==""){
-                                    $trazado='NO';    
-                                }else{
-                                    $trazado='SI';
-                                }
+                    if ($ing->archivo==""){
+                        $trazado='NO';    
+                    }else{
+                        $trazado='SI';
+                    }
 
-                                if(($fotomecanica->acabado_impresion_4=="17") || ($fotomecanica->acabado_impresion_4==""))
-                                {
-                                    $hayAcabados = 'NO';
-                                    $lugarAcabado = 'No Aplica';
-                                }else{
-                                    $hayAcabados = 'SI';
-                                    $lugarAcabado = 'Externo';
-                                }
-                                //if(($fotomecanica->acabado_impresion_5=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_5==""))
-                                if(($fotomecanica->acabado_impresion_5=="17") || ($fotomecanica->acabado_impresion_5==""))
-                                {
-                                    $hayAcabados = 'NO';
-                                    $lugarAcabado = 'No Aplica';
-                                }else{
-                                    $hayAcabados = 'SI';
-                                    $lugarAcabado = 'Externo';
-                                }
-                                //if(($fotomecanica->acabado_impresion_6=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_6==""))
-                                if(($fotomecanica->acabado_impresion_6=="17") || ($fotomecanica->acabado_impresion_6==""))
-                                {
-                                    $hayAcabados = 'NO';
-                                    $lugarAcabado = 'No Aplica';
-                                }else{
-                                    $hayAcabados = 'SI';
-                                    $lugarAcabado = 'Externo';
-                                }      
+                    if(($fotomecanica->acabado_impresion_4=="17") || ($fotomecanica->acabado_impresion_4==""))
+                    {
+                        $hayAcabados = 'NO';
+                        $lugarAcabado = 'No Aplica';
+                    }else{
+                        $hayAcabados = 'SI';
+                        $lugarAcabado = 'Externo';
+                    }
+                    //if(($fotomecanica->acabado_impresion_5=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_5==""))
+                    if(($fotomecanica->acabado_impresion_5=="17") || ($fotomecanica->acabado_impresion_5==""))
+                    {
+                        $hayAcabados = 'NO';
+                        $lugarAcabado = 'No Aplica';
+                    }else{
+                        $hayAcabados = 'SI';
+                        $lugarAcabado = 'Externo';
+                    }
+                    //if(($fotomecanica->acabado_impresion_6=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_6==""))
+                    if(($fotomecanica->acabado_impresion_6=="17") || ($fotomecanica->acabado_impresion_6==""))
+                    {
+                        $hayAcabados = 'NO';
+                        $lugarAcabado = 'No Aplica';
+                    }else{
+                        $hayAcabados = 'SI';
+                        $lugarAcabado = 'Externo';
+                    }      
 
-                                $estado=$this->produccion_model->getFotomecanicaPorTipo(1,$dato->id_cotizacion);
-/////
-                   /////////////// CALCULAR EL ESTADO ///////////////
-                   $estados_pendiente = '';
-     //              echo "<pre>";
-       //            print_r($dato);
-         //          exit($dato->recepcion_ot);
-                   if ( $dato->recepcion_ot== ''){                    
+                    $estado=$this->produccion_model->getFotomecanicaPorTipo(1,$dato->id_cotizacion);
+                    ///// ///////// CALCULAR EL ESTADO ///////////////
+                    $estados_pendiente = '';
+                    //echo "<pre>";
+                    //print_r($dato);
+                    //exit($dato->recepcion_ot);
+                    if ( $dato->recepcion_ot== ''){                    
                         $estados_pendiente = 'Recepcion OT';
                        
-                   }elseif ( $dato->recepcion_ot!= 'Aprobada'){                    
+                    }elseif ( $dato->recepcion_ot!= 'Aprobada'){                    
                         $estados_pendiente = 'Revisión Trazado';
 
-                   }elseif ( $dato->revision_trazado != 'Aprobada'){ 
+                    }elseif ( $dato->revision_trazado != 'Aprobada'){ 
                         $estados_pendiente = 'Recepcion de Maqueta';
 
-                   }elseif ( $dato->recepcion_maqueta != 'Recepcion Aprobada'){ 
+                    }elseif ( $dato->recepcion_maqueta != 'Recepcion Aprobada'){ 
                         $estados_pendiente = 'Revisión de Imagen';                    
 
-                   }elseif ( $dato->revision_imagen != 'Aprobado'){ 
+                    }elseif ( $dato->revision_imagen != 'Aprobado'){ 
                         $estados_pendiente = 'Montaje Digital';                    
 
-                   }elseif ( $dato->montaje_digital != 'Aprobado'){ 
+                    }elseif ( $dato->montaje_digital != 'Aprobado'){ 
                         $estados_pendiente = 'Prueba de Color';                    
 
-                   }elseif ( $dato->prueba_color != 'Aprobado'){ 
+                    }elseif ( $dato->prueba_color != 'Aprobado'){ 
                         $estados_pendiente = 'Arte y Diseño';                    
 
-                   }elseif ( $dato->arte_diseno != 'Aprobada'){ 
+                    }elseif ( $dato->arte_diseno != 'Aprobada'){ 
                         $estados_pendiente = 'Confeccion Salida de Pelicula';                    
 
-                   }elseif ( $dato->conf_sal_pel != 'Entregado'){ 
+                    }elseif ( $dato->conf_sal_pel != 'Entregado'){ 
                         $estados_pendiente = 'Sobre de Desarrollo';
 
-                   }elseif ( $dato->sobre_desarrollo != 'Entregado'){ 
+                    }elseif ( $dato->sobre_desarrollo != 'Entregado'){ 
 
-                   }                    
-                   //////////////////////////////////////////////////                                
+                    }                    
+                    //////////////////////////////////////////////////                                
 
-                            $onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
+                    $onda    = $valores->nombre.' - ('.$valores->gramaje.' '.$valores->reverso.")";
 
-                            //Cantidad de Despacho
-                            $despacho = $this->despachos_model->getDespachosUltimoRegistro($dato->id_cotizacion);
+                    //Cantidad de Despacho
+                    $despacho = $this->despachos_model->getDespachosUltimoRegistro($dato->id_cotizacion);
 
-                            $cuerpo .='<tr>
-                                <td>'.$dato->ot.'</td>
-                                <td>'.fecha_con_slash($dato->fecha).'</td>                                
-                                <td>'.$dato->razon_social.'</td>
-                                <td>'.$dato->producto.'</td>
-                                <td>'.$dato->condicion.'</td>
-                                <td>'.$fotomecanica->fot_lleva_barniz.'</td>
-                                <td>'.$fotomecanica->fot_reserva_barniz.'</td>
-                                <td>'.$hayAcabados.'</td>
-                                <td>'.$trazado.'</td>
-                                <td>'.$dato->colores.'</td>
-                                <td>'.$dato->ancho.'</td>
-                                <td>'.$dato->largo.'</td>
-                                <td>'.$dato->tipo.'</td>
-                                <td align="right">'.$dato->cantidad.'</td>
-                                <td>'.$estados_pendiente.'</td>                                
-                            </tr>';
+                    $cuerpo .='<tr>
+                        <td>'.$dato->ot.'</td>
+                        <td>'.fecha_con_slash($dato->fecha).'</td>                                
+                        <td>'.$dato->razon_social.'</td>
+                        <td>'.$dato->producto.'</td>
+                        <td>'.$dato->condicion.'</td>
+                        <td>'.$fotomecanica->fot_lleva_barniz.'</td>
+                        <td>'.$fotomecanica->fot_reserva_barniz.'</td>
+                        <td>'.$hayAcabados.'</td>
+                        <td>'.$trazado.'</td>
+                        <td>'.$dato->colores.'</td>
+                        <td>'.$dato->ancho.'</td>
+                        <td>'.$dato->largo.'</td>
+                        <td>'.$dato->tipo.'</td>
+                        <td align="right">'.$dato->cantidad.'</td>
+                        <td>'.$estados_pendiente.'</td>                                
+                    </tr>';
+                }
             }
             $cuerpo .='</table></body>
                       </html>';

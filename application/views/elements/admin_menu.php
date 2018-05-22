@@ -168,7 +168,9 @@ if( $this->session->userdata('perfil')==1)
 					<li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_vendedor" id="dropdown_ususarios" title="Listado de Producción por Vendedor">Listado de Producción por Vendedor</a></li>
 					<li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_cerradas" id="dropdown_ususarios" title="Listado de Producción Cerradas">Listado de Ordenes Cerradas</a></li>
           <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_fotomecanica" id="dropdown_ususarios" title="Listado de Programa de Fotomecanica">Listado de Programa de Fotomecanica</a></li>
-          <li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_cartulina_liberar" id="dropdown_ususarios" title="Listado de Control de Cartulina por Liberar">Listado de Control de Cartulina por Liberar</a></li>
+          <li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_cartulina_liberar" id="dropdown_ususarios" title="Listado de Control de Cartulina por Liberar">Listado de Corte Cartulina por Liberar</a></li>
+          <li><a href="<?php echo  base_url(); ?>produccion/resumen_control_liner" id="dropdown_ususarios" title="RESUMEN CONTROL LINER">Resumen Control Liner</a></li>
+          <li><a href="<?php echo  base_url(); ?>produccion/resumen_control_onda" id="dropdown_ususarios" title="RESUMEN CONTROL ONDA">Resumen Control Onda</a></li>
           <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" id="dropdown_ususarios" title="Listado de Programa de Corrugado">Listado de Programa de Corrugado</a></li>          
           <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" id="dropdown_ususarios" title="Listado de Programa de Emplacado">Listado de Programa de Emplacado</a></li>
           <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_troquelado" id="dropdown_ususarios" title="Listado de Programa de Troquelado">Listado de Programa de Troquelado</a></li>

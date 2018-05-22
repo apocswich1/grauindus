@@ -242,6 +242,8 @@ function getField($campo,$datos,$ing)
         }
         $vendedor=$this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
         $trazadosing=$this->trazados_model->getTrazadosPorId($datos->trazado);
+        //print_r($trazadosing);
+        //echo $trazadosing->archivo;
         ?>
             <li>Cliente : <?php echo $cliente ?></li>
             <?php if($datos->id_cliente_sec!="" && $datos->id_cliente_sec!=0){ ?>
@@ -461,15 +463,15 @@ function getField($campo,$datos,$ing)
             <div class="controls">
                     <?php //echo $ing->archivo;// print_r($trazadosing) //my code is here ?>
                 <?php if ($ing->archivo == "") {
-                    if($moldes2->archivo == ""){?>
+                    if($moldes2->archivo == "" && $trazadosing->archivo==""){ ?>
                     <a href='#'>No Existe Archivo de Trazado Ingenieria</a>
-                    <?php }else{ if($trazadosing->archivo==""){?>
+                    <?php }else{ if($trazadosing->archivo==""){ ?>
                     <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $moldes2->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>    
                     <?php }else{ ?>
                     <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero  ?></a>        
-                    <?php } }} else { if ($ing->archivo == "") {?>
+                    <?php } }}else{ if ($ing->archivo == "") { ?>
                     <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
-                    <?php }else{ if($trazadosing->archivo==""){?>
+                    <?php }else{ if($trazadosing->archivo==""){ ?>
                     <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
                     <?php }else{ ?> 
                     <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero  ?></a>            
@@ -1343,13 +1345,12 @@ th {
     <div class="control-group">
 		<label class="control-label" for="id_antiguo">Lleva troquelado?</label>
 		<div class="controls">
-
 		<?php
           //  print_r($datos);exit();
 		if(sizeof($ing)==0) { ?>
-		<input readonly="true" type="text" name="lleva_troquelado"  value="<?php if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE"){echo 'SI';} if($datos->estan_los_moldes=="MOLDE GENERICO"){echo 'SI';} if($datos->estan_los_moldes=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="NO"){echo 'NO';} if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO LLEVA"){echo 'NO';} if($datos->estan_los_moldes=="CLIENTE LO APORTA"){echo 'SI';} ?>" />
+		<input type="text" name="lleva_troquelado"  value="<?php if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE"){echo 'SI';} if($datos->estan_los_moldes=="MOLDE GENERICO"){echo 'SI';} if($datos->estan_los_moldes=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="NO"){echo 'NO';} if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO LLEVA"){echo 'NO';} if($datos->estan_los_moldes=="CLIENTE LO APORTA"){echo 'SI';} ?>" />
 		<?php } elseif(sizeof($ing)>= 1) { ?>
-		<input readonly="true" type="text" name="lleva_troquelado"  value="<?php echo $ing->lleva_troquelado ?>" />
+		<input type="text" name="lleva_troquelado"  value="<?php echo $ing->lleva_troquelado ?>" />
 		<?php } ?>
 		</div>
 	</div> 
@@ -1380,7 +1381,7 @@ th {
                         $hacer_troquel='NO';
                 }                    
                 ?>
-                <input readonly="true" type="text" name="hacer_troquel"  value="<?php echo $hacer_troquel; ?>" />
+                    <input type="text" id="dato_hacer_troquel" name="hacer_troquel"  value="<?php echo $hacer_troquel; ?>" />
                     
 		</div>
                 <?php $molde=$this->moldes_model->getMoldesPorId($datos->numero_molde) ?>
@@ -1438,7 +1439,8 @@ th {
 		<label class="control-label" for="usuario">Unidades ("Producto Completo") por pliego <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
 		<?php if(sizeof($ing) >0) {?>  
-			<input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php echo $ing->unidades_por_pliego;?>" /><a style="color:#BBBBBB"> [<?php echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>
+			<!--<input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php //echo $ing->unidades_por_pliego;?>" /><a style="color:#BBBBBB"> [<?php //echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>-->
+                        <input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php if($ing->unidades_por_pliego!=""){echo $ing->unidades_por_pliego;}else{if($moldes2->unidades_productos_completos!=""){if($trazadosing->unidades_productos_completos==""){echo $moldes2->unidades_productos_completos;}else{echo $trazadosing->unidades_productos_completos;}}else{echo $_POST["unidades_por_pliego"];}}?>" /><a style="color:#BBBBBB"> [<?php echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>
                 <?php } else {?>  
                         <input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php if($moldes2->unidades_productos_completos!=""){if($trazadosing->unidades_productos_completos==""){echo $moldes2->unidades_productos_completos;}else{echo $trazadosing->unidades_productos_completos;}}else{echo $_POST["unidades_por_pliego"];}?>" /><a style="color:#BBBBBB"> [<?php echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>
                 <?php }?>                       
@@ -1450,7 +1452,7 @@ th {
 		<label class="control-label" for="usuario">Piezas totales en el pliego ( para desgajado )<strong style="color: red;">(*)</strong></label>
 		<div class="controls">
                     <?php if(sizeof($ing)>0) { ?>
-			<input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php echo $ing->piezas_totales_en_el_pliego?>" /> <a style="color:#BBBBBB"> [<?php if($ing->piezas_totales_en_el_pliego!=0){echo number_format($ing->piezas_totales_en_el_pliego,0,'','.');}?>] </a>
+                        <input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php if($ing->unidades_por_pliego!=""){echo $ing->piezas_totales_en_el_pliego;}else{if($moldes2->piezas_totales!=""){if($trazadosing->piezas_totales!=""){echo $trazadosing->piezas_totales;}else{echo $moldes2->piezas_totales;}}else{echo $datos->piezas_totales_en_el_pliego;}}?>" /> <a style="color:#BBBBBB"> [<?php if($ing->piezas_totales_en_el_pliego!=0){echo number_format($ing->piezas_totales_en_el_pliego,0,'','.');}?>] </a>
                     <?php } elseif(sizeof($datos)>0) { ?>
                         <input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php if($moldes2->piezas_totales!=""){if($trazadosing->piezas_totales!=""){echo $trazadosing->piezas_totales;}else{echo $moldes2->piezas_totales;}}else{echo $datos->piezas_totales_en_el_pliego;}?>" /><a style="color:#BBBBBB"> [<?php if($datos->piezas_totales_en_el_pliego!=0){echo number_format($datos->piezas_totales_en_el_pliego,0,'','.');}?>] </a>
                     <?php } else { ?>                
@@ -1461,15 +1463,15 @@ th {
 	</div>
     
 	<?php
-	if((sizeof($ing)>0) and ($ing->estan_los_moldes!="NO LLEVA"))
-	{
+	if((sizeof($ing)>0) && ($ing->estan_los_moldes!="NO LLEVA"))
+	{ 
 	?>
             <div class="control-group">
                 <label class="control-label" for="usuario">Lleva Troquel por atrás (reverso):</label>
                 <div class="controls">
                         <select name="troquel_por_atras" style="width: 260px;" onchange="llevafondo2(this.value);">
                         <option value="">Seleccione......</option>
-                        <?php if (sizeof($ing)>0)  { ?>
+                        <?php if (sizeof($ing)>0){ ?>
                             <option value="SI" <?php if($ing->troquel_por_atras=="SI"){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option>
                             <option value="NO" <?php if($ing->troquel_por_atras=="NO"){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
                             <option value="" <?php if($ing->troquel_por_atras==""){echo 'selected="selected"';}?>>Por definir</option>
@@ -1480,7 +1482,8 @@ th {
                             <option value="" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]==''){echo 'selected="selected"';}?>>Por definir</option>
                             <option value="NO LLEVA" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='NO LLEVA'){echo 'selected="selected"';}?>>No lleva</option>
                         <?php }  ?>                                                    
-                        </select> 			
+                        </select>
+                    <span id="etiquetatroquel" style="color:red"></span>
                 </div>
              </div>
 	<?php
@@ -1508,7 +1511,7 @@ th {
                             <option value="NO LLEVA" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='NO LLEVA'){echo 'selected="selected"';}?>>No lleva</option>
                         <?php }  ?>                                                    
                         </select> 
-                
+                        <span id="etiquetatroquel" style="color:red"></span>
             </div>
 	</div>
 	<?php
@@ -1833,12 +1836,13 @@ th {
                 </div>
             
 	</div>	
+ <?php //print_r($moldes2); //my code is here ?>
    <input type="hidden" name="ccac_o" id="ccac_o" value="45">
     <div class="control-group" id="producto">
 		<label class="control-label" for="usuario">Largo a cortar por Tamaño a cortar:<strong style="color: red;">(*)</strong></label>
 		<div class="controls">
                     <?php if(sizeof($ing)>0) { ?>
-			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $ing->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $ing->tamano_a_imprimir_2; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $ing->tamano_a_imprimir_1." X ".$ing->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
+                        <input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php if($ing->tamano_a_imprimir_1==""){echo $moldes2->ancho_bobina;}else{ echo $ing->tamano_a_imprimir_1; } ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php if($ing->tamano_a_imprimir_2==""){echo $moldes2->largo_bobina;}else{ echo $ing->tamano_a_imprimir_2; } ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php if($ing->tamano_a_imprimir_1==""){echo $moldes2->ancho_bobina;}else{ echo $ing->tamano_a_imprimir_1; } ?>" X "<?php if($ing->tamano_a_imprimir_2==""){echo $moldes2->largo_bobina;}else{ echo $ing->tamano_a_imprimir_2; }" Cms" ?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
                     <?php } elseif(sizeof($datos)>0) { ?>
 			<!--<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php //echo $datos->tamano_a_imprimir_1." X ".$datos->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccac"></h3></div>-->
 			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->ancho_bobina;}else{echo $moldes2->ancho_bobina; }?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->largo_bobina;}else{echo $moldes2->largo_bobina; }?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $_POST["tamano_1"]." X ".$_POST["tamano_2"]." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
@@ -3090,7 +3094,26 @@ th {
 	</div>
      <h3>Otros datos</h3>
     
-    
+    <div class="control-group">
+		<label class="control-label" for="usuario">Acepta Excedentes</label>
+		<div class="controls">
+		<select name="acepta_excedentes" style="width: 100px;" onchange="aceptaExcedentes();">
+                            <option value="">Seleccione.....</option>
+                      <?php  if (sizeof($datos)>0) {   ?>
+                            <option value="SI" <?php if($datos->acepta_excedentes=="SI"){echo 'selected="true"';}?>>SI</option>
+                            <option value="NO" <?php if($datos->acepta_excedentes=="NO"){echo 'selected="true"';}?>>NO</option>
+                      <?php } else {?>                    
+                            <option value="SI" <?php if(($_POST["acepta_excedentes"]) and $_POST["acepta_excedentes"]=='SI'){echo 'selected="selected"';}?>>SI</option>
+                            <option value="NO" <?php if(($_POST["acepta_excedentes"]) and $_POST["acepta_excedentes"]=='NO'){echo 'selected="selected"';}?>>NO</option>
+                    <?php } ?>                       
+
+                </select> 
+            <span id="acepta_excedentes">Acepta excedentes mas o menos 10%</span>
+            <input type="hidden" name="acepta_excedentes_extra" value="Acepta pagar extra por cantidad exacta" readonly="true" />
+            
+        
+		</div>
+	</div>
     
     
     <div class="control-group" id="producto">
@@ -3627,12 +3650,47 @@ switch (x) {
     $('#lleva_fondo_negro').on('change',()=>{
        if($('#lleva_fondo_negro').val()=="SI"){
         $('select[name=troquel_por_atras]').val('NO')
+        $('#etiquetatroquel').text('No Puede ser retiro porque lleva fondo negro');
+        $('select[name=troquel_por_atras]').prop('disabled',false);
+        $("select[name=troquel_por_atras] option[value='SI']").attr("disabled","true");
+    }else{
+        $('select[name=troquel_por_atras]').prop('disabled',false);
+        $('#etiquetatroquel').text('');
+        $("select[name=troquel_por_atras] option[value='SI']").removeAttr("disabled");
     }
     });
     
     if($('#lleva_fondo_negro').val()=="SI"){
-        $('select[name=troquel_por_atras]').val('NO')
+     $('#etiquetatroquel').text('No Puede ser retiro porque lleva fondo negro');
+     //$("select[name=troquel_por_atras] option[value='NO']").attr("selected",true);
+     $("select[name=troquel_por_atras] option[value='SI']").attr("disabled","true");
+    }else{
+     $('#etiquetatroquel').text('');
+     $("select[name=troquel_por_atras] option[value='SI']").removeAttr("disabled");
     }
     
+    if($("select[name=hay_que_troquelar]").val()=="NO"){
+     $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").attr("selected","true");
+     $("input[name=lleva_troquelado]").val("NO");
+     if($("input[name=hacer_troquel]").val()==""){
+     $("input[name=hacer_troquel]").val("NO"); }
+    }else{
+     if($("select[name=hay_que_troquelar]").val()=="SI" && $("input[name=nm]").val()==""){
+     $("select[name=select_estan_los_moldes]").val("");
+     $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").removeAttr("selected");
+     $("input[name=lleva_troquelado]").val("SI");
+     $("#dato_hacer_troquel").val("SI");
+     }else{
+        if($("select[name=hay_que_troquelar]").val()=="SI" && $("input[name=nm]").val()!==""){
+            $("select[name=select_estan_los_moldes]").val("");
+     $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").removeAttr("selected");
+     $("input[name=lleva_troquelado]").val("SI");
+     $("#dato_hacer_troquel").val("NO");
+        }
+      }
+     }
+    }
+    
+    alert($("input[name=nm]").val());
     
 </script>

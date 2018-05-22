@@ -359,8 +359,8 @@ class Ordenes extends CI_Controller {
                             "fecha_20_dias"=>$fecha_20_dias,
                         );  
                       }
-                  // exit(print_r($data));
-                    $this->db->insert("orden_de_produccion",$data);
+                 //  exit(print_r($data));
+                    //$this->db->insert("orden_de_produccion",$data);
                     // actualizo la forma de pago del cliente
                     $data_cliente=array
                     (
@@ -439,9 +439,9 @@ class Ordenes extends CI_Controller {
                         'cuando'=>date("Y-m-d"),
                         "glosa"=>$this->input->post('glosa',true),
                         "fecha_20_dias"=>$fecha_20_dias,
-                        "observaciones"=>$fecha_20_dias,
+                        "observaciones"=>$this->input->post('observaciones',true),
                     );
-                   // exit(print_r($data));
+                  //  exit(print_r($data));
                     $this->db->where('id_cotizacion', $this->input->post("id",true));
                     $this->db->update("orden_de_produccion",$data);
                     // actualizo la forma de pago del cliente
@@ -608,10 +608,10 @@ class Ordenes extends CI_Controller {
             $vendedor=$this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
             $producto=$this->productos_model->getProductosPorId($orden->producto_id);
             $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
-            //print_r($hoja);exit();
             $tapa = $this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_placa1);
             $monda = $this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_onda2);
             $mliner = $this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_liner3);
+            //print_r($mliner);exit();
             
             $orden_fotomecanica = $this->produccion_model->getFotomecanicaPorTipo(1,$id);
             $orden_ultimas = $this->orden_model->getUltimasOrdenes($orden->producto_id,$id);
@@ -648,11 +648,7 @@ class Ordenes extends CI_Controller {
            else 
                 $nombre_molde=$this->moldes_model->getMoldesPorId($orden->id_molde);    
     
-//       echo '<pre>';
-//                print_r($orden);
-//                echo  '</pre>';
-//            
-//            exit;
+
    
     if($tamano1==60 and $tamano2>100)
     {
@@ -693,12 +689,7 @@ class Ordenes extends CI_Controller {
 							<h1><span id="titulo">Cartonajes Grau </span></h1>
 							</td>
 				</tr>
-				
-				
-					<tr>
-							
-							
-							
+				<tr>						
 							<td class="centro">
 							<h1><span id="titulo" >
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -706,25 +697,15 @@ class Ordenes extends CI_Controller {
 							Orden de Producción</span>
 							</h1>
 							</td>
-							
 				</tr>
-				
-                </table>
+		</table>
                 </div>
                       
             </header>
                 <!--separador 20-->
                     <div class="separador_20"></div>
                 <!--/separador 20-->
-            
-			
-			
-			
-			
-			
-			
-			
-                    <!--separador 10-->
+                <!--separador 10-->
                     <div class="separador_10"></div>
                 <!--/separador 10--> 
                    <table id="tabla_detalle">
@@ -771,6 +752,16 @@ class Ordenes extends CI_Controller {
                         <td class="celda_25">FECHA ENTREGA SEGUN CLIENTE <span class="borde"><br>'.fecha_con_slash($ordenDeCompra->fecha_despacho).'</span></td>
                         <td class="celda_25">FECHA ENTREGA SEGUN EMPRESA <span class="borde"><br>'.fecha_con_slash($orden->fecha_entrega).'</span></td>
                     </tr>';
+                
+                if($datos->acepta_excedentes=="" || $datos->acepta_excedentes==NULL){
+                    $acepta_excedentes="Por Definir";
+                }else{
+                    if($datos->acepta_excedentes=="SI"){    
+                    $acepta_excedentes="Si Acepta Excedentes";
+                    }else{    
+                    $acepta_excedentes="Cantidad Exacta";
+                    }
+                }
                 if($ordenDeCompra->nota!=""){
                     $cuerpo.='<tr>
                         <td colspan="5" style="font-size:14px"><br><strong>NOTA: </strong>'.$ordenDeCompra->nota.'</td>
@@ -791,12 +782,14 @@ class Ordenes extends CI_Controller {
                     <tr>
                         <td class="celda_15">CANTIDAD</td>
                         <td class="celda_40">IDENTIFICACIÓN DEL TRABAJO</td>
+                        <td class="celda_40">NOMBRE TRABAJO CLIENTE</td>
                         <td class="celda_15">CPRODUCTO</td>
                         <td class="celda_15">PRECIO VENTA</td>
                     </tr>
                     <tr>
                         <td class="celda_15"><span class="borde"><strong>'.number_format($ordenDeCompra->cantidad_de_cajas,0,'','.').'</strong></span><br /></td>
-                        <td class="celda_40"><span class="borde"><strong>'.$ing->producto.'</strong></span></td>
+                        <td class="celda_50"><span class="borde"><strong>'.$ing->producto.'</strong></span></td>
+                        <td class="celda_40"><span class="borde"><strong>'.$ordenDeCompra->nombre_producto_cliente.'</strong></span></td>
                         <td class="celda_15"><span class="borde">'.$producto->codigo.'</span></td>
                         <td class="celda_15"><span class="borde">$'.number_format($ordenDeCompra->precio).'</span></td>
                     </tr>
@@ -807,7 +800,7 @@ class Ordenes extends CI_Controller {
                         <td colspan="4" class="celda_15">CANTIDAD DE PLIEGOS</td><td colspan="3" class="celda_15"><span class="borde"><strong>'.number_format($ordenDeCompra->cantidad_de_cajas,0,'','.').'</strong></span><br /></td>
                     </tr>
                     <tr>
-                        <td class="celda_25"><span class="borde"><strong>'.number_format($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego).'</strong>MERMA: '.$hoja->total_merma.'</span></td>
+                        <td class="celda_25"><span class="borde"><strong>'.number_format($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego).'</strong></span></td>
                     </tr>
                 </table>
                 <!--separador 50-->
@@ -823,7 +816,7 @@ class Ordenes extends CI_Controller {
                         <td><br /></td>
                     </tr>
                     <tr>
-                        <td class="celda_50">TAMAÑO CUCHILLO A CUCHILLO: &nbsp;<span class="borde">'.$ing->tamano_cuchillo_1.'</span>x<span class="borde">'.$ing->tamano_cuchillo_2.'</span><br /> </td>
+                        <td class="celda_50">TAMAÑO CUCHILLO A CUCHILLO: &nbsp;<span class="borde">'.$ing->tamano_cuchillo_1.'</span>x<span class="borde">'.$ing->tamano_cuchillo_2.'</span></td><td class="celda_50">ACEPTA EXCEDENTES : '.$acepta_excedentes.'<br /> </td>
                     </tr>
                 </table>
                 <!--separador 20-->
@@ -831,203 +824,164 @@ class Ordenes extends CI_Controller {
                 <!--/separador 20--> 
 				';
 				
+	    $acabado_1Array = $this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_1);
+            $acabado_1 = $acabado_4Array->caracteristicas;
+            $acabado_2Array = $this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_2);
+            $acabado_2 = $acabado_4Array->caracteristicas;
+            $acabado_3Array = $this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_3);
+            $acabado_3 = $acabado_4Array->caracteristicas;
 
-				
-									$acabado_1Array=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_1);
-                                    $acabado_1=$acabado_4Array->caracteristicas; 
-									$acabado_2Array=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_2);
-                                    $acabado_2=$acabado_4Array->caracteristicas; 
-									$acabado_3Array=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_3);
-                                    $acabado_3=$acabado_4Array->caracteristicas; 
-						
-						
-						if($fotomecanica->acabado_impresion_1=="16")
-                                {
-                                    $acabado_1="No Lleva";
-                                    $acabado_1Valor="&nbsp;";
-                                    $acabado_1MedidaMasValorVenta="&nbsp;";
-                                    $acabado_1Unitario="&nbsp;";
-									$acabado_1UnidadVentaNombre="&nbsp;";
-                                }
-						if($fotomecanica->acabado_impresion_2=="16")
-                                {
-                                    $acabado_2="No Lleva";
-                                    $acabado_2Valor="&nbsp;";
-                                    $acabado_2MedidaMasValorVenta="&nbsp;";
-                                    $acabado_2Unitario="&nbsp;";
-									$acabado_2UnidadVentaNombre="&nbsp;";
-                                }
-						if($fotomecanica->acabado_impresion_3=="16")
-                                {
-                                    $acabado_3="No Lleva";
-                                    $acabado_3Valor="&nbsp;";
-                                    $acabado_3MedidaMasValorVenta="&nbsp;";
-                                    $acabado_3Unitario="&nbsp;";
-									$acabado_3UnidadVentaNombre="&nbsp;";
-                                }
-			
-			 if($fotomecanica->acabado_impresion_4=="17")
-                                {
-                                    $acabado_4="No Lleva";
-                                    $acabado_4Valor="&nbsp;";
-                                    $acabado_4MedidaMasValorVenta="&nbsp;";
-                                    $acabado_4Unitario="&nbsp;";
-									$acabado_4UnidadVentaNombre="&nbsp;";
-                                }else
-                                {
-                                    $acabado_4Array=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_4);
-                                    $acabado_4=$acabado_4Array->caracteristicas; // Nombre acabado
-									
-                                    $acabado_4UnidadVentaNombre=$acabado_4Array->unv; //Nombre unidad de venta
-                                    $acabado_4Valor=$acabado_4Array->valor_venta; // ej: 52
-									
+            if ($fotomecanica->acabado_impresion_1 == "16") {
+                $acabado_1 = "No Lleva";
+                $acabado_1Valor = "&nbsp;";
+                $acabado_1MedidaMasValorVenta = "&nbsp;";
+                $acabado_1Unitario = "&nbsp;";
+                $acabado_1UnidadVentaNombre = "&nbsp;";
+            }
+            if ($fotomecanica->acabado_impresion_2 == "16") {
+                $acabado_2 = "No Lleva";
+                $acabado_2Valor = "&nbsp;";
+                $acabado_2MedidaMasValorVenta = "&nbsp;";
+                $acabado_2Unitario = "&nbsp;";
+                $acabado_2UnidadVentaNombre = "&nbsp;";
+            }
+            if ($fotomecanica->acabado_impresion_3 == "16") {
+                $acabado_3 = "No Lleva";
+                $acabado_3Valor = "&nbsp;";
+                $acabado_3MedidaMasValorVenta = "&nbsp;";
+                $acabado_3Unitario = "&nbsp;";
+                $acabado_3UnidadVentaNombre = "&nbsp;";
+            }
 
-									
-                                    $acabado_4MedidaMasValorVenta=($tamano1*$tamano2*$acabado_4Valor)/10000; // (ancho x largo x valor venta) /10000									
-                                    
-									$acabado_4CostoFijo=$acabado_4Array->costo_fijo;		
-									
-									 
-									if ($acabado_4Array->unidad_de_venta == '1' /*== '1'and sizeof($hoja->valor_acabado_1)==0*/) //mt2
-									{
-										//(cf/(total cajas/unidad pliego))+((ancho x largo x valor venta)/10.000)
-										$acabado_4Unitario = ($acabado_4CostoFijo/($datos->cantidad_1/$ing->unidades_por_pliego))+($acabado_4MedidaMasValorVenta);
-									}
-									
-									if ($acabado_4Array->unidad_de_venta == '4') //por pasada
-									{
-										$acabado_4Unitario = (($acabado_4CostoFijo/($datos->cantidad_1/$ing->unidades_por_pliego))+ $acabado_4Valor);
-										
-									}									
-                                }
-                                 if($fotomecanica->acabado_impresion_5=="17")
-                                {
-                                    $acabado_5="No Lleva";
-                                    $acabado_5Valor="&nbsp;";
-                                    $acabado_4MedidaMasValorVenta="&nbsp;";
-                                    $acabado_5Unitario="&nbsp;";
-									$acabado_5UnidadVentaNombre="&nbsp;";
-                                }else
-                                {
-                                    $acabado_5Array=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_5);
-                                    $acabado_5=$acabado_5Array->caracteristicas;
-									
-									$acabado_5UnidadVentaNombre=$acabado_5Array->unv; //Nombre unidad de venta
-                                    $acabado_5Valor=$acabado_5Array->valor_venta; // ej: 52
-									
+            if ($fotomecanica->acabado_impresion_4 == "17") {
+                $acabado_4 = "No Lleva";
+                $acabado_4Valor = "&nbsp;";
+                $acabado_4MedidaMasValorVenta = "&nbsp;";
+                $acabado_4Unitario = "&nbsp;";
+                $acabado_4UnidadVentaNombre = "&nbsp;";
+            } else {
+                $acabado_4Array = $this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_4);
+                $acabado_4 = $acabado_4Array->caracteristicas; // Nombre acabado
+                $acabado_4UnidadVentaNombre = $acabado_4Array->unv; //Nombre unidad de venta
+                $acabado_4Valor = $acabado_4Array->valor_venta; // ej: 52
+                $acabado_4MedidaMasValorVenta = ($tamano1 * $tamano2 * $acabado_4Valor) / 10000; // (ancho x largo x valor venta) /10000									
+                $acabado_4CostoFijo = $acabado_4Array->costo_fijo;
 
-									
-                                    $acabado_5MedidaMasValorVenta=($tamano1*$tamano2*$acabado_5Valor)/10000; // (ancho x largo x valor venta) /10000									
-                                    
-									$acabado_5CostoFijo=$acabado_5Array->costo_fijo;		
-									
-									 
-									if ($acabado_5Array->unidad_de_venta == '1' /*== '1'and sizeof($hoja->valor_acabado_1)==0*/) //mt2
-									{
-										//(cf/(total cajas/unidad pliego))+((ancho x largo x valor venta)/10.000)
-										$acabado_5Unitario = ($acabado_5CostoFijo/($datos->cantidad_1/$ing->unidades_por_pliego))+($acabado_5MedidaMasValorVenta);
-									}
-									
-									if ($acabado_5Array->unidad_de_venta == '4') //por pasada
-									{
-										$acabado_5Unitario = (($acabado_5CostoFijo/($datos->cantidad_1/$ing->unidades_por_pliego))+ $acabado_5Valor);
-										
-									}
-                                }    
-                              if($fotomecanica->acabado_impresion_6=="17")
-                                {
-                                    $acabado_6="No Lleva";
-                                    $acabado_6Valor="&nbsp;";
-                                    $acabado_4MedidaMasValorVenta="&nbsp;";
-                                    $acabado_6Unitario="&nbsp;";
-									$acabado_6UnidadVentaNombre="&nbsp;";
-                                }else
-                                {
-                                    $acabado_6Array=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_6);
-                                    $acabado_6=$acabado_6Array->caracteristicas;
-									
-                                    $acabado_6UnidadVentaNombre=$acabado_Array->unv; //Nombre unidad de venta
-                                    $acabado_6Valor=$acabado_6Array->valor_venta; // ej: 52
-									
-                                    $acabado_6MedidaMasValorVenta=($tamano1*$tamano2*$acabado_6Valor)/10000; // (ancho x largo x valor venta) /10000									
-                                    
-									$acabado_6CostoFijo=$acabado_6Array->costo_fijo;		
-									
-									 
-									if ($acabado_6Array->unidad_de_venta == '1' /*== '1'and sizeof($hoja->valor_acabado_1)==0*/) //mt2
-									{
-										//(cf/(total cajas/unidad pliego))+((ancho x largo x valor venta)/10.000)
-										$acabado_6Unitario = ($acabado_6CostoFijo/($datos->cantidad_1/$ing->unidades_por_pliego))+($acabado_6MedidaMasValorVenta);
-									}
-									
-									if ($acabado_6Array->unidad_de_venta == '4') //por pasada
-									{
-										$acabado_6Unitario = (($acabado_6CostoFijo/($datos->cantidad_1/$ing->unidades_por_pliego))+ $acabado_6Valor);
-										
-									}
-                                }  
-			
-			
-								if($hoja->valor_acabado_1 != '0')
-								{
-									$valor_acabado_1hc = $hoja->valor_acabado_1;
-								}
-								else
-								{
-									$valor_acabado_1hc = $acabado_4Unitario;	
-								}
-								
-								if($hoja->valor_acabado_2 != '0')
-								{
-									$valor_acabado_2hc = $hoja->valor_acabado_2;
-								}
-								else
-								{
-									$valor_acabado_2hc = $acabado_5Unitario;	
-								}
-								
-								if($hoja->valor_acabado_3 != '0')
-								{
-									$valor_acabado_3hc = $hoja->valor_acabado_3;
-								} 
-								else
-								{
-									$valor_acabado_3hc = $acabado_6Unitario;	
-								}
-								
-                                                                
-                                                                echo $fotomecanica->acabado_impresion_4;
-                                                                echo $fotomecanica->acabado_impresion_5."<br>";
-                                                                echo $fotomecanica->acabado_impresion_6."<br>";
-                                                                //exit();
-								//if(($fotomecanica->acabado_impresion_4=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_4==""))
-								if(($fotomecanica->acabado_impresion_4=="17") || ($fotomecanica->acabado_impresion_4==""))
-								{
-									$hayAcabados = 'NO';
-									$lugarAcabado = 'No Aplica';
-								}else{
-									$hayAcabados = 'SI';
-									$lugarAcabado = 'Externo';
-								}
-								//if(($fotomecanica->acabado_impresion_5=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_5==""))
-								if(($fotomecanica->acabado_impresion_5=="17") || ($fotomecanica->acabado_impresion_5==""))
-								{
-									$hayAcabados = 'NO';
-									$lugarAcabado = 'No Aplica';
-								}else{
-									$hayAcabados = 'SI';
-									$lugarAcabado = 'Externo';
-								}
-								//if(($fotomecanica->acabado_impresion_6=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_6==""))
-								if(($fotomecanica->acabado_impresion_6=="17") || ($fotomecanica->acabado_impresion_6==""))
-								{
-									$hayAcabados = 'NO';
-									$lugarAcabado = 'No Aplica';
-								}else{
-									$hayAcabados = 'SI';
-									$lugarAcabado = 'Externo';
-								}
-                                                                //valores de procesos especiales (Folia y cuno)
+                if ($acabado_4Array->unidad_de_venta == '1' /* == '1'and sizeof($hoja->valor_acabado_1)==0 */) { //mt2
+                    //(cf/(total cajas/unidad pliego))+((ancho x largo x valor venta)/10.000)
+                    $acabado_4Unitario = ($acabado_4CostoFijo / ($datos->cantidad_1 / $ing->unidades_por_pliego)) + ($acabado_4MedidaMasValorVenta);
+                }
+
+                if ($acabado_4Array->unidad_de_venta == '4') { //por pasada
+                    $acabado_4Unitario = (($acabado_4CostoFijo / ($datos->cantidad_1 / $ing->unidades_por_pliego)) + $acabado_4Valor);
+                }
+            }
+            if ($fotomecanica->acabado_impresion_5 == "17") {
+                $acabado_5 = "No Lleva";
+                $acabado_5Valor = "&nbsp;";
+                $acabado_4MedidaMasValorVenta = "&nbsp;";
+                $acabado_5Unitario = "&nbsp;";
+                $acabado_5UnidadVentaNombre = "&nbsp;";
+            } else {
+                $acabado_5Array = $this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_5);
+                $acabado_5 = $acabado_5Array->caracteristicas;
+
+                $acabado_5UnidadVentaNombre = $acabado_5Array->unv; //Nombre unidad de venta
+                $acabado_5Valor = $acabado_5Array->valor_venta; // ej: 52
+
+
+
+                $acabado_5MedidaMasValorVenta = ($tamano1 * $tamano2 * $acabado_5Valor) / 10000; // (ancho x largo x valor venta) /10000									
+
+                $acabado_5CostoFijo = $acabado_5Array->costo_fijo;
+
+
+                if ($acabado_5Array->unidad_de_venta == '1' /* == '1'and sizeof($hoja->valor_acabado_1)==0 */) { //mt2
+                    //(cf/(total cajas/unidad pliego))+((ancho x largo x valor venta)/10.000)
+                    $acabado_5Unitario = ($acabado_5CostoFijo / ($datos->cantidad_1 / $ing->unidades_por_pliego)) + ($acabado_5MedidaMasValorVenta);
+                }
+
+                if ($acabado_5Array->unidad_de_venta == '4') { //por pasada
+                    $acabado_5Unitario = (($acabado_5CostoFijo / ($datos->cantidad_1 / $ing->unidades_por_pliego)) + $acabado_5Valor);
+                }
+            }
+            if ($fotomecanica->acabado_impresion_6 == "17") {
+                $acabado_6 = "No Lleva";
+                $acabado_6Valor = "&nbsp;";
+                $acabado_4MedidaMasValorVenta = "&nbsp;";
+                $acabado_6Unitario = "&nbsp;";
+                $acabado_6UnidadVentaNombre = "&nbsp;";
+            } else {
+                $acabado_6Array = $this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_6);
+                $acabado_6 = $acabado_6Array->caracteristicas;
+
+                $acabado_6UnidadVentaNombre = $acabado_Array->unv; //Nombre unidad de venta
+                $acabado_6Valor = $acabado_6Array->valor_venta; // ej: 52
+
+                $acabado_6MedidaMasValorVenta = ($tamano1 * $tamano2 * $acabado_6Valor) / 10000; // (ancho x largo x valor venta) /10000									
+
+                $acabado_6CostoFijo = $acabado_6Array->costo_fijo;
+
+
+                if ($acabado_6Array->unidad_de_venta == '1' /* == '1'and sizeof($hoja->valor_acabado_1)==0 */) { //mt2
+                    //(cf/(total cajas/unidad pliego))+((ancho x largo x valor venta)/10.000)
+                    $acabado_6Unitario = ($acabado_6CostoFijo / ($datos->cantidad_1 / $ing->unidades_por_pliego)) + ($acabado_6MedidaMasValorVenta);
+                }
+
+                if ($acabado_6Array->unidad_de_venta == '4') { //por pasada
+                    $acabado_6Unitario = (($acabado_6CostoFijo / ($datos->cantidad_1 / $ing->unidades_por_pliego)) + $acabado_6Valor);
+                }
+            }
+
+
+            if ($hoja->valor_acabado_1 != '0') {
+                $valor_acabado_1hc = $hoja->valor_acabado_1;
+            } else {
+                $valor_acabado_1hc = $acabado_4Unitario;
+            }
+
+            if ($hoja->valor_acabado_2 != '0') {
+                $valor_acabado_2hc = $hoja->valor_acabado_2;
+            } else {
+                $valor_acabado_2hc = $acabado_5Unitario;
+            }
+
+            if ($hoja->valor_acabado_3 != '0') {
+                $valor_acabado_3hc = $hoja->valor_acabado_3;
+            } else {
+                $valor_acabado_3hc = $acabado_6Unitario;
+            }
+
+
+            echo $fotomecanica->acabado_impresion_4;
+            echo $fotomecanica->acabado_impresion_5 . "<br>";
+            echo $fotomecanica->acabado_impresion_6 . "<br>";
+            //exit();
+            //if(($fotomecanica->acabado_impresion_4=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_4==""))
+            if (($fotomecanica->acabado_impresion_4 == "17") || ($fotomecanica->acabado_impresion_4 == "")) {
+                $hayAcabados = 'NO';
+                $lugarAcabado = 'No Aplica';
+            } else {
+                $hayAcabados = 'SI';
+                $lugarAcabado = 'Externo';
+            }
+            //if(($fotomecanica->acabado_impresion_5=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_5==""))
+            if (($fotomecanica->acabado_impresion_5 == "17") || ($fotomecanica->acabado_impresion_5 == "")) {
+                $hayAcabados = 'NO';
+                $lugarAcabado = 'No Aplica';
+            } else {
+                $hayAcabados = 'SI';
+                $lugarAcabado = 'Externo';
+            }
+            //if(($fotomecanica->acabado_impresion_6=="17") && ($hayAcabados != 'SI') && ($fotomecanica->acabado_impresion_6==""))
+            if (($fotomecanica->acabado_impresion_6 == "17") || ($fotomecanica->acabado_impresion_6 == "")) {
+                $hayAcabados = 'NO';
+                $lugarAcabado = 'No Aplica';
+            } else {
+                $hayAcabados = 'SI';
+                $lugarAcabado = 'Externo';
+            }
+            //valores de procesos especiales (Folia y cuno)
      $tesp1=$fotomecanica->folia1_proceso_seletec;
      $tesp2=$fotomecanica->folia2_proceso_seletec;
      $tesp3=$fotomecanica->folia3_proceso_seletec;
@@ -1060,14 +1014,14 @@ class Ordenes extends CI_Controller {
     $folia3=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->folia3_proceso_seletec);
     $cuno1=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->cuno1_proceso_seletec);
     $cuno2=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->cuno2_proceso_seletec);
-   // print_r($folia1);exit();
     //Lleno los arrays de costos fijos
     $cffolia1=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->folia1_molde_selected);
     $cffolia2=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->folia2_molde_selected);
     $cffolia3=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->folia3_molde_selected);
     $cfcuno1=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->cuno1_molde_selected);
-    $cfcuno2=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->cuno2_molde_selected); 
-			
+    $cfcuno2=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->cuno2_molde_selected);
+    
+    
 				$cuerpo.='
 				
 				<table id="tabla_detalle">
@@ -1078,110 +1032,201 @@ class Ordenes extends CI_Controller {
                         <td class="celda_25">ACABADOS EXTERNOS <span class="borde">'.$hayAcabados.'</span></td>
                         <td class="celda_25">LUGAR <span class="borde">'.$lugarAcabado.'</span></td>
                     </tr>
-                </table>
-			
-				
-		<br /><table border="1" style="width:300px;">';
+                </table>';
+                                if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_1){
+                                        $merma = $hoja->total_merma;
+                                }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_2){
+                                        $merma = $hoja->total_merma2;
+                                }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_3){
+                                        $merma = $hoja->total_merma3;
+                                }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_4){
+                                        $merma = $hoja->total_merma3;
+                                }
+                                
+                                $totalpliegos = ($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)+$merma;
+                                $kilosdelaonda=(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)+104;
+                                $mermaonda=(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+104;
+                                $mermaliner=(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+104;
+                                $pliegosonda=($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)+(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+104;
+                                $pliegosliner=($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)+(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+104;
+                                $kiloonda = number_format((($ing->tamano_a_imprimir_1 * $ing->tamano_a_imprimir_2 * $monda->gramaje * $pliegosonda)/10000000)*1.37,0,"",".");
+                                $kiloliner = number_format((($ing->tamano_a_imprimir_1 * $ing->tamano_a_imprimir_2 * $monda->gramaje * $pliegosonda)/10000000),0,"",".");
+                                //echo $kilosdelaonda;exit();
+                               // $kiloonda = number_format(($ing->tamano_a_imprimir_1 * $ing->tamano_a_imprimir_2 * $hoja->onda_kilo * $hoja->gramos_metro_cuadrado)/10000000,0,"",".");
+		 $cuerpo.='<br />
+                <table border="1" width="450px">
+                <tr>
+                <td colspan="7">Materialidad: '.$fotomecanica->materialidad_datos_tecnicos.'</td>
+                </tr>
+                <tr>
+                <td></td>
+                <td align="center">Tipo</td>
+                <td align="center">Gramaje</td>
+                <td align="center">Pliegos Buenos</td>
+                <td align="center">Merma</td>
+                <td align="center">Total Pliegos</td>
+                <td align="center">Kilos</td>
+                <tr>
+                <tr>
+                <td>Placa </td>
+                <td align="center">'.$tapa->materiales_tipo.'</td>'
+                         . '<td align="center">'.$tapa->gramaje.'</td>'
+                         . '<td align="center">'.$ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego.'</td>'
+                         . '<td align="center">'.$merma.'</td>'
+                         . '<td align="center">'.$totalpliegos.'</td>'
+                         . '<td align="center">'.$hoja->kilos_placa.'</td>
+                <tr>';
+                if($fotomecanica->materialidad_datos_tecnicos!=='Cartulina-cartulina' && $fotomecanica->materialidad_datos_tecnicos!=='Solo Cartulina'){
+                $cuerpo.='
+                <tr>
+                <td>Onda </td>
+                <td align="center">'.$monda->materiales_tipo.'</td>'
+                        . '<td align="center">'.$monda->gramaje.'</td>'
+                        . '<td align="center">'.$ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego.'</td>'
+                        . '<td align="center">'.$mermaonda.'</td>'
+                        . '<td align="center">'.$pliegosonda.'</td>'
+                        . '<td align="center">'.$kiloonda.'</td>
+                <tr>';
+                }
+                if($fotomecanica->materialidad_datos_tecnicos!=='Solo Cartulina'){
+                $cuerpo.='
+                <tr>
+                <td>Liner </td>
+                <td align="center">'.$mliner->materiales_tipo.'</td>'
+                        . '<td align="center">'.$mliner->gramaje.'</td>'
+                        . '<td align="center">'.$ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego.'</td>'
+                        . '<td align="center">'.$mermaliner.'</td>'
+                        . '<td align="center">'.$pliegosliner.'</td>'
+                        . '<td align="center">'.$kiloliner.'</td>
+                <tr>';
+                }
+                $cuerpo.='</table>';
+                
+		//print_r($acabado_4Array);exit();
+                $cuerpo.='<br />
+                <table border="1" width="450px">
+                <tr>
+                <td colspan="3" align="center">Trabajos Externos</td>
+                </tr>
+                <tr>
+                <td align="center">Descripcion</td>
+                <td align="center">Valor</td>
+                <td align="center">Medida</td>
+                <tr>';
+                if(!empty($acabado_1)){
+                $cuerpo.='<tr>
+                <td align="center">'.$acabado_1.'</td>
+                <td align="center">'.$acabado_1Array->valor_venta.'</td>
+                <td align="center">'.$acabado_1Array->unv.'</td>
+                <tr>';}
+                if(!empty($acabado_2)){
+                $cuerpo.='<tr>
+                <td align="center">'.$acabado_2.'</td>
+                <td align="center">'.$acabado_2Array->valor_venta.'</td>
+                <td align="center">'.$acabado_2Array->unv.'</td>
+                <tr>';}
+                if(!empty($acabado_3)){
+                $cuerpo.='<tr>
+                <td align="center">'.$acabado_3.'</td>
+                <td align="center">'.$acabado_3Array->valor_venta.'</td>
+                <td align="center">'.$acabado_3Array->unv.'</td>
+                <tr>';}
+                if(!empty($acabado_4)){
+                $cuerpo.='<tr>
+                <td align="center">'.$acabado_4.'</td>
+                <td align="center">'.$acabado_4Array->valor_venta.'</td>
+                <td align="center">'.$acabado_4Array->unv.'</td>
+                <tr>';}
+                if(!empty($acabado_5)){
+                $cuerpo.='<tr>
+                <td align="center">'.$acabado_5.'</td>
+                <td align="center">'.$acabado_5Array->valor_venta.'</td>
+                <td align="center">'.$acabado_5Array->unv.'</td>
+                <tr>';}
+                if(!empty($acabado_6)){
+                $cuerpo.='<tr>
+                <td align="center">'.$acabado_6.'</td>
+                <td align="center">'.$acabado_6Array->valor_venta.'</td>
+                <td align="center">'.$acabado_6Array->unv.'</td>
+                <tr>';}
+                $cuerpo.='</table>';
+                $cuerpo.='<br />
+                
+                <table border="1" style="width:300px;">';
                 if(!empty($folia1) || !empty($folia2) || !empty($folia3) || !empty($cuno1) || !empty($cuno2)){
                     
                 $cuerpo.='
-                <tr><th align="center" colspan="4" style="background-color:#eeeeee">Valores para trabajos especiales de cuño y folia</th></tr>
+                <tr><th align="center" colspan="3" style="background-color:#eeeeee">Valores para trabajos especiales de cuño y folia</th></tr>
                 <tr>
                 <td align="left" width="150" style="background-color:#eeeeee"><b>Descripcion</b></td>
                 <td align="left" width="150" style="background-color:#eeeeee"><b>Valor de Venta</b></td>
                 <td align="left" width="150" style="background-color:#eeeeee"><b>Unidad de Medida</b></td>
-                <td align="left" width="150" style="background-color:#eeeeee"><b>Proveedor</b></td>
                 </tr>';
                 }
-                if($folia1){
+                if(!empty($folia1)){
                 $cuerpo.="<tr><td>".$folia1->caracteristicas."</td>";     
                 $cuerpo.="<td>".$folia1->valor_venta."</td>";     
-                $cuerpo.="<td>".$folia1->unidades_de_venta."</td>";     
-                $cuerpo.="<td>"."</td>";     
+                $cuerpo.="<td>".$folia1->unv."</td>";     
                 }
-                if($folia2){
+                if(!empty($folia2)){
                 $cuerpo.="<tr><td>".$folia2->caracteristicas."</td>";     
                 $cuerpo.="<td>".$folia2->valor_venta."</td>";     
-                $cuerpo.="<td>".$folia2->unidades_de_venta."</td>";          
-                $cuerpo.="<td>"."</td>";          
+                $cuerpo.="<td>".$folia2->unv."</td>";          
                 }
-                if($folia3){
+                if(!empty($folia3)){
                 $cuerpo.="<tr><td>".$folia3->caracteristicas."</td>";     
                 $cuerpo.="<td>".$folia3->valor_venta."</td>";     
-                $cuerpo.="<td>".$folia3->unidades_de_venta."</td>";        
-                $cuerpo.="<td>"."</td>";        
+                $cuerpo.="<td>".$folia3->unv."</td>";        
                 }
-                if($cuno1){
+                if(!empty($cuno1)){
                 $cuerpo.="<tr><td>".$cuno1->caracteristicas."</td>";     
                 $cuerpo.="<td>".$cuno1->valor_venta."</td>";     
-                $cuerpo.="<td>".$cuno1->unidades_de_venta."</td>";       
-                $cuerpo.="<td>"."</td>";       
+                $cuerpo.="<td>".$cuno1->unv."</td>";       
                 }
-                if($cuno2){
+                if(!empty($cuno2)){
                 $cuerpo.="<tr><td>".$cuno2->caracteristicas."</td>";     
                 $cuerpo.="<td>".$cuno2->valor_venta."</td>";     
-                $cuerpo.="<td>".$cuno2->unidades_de_venta."</td>";        
-                $cuerpo.="<td>"."</td>";        
+                $cuerpo.="<td>".$cuno2->unv."</td>";        
+                }
+                if(!empty($cffolia1)){
+                $cuerpo.="<tr><td>".$cffolia1->caracteristicas."</td>";     
+                $cuerpo.="<td>".$cffolia1->valor_venta."</td>";     
+                $cuerpo.="<td>".$cffolia1->unv."</td>";     
+                }
+                if(!empty($cffolia2)){
+                $cuerpo.="<tr><td>".$cffolia2->caracteristicas."</td>";     
+                $cuerpo.="<td>".$cffolia2->valor_venta."</td>";     
+                $cuerpo.="<td>".$cffolia2->unv."</td>";          
+                }
+                if(!empty($cffolia3)){
+                $cuerpo.="<tr><td>".$cffolia3->caracteristicas."</td>";     
+                $cuerpo.="<td>".$cffolia3->valor_venta."</td>";     
+                $cuerpo.="<td>".$cffolia3->unv."</td>";        
+                }
+                 if(!empty($cfcuno1)){
+                $cuerpo.="<tr><td>".$cfcuno1->caracteristicas."</td>";     
+                $cuerpo.="<td>".$cfcuno1->valor_venta."</td>";     
+                $cuerpo.="<td>".$cfcuno1->unv."</td>";       
+                }
+                if(!empty($cfcuno2)){
+                $cuerpo.="<tr><td>".$cfcuno2->caracteristicas."</td>";     
+                $cuerpo.="<td>".$cfcuno2->valor_venta."</td>";     
+                $cuerpo.="<td>".$cfcuno2->unv."</td>";        
                 }
                 $cuerpo.='
                 </table><br />
                 <table border="0" >
+                ';
 
-                <tr>
-                <td class="celda_3"></td>
-                <td class="celda_3"></td>
-                <td class="celda_3"></td>
-                <td class="celda_3">&nbsp;</td>
+//  ehndz quitado                      $cuerpo.='
+//                        <tr>
+//                        <td class="celda_3"><strong> Placa:</strong> </td>
+//                        <td class="celda_3"></td>
+//                        <td class="celda_3"><strong>Kilos Pliegos Gramajes</strong> </td>
+//                        <td class="celda_3">&nbsp;</td>
+//                        ';
 
-                <td class="fuente2">Descripcion</td>
-                <td class="celda_3">&nbsp;</td>
-                <td class="fuente2">Valor</td>
-                 <td class="celda_3">&nbsp;</td>
-                <td class="fuente2">Medida</td>
-                 <td class="celda_3">&nbsp;</td>
-                <td class="fuente2">Unitario</td>
-                  <td class="celda_3">&nbsp;</td>
-                <td class="fuente2">Empresa</td>
-                </tr>
-
-                        <tr>
-                        <td class="celda_3"></td>
-                        <td class="celda_3"></td>
-                        <td class="celda_3"></td>
-                        <td class="celda_3">&nbsp;</td>
-
-                        <td class="fuente2"><span class="fuente2">'.$acabado_1.'</span></td>
-                        <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                         <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                         <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                          <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                        </tr>
-                        ';
-
-                        $cuerpo.='
-                        <tr>
-                        <td class="celda_3"><strong> Placa:</strong> </td>
-                        <td class="celda_3"></td>
-                        <td class="celda_3"><strong>Kilos Pliegos Gramajes</strong> </td>
-                        <td class="celda_3">&nbsp;</td>
-                        ';
-
-                        $cuerpo.='
-                        <td class="fuente2"><span class="fuente2">'.$acabado_3.'</span></td>
-                        <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                         <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                         <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                         <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                        </tr>
-                        ';
+                
 
                         if($fotomecanica->materialidad_datos_tecnicos == 'Cartulina-cartulina')
                         {
@@ -1204,13 +1249,13 @@ class Ordenes extends CI_Controller {
                     }
                 } //se sustituyo $placa_kilo por $placakilo
                 //
-                        $cuerpo.='
-                        <tr>															
-                        <td class="celda_3">'.$tapa->materiales_tipo.''.$tapa->gramaje.'</td>
-                        <td class="celda_3"> </td>
-                        <td class="celda_3 centro">'.$placakilos.' '.$placakilo.'&nbsp;&nbsp;'.$materialidad_1->gramaje.'</td>
-                        <td class="celda_3">&nbsp;</td>
-                        ';
+//     ehndz quitado                   $cuerpo.='
+//                        <tr>															
+//                        <td class="celda_3">'.$tapa->materiales_tipo.''.$tapa->gramaje.'</td>
+//                        <td class="celda_3"> </td>
+//                        <td class="celda_3 centro">'.$placakilos.' '.$placakilo.'&nbsp;&nbsp;'.$materialidad_1->gramaje.'</td>
+//                        <td class="celda_3">&nbsp;</td>
+//                        ';
                          }else{
                             if ($ordenDeCompra->cantidad_de_cajas == $datos->cantidad_1) {
                     //$placakilo = ($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego) + $hoja->total_merma;
@@ -1228,61 +1273,25 @@ class Ordenes extends CI_Controller {
                         }
                     }
                 }
-//                echo "AAA".$ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego;
-//                echo "AAA".$placakilo;exit();
-//                echo "AAA".$placakilo;exit();
-                //se sustituyo $placa_kilo por $placakilo
-                        $cuerpo.='
-                        <tr>															
-                        <td class="celda_3">'.$tapa->materiales_tipo.'&nbsp;'.$tapa->gramaje.'</td>
-                        <td class="celda_3"> </td>
-                        <td class="celda_3 centro">'.$hoja->total_pliegos.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$placakilo.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$materialidad_1->gramaje.'</td>
-                        <td class="celda_3">&nbsp;</td>
-                        ';
+
+//     ehndz quitado                   $cuerpo.='
+//                        <tr>															
+//                        <td class="celda_3">'.$tapa->materiales_tipo.'&nbsp;'.$tapa->gramaje.'</td>
+//                        <td class="celda_3"> </td>
+//                        <td class="celda_3 centro">'.$hoja->total_pliegos.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$placakilo.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$materialidad_1->gramaje.'</td>
+//                        <td class="celda_3">&nbsp;</td>
+//                        ';
 
                         }
 
-                        $cuerpo.='
-                        <td class="fuente2"><span class="fuente2">'.$acabado_3.'</span></td>
-                         <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                         <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                          <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                         <td class="celda_3">&nbsp;</td>
-                        <td class="fuente2"><span class="fuente2">0</span></td>
-                        </tr>
-
-                        <tr>
-
-                        <td class="celda_3"><strong> '.$fotomecanica->materialidad_datos_tecnicos.'</strong> </td>
-                    <td class="celda_3"></td>
-                    <td class="celda_3"></td>
-                        <td class="celda_3">&nbsp;</td>
-
-                                <td class="fuente2">'.$acabado_4.'</td>
-                                <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$acabado_4Valor.'</span></td>
-                                 <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$acabado_4UnidadVentaNombre.'</span></td>
-                                 <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$acabado_4Unitario.'</span></td>
-                                  <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$valor_acabado_1hc.'</span></td>
-                        </tr>
-
-                         <tr>
-                        ';
-
                         if($fotomecanica->materialidad_datos_tecnicos == 'Cartulina-cartulina')
                         {
-                                $cuerpo.='
-                                        <td class="celda_3"><strong>Tapa (Respaldo) :</strong></td>
-                                        <td class="celda_3"></td>
-                                        <td class="celda_3"></td>
-                                        <td class="celda_3">&nbsp;</td>
-                                ';
+//ehndz quitado                                $cuerpo.='
+//                                        <td class="celda_3"><strong>Tapa (Respaldo) :</strong></td>
+//                                        <td class="celda_3"></td>
+//                                        <td class="celda_3"></td>
+//                                        <td class="celda_3">&nbsp;</td>
+//                                ';
                         }else{                          //  print_r($hoja);exit();
                                 /* lo que necesitas de Orden de Producción*/
                                 /* se cambio onda_kilo por kilosdelaonda*/
@@ -1290,29 +1299,14 @@ class Ordenes extends CI_Controller {
                                 $kilosdelaonda=(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)+104;
                                 //echo $kilosdelaonda;exit();
                                 $kiloonda = number_format(($ing->tamano_a_imprimir_1 * $ing->tamano_a_imprimir_2 * $hoja->onda_kilo * $hoja->gramos_metro_cuadrado)/10000000,0,"",".");
-                                $cuerpo.='
-                                        <td class="celda_3"><strong>Onda :</strong>'.$monda->materiales_tipo.'&nbsp; </td>
-                                        <td class="celda_3">'.$monda->gramaje.'</td>
-                                        <td class="celda_3 centro">'.$kiloonda.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$kilosdelaonda.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$hoja->gramos_metro_cuadrado.'</td>
-                                        <td class="celda_3">&nbsp;</td>
-                                ';
+// ehndz quitado                               $cuerpo.='
+//                                        <td class="celda_3"><strong>Onda :</strong>'.$monda->materiales_tipo.'&nbsp; </td>
+//                                        <td class="celda_3">'.$monda->gramaje.'</td>
+//                                        <td class="celda_3 centro">'.$kiloonda.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$kilosdelaonda.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$hoja->gramos_metro_cuadrado.'</td>
+//                                        <td class="celda_3">&nbsp;</td>
+//                                ';
 
                         }	
-
-
-                    $cuerpo.='														
-                                <td class="fuente2"><span class="fuente2">'.$acabado_5.'</span></td>
-                                 <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$acabado_5Valor.'</span></td>
-                                 <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$acabado_5UnidadVentaNombre.'</span></td>
-                                  <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$acabado_5Unitario.'</span></td>
-                                  <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$valor_acabado_2hc.'</span></td>															
-                                </tr>															
-                                <tr>
-                             ';
 
                          if($fotomecanica->materialidad_datos_tecnicos == 'Cartulina-cartulina')
                         {
@@ -1328,44 +1322,23 @@ class Ordenes extends CI_Controller {
                                             }
                                         }
                                         $ondakilo = $costoPlacaKilo2 + $agregado_a_apliegos;
-                                         $cuerpo.='															 
-                                        <td class="celda_3">'.$monda->materiales_tipo.'&nbsp; '.$monda->gramaje.'</td>
-                                        <td class="celda_3">&nbsp;</td>
-                                        <td class="celda_3 centro">'.($ondakilo).'&nbsp;'.$monda->gramaje.'</td>
-                                        <td class="celda_3"></td>
-
-                                         ';                                         //print_r($monda);exit();
-//                                         $cuerpo.='															 
+//ehndz                                         $cuerpo.='															 
 //                                        <td class="celda_3">'.$monda->materiales_tipo.'&nbsp; '.$monda->gramaje.'</td>
 //                                        <td class="celda_3">&nbsp;</td>
-//                                        <td class="celda_3 centro">'.$hoja->onda_kilo.'&nbsp;'.$monda->gramaje.'</td>
-//                                        <td class="celda_3"></td>
-//
-//                                         ';
+//                                        <td class="celda_3 centro">'.($ondakilo).'&nbsp;'.$monda->gramaje.'</td>
+//                                        <td class="celda_3"></td>';                                         
                         }else{
 
-                                         $cuerpo.='
-                                         <td class="celda_3"><strong>Liner :</strong>'.$mliner->materiales_tipo.'&nbsp;</td>
-                                         <td class="celda_3">'.$mliner->gramaje.'</td>
-                                         <td class="celda_3"></td>
-                                         <td class="celda_3">&nbsp;</td>
-                                         '; 
+//ehndz                                         $cuerpo.='
+//                                         <td class="celda_3"><strong>Liner :</strong>'.$mliner->materiales_tipo.'&nbsp;</td>
+//                                         <td class="celda_3">'.$mliner->gramaje.'</td>
+//                                         <td class="celda_3"></td>
+//                                         <td class="celda_3">&nbsp;</td>
+//                                         '; 
 
                          }
 
-                         $cuerpo.='
-                                <td class="fuente2"><span class="fuente2">'.$acabado_6.'</span></td>
-                                <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$acabado_6Valor.'</span></td>
-                                 <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$acabado_6UnidadVentaNombre.'</span></td>
-                                  <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$acabado_6Unitario.'</span></td>
-                                  <td class="celda_3">&nbsp;</td>
-                                <td class="fuente2"><span class="fuente2">'.$valor_acabado_3hc.'</span></td>
-                        </tr>
-
-                </table>
+                         $cuerpo.='</table>
 
 			
 				
@@ -1510,7 +1483,7 @@ class Ordenes extends CI_Controller {
                 <!--separador 50-->
                     <div class="separador_20"></div>
                 <!--/separador 50-->
-                <div class="" style="background-color:#000000; height:2px"></div>
+                <div class="" style="background-color:#000000; height:1px"></div>
                 <!--separador 50-->
                     <div class="separador_50"></div>
                 <!--/separador 50-->
@@ -1956,15 +1929,11 @@ $cuerpo='
 <td></td>
 </tr>
 
-
-
 <tr>
  <td colspan="2"><b><span style="font-size: 13px;">ORDEN DE PRODUCCION DISEÑO </span></b></td>
   <td><font size="3">Fecha:'.$datos->fecha.'</font></td>
   <td><font size="3">ENT:'.$datos->fecha.'</font></td>
 </tr> 
- 
- 
 <tr>
   <td colspan="3">Cliente: '.$vcliente->razon_social.'</td> 
   <td>OC:12345</td>
@@ -1976,8 +1945,6 @@ $cuerpo='
 <tr>
   <td>Cantidad: '.$datos->cantidad_1.'</td>
 </tr>
-
-
 <tr>
   <td colspan="5">Trabajo:'.$datos->comentario_medidas.', '.$ing->medidas_de_la_caja.' </td>
    <td>&nbsp; </td>
@@ -1985,7 +1952,6 @@ $cuerpo='
 	 <td>&nbsp; </td>
 	  <td>&nbsp; </td>
 </tr>
- 
 <tr>
  <td>&nbsp; </td>
 </tr>

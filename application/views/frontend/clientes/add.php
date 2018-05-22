@@ -95,7 +95,7 @@
 	<div class="control-group">
 		<label class="control-label" for="usuario">RUT Cliente <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" id="rut" name="rut" onblur="ValidarRut(this.value,this.id);" value="<?php echo set_value("rut")?>" placeholder="(con guion y sin puntos)" />
+			<input type="text" id="rut" name="rut" onblur="ValidarRut(this.value,this.id);" value="<?php echo $_POST['rut']?>" placeholder="(con guion y sin puntos)" />
 			<?php echo '<a href='.'#'.'>xxxxxxx-x</a>';?>
 		</div>
 	</div>
@@ -104,14 +104,14 @@
     <div class="control-group">
 		<label class="control-label" for="usuario">Razón Social <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" id="razon" name="razon" value="<?php echo set_value("razon")?>" placeholder="Razón Social" />
+			<input type="text" id="razon" name="razon" value="<?php echo $_POST['razon']; ?>" placeholder="Razón Social" />
 		</div>
 	</div>
     
 	<div class="control-group">
 		<label class="control-label" for="usuario">Nombre de Fantasía <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" id="nom" name="nom" value="<?php echo set_value("nom")?>" placeholder="Nombre de Fantasía" />
+			<input type="text" id="nom" name="nom" value="<?php echo $_POST['nom']; ?>" placeholder="Nombre de Fantasía" />
 		</div>
 	</div>
     
@@ -119,14 +119,14 @@
 	 <div class="control-group">
 		<label class="control-label" for="usuario">E-Mail <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" id="correo" name="correo" value="<?php echo set_value('correo'); ?>" placeholder="E-Mail" />
+			<input type="text" id="correo" name="correo" value="<?php echo $_POST['correo']; ?>" placeholder="E-Mail" />
 		</div>
 	</div>
     
     <div class="control-group">
 		<label class="control-label" for="usuario">Teléfono</label>
 		<div class="controls">
-			<input type="text" id="tel" name="tel" value="<?php echo set_value('tel'); ?>" placeholder="Teléfono" />
+			<input type="text" id="tel" name="tel" value="<?php echo $_POST['tel']; ?>" placeholder="Teléfono" />
 		</div>
 	</div>
 
@@ -135,7 +135,7 @@
     <div class="control-group">
 		<label class="control-label" for="usuario">Celular</label>
 		<div class="controls">
-			<input type="text" id="cel" name="cel" value="<?php echo set_value_input(array(),'cel','cel'); ?>" placeholder="Celular" />
+			<input type="text" id="cel" name="cel" value="<?php echo $_POST['cel']; ?>" placeholder="Celular" />
 		
 
 			</div> 

@@ -125,6 +125,7 @@
                             <li>Fecha Confección películas Fotomecánica : <strong><?php echo fecha($fotomecanica->confeccion_de_peliculas_fecha);?></strong></li>
                             <li>Cantidad de golpes : <strong><?php echo number_format($hoja->placa_kilo,0,'','.');?></strong></li>
                             <li>Total metros de cuchillo a usar : <strong><?php echo $ing->metros_de_cuchillo;?></strong></li>
+                            <li>Numero de molde : <strong><?php echo $ing->id_molde;?></strong></li>
             	</div>  
             <?php
         break;
@@ -178,6 +179,7 @@
                      <li>Barniz : <strong><?php echo $fotomecanica2->fot_lleva_barniz; ?></strong></li>                     
                      <li>Reserva : <strong><?php echo $fotomecanica2->fot_reserva_barniz; ?></strong></li>        
                      <li>Total merma : <strong><?php  echo $hoja->total_merma; ?></strong></li>
+                     <li><h4>Fecha liberada : <strong><?php echo fecha_con_hora($control->fecha_liberada);?></strong></h4></li>
                 </ul>
             	</div>
 		<div class="controls"  style="margin-left: 0px;width:30%;float:left;margin-top: 0%;">
@@ -219,22 +221,38 @@
         <div class="control-group">
             <label class="control-label" for="usuario">Molde para revisión</label>
             <div class="controls">
-		<input type="text" name="molde_revision" value="Para Revisión" readonly="true" />
+		          <input type="text" name="molde_revision" value="Para Revisión" readonly="true" />
             </div>
 	</div> 
         <div class="control-group">
             <label class="control-label" for="usuario">Opciones Molde para revisión</label>
 		<div class="controls">
-		<select name="molde_para_revision">
-                    <option value="Molde bueno">Molde bueno</option>
-                    <option value="Molde en observación">Molde en observación</option>
-                    <option value="Molde en mal estado, para cambiar en próximo pedido">Molde en mal estado, para cambiar en próximo pedido</option>
+		<select name="molde_para_revision" id="molde_para_revision">
+                    <option value="">Seleccione</option>
+                    <option value="Molde bueno" <?php echo set_value_select($control,'molde_para_revision',$control->molde_para_revision,'Molde bueno');?> >Molde bueno</option>
+                    <option value="Molde en observación" <?php echo set_value_select($control,'molde_para_revision',$control->molde_para_revision,'Molde en observacion');?> >Molde en observación</option>
+                    <option value="Molde en mal estado, para cambiar en próximo pedido" <?php echo set_value_select($control,'molde_para_revision',$control->molde_para_revision,'Molde en mal estado, para cambiar en próximo pedido');?> >Molde en mal estado, para cambiar en próximo pedido</option>
+                    <option value="MOLDE MALO CON FABRICACION INMEDIATA" <?php echo $molde_malo = set_value_select($control,'molde_para_revision',$control->molde_para_revision,'MOLDE MALO CON FABRICACION INMEDIATA');?> >Molde malo con fabricacion inmediata</option>
                 </select>
                 </div>
 	</div> 
-        <?php } ?>
+        <?php } 
+    if ($molde_malo) { ?>
+        <style>
+        #id_select,#id_select1,#id_select2,#id_select3,#id_select4{
+            display: block;
+        }
+    </style>
+    <?php } else {?>
+        <style>
+        #id_select,#id_select1,#id_select2,#id_select3,#id_select4{
+            display: none;
+        }
+    </style>
+    <?php }?>
     
-    <div class="control-group">
+    
+    <div class="control-group" id="id_select">
 		<label class="control-label" for="usuario">Hay madera <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
             <?php
@@ -247,9 +265,9 @@
             {
                 ?>
                 <select name="hay_madera">
-                <option value="NO" <?php echo set_value_select($control,'hay_madera',$control->hay_madera,'NO');?>>NO</option>
-                <option value="SI" <?php echo set_value_select($control,'hay_madera',$control->hay_madera,'SI');?>>SI</option>
-            </select>
+                    <option value="NO" <?php echo set_value_select($control,'hay_madera',$control->hay_madera,'NO');?>>NO</option>
+                    <option value="SI" <?php echo set_value_select($control,'hay_madera',$control->hay_madera,'SI');?>>SI</option>
+                </select>
                 <?php
             }
             ?>
@@ -257,7 +275,7 @@
           	</div>
 	</div>
     
-    <div class="control-group">
+    <div class="control-group" id="id_select1">
 		<label class="control-label" for="usuario">Hay cuchillos <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
         <?php
@@ -281,7 +299,7 @@
           	</div>
 	</div>
     
-    <div class="control-group">
+    <div class="control-group" id="id_select2">
 		<label class="control-label" for="usuario">Calado <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
         <?php
@@ -305,7 +323,7 @@
           	</div>
 	</div>
     
-    <div class="control-group">
+    <div class="control-group" id="id_select3">
 		<label class="control-label" for="usuario">Confección de cuchillo <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
         <?php
@@ -328,7 +346,7 @@
           	</div>
 	</div>
     
-    <div class="control-group">
+    <div class="control-group" id="id_select4">
 		<label class="control-label" for="usuario">Armado de Molde <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
         <?php
@@ -363,8 +381,8 @@
 		<label class="control-label" for="usuario">Molde Listo <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
             <select name="molde_listo">
-                <option value="NO" <?php echo set_value_select($control,'molde_listo',$control->armado_de_molde,'NO');?>>NO</option>
-                <option value="SI" <?php echo set_value_select($control,'molde_listo',$control->armado_de_molde,'SI');?>>SI</option>
+                <option value="NO" <?php echo set_value_select($control,'molde_listo',$control->molde_listo,'NO');?>>NO</option>
+                <option value="SI" <?php echo set_value_select($control,'molde_listo',$control->molde_listo,'SI');?>>SI</option>
             </select>
        	</div>
 	</div>
@@ -393,18 +411,18 @@
 	</div>
     
     
-    <div class="control-group">
+    <!--<div class="control-group">
 		<label class="control-label" for="usuario">Hay que hacer molde</label>
 		<div class="controls">
-			<!--
+			
 <select name="hay_que_hacer_molde">
                 <option value="NO" <?php echo set_value_select($control,'hay_que_hacer_molde',$control->hay_que_hacer_molde,'NO');?>>NO</option>
                 <option value="SI" <?php echo set_value_select($control,'hay_que_hacer_molde',$control->hay_que_hacer_molde,'SI');?>>SI</option>
             </select>
 -->
-                <input type="text" name="hay_que_hacer_molde" value="<?php echo $hayQueHacerMolde?>" readonly="true" />
+                <!--<input type="text" name="hay_que_hacer_molde" value="<?php echo $hayQueHacerMolde?>" readonly="true" />
           	</div>
-	</div>
+	</div>-->
     
     <div class="control-group" id="producto">
 		<label class="control-label" for="usuario">Distancia cuchillo a cuchillo</label>
@@ -433,7 +451,7 @@
             <input type="hidden" name="id_cliente" value="<?php if($tipo==1){echo $datos->id_cliente;}else{echo $datos->cliente;}?>" />
 			<input type="hidden" name="indicador" />
             <input type="hidden" name="estado" />
-			<input type="button" value="Guardar" class="btn <?php if($control->estado==0){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('0');" />
+			<input type="button" value="Guardar"  class="btn <?php if($control->estado==0){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('0');" />
    		    <input type="button" value="Rechazar" class="btn <?php if($control->estado==2){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('2');" />
 			<?php
 			if($fotomecanica->estado == 1){
@@ -459,7 +477,23 @@
         function ()
         {
             document.form.reset();
-        //document.form.cliente.focus();
+            
+            $('#molde_para_revision').change(function() {                
+                if($('#molde_para_revision option:selected').val() != 'MOLDE MALO CON FABRICACION INMEDIATA') {
+                  //con un solo id general no funciona, por eso se declaran id distintos
+                  $('#id_select').hide();
+                  $('#id_select1').hide();
+                  $('#id_select2').hide();
+                  $('#id_select3').hide();
+                  $('#id_select4').hide();
+                }else{
+                  $('#id_select').show();
+                  $('#id_select1').show();
+                  $('#id_select2').show();
+                  $('#id_select3').show();
+                  $('#id_select4').show();
+                }
+            });
         }
     );
     tinyMCE.init({

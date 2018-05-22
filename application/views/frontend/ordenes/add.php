@@ -116,7 +116,7 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
 //                print_r($datos);
                 if(sizeof($producto_existe)>0)
                 {             
-                    if(sizeof($existeProducto)>0 and sizeof($existeProducto2)>0)
+                    if(sizeof($existeProducto)>0 && sizeof($existeProducto2)>0)
                     { 
                     ?>
                         <strong>Producto con Descripción Similar ya Existe: <ins><?php echo $ing->producto?></ins> con el código <ins><?php echo $existeProducto->codigo ?></ins></strong>
@@ -147,7 +147,7 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
      {
         ?>
         <div class="control-group">
-		<label class="control-label" for="usuario">Producto</label>
+		<label class="control-label" for="usuario">Producto Generado en Base de Datos</label>
 		<div class="controls">
 		
             <select name="producto_id" style="width: 600px;" class="chosen-select">
@@ -391,6 +391,12 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
 		<label class="control-label" for="usuario">Nombre Producto</label>
 		<div class="controls">
 			<input type="text" style="width: 600px;" id="titulo" name="nombre_producto_normal" value="<?php echo $ing->producto?>" placeholder="nombre_producto" <?php if($datos->condicion_del_producto=='Repetición Con Cambios'){echo '';}else{echo '';}?> /> <strong>(<?php echo $datos->condicion_del_producto?>)</strong>
+		</div>
+	</div>
+    <div class="control-group">
+		<label class="control-label" for="usuario">Nombre Producto Cliente</label>
+		<div class="controls">
+			<input type="text" style="width: 600px;" id="titulo" name="nombre_producto_cliente" value="<?php echo $ordenDeCompra->nombre_producto_cliente?>" placeholder="nombre_producto" <?php if($datos->condicion_del_producto=='Repetición Con Cambios'){echo '';}else{echo '';}?> />
 		</div>
 	</div>
         <div class="control-group">

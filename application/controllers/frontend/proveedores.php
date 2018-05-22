@@ -130,7 +130,7 @@ class Proveedores extends CI_Controller {
             if(sizeof($datos)==0){show_404();}
             if ( $this->input->post() )
             {
-                        if ( $this->form_validation->run('ad_proveedores') )
+                        if ( $this->form_validation->run('ed_proveedores') )
                            {
     			     $data=array
                              (

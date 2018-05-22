@@ -122,7 +122,7 @@
     <h3>Orden de Compra Cliente</h3>
     <?php //echo $fotomecanica->producto; ?>
     <div class="control-group">
-		<label class="control-label" for="usuario">Nombre Producto para factura (idéntico a la orden de compra)</label>
+		<label class="control-label" for="usuario">Nombre Producto</label>
 		<div class="controls">
 			<input type="text" style="width: 600px;" id="titulo" name="nombre_producto" value="<?php echo $fotomecanica->producto;?>" placeholder="nombre_producto" /> 
             
@@ -131,7 +131,7 @@
     
     <?php //echo $fotomecanica->producto; ?>
     <div class="control-group">
-		<label class="control-label" for="usuario">Nombre Producto para cliente</label>
+		<label class="control-label" for="usuario">Nombre Producto para cliente (idéntico a la orden de compra)</label>
 		<div class="controls">
                         <input type="text" style="width: 600px;" id="titulo" name="nombre_producto_cliente" value="<?php if($orden->nombre_producto_cliente==""){echo $fotomecanica->producto;}else{echo $orden->nombre_producto_cliente;}?>" placeholder="nombre_producto_cliente" /> 
 		</div>

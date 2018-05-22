@@ -12,6 +12,14 @@
     font-size: 12px;
     font-weight: bold;
 }
+
+#stock_parcial_opciones1,#stock_parcial_opciones2,#comprar_parcial_opciones1,#comprar_parcial_opciones2,
+#comprar_total_opciones1,#comprar_total_opciones2,#comprar_total_opciones3,#comprar_total_opciones4,#comprar_total_opciones5,
+#comprar_saldo_opciones1,#comprar_saldo_opciones2,#comprar_saldo_opciones3,#comprar_saldo_opciones4,#comprar_saldo_opciones5,
+#comprar_parcial_opciones1,#comprar_parcial_opciones2,#comprar_parcial_opciones3,#comprar_parcial_opciones4,#comprar_parcial_opciones5
+{
+  display: none;
+}
 </style>
 <link rel = "stylesheet" type = "text/css" href = "<?php echo base_url(); ?>css/datepicker.css">
 <script type = 'text/javascript' src = "<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
@@ -258,7 +266,7 @@
     <div class="control-group">
 		<label class="control-label" for="usuario">Gramaje Cotizado</label>
 		<div class="controls">
-			<input type="text" name="gramaje" id="gramaje" value="<?php echo $materialidad_1->gramaje?>" readonly="true" />
+			<input type="text" name="gramaje" id="gramaje" value="<?php echo $gramaje_cotizado = $materialidad_1->gramaje?>" readonly="true" />
             <input type="hidden" name="aplica_gramaje" value="<?php echo $control_cartulina->aplica_gramaje?>" /> 
         </div>
 	</div>
@@ -282,7 +290,7 @@
    <div class="control-group">
 		<label class="control-label" for="usuario">Ancho de Bobina Cotizado (<?php echo $ing->tamano_a_imprimir_1;?> Cms)</label>
 		<div class="controls">
-			<input type="text" name="ancho_de_bobina" value="<?php echo ($ing->tamano_a_imprimir_1*10);?>" readonly="true" /> <strong>(Mms)</strong>
+			<input type="text" name="ancho_de_bobina" id="ancho_de_bobina" value="<?php echo $ancho_cotizado = ($ing->tamano_a_imprimir_1*10);?>" readonly="true" /> <strong>(Mms)</strong>
         </div>
 	</div>
 
@@ -291,7 +299,7 @@
     <div class="control-group">
 		<label class="control-label" for="usuario">Total Kilos de la Cartulina Cotizadas</label>
 		<div class="controls">
-<input type="text"  id="total_kilos" name="total_kilos" onkeypress="return soloNumeros(event)" value="<?php echo floor(($hoja->placa_kilo*$ing->tamano_a_imprimir_1*$ing->tamano_a_imprimir_2*$materialidad_1->gramaje)/10000000); ?>" placeholder="0" readonly="true" /> 
+      <input type="text"  id="total_kilos" name="total_kilos" onkeypress="return soloNumeros(event)" value="<?php echo $total_kilos = floor(($hoja->placa_kilo*$ing->tamano_a_imprimir_1*$ing->tamano_a_imprimir_2*$materialidad_1->gramaje)/10000000); ?>" placeholder="0" readonly="true" /> 
 			
 				<?php
 				if(sizeof($hayparcial->sum) == 0)
@@ -306,15 +314,321 @@
 					}
 				}
 				?>
-			
+			<span style="display: inline-block;"><strong>Total Metros: </strong><?php echo round(($total_kilos/($ancho_cotizado*$gramaje_cotizado)*1000000)); ?></span>
         </div>
-	</div>
 
-<?php //print_r($control_cartulina); exit();// echo $control_cartulina->descripcion_de_la_tapa."holaaaa"; ?>
+	</div>
+  <!--EXISTENCIA-->
+    <h3>Existencia</h3>
     <div class="control-group">
-          <label class="control-label" for="usuario">Tapas (Placas) Seleccionado 1ra Bobina</label>
+      <label class="control-label" for="usuario">Estado Materia prima</label>
+      <div class="controls">
+        <select name="existencia" id="existencia">
+            <option value="">Seleccione...</option>
+            <option value="stock_total">Hay stock total</option>
+            <option value="Comprar Total" id="comprar_total">Comprar total</option>
+            <option value="Stock Parcial" id="stock_parcial">Hay stock parcial</option>
+            <option value="Comprar Parcial" id="comprar_parcial">Comprar parcial</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group" id="stock_parcial_opciones1">
+      <label class="control-label" for="usuario">Opciones</label>
+      <div class="controls">
+        <select name="" id="select_stock_parcial_opciones1">
+          <option value="">Seleccione</option>
+          <option value="Comprar Saldo" id="comprar_saldo">Comprar Saldo</option>
+          <option value="Se produce parcial">Se produce parcial</option>
+        </select>
+      </div>
+    </div>
+
+        <div class="control-group" id="comprar_saldo_opciones1">
+          <label class="control-label" for="usuario">Proveedor</label>
           <div class="controls">
-          <select name="descripcion_de_la_tapa" class="chosen-select" onchange="carga_ajax_obtenerGramaje(this.value,'gramaje_ajax');">
+            <select name="proveedor_existencia"  class="chosen-select" onchange="llenar_datos_proveedor(this.value);">
+                <option value="">Seleccione</option>
+                <?php
+                $proves=$this->proveedores_model->getProveedores();
+
+                    foreach($proves as $prove)
+                    {
+                    ?>
+                      <option value="<?php echo $prove->id?>" <?php if($control->proveedor==$prove->id){echo 'selected="true"';}?>><?php echo $prove->nombre?></option>
+                    <?php
+                    }
+                ?>
+            </select>
+          </div>
+        </div>
+
+       
+
+        <div class="control-group" id="comprar_saldo_opciones2">
+          <label class="control-label" for="usuario">Material Comprado</label>
+          <div class="controls">
+            <select id="mate1" name="materialidad_1" class="chosen-select" style="width: 300px">
+              <option value="0">Seleccione......</option>
+              <?php
+              $tapas=$this->materiales_model->getMaterialesSelectCartulina();
+              foreach($tapas as $tapa){
+              if (sizeof($ing)>0) {  ?>                
+                  <?php if($ing->id_mat_placa1!=""){?>
+                  <option value="<?php echo $tapa->id?>" <?php if($ing->id_mat_placa1==$tapa->id){ /*echo 'selected="true"';*/}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+                  <?php }else{ ?>
+                  <option value="<?php echo $tapa->id?>" <?php if($datos->id_mat_placa1==$tapa->id){ /*echo 'selected="true"';*/}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+                  <?php } ?>
+              <?php } else { ?>
+                  <!--<option value="<?php// echo $tapa->nombre?>" <?php //if($datos->materialidad_1==$tapa->nombre){echo 'selected="true"';}?>><?php //echo $tapa->gramaje?> ( <?php //echo $tapa->materiales_tipo?> - $<?php //echo $tapa->precio?> ) (<?php //echo $tapa->reverso?>)</option>-->
+                  <option value="<?php echo $tapa->id?>" <?php if($datos->id_mat_placa1==$tapa->id){ /*echo 'selected="true"';*/}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+              <?php }
+              }
+              ?>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group" id="comprar_saldo_opciones3">
+          <label class="control-label" for="usuario">Ancho (Cms)</label>
+          <div class="controls">
+            <input type="number" placeholder="Ancho" min="<?php echo $ancho_cotizado = ($ing->tamano_a_imprimir_1*10);?>">
+          </div>
+        </div>
+
+        <div class="control-group" id="comprar_saldo_opciones4">
+          <label class="control-label" for="usuario">Fecha estimada de recepcion en fabrica</label>
+          <div class="controls">
+            <input type="date" name="fecha_estimada_de_produccion">
+          </div>
+        </div>
+
+        <div class="control-group" id="comprar_saldo_opciones5">
+          <label class="control-label" for="usuario">Fecha de recepcion efectiva en fabrica</label>
+          <div class="controls">
+            <input type="date" name="fecha_estimada_de_produccion">
+          </div>
+        </div>
+
+     <!--<div class="control-group" id="comprar_parcial_opciones1">
+      <label class="control-label" for="usuario">Opciones</label>
+      <div class="controls">
+        <select name="" id="">
+          <option value="">Seleccione</option>
+          <option value="Se compra el saldo total">Se compra el saldo total</option>
+          <option value="Se produce parcial">Se produce parcial</option>
+        </select>
+      </div>
+    </div>-->
+        
+        <div class="control-group" id="comprar_parcial_opciones1">
+          <label class="control-label" for="usuario">Proveedor</label>
+          <div class="controls">
+            <select name="proveedor_existencia"  class="chosen-select" onchange="llenar_datos_proveedor(this.value);">
+                <option value="">Seleccione</option>
+                <?php
+                $proves=$this->proveedores_model->getProveedores();
+
+                    foreach($proves as $prove)
+                    {
+                    ?>
+                      <option value="<?php echo $prove->id?>" <?php if($control->proveedor==$prove->id){echo 'selected="true"';}?>><?php echo $prove->nombre?></option>
+                    <?php
+                    }
+                ?>
+            </select>
+          </div>
+        </div>
+
+       
+
+        <div class="control-group" id="comprar_parcial_opciones2">
+          <label class="control-label" for="usuario">Material Comprado</label>
+          <div class="controls">
+            <select id="mate1" name="materialidad_1" class="chosen-select" style="width: 300px">
+              <option value="0">Seleccione......</option>
+              <?php
+              $tapas=$this->materiales_model->getMaterialesSelectCartulina();
+              foreach($tapas as $tapa){
+              if (sizeof($ing)>0) {  ?>                
+                  <?php if($ing->id_mat_placa1!=""){?>
+                  <option value="<?php echo $tapa->id?>" <?php if($ing->id_mat_placa1==$tapa->id){ /*echo 'selected="true"';*/}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+                  <?php }else{ ?>
+                  <option value="<?php echo $tapa->id?>" <?php if($datos->id_mat_placa1==$tapa->id){ /*echo 'selected="true"';*/}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+                  <?php } ?>
+              <?php } else { ?>
+                  <!--<option value="<?php// echo $tapa->nombre?>" <?php //if($datos->materialidad_1==$tapa->nombre){echo 'selected="true"';}?>><?php //echo $tapa->gramaje?> ( <?php //echo $tapa->materiales_tipo?> - $<?php //echo $tapa->precio?> ) (<?php //echo $tapa->reverso?>)</option>-->
+                  <option value="<?php echo $tapa->id?>" <?php if($datos->id_mat_placa1==$tapa->id){ /*echo 'selected="true"';*/}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+              <?php }
+              }
+              ?>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group" id="comprar_parcial_opciones3">
+          <label class="control-label" for="usuario">Ancho (Cms)</label>
+          <div class="controls">
+            <input type="number" placeholder="Ancho" min="<?php echo $ancho_cotizado = ($ing->tamano_a_imprimir_1*10);?>">
+          </div>
+        </div>
+
+        <div class="control-group" id="comprar_parcial_opciones4">
+          <label class="control-label" for="usuario">Fecha estimada de recepcion en fabrica</label>
+          <div class="controls">
+            <input type="date" name="fecha_estimada_de_produccion">
+          </div>
+        </div>
+
+        <div class="control-group" id="comprar_parcial_opciones5">
+          <label class="control-label" for="usuario">Fecha de recepcion efectiva en fabrica</label>
+          <div class="controls">
+            <input type="date" name="fecha_estimada_de_produccion">
+          </div>
+        </div>
+
+
+  
+
+   
+
+
+
+    <div class="control-group" id="comprar_total_opciones1">
+      <label class="control-label" for="usuario">Proveedor</label>
+      <div class="controls">
+        <select name="proveedor_existencia"  class="chosen-select" onchange="llenar_datos_proveedor(this.value);">
+            <option value="">Seleccione</option>
+            <?php
+            $proves=$this->proveedores_model->getProveedores();
+
+                foreach($proves as $prove)
+                {
+                ?>
+                  <option value="<?php echo $prove->id?>" <?php if($control->proveedor==$prove->id){echo 'selected="true"';}?>><?php echo $prove->nombre?></option>
+                <?php
+                }
+            ?>
+        </select>
+      </div>
+    </div>
+
+   
+
+    <div class="control-group" id="comprar_total_opciones2">
+      <label class="control-label" for="usuario">Material Comprado</label>
+      <div class="controls">
+        <select id="mate1" name="materialidad_1" class="chosen-select" style="width: 300px">
+          <option value="0">Seleccione......</option>
+          <?php
+          $tapas=$this->materiales_model->getMaterialesSelectCartulina();
+          foreach($tapas as $tapa){
+          if (sizeof($ing)>0) {  ?>                
+              <?php if($ing->id_mat_placa1!=""){?>
+              <option value="<?php echo $tapa->id?>" <?php if($ing->id_mat_placa1==$tapa->id){ /*echo 'selected="true"';*/}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+              <?php }else{ ?>
+              <option value="<?php echo $tapa->id?>" <?php if($datos->id_mat_placa1==$tapa->id){ /*echo 'selected="true"';*/}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+              <?php } ?>
+          <?php } else { ?>
+              <!--<option value="<?php// echo $tapa->nombre?>" <?php //if($datos->materialidad_1==$tapa->nombre){echo 'selected="true"';}?>><?php //echo $tapa->gramaje?> ( <?php //echo $tapa->materiales_tipo?> - $<?php //echo $tapa->precio?> ) (<?php //echo $tapa->reverso?>)</option>-->
+              <option value="<?php echo $tapa->id?>" <?php if($datos->id_mat_placa1==$tapa->id){ /*echo 'selected="true"';*/}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+          <?php }
+          }
+          ?>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group" id="comprar_total_opciones3">
+      <label class="control-label" for="usuario">Ancho (Cms)</label>
+      <div class="controls">
+        <input type="number" placeholder="Ancho" min="<?php echo $ancho_cotizado = ($ing->tamano_a_imprimir_1*10);?>">
+      </div>
+    </div>
+
+    <div class="control-group" id="comprar_total_opciones4">
+      <label class="control-label" for="usuario">Fecha estimada de recepcion en fabrica</label>
+      <div class="controls">
+        <input type="date" name="fecha_estimada_de_produccion">
+      </div>
+    </div>
+
+    <div class="control-group" id="comprar_total_opciones5">
+      <label class="control-label" for="usuario">Fecha de recepcion efectiva en fabrica</label>
+      <div class="controls">
+        <input type="date" name="fecha_estimada_de_produccion">
+      </div>
+    </div>
+
+  
+
+
+
+    <!--PRIMERA BOBINA-->
+    <h3>PRIMERA BOBINA</h3>    
+    <div class="control-group">
+      <label class="control-label" for="usuario">Tapas (Placas) Seleccionado <br> 1ra Bobina</label>
+      <div class="controls">
+        <select name="descripcion_de_la_tapa" id="select_bobina1" class="chosen-select" onchange="carga_ajax_obtenerGramaje(this.value,'gramaje_ajax');">
+            <option value="0">Seleccione......</option>
+            <option value="no_hay">No hay</option>
+            <?php
+            $tapas=$this->materiales_model->getMaterialesSelectCartulina();
+            foreach($tapas as $tapa)
+            {
+              if ($control_cartulina->descripcion_de_la_tapa=='')  {
+                ?>
+                  <option value="<?php echo $tapa->codigo?>" <?php if($tapa->nombre==$fotomecanica->materialidad_1){echo 'selected="selected"';}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+                <?php
+                } else  { ?>
+                  <option value="<?php echo $tapa->codigo?>" <?php if($tapa->codigo==$control_cartulina->descripcion_de_la_tapa){echo 'selected="selected"';}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+                 <?php }
+             }
+            ?>
+        </select>
+      </div>
+    </div>
+    
+    <div class="control-group" hidden>
+  		<label class="control-label" for="usuario">Gramaje seleccionado 1ra Bobina</label>
+  		<div id="gramaje_ajax" class="controls">
+        <input type="text" name="gramaje_seleccionado" id="gramaje_seleccionado" value="<?php if(sizeof($control_cartulina) == 0){echo $materialidad_1->gramaje;}else{echo $control_cartulina->gramaje;}?>" placeholder="Gramaje seleccionado" onblur="validacion_gramaje_control_cartulina();" onchange="ControlGranajeSeleccionado(<?php echo $id?>);validacion_gramaje_control_cartulina();"/>
+      </div>
+  	</div>
+
+    <div class="control-group">
+      <label class="control-label" for="usuario">Ancho seleccionado de bobina (<?php echo ($ing->tamano_a_imprimir_1);?> Cms) 1ra Bobina</label>
+      <div class="controls">
+        <input type="text" name="ancho_seleccionado_de_bobina" id="ancho_seleccionado_de_bobina"  value="<?php if($control_cartulina->ancho_seleccionado_de_bobina >0){echo ($control_cartulina->ancho_seleccionado_de_bobina);}else {echo ($ing->tamano_a_imprimir_1*10);}?>" placeholder="Ancho seleccionado de bobina" onblur="validacion_ancho_seleccionado_de_bobina_control_cartulina();" onchange="validacion_ancho_seleccionado_de_bobina_control_cartulina();ControlGranajeSeleccionado(<?php echo $id?>);limpiar_cortes_control_cartulina();"/> <strong>(Mms)</strong>
+      </div>
+    </div>
+
+    <div class="control-group">
+		  <label class="control-label" for="usuario">Kilos de la Bobina Seleccionada <br> 1ra Bobina</label>
+		  <div class="controls">
+        <input type="text" name="kilos_bobina_seleccionada"  onblur="validacion_kilos_bobina_seleccionada_control_cartulina();reiniciar_calculos_bobinas_cortes();" id="kilos_bobina_seleccionada"  value="<?php if($control_cartulina->kilos_bobina_seleccionada >0){echo ($control_cartulina->kilos_bobina_seleccionada);}?>" placeholder="0"/> <strong>(Kg)</strong><span id="resto1_metros"></span><span class="" id="resto1"></span>
+      </div> 
+	  </div> 
+
+    <div class="control-group">
+  		<label class="control-label" for="usuario"><strong>Hay que bobinar</strong></label>
+  		<div class="controls">
+        <select id="hay_que_bobinar" name="hay_que_bobinar" onchange="validar_kilos_bobina_seleccionada();Hay_Que_Bobinar_Carutlina(this.value);otra_bobina(this.value);totalbobinas();">
+          <option value="" <?php if (sizeof($control_cartulina)==0){echo "selected";}?>>Seleccione</option>                                            
+          <option value="NO" <?php echo set_value_select($control_cartulina,'hay_que_bobinar',$control_cartulina->hay_que_bobinar,'NO');?>>NO</option>
+          <option value="SI" <?php echo set_value_select($control_cartulina,'hay_que_bobinar',$control_cartulina->hay_que_bobinar,'SI');?>>SI</option>
+        </select>
+      </div>
+    </div>
+    <!------------------------------------------------------------------>
+    <!--SEGUNDA BOBINA-->
+    <h3>SEGUNDA BOBINA</h3>    
+    <div id="bobina_adicional" <?php // if(sizeof($bobinas)==0){ echo 'hidden="true"';}?>>
+        <?php //print_r($control_cartulina); exit();// echo $control_cartulina->descripcion_de_la_tapa."holaaaa"; ?>
+      <div class="control-group">
+            <label class="control-label" for="usuario">Tapas (Placas) Seleccionado <br> 2da Bobina</label>
+            <div class="controls">
+            <select name="descripcion_de_la_tapa" id="select_bobina2" class="chosen-select" onchange="carga_ajax_obtenerGramaje2(this.value,'gramaje_ajax2');">
               <option value="0">Seleccione......</option>
               <option value="no_hay">No hay</option>
               <?php
@@ -331,89 +645,86 @@
                }
               ?>
           </select>
-          </div>
+            </div>
+      </div>
+
+      <div class="control-group" hidden>
+        <label class="control-label" for="usuario">Gramaje seleccionado 2da Bobina</label>
+        <div id="gramaje_ajax2" class="controls">
+          <input type="text" name="gramaje_seleccionado2" id="gramaje_seleccionado2" value="<?php if(sizeof($control_cartulina) == 0){echo $materialidad_1->gramaje;}else{echo $bobinas->gramaje;}?>" placeholder="Gramaje seleccionado" onblur="validacion_gramaje_control_cartulina();" onchange="ControlGranajeSeleccionado2(<?php echo $id?>);validacion_gramaje_control_cartulina();"/>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="usuario">Ancho seleccionado de bobina (<?php echo ($ing->tamano_a_imprimir_1);?> Cms) 2da Bobina</label>
+        <div class="controls">
+          <input type="text" name="ancho_seleccionado_de_bobina2" id="ancho_seleccionado_de_bobina2"  value="<?php if($bobinas->ancho >0){echo ($bobinas->ancho);}else {echo ($ing->tamano_a_imprimir_1*10);}?>" placeholder="Ancho seleccionado de bobina" onblur="validacion_ancho_seleccionado_de_bobina_control_cartulina();" onchange="validacion_ancho_seleccionado_de_bobina_control_cartulina();ControlGranajeSeleccionado(<?php echo $id?>);limpiar_cortes_control_cartulina();"/> <strong>(Mms)</strong>
+        </div>
+      </div> 
+
+      <div class="control-group">
+  		  <label class="control-label" for="usuario">Kilos de la Bobina Seleccionada <br> 2da Bobina</label>
+  		  <div class="controls">
+            <input type="text" name="kilos_bobina_seleccionada2"  onblur="validacion_kilos_bobina_seleccionada_control_cartulina();reiniciar_calculos_bobinas_cortes();" id="kilos_bobina_seleccionada2"  value="<?php if($control_cartulina->kilos_bobina_seleccionada >0){echo ($bobinas->kilos);}?>" placeholder="0"/> <strong>(Kg)</strong><span id="resto2_metros"></span><span class="" id="resto2"></span>
+        </div>
+      </div> 
     </div>
 
-    <div class="control-group">
-		<label class="control-label" for="usuario">Gramaje seleccionado 1ra Bobina</label>
-		<div id="gramaje_ajax" class="controls">
-                        <input type="text" name="gramaje_seleccionado" id="gramaje_seleccionado" value="<?php if(sizeof($control_cartulina) == 0){echo $materialidad_1->gramaje;}else{echo $control_cartulina->gramaje;}?>" placeholder="Gramaje seleccionado" onblur="validacion_gramaje_control_cartulina();" onchange="ControlGranajeSeleccionado(<?php echo $id?>);validacion_gramaje_control_cartulina();"/>
-                </div>
-	</div>
-            <?php // print_r($control_cartulina); ?>
-
-    <div class="control-group">
-		<label class="control-label" for="usuario">Kilos de la Bobina Seleccionada 1ra Bobina</label>
-		<div class="controls">
-                    <input type="text" name="kilos_bobina_seleccionada"  onblur="validacion_kilos_bobina_seleccionada_control_cartulina();reiniciar_calculos_bobinas_cortes();" id="kilos_bobina_seleccionada"  value="<?php if($control_cartulina->kilos_bobina_seleccionada >0){echo ($control_cartulina->kilos_bobina_seleccionada);}?>" placeholder="0"/> <strong>(Kg)</strong><span class="" id="resto1"></span>
-       </div>
-	</div> 
-
-    <div class="control-group">
-		<label class="control-label" for="usuario">Ancho seleccionado de bobina (<?php echo ($ing->tamano_a_imprimir_1);?> Cms) 1ra Bobina</label>
-		<div class="controls">
-            <input type="text" name="ancho_seleccionado_de_bobina" id="ancho_seleccionado_de_bobina"  value="<?php if($control_cartulina->ancho_seleccionado_de_bobina >0){echo ($control_cartulina->ancho_seleccionado_de_bobina);}else {echo ($ing->tamano_a_imprimir_1*10);}?>" placeholder="Ancho seleccionado de bobina" onblur="validacion_ancho_seleccionado_de_bobina_control_cartulina();" onchange="validacion_ancho_seleccionado_de_bobina_control_cartulina();ControlGranajeSeleccionado(<?php echo $id?>);limpiar_cortes_control_cartulina();"/> <strong>(Mms)</strong>
-       </div>
-	</div> 
-<div class="control-group">
-		<label class="control-label" for="usuario"><strong>Hay que bobinar</strong></label>
-		<div class="controls">
-                    <select id="hay_que_bobinar" name="hay_que_bobinar" onchange="validar_kilos_bobina_seleccionada();Hay_Que_Bobinar_Carutlina(this.value);otra_bobina(this.value);totalbobinas();">
-                        <option value="" <?php if (sizeof($control_cartulina)==0){echo "selected";}?>>Seleccione</option>                                            
-                    <option value="NO" <?php echo set_value_select($control_cartulina,'hay_que_bobinar',$control_cartulina->hay_que_bobinar,'NO');?>>NO</option>
-                    <option value="SI" <?php echo set_value_select($control_cartulina,'hay_que_bobinar',$control_cartulina->hay_que_bobinar,'SI');?>>SI</option>
-                </select>
-        </div>
-</div>
     <!------------------------------------------------------------------>
-    <div id="bobina_adicional" <?php if(sizeof($bobinas)==0){ echo 'hidden="true"';}?>>
+    <!--TERCERA BOBINA-->
+    <h3>TERCERA BOBINA</h3>
+    <div id="bobina_adicional" <?php // if(sizeof($bobinas)==0){ echo 'hidden="true"';}?>>
         <?php //print_r($control_cartulina); exit();// echo $control_cartulina->descripcion_de_la_tapa."holaaaa"; ?>
-    <div class="control-group">
-          <label class="control-label" for="usuario">Tapas (Placas) Seleccionado 2da Bobina</label>
-          <div class="controls">
-          <select name="descripcion_de_la_tapa2" class="chosen-select" onchange="carga_ajax_obtenerGramaje2(this.value,'gramaje_ajax2');">
+      <div class="control-group">
+            <label class="control-label" for="usuario">Tapas (Placas) Seleccionado <br> 3da Bobina</label>
+            <div class="controls">
+            <select name="descripcion_de_la_tapa" id="select_bobina3" class="chosen-select" onchange="carga_ajax_obtenerGramaje3(this.value,'gramaje_ajax3');">
               <option value="0">Seleccione......</option>
               <option value="no_hay">No hay</option>
               <?php
               $tapas=$this->materiales_model->getMaterialesSelectCartulina();
               foreach($tapas as $tapa)
               {
-                if ($bobinas->descripcion=='')  {
+                if ($control_cartulina->descripcion_de_la_tapa=='')  {
                   ?>
-                    <option value="<?php echo $tapa->codigo?>" <?php if($tapa->nombre==$bobinas->descripcion){echo 'selected="selected"';}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+                    <option value="<?php echo $tapa->codigo?>" <?php if($tapa->nombre==$fotomecanica->materialidad_1){echo 'selected="selected"';}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
                   <?php
                   } else  { ?>
-                    <option value="<?php echo $tapa->codigo?>" <?php if($tapa->nombre==$bobinas->descripcion){echo 'selected="selected"';}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
+                    <option value="<?php echo $tapa->codigo?>" <?php if($tapa->codigo==$control_cartulina->descripcion_de_la_tapa){echo 'selected="selected"';}?>><?php echo $tapa->gramaje?> ( <?php echo $tapa->materiales_tipo?> - $<?php echo $tapa->precio?> ) (<?php echo $tapa->reverso?>)</option>
                    <?php }
                }
               ?>
           </select>
-          </div>
+            </div>
+      </div>
+
+      <div class="control-group" hidden>
+        <label class="control-label" for="usuario">Gramaje seleccionado 3ra Bobina</label>
+        <div id="gramaje_ajax3" class="controls">
+          <input type="text" name="gramaje_seleccionado3" id="gramaje_seleccionado3" value="<?php if(sizeof($control_cartulina) == 0){echo $materialidad_1->gramaje;}else{echo $bobinas->gramaje;}?>" placeholder="Gramaje seleccionado" onblur="validacion_gramaje_control_cartulina();" onchange="ControlGranajeSeleccionado3(<?php echo $id?>);validacion_gramaje_control_cartulina();"/>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="usuario">Ancho seleccionado de bobina (<?php echo ($ing->tamano_a_imprimir_1);?> Cms) 3da Bobina</label>
+        <div class="controls">
+          <input type="text" name="ancho_seleccionado_de_bobina3" id="ancho_seleccionado_de_bobina3"  value="<?php if($bobinas->ancho >0){echo ($bobinas->ancho);}else {echo ($ing->tamano_a_imprimir_1*10);}?>" placeholder="Ancho seleccionado de bobina" onblur="validacion_ancho_seleccionado_de_bobina_control_cartulina();" onchange="validacion_ancho_seleccionado_de_bobina_control_cartulina();ControlGranajeSeleccionado(<?php echo $id?>);limpiar_cortes_control_cartulina();"/> <strong>(Mms)</strong>
+        </div>
+      </div> 
+
+      <div class="control-group">
+        <label class="control-label" for="usuario">Kilos de la Bobina Seleccionada <br> 3da Bobina</label>
+        <div class="controls">
+            <input type="text" name="kilos_bobina_seleccionada3"  onblur="validacion_kilos_bobina_seleccionada_control_cartulina();reiniciar_calculos_bobinas_cortes();" id="kilos_bobina_seleccionada3"  value="<?php if($control_cartulina->kilos_bobina_seleccionada >0){echo ($bobinas->kilos);}?>" placeholder="0"/> <strong>(Kg)</strong><span id="resto3_metros"></span><span class="" id="resto3"></span>
+        </div>
+      </div> 
     </div>
 
-    <div class="control-group">
-		<label class="control-label" for="usuario">Gramaje seleccionado 2da Bobina</label>
-		<div id="gramaje_ajax2" class="controls">
-                        <input type="text" name="gramaje_seleccionado2" id="gramaje_seleccionado2" value="<?php if(sizeof($control_cartulina) == 0){echo $materialidad_1->gramaje;}else{echo $bobinas->gramaje;}?>" placeholder="Gramaje seleccionado" onblur="validacion_gramaje_control_cartulina();" onchange="ControlGranajeSeleccionado2(<?php echo $id?>);validacion_gramaje_control_cartulina();"/>
-                </div>
-	</div>
 
-    <div class="control-group">
-		<label class="control-label" for="usuario">Kilos de la Bobina Seleccionada 2da Bobina</label>
-		<div class="controls">
-            <input type="text" name="kilos_bobina_seleccionada2"  onblur="validacion_kilos_bobina_seleccionada_control_cartulina();reiniciar_calculos_bobinas_cortes();" id="kilos_bobina_seleccionada2"  value="<?php if($control_cartulina->kilos_bobina_seleccionada >0){echo ($bobinas->kilos);}?>" placeholder="0"/> <strong>(Kg)</strong><span class="" id="resto2"></span>
-       </div>
-	</div> 
 
-    <div class="control-group">
-		<label class="control-label" for="usuario">Ancho seleccionado de bobina (<?php echo ($ing->tamano_a_imprimir_1);?> Cms) 2da Bobina</label>
-		<div class="controls">
-            <input type="text" name="ancho_seleccionado_de_bobina2" id="ancho_seleccionado_de_bobina2"  value="<?php if($bobinas->ancho >0){echo ($bobinas->ancho);}else {echo ($ing->tamano_a_imprimir_1*10);}?>" placeholder="Ancho seleccionado de bobina" onblur="validacion_ancho_seleccionado_de_bobina_control_cartulina();" onchange="validacion_ancho_seleccionado_de_bobina_control_cartulina();ControlGranajeSeleccionado(<?php echo $id?>);limpiar_cortes_control_cartulina();"/> <strong>(Mms)</strong>
-       </div>
-	</div> 
 
-    </div>
     <!------------------------------------------------------------------>
+      <h3>RESUMEN</h3>    
     
         <div id="ancho_bobina_seleccionado_bobinar" <?php if (($control_cartulina->hay_que_bobinar=="NO" ) or ($control_cartulina->hay_que_bobinar=="")) { ?> style="display:none" <?php } ?> >   
         <div class="control-group">
@@ -894,18 +1205,83 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript">
     $(window).load(function() {
-    function comprobarkilos(){
-    var tk=$("#total_kilos").val();
-    var kb=$("#kilos_bobina_seleccionada").val();
-    var sbk=$("#segunda_bobina_adicional_kilos").val();
-    var tbk=$("#tercera_bobina_adicional_kilos").val();
-    var cbk=$("#cuarta_bobina_adicional_kilos").val();
-    if((kb+sbk+tbk+cbk)<tk){    
-    $("#comprobacion_de_kilos").text("Faltan bobinas para alcanzar el total de kilos de la Cartulina Cotizadas")
-    }else{
-    $("#comprobacion_de_kilos").text("")    
+      function comprobarkilos(){
+      var tk=$("#total_kilos").val();
+      var kb=$("#kilos_bobina_seleccionada").val();
+      var sbk=$("#segunda_bobina_adicional_kilos").val();
+      var tbk=$("#tercera_bobina_adicional_kilos").val();
+      var cbk=$("#cuarta_bobina_adicional_kilos").val();
+      if((kb+sbk+tbk+cbk)<tk){    
+        $("#comprobacion_de_kilos").text("Faltan bobinas para alcanzar el total de kilos de la Cartulina Cotizadas")
+      }else{
+        $("#comprobacion_de_kilos").text("")    
+      }
     }
-}
+
+    $('#existencia').change(function() {                
+        if($('#existencia option:selected').val() != 'Stock Parcial') {
+          $('#stock_parcial_opciones1').hide();
+          $('#stock_parcial_opciones2').hide();
+
+          $('#comprar_saldo_opciones1').hide();
+          $('#comprar_saldo_opciones2').hide();
+          $('#comprar_saldo_opciones3').hide();
+          $('#comprar_saldo_opciones4').hide();
+          $('#comprar_saldo_opciones5').hide();
+          $('#select_stock_parcial_opciones1').val("");
+        }else{
+          $("#stock_parcial_opciones1").show();
+          $("#stock_parcial_opciones2").show();
+        }
+
+        if($('#existencia option:selected').val() != 'Comprar Parcial') {
+          $('#comprar_parcial_opciones1').hide();
+          $('#comprar_parcial_opciones2').hide();
+          $('#comprar_parcial_opciones3').hide();
+          $('#comprar_parcial_opciones4').hide();
+          $('#comprar_parcial_opciones5').hide();
+        }else{
+          $("#comprar_parcial_opciones1").show();
+          $("#comprar_parcial_opciones2").show();
+          $("#comprar_parcial_opciones3").show();
+          $("#comprar_parcial_opciones4").show();
+          $("#comprar_parcial_opciones5").show();
+        }
+
+        if($('#existencia option:selected').val() != 'Comprar Total') {
+          $('#comprar_total_opciones1').hide();
+          $('#comprar_total_opciones2').hide();
+          $('#comprar_total_opciones3').hide();
+          $('#comprar_total_opciones4').hide();
+          $('#comprar_total_opciones5').hide();
+        }else{
+          $("#comprar_total_opciones1").show();
+          $("#comprar_total_opciones2").show();
+          $("#comprar_total_opciones3").show();
+          $("#comprar_total_opciones4").show();
+          $("#comprar_total_opciones5").show();
+        }
+    });
+
+
+
+    $('#select_stock_parcial_opciones1').change(function() {                
+        if($('#select_stock_parcial_opciones1 option:selected').val() != 'Comprar Saldo') {
+          $('#comprar_saldo_opciones1').hide();
+          $('#comprar_saldo_opciones2').hide();
+          $('#comprar_saldo_opciones3').hide();
+          $('#comprar_saldo_opciones4').hide();
+          $('#comprar_saldo_opciones5').hide();
+        }else{
+          $("#comprar_saldo_opciones1").show();
+          $("#comprar_saldo_opciones2").show();
+          $("#comprar_saldo_opciones3").show();
+          $("#comprar_saldo_opciones4").show();
+          $("#comprar_saldo_opciones5").show();
+        }
+    });
+    
+    
 
 $("#cuarta_bobina_adicional_kilos").on("keyup",function(){
     var tk=$("#total_kilos").val();
@@ -941,7 +1317,7 @@ $("#segunda_bobina_adicional_kilos").on("keyup",function(){
     var sbk=$("#segunda_bobina_adicional_kilos").val();
     var tbk=$("#tercera_bobina_adicional_kilos").val();
     var cbk=$("#cuarta_bobina_adicional_kilos").val();
-    
+
     var cant =parseInt(kb)+parseInt(sbk)+parseInt(tbk)+parseInt(cbk);
     if(cant<tk){    
     $("#comprobacion_de_kilos").text("Faltan bobinas para alcanzar el total de kilos de la Cartulina Cotizadas")
@@ -963,113 +1339,813 @@ $("#kilos_bobina_seleccionada").on("keyup",function(){
     }
 });
 
-$("#kilos_bobina_seleccionada").on("keyup",function(){
-    var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
-    var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
-    var bobt  = parseInt($("#total_kilos").val());
-    if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
-    if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
-    var resto = parseInt(bobt)-parseInt(bob1+bob2);
-    if(resto<0){
-    $("#resto1").removeClass("label label-danger-mio");    
-    $("#resto1").addClass("label label-success");    
-    $("#resto1").text(" Sobrepasa por: "+(resto*-1));
-    $("#resto2").removeClass("label label-danger-mio");    
-    $("#resto2").addClass("label label-success");    
-    $("#resto2").text(" Sobrepasa por: "+(resto*-1));
-    $("#numero_de_bobina2").val(0);
-    }else{
-    $("#resto1").addClass("label label-danger-mio");    
-    $("#resto1").removeClass("label label-success");    
-    $("#resto1").text(" Restante: "+resto)
-    $("#resto2").addClass("label label-danger-mio");    
-    $("#resto2").removeClass("label label-success");    
-    $("#resto2").text(" Restante: "+resto)
-    $("#numero_de_bobina2_div").show();
-    }
-    ba();
+
+//--------------------PRIMERA BOBINA-----------------//
+  //-------------Si cambia un valor en el select -------//
+  $("#select_bobina1").change(function(){
+
+      //------------------KILOS------------------------//
+      var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
+      var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
+      var bob3  = parseInt($("#kilos_bobina_seleccionada3").val());
+
+      var bobt  = parseInt($("#total_kilos").val());
+      if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
+      if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
+      if($("#kilos_bobina_seleccionada3").val()==""){bob3=0;}
+      
+      //--------------------------METROS--------------------------------//
+      var gramaje_seleccionado1  = parseInt($("#gramaje_seleccionado").val());
+      var gramaje_seleccionado2  = parseInt($("#gramaje_seleccionado2").val());
+      var gramaje_seleccionado3  = parseInt($("#gramaje_seleccionado3").val());
+      
+      var bob_kilos  = parseInt($("#total_kilos").val());
+      var bob_ancho  = parseInt($("#ancho_de_bobina").val());
+      var bob_gramaje= parseInt($("#gramaje").val());
+      var resto_metros = Math.round(parseInt(resto)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000);
+      var total_metros = Math.round(parseInt(bob_kilos)/(parseInt(bob_ancho)*parseInt(bob_gramaje))*1000000);
+      var resto_metros_ingresados1 = (Math.round(parseInt(bob1)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000));
+      var resto_metros_ingresados2 = (Math.round(parseInt(bob2)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000));
+      var resto_metros_ingresados3 = (Math.round(parseInt(bob3)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000));
+
+      var total_metros_ingresados = Math.round(parseInt(resto_metros_ingresados1)+parseInt(resto_metros_ingresados2)+parseInt(resto_metros_ingresados3));
+      
+      var resta_de_metros = Math.round(parseInt(total_metros)-parseInt(total_metros_ingresados));
+      if(resto_metros<0){
+        $("#resto1_metros").removeClass("label label-danger-mio padding");    
+        $("#resto1_metros").addClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+        
+        $("#resto2_metros").removeClass("label label-danger-mio padding");    
+        $("#resto2_metros").addClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+
+        $("#resto3_metros").removeClass("label label-danger-mio padding");    
+        $("#resto3_metros").addClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+      }else{
+        $("#resto1_metros").addClass("label label-danger-mio padding");    
+        $("#resto1_metros").removeClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto2_metros").addClass("label label-danger-mio padding");    
+        $("#resto2_metros").removeClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto3_metros").addClass("label label-danger-mio padding");    
+        $("#resto3_metros").removeClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+      }
+
+      //IMPRIMIR KILOS 
+      var resto = parseInt(bobt)-parseInt(bob1+bob2+bob3);
+      var resto_prueba = Math.round((parseInt(resta_de_metros)*parseInt(bob_gramaje)*parseInt(bob_ancho))/parseInt(1000000));
+      if(resto<0){
+        $("#resto1").removeClass("label label-danger-mio padding");    
+        $("#resto1").addClass("label label-success padding");    
+        $("#resto1").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        
+        $("#resto2").removeClass("label label-danger-mio padding");    
+        $("#resto2").addClass("label label-success padding");    
+        $("#resto2").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+
+        $("#resto3").removeClass("label label-danger-mio padding");    
+        $("#resto3").addClass("label label-success padding");    
+        $("#resto3").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        $("#numero_de_bobina2").val(0);
+      }else{
+        $("#resto1").addClass("label label-danger-mio padding");    
+        $("#resto1").removeClass("label label-success padding");    
+        $("#resto1").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto2").addClass("label label-danger-mio padding");    
+        $("#resto2").removeClass("label label-success padding");    
+        $("#resto2").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto3").addClass("label label-danger-mio padding");    
+        $("#resto3").removeClass("label label-success padding");    
+        $("#resto3").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#numero_de_bobina2_div").show();
+      }
+      ba();
+  });
+  //-------------Si ingresa algun dato en KG -----------//
+  $("#kilos_bobina_seleccionada").on("keyup",function(){
+      //------------------KILOS------------------------//
+      var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
+      var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
+      var bob3  = parseInt($("#kilos_bobina_seleccionada3").val());
+
+      var bobt  = parseInt($("#total_kilos").val());
+      if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
+      if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
+      if($("#kilos_bobina_seleccionada3").val()==""){bob3=0;}
+      
+      //--------------------------METROS--------------------------------//
+      var gramaje_seleccionado1  = parseInt($("#gramaje_seleccionado").val());
+      var gramaje_seleccionado2  = parseInt($("#gramaje_seleccionado2").val());
+      var gramaje_seleccionado3  = parseInt($("#gramaje_seleccionado3").val());
+      
+      var bob_kilos  = parseInt($("#total_kilos").val());
+      var bob_ancho  = parseInt($("#ancho_de_bobina").val());
+      var bob_gramaje= parseInt($("#gramaje").val());
+      var resto_metros = Math.round(parseInt(resto)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000);
+      var total_metros = Math.round(parseInt(bob_kilos)/(parseInt(bob_ancho)*parseInt(bob_gramaje))*1000000);
+      var resto_metros_ingresados1 = (Math.round(parseInt(bob1)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000));
+      var resto_metros_ingresados2 = (Math.round(parseInt(bob2)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000));
+      var resto_metros_ingresados3 = (Math.round(parseInt(bob3)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000));
+
+      var total_metros_ingresados = Math.round(parseInt(resto_metros_ingresados1)+parseInt(resto_metros_ingresados2)+parseInt(resto_metros_ingresados3));
+      
+      var resta_de_metros = Math.round(parseInt(total_metros)-parseInt(total_metros_ingresados));
+      if(resto_metros<0){
+        $("#resto1_metros").removeClass("label label-danger-mio padding");    
+        $("#resto1_metros").addClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+        
+        $("#resto2_metros").removeClass("label label-danger-mio padding");    
+        $("#resto2_metros").addClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+
+        $("#resto3_metros").removeClass("label label-danger-mio padding");    
+        $("#resto3_metros").addClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+      }else{
+        $("#resto1_metros").addClass("label label-danger-mio padding");    
+        $("#resto1_metros").removeClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto2_metros").addClass("label label-danger-mio padding");    
+        $("#resto2_metros").removeClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto3_metros").addClass("label label-danger-mio padding");    
+        $("#resto3_metros").removeClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+      }
+
+
+
+      //IMPRIMIR KILOS 
+      var resto = parseInt(bobt)-parseInt(bob1+bob2+bob3);
+      var resto_prueba = Math.round((parseInt(resta_de_metros)*parseInt(bob_gramaje)*parseInt(bob_ancho))/parseInt(1000000));
+      if(resto<0){
+        $("#resto1").removeClass("label label-danger-mio padding");    
+        $("#resto1").addClass("label label-success padding");    
+        $("#resto1").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        
+        $("#resto2").removeClass("label label-danger-mio padding");    
+        $("#resto2").addClass("label label-success padding");    
+        $("#resto2").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+
+        $("#resto3").removeClass("label label-danger-mio padding");    
+        $("#resto3").addClass("label label-success padding");    
+        $("#resto3").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        $("#numero_de_bobina2").val(0);
+      }else{
+        $("#resto1").addClass("label label-danger-mio padding");    
+        $("#resto1").removeClass("label label-success padding");    
+        $("#resto1").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto2").addClass("label label-danger-mio padding");    
+        $("#resto2").removeClass("label label-success padding");    
+        $("#resto2").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto3").addClass("label label-danger-mio padding");    
+        $("#resto3").removeClass("label label-success padding");    
+        $("#resto3").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#numero_de_bobina2_div").show();
+      }
+      ba();
+  });
+  //-------------- CALCULO QUE SE MUESTRA AL DESELECCIONAR EL INPUT --------------//
+  $("#kilos_bobina_seleccionada").on("blur",function(){
+      var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
+      var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
+      var bob3  = parseInt($("#kilos_bobina_seleccionada3").val());
+      var bobt  = parseInt($("#total_kilos").val());
+      if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
+      if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
+      if($("#kilos_bobina_seleccionada3").val()==""){bob3=0;}
+      var resto = parseInt(bobt)-parseInt(bob1+bob2+bob3);
+      if(resto<0){
+        $("#resto1").removeClass("label label-danger-mio padding");    
+        $("#resto1").addClass("label label-success padding");    
+        $("#resto1").text(" Sobrepasa por: "+(resto*-1)+" Kilos");
+
+        $("#resto2").removeClass("label label-danger-mio padding");    
+        $("#resto2").addClass("label label-success padding");    
+        $("#resto2").text(" Sobrepasa por: "+(resto*-1)+" Kilos");
+
+        $("#resto3").removeClass("label label-danger-mio padding");    
+        $("#resto3").addClass("label label-success padding");    
+        $("#resto3").text(" Sobrepasa por: "+(resto*-1)+" Kilos");
+
+        $("#numero_de_bobina2").val(0);
+        $("#numero_de_bobina2_div").hide();
+      }else{
+        $("#resto1").addClass("label label-danger-mio padding");    
+        $("#resto1").removeClass("label label-success padding");    
+        $("#resto1").text(" Restante: "+resto+" Kilos")
+
+        $("#resto2").addClass("label label-danger-mio padding");    
+        $("#resto2").removeClass("label label-success padding");    
+        $("#resto2").text(" Restante: "+resto+" Kilos")
+
+        $("#resto3").addClass("label label-danger-mio padding");    
+        $("#resto3").removeClass("label label-success padding");    
+        $("#resto3").text(" Restante: "+resto+" Kilos")
+        $("#numero_de_bobina2_div").show();
+      }
+
+      //--------------------------METROS--------------------------------//
+      var gramaje_seleccionado1  = parseInt($("#gramaje_seleccionado").val());
+      var gramaje_seleccionado2  = parseInt($("#gramaje_seleccionado2").val());
+      var gramaje_seleccionado3  = parseInt($("#gramaje_seleccionado3").val());
+      var bob_kilos  = parseInt($("#total_kilos").val());
+      var bob_ancho  = parseInt($("#ancho_de_bobina").val());
+      var bob_gramaje= parseInt($("#gramaje").val());
+      var resto_metros = Math.round(parseInt(resto)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000);
+      var total_metros = Math.round(parseInt(bob_kilos)/(parseInt(bob_ancho)*parseInt(bob_gramaje))*1000000);
+      var resto_metros_ingresados1 = (Math.round(parseInt(bob1)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000));
+      var resto_metros_ingresados2 = (Math.round(parseInt(bob2)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000));
+      var resto_metros_ingresados3 = (Math.round(parseInt(bob3)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000));
+
+      var total_metros_ingresados = (parseInt(resto_metros_ingresados1)+parseInt(resto_metros_ingresados2)+parseInt(resto_metros_ingresados3));
+      
+      var resta_de_metros = parseInt(total_metros)-parseInt(total_metros_ingresados);
+      if(resto_metros<0){
+        $("#resto1_metros").removeClass("label label-danger-mio padding");    
+        $("#resto1_metros").addClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+        
+        $("#resto2_metros").removeClass("label label-danger-mio padding");    
+        $("#resto2_metros").addClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+
+        $("#resto3_metros").removeClass("label label-danger-mio padding");    
+        $("#resto3_metros").addClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+      }else{
+        $("#resto1_metros").addClass("label label-danger-mio padding");    
+        $("#resto1_metros").removeClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto2_metros").addClass("label label-danger-mio padding");    
+        $("#resto2_metros").removeClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto3_metros").addClass("label label-danger-mio padding");    
+        $("#resto3_metros").removeClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+      }
+      ba();
 });
-$("#kilos_bobina_seleccionada").on("blur",function(){
-    var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
-    var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
-    var bobt  = parseInt($("#total_kilos").val());
-    if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
-    if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
-    var resto = parseInt(bobt)-parseInt(bob1+bob2);
-    if(resto<0){
-    $("#resto1").removeClass("label label-danger-mio");    
-    $("#resto1").addClass("label label-success");    
-    $("#resto1").text(" Sobrepasa por: "+(resto*-1));
-    $("#resto2").removeClass("label label-danger-mio");    
-    $("#resto2").addClass("label label-success");    
-    $("#resto2").text(" Sobrepasa por: "+(resto*-1));
-    $("#numero_de_bobina2").val(0);
-    $("#numero_de_bobina2_div").hide();
-    }else{
-    $("#resto1").addClass("label label-danger-mio");    
-    $("#resto1").removeClass("label label-success");    
-    $("#resto1").text(" Restante: "+resto)
-    $("#resto2").addClass("label label-danger-mio");    
-    $("#resto2").removeClass("label label-success");    
-    $("#resto2").text(" Restante: "+resto)
-    $("#numero_de_bobina2_div").show();
-    }
-    ba();
+
+//--------------------SEGUNDA BOBINA--------------------------//
+  //-------------Si cambia un valor en el select -------//
+  $("#select_bobina2").change(function(){
+      //------------------KILOS------------------------//
+      var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
+      var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
+      var bob3  = parseInt($("#kilos_bobina_seleccionada3").val());
+
+      var bobt  = parseInt($("#total_kilos").val());
+      if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
+      if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
+      if($("#kilos_bobina_seleccionada3").val()==""){bob3=0;}
+      
+      //--------------------------METROS--------------------------------//
+      var gramaje_seleccionado1  = parseInt($("#gramaje_seleccionado").val());
+      var gramaje_seleccionado2  = parseInt($("#gramaje_seleccionado2").val());
+      var gramaje_seleccionado3  = parseInt($("#gramaje_seleccionado3").val());
+      
+      var bob_kilos  = parseInt($("#total_kilos").val());
+      var bob_ancho  = parseInt($("#ancho_de_bobina").val());
+      var bob_gramaje= parseInt($("#gramaje").val());
+      var resto_metros = Math.round(parseInt(resto)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000);
+      var total_metros = Math.round(parseInt(bob_kilos)/(parseInt(bob_ancho)*parseInt(bob_gramaje))*1000000);
+      var resto_metros_ingresados1 = (Math.round(parseInt(bob1)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000));
+      var resto_metros_ingresados2 = (Math.round(parseInt(bob2)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000));
+      var resto_metros_ingresados3 = (Math.round(parseInt(bob3)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000));
+
+      var total_metros_ingresados = Math.round(parseInt(resto_metros_ingresados1)+parseInt(resto_metros_ingresados2)+parseInt(resto_metros_ingresados3));
+      
+      var resta_de_metros = Math.round(parseInt(total_metros)-parseInt(total_metros_ingresados));
+      if(resto_metros<0){
+        $("#resto1_metros").removeClass("label label-danger-mio padding");    
+        $("#resto1_metros").addClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+        
+        $("#resto2_metros").removeClass("label label-danger-mio padding");    
+        $("#resto2_metros").addClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+
+        $("#resto3_metros").removeClass("label label-danger-mio padding");    
+        $("#resto3_metros").addClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+      }else{
+        $("#resto1_metros").addClass("label label-danger-mio padding");    
+        $("#resto1_metros").removeClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto2_metros").addClass("label label-danger-mio padding");    
+        $("#resto2_metros").removeClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto3_metros").addClass("label label-danger-mio padding");    
+        $("#resto3_metros").removeClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+      }
+
+
+      //IMPRIMIR KILOS
+      var resto = parseInt(bobt)-parseInt(bob1+bob2+bob3);
+      var resto_prueba = Math.round((parseInt(resta_de_metros)*parseInt(bob_gramaje)*parseInt(bob_ancho))/parseInt(1000000));
+      if(resto<0){
+        $("#resto1").removeClass("label label-danger-mio padding");    
+        $("#resto1").addClass("label label-success padding");    
+        $("#resto1").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        
+        $("#resto2").removeClass("label label-danger-mio padding");    
+        $("#resto2").addClass("label label-success padding");    
+        $("#resto2").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+
+        $("#resto3").removeClass("label label-danger-mio padding");    
+        $("#resto3").addClass("label label-success padding");    
+        $("#resto3").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        $("#numero_de_bobina2").val(0);
+      }else{
+        $("#resto1").addClass("label label-danger-mio padding");    
+        $("#resto1").removeClass("label label-success padding");    
+        $("#resto1").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto2").addClass("label label-danger-mio padding");    
+        $("#resto2").removeClass("label label-success padding");    
+        $("#resto2").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto3").addClass("label label-danger-mio padding");    
+        $("#resto3").removeClass("label label-success padding");    
+        $("#resto3").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#numero_de_bobina2_div").show();
+      }
+      ba();
+  });
+
+  //-------------Si ingresa algun dato en KG -----------//
+  $("#kilos_bobina_seleccionada2").on("keyup",function(){
+      //------------------KILOS------------------------//
+      var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
+      var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
+      var bob3  = parseInt($("#kilos_bobina_seleccionada3").val());
+
+      var bobt  = parseInt($("#total_kilos").val());
+      if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
+      if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
+      if($("#kilos_bobina_seleccionada3").val()==""){bob3=0;}
+      
+      //--------------------------METROS--------------------------------//
+      var gramaje_seleccionado1  = parseInt($("#gramaje_seleccionado").val());
+      var gramaje_seleccionado2  = parseInt($("#gramaje_seleccionado2").val());
+      var gramaje_seleccionado3  = parseInt($("#gramaje_seleccionado3").val());
+      
+      var bob_kilos  = parseInt($("#total_kilos").val());
+      var bob_ancho  = parseInt($("#ancho_de_bobina").val());
+      var bob_gramaje= parseInt($("#gramaje").val());
+      var resto_metros = Math.round(parseInt(resto)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000);
+      var total_metros = Math.round(parseInt(bob_kilos)/(parseInt(bob_ancho)*parseInt(bob_gramaje))*1000000);
+      var resto_metros_ingresados1 = (Math.round(parseInt(bob1)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000));
+      var resto_metros_ingresados2 = (Math.round(parseInt(bob2)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000));
+      var resto_metros_ingresados3 = (Math.round(parseInt(bob3)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000));
+
+      var total_metros_ingresados = Math.round(parseInt(resto_metros_ingresados1)+parseInt(resto_metros_ingresados2)+parseInt(resto_metros_ingresados3));
+      
+      var resta_de_metros = Math.round(parseInt(total_metros)-parseInt(total_metros_ingresados));
+      if(resto_metros<0){
+        $("#resto1_metros").removeClass("label label-danger-mio padding");    
+        $("#resto1_metros").addClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+        
+        $("#resto2_metros").removeClass("label label-danger-mio padding");    
+        $("#resto2_metros").addClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+
+        $("#resto3_metros").removeClass("label label-danger-mio padding");    
+        $("#resto3_metros").addClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+      }else{
+        $("#resto1_metros").addClass("label label-danger-mio padding");    
+        $("#resto1_metros").removeClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto2_metros").addClass("label label-danger-mio padding");    
+        $("#resto2_metros").removeClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto3_metros").addClass("label label-danger-mio padding");    
+        $("#resto3_metros").removeClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+      }
+
+
+      //IMPRIMIR KILOS
+      var resto = parseInt(bobt)-parseInt(bob1+bob2+bob3);
+      var resto_prueba = Math.round((parseInt(resta_de_metros)*parseInt(bob_gramaje)*parseInt(bob_ancho))/parseInt(1000000));
+      if(resto<0){
+        $("#resto1").removeClass("label label-danger-mio padding");    
+        $("#resto1").addClass("label label-success padding");    
+        $("#resto1").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        
+        $("#resto2").removeClass("label label-danger-mio padding");    
+        $("#resto2").addClass("label label-success padding");    
+        $("#resto2").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+
+        $("#resto3").removeClass("label label-danger-mio padding");    
+        $("#resto3").addClass("label label-success padding");    
+        $("#resto3").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        $("#numero_de_bobina2").val(0);
+      }else{
+        $("#resto1").addClass("label label-danger-mio padding");    
+        $("#resto1").removeClass("label label-success padding");    
+        $("#resto1").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto2").addClass("label label-danger-mio padding");    
+        $("#resto2").removeClass("label label-success padding");    
+        $("#resto2").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto3").addClass("label label-danger-mio padding");    
+        $("#resto3").removeClass("label label-success padding");    
+        $("#resto3").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#numero_de_bobina2_div").show();
+      }
+      ba();
+  });
+  //-------------- CALCULO QUE SE MUESTRA AL DESELECCIONAR EL INPUT --------------//
+  $("#kilos_bobina_seleccionada2").on("blur",function(){
+      var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
+      var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
+      var bob3  = parseInt($("#kilos_bobina_seleccionada3").val());
+      var bobt  = parseInt($("#total_kilos").val());
+      if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
+      if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
+      if($("#kilos_bobina_seleccionada3").val()==""){bob3=0;}
+      var resto = parseInt(bobt)-parseInt(bob1+bob2+bob3);
+      if(resto<0){
+        $("#resto1").removeClass("label label-danger-mio padding");    
+        $("#resto1").addClass("label label-success padding");    
+        $("#resto1").text(" Sobrepasa por: "+(resto*-1)+" Kilos");
+
+        $("#resto2").removeClass("label label-danger-mio padding");    
+        $("#resto2").addClass("label label-success padding");    
+        $("#resto2").text(" Sobrepasa por: "+(resto*-1)+" Kilos");
+
+        $("#resto3").removeClass("label label-danger-mio padding");    
+        $("#resto3").addClass("label label-success padding");    
+        $("#resto3").text(" Sobrepasa por: "+(resto*-1)+" Kilos");
+
+        $("#numero_de_bobina2").val(0);
+        $("#numero_de_bobina2_div").hide();
+      }else{1
+        $("#resto1").addClass("label label-danger-mio padding");    
+        $("#resto1").removeClass("label label-success padding");    
+        $("#resto1").text(" Restante: "+resto+" Kilos")
+
+        $("#resto2").addClass("label label-danger-mio padding");    
+        $("#resto2").removeClass("label label-success padding");    
+        $("#resto2").text(" Restante: "+resto+" Kilos")
+
+        $("#resto3").addClass("label label-danger-mio padding");    
+        $("#resto3").removeClass("label label-success padding");    
+        $("#resto3").text(" Restante: "+resto+" Kilos")
+        $("#numero_de_bobina2_div").show();
+      }
+
+      //--------------------------METROS--------------------------------//
+      var gramaje_seleccionado1  = parseInt($("#gramaje_seleccionado").val());
+      var gramaje_seleccionado2  = parseInt($("#gramaje_seleccionado2").val());
+      var gramaje_seleccionado3  = parseInt($("#gramaje_seleccionado3").val());
+      var bob_kilos  = parseInt($("#total_kilos").val());
+      var bob_ancho  = parseInt($("#ancho_de_bobina").val());
+      var bob_gramaje= parseInt($("#gramaje").val());
+      var resto_metros = Math.round(parseInt(resto)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000);
+      var total_metros = Math.round(parseInt(bob_kilos)/(parseInt(bob_ancho)*parseInt(bob_gramaje))*1000000);
+      var resto_metros_ingresados1 = (Math.round(parseInt(bob1)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000));
+      var resto_metros_ingresados2 = (Math.round(parseInt(bob2)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000));
+      var resto_metros_ingresados3 = (Math.round(parseInt(bob3)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000));
+
+      var total_metros_ingresados = (parseInt(resto_metros_ingresados1)+parseInt(resto_metros_ingresados2)+parseInt(resto_metros_ingresados3));
+      
+      var resta_de_metros = parseInt(total_metros)-parseInt(total_metros_ingresados);
+      if(resto_metros<0){
+        $("#resto1_metros").removeClass("label label-danger-mio padding");    
+        $("#resto1_metros").addClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+        
+        $("#resto2_metros").removeClass("label label-danger-mio padding");    
+        $("#resto2_metros").addClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+
+        $("#resto3_metros").removeClass("label label-danger-mio padding");    
+        $("#resto3_metros").addClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+      }else{
+        $("#resto1_metros").addClass("label label-danger-mio padding");    
+        $("#resto1_metros").removeClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto2_metros").addClass("label label-danger-mio padding");    
+        $("#resto2_metros").removeClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto3_metros").addClass("label label-danger-mio padding");    
+        $("#resto3_metros").removeClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+      }
+      ba();
 });
-$("#kilos_bobina_seleccionada2").on("keyup",function(){
-    var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
-    var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
-    var bobt  = parseInt($("#total_kilos").val());
-    if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
-    if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
-    var resto = parseInt(bobt)-parseInt(bob1+bob2);
-    if(resto<0){
-    $("#resto1").removeClass("label label-danger-mio");    
-    $("#resto1").addClass("label label-success");    
-    $("#resto1").text(" Sobrepasa por: "+(resto*-1));
-    $("#resto2").removeClass("label label-danger-mio");    
-    $("#resto2").addClass("label label-success");    
-    $("#resto2").text(" Sobrepasa por: "+(resto*-1));
-    $("#numero_de_bobina2").val(0);
-    $("#numero_de_bobina2_div").hide();
-    }else{
-    $("#resto1").addClass("label label-danger-mio");    
-    $("#resto1").removeClass("label label-success");    
-    $("#resto1").text(" Restante: "+resto)
-    $("#resto2").addClass("label label-danger-mio");    
-    $("#resto2").removeClass("label label-success");    
-    $("#resto2").text(" Restante: "+resto)
-    $("#numero_de_bobina2_div").show();
-    }
-    ba();
+
+
+//----------- TERCERA BOBINA --------------------//
+//-------------Si cambia un valor en el select -------//
+ $("#select_bobina3").change(function(){
+      //------------------KILOS------------------------//
+      var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
+      var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
+      var bob3  = parseInt($("#kilos_bobina_seleccionada3").val());
+
+      var bobt  = parseInt($("#total_kilos").val());
+      if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
+      if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
+      if($("#kilos_bobina_seleccionada3").val()==""){bob3=0;}
+      
+      //--------------------------METROS--------------------------------//
+      var gramaje_seleccionado1  = parseInt($("#gramaje_seleccionado").val());
+      var gramaje_seleccionado2  = parseInt($("#gramaje_seleccionado2").val());
+      var gramaje_seleccionado3  = parseInt($("#gramaje_seleccionado3").val());
+      
+      var bob_kilos  = parseInt($("#total_kilos").val());
+      var bob_ancho  = parseInt($("#ancho_de_bobina").val());
+      var bob_gramaje= parseInt($("#gramaje").val());
+      var resto_metros = Math.round(parseInt(resto)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000);
+      var total_metros = Math.round(parseInt(bob_kilos)/(parseInt(bob_ancho)*parseInt(bob_gramaje))*1000000);
+      var resto_metros_ingresados1 = (Math.round(parseInt(bob1)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000));
+      var resto_metros_ingresados2 = (Math.round(parseInt(bob2)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000));
+      var resto_metros_ingresados3 = (Math.round(parseInt(bob3)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000));
+
+      var total_metros_ingresados = Math.round(parseInt(resto_metros_ingresados1)+parseInt(resto_metros_ingresados2)+parseInt(resto_metros_ingresados3));
+      
+      var resta_de_metros = Math.round(parseInt(total_metros)-parseInt(total_metros_ingresados));
+      if(resto_metros<0){
+        $("#resto1_metros").removeClass("label label-danger-mio padding");    
+        $("#resto1_metros").addClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+        
+        $("#resto2_metros").removeClass("label label-danger-mio padding");    
+        $("#resto2_metros").addClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+
+        $("#resto3_metros").removeClass("label label-danger-mio padding");    
+        $("#resto3_metros").addClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+      }else{
+        $("#resto1_metros").addClass("label label-danger-mio padding");    
+        $("#resto1_metros").removeClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto2_metros").addClass("label label-danger-mio padding");    
+        $("#resto2_metros").removeClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto3_metros").addClass("label label-danger-mio padding");    
+        $("#resto3_metros").removeClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+      }
+
+
+
+      //IMPRIMIR KILOS 
+      var resto = parseInt(bobt)-parseInt(bob1+bob2+bob3);
+      var resto_prueba = Math.round((parseInt(resta_de_metros)*parseInt(bob_gramaje)*parseInt(bob_ancho))/parseInt(1000000));
+      if(resto<0){
+        $("#resto1").removeClass("label label-danger-mio padding");    
+        $("#resto1").addClass("label label-success padding");    
+        $("#resto1").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        
+        $("#resto2").removeClass("label label-danger-mio padding");    
+        $("#resto2").addClass("label label-success padding");    
+        $("#resto2").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+
+        $("#resto3").removeClass("label label-danger-mio padding");    
+        $("#resto3").addClass("label label-success padding");    
+        $("#resto3").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        $("#numero_de_bobina2").val(0);
+      }else{
+        $("#resto1").addClass("label label-danger-mio padding");    
+        $("#resto1").removeClass("label label-success padding");    
+        $("#resto1").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto2").addClass("label label-danger-mio padding");    
+        $("#resto2").removeClass("label label-success padding");    
+        $("#resto2").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto3").addClass("label label-danger-mio padding");    
+        $("#resto3").removeClass("label label-success padding");    
+        $("#resto3").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#numero_de_bobina2_div").show();
+      }
+      ba();
+  });
+
+  //-------------Si ingresa algun dato en KG -----------//
+  $("#kilos_bobina_seleccionada3").on("keyup",function(){
+      //------------------KILOS------------------------//
+      var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
+      var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
+      var bob3  = parseInt($("#kilos_bobina_seleccionada3").val());
+
+      var bobt  = parseInt($("#total_kilos").val());
+      if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
+      if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
+      if($("#kilos_bobina_seleccionada3").val()==""){bob3=0;}
+      
+      //--------------------------METROS--------------------------------//
+      var gramaje_seleccionado1  = parseInt($("#gramaje_seleccionado").val());
+      var gramaje_seleccionado2  = parseInt($("#gramaje_seleccionado2").val());
+      var gramaje_seleccionado3  = parseInt($("#gramaje_seleccionado3").val());
+      
+      var bob_kilos  = parseInt($("#total_kilos").val());
+      var bob_ancho  = parseInt($("#ancho_de_bobina").val());
+      var bob_gramaje= parseInt($("#gramaje").val());
+      var resto_metros = Math.round(parseInt(resto)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000);
+      var total_metros = Math.round(parseInt(bob_kilos)/(parseInt(bob_ancho)*parseInt(bob_gramaje))*1000000);
+      var resto_metros_ingresados1 = (Math.round(parseInt(bob1)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000));
+      var resto_metros_ingresados2 = (Math.round(parseInt(bob2)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000));
+      var resto_metros_ingresados3 = (Math.round(parseInt(bob3)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000));
+
+      var total_metros_ingresados = Math.round(parseInt(resto_metros_ingresados1)+parseInt(resto_metros_ingresados2)+parseInt(resto_metros_ingresados3));
+      
+      var resta_de_metros = Math.round(parseInt(total_metros)-parseInt(total_metros_ingresados));
+      if(resto_metros<0){
+        $("#resto1_metros").removeClass("label label-danger-mio padding");    
+        $("#resto1_metros").addClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+        
+        $("#resto2_metros").removeClass("label label-danger-mio padding");    
+        $("#resto2_metros").addClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+
+        $("#resto3_metros").removeClass("label label-danger-mio padding");    
+        $("#resto3_metros").addClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+      }else{
+        $("#resto1_metros").addClass("label label-danger-mio padding");    
+        $("#resto1_metros").removeClass("label label-success padding");    
+        $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto2_metros").addClass("label label-danger-mio padding");    
+        $("#resto2_metros").removeClass("label label-success padding");    
+        $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+        $("#resto3_metros").addClass("label label-danger-mio padding");    
+        $("#resto3_metros").removeClass("label label-success padding");    
+        $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+      }
+
+
+
+      //IMPRIMIR KILOS 
+      var resto = parseInt(bobt)-parseInt(bob1+bob2+bob3);
+      var resto_prueba = Math.round((parseInt(resta_de_metros)*parseInt(bob_gramaje)*parseInt(bob_ancho))/parseInt(1000000));
+      if(resto<0){
+        $("#resto1").removeClass("label label-danger-mio padding");    
+        $("#resto1").addClass("label label-success padding");    
+        $("#resto1").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        
+        $("#resto2").removeClass("label label-danger-mio padding");    
+        $("#resto2").addClass("label label-success padding");    
+        $("#resto2").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+
+        $("#resto3").removeClass("label label-danger-mio padding");    
+        $("#resto3").addClass("label label-success padding");    
+        $("#resto3").text(" Sobrepasa por: "+(resto_prueba*-1)+" Kilos");
+        $("#numero_de_bobina2").val(0);
+      }else{
+        $("#resto1").addClass("label label-danger-mio padding");    
+        $("#resto1").removeClass("label label-success padding");    
+        $("#resto1").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto2").addClass("label label-danger-mio padding");    
+        $("#resto2").removeClass("label label-success padding");    
+        $("#resto2").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#resto3").addClass("label label-danger-mio padding");    
+        $("#resto3").removeClass("label label-success padding");    
+        $("#resto3").text(" Restante: "+resto_prueba+" Kilos")
+
+        $("#numero_de_bobina2_div").show();
+      }
+      ba();
+  });
+  //-------------- CALCULO QUE SE MUESTRA AL DESELECCIONAR EL INPUT --------------//
+  $("#kilos_bobina_seleccionada3").on("blur",function(){
+      var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
+      var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
+      var bob3  = parseInt($("#kilos_bobina_seleccionada3").val());
+
+      //--------------------------METROS--------------------------------//
+
+      var bobt  = parseInt($("#total_kilos").val());
+      if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
+      if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
+      if($("#kilos_bobina_seleccionada3").val()==""){bob3=0;}
+      var resto = parseInt(bobt)-parseInt(bob1+bob2+bob3);
+      if(resto<0){
+      $("#resto1").removeClass("label label-danger-mio padding");    
+      $("#resto1").addClass("label label-success padding");    
+      $("#resto1").text(" Sobrepasa por: "+(resto*-1)+" Kilos");
+
+      $("#resto2").removeClass("label label-danger-mio padding");    
+      $("#resto2").addClass("label label-success padding");    
+      $("#resto2").text(" Sobrepasa por: "+(resto*-1)+" Kilos");
+
+      $("#resto3").removeClass("label label-danger-mio padding");    
+      $("#resto3").addClass("label label-success padding");    
+      $("#resto3").text(" Sobrepasa por: "+(resto*-1)+" Kilos");
+
+      $("#numero_de_bobina2").val(0);
+      $("#numero_de_bobina2_div").hide();
+      }else{1
+      $("#resto1").addClass("label label-danger-mio padding");    
+      $("#resto1").removeClass("label label-success padding");    
+      $("#resto1").text(" Restante: "+resto+" Kilos")
+
+      $("#resto2").addClass("label label-danger-mio padding");    
+      $("#resto2").removeClass("label label-success padding");    
+      $("#resto2").text(" Restante: "+resto+" Kilos")
+
+      $("#resto3").addClass("label label-danger-mio padding");    
+      $("#resto3").removeClass("label label-success padding");    
+      $("#resto3").text(" Restante: "+resto+" Kilos")
+      $("#numero_de_bobina2_div").show();
+      }
+
+      //--------------------------METROS--------------------------------//
+      var gramaje_seleccionado1  = parseInt($("#gramaje_seleccionado").val());
+      var gramaje_seleccionado2  = parseInt($("#gramaje_seleccionado2").val());
+      var gramaje_seleccionado3  = parseInt($("#gramaje_seleccionado3").val());
+      var bob_kilos  = parseInt($("#total_kilos").val());
+      var bob_ancho  = parseInt($("#ancho_de_bobina").val());
+      var bob_gramaje= parseInt($("#gramaje").val());
+      var resto_metros = Math.round(parseInt(resto)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000);
+      var total_metros = Math.round(parseInt(bob_kilos)/(parseInt(bob_ancho)*parseInt(bob_gramaje))*1000000);
+      var resto_metros_ingresados1 = (Math.round(parseInt(bob1)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado1))*1000000));
+      var resto_metros_ingresados2 = (Math.round(parseInt(bob2)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado2))*1000000));
+      var resto_metros_ingresados3 = (Math.round(parseInt(bob3)/(parseInt(bob_ancho)*parseInt(gramaje_seleccionado3))*1000000));
+
+      var total_metros_ingresados = (parseInt(resto_metros_ingresados1)+parseInt(resto_metros_ingresados2)+parseInt(resto_metros_ingresados3));
+      
+      var resta_de_metros = parseInt(total_metros)-parseInt(total_metros_ingresados);
+      if(resto_metros<0){
+      $("#resto1_metros").removeClass("label label-danger-mio padding");    
+      $("#resto1_metros").addClass("label label-success padding");    
+      $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+      
+      $("#resto2_metros").removeClass("label label-danger-mio padding");    
+      $("#resto2_metros").addClass("label label-success padding");    
+      $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+
+      $("#resto3_metros").removeClass("label label-danger-mio padding");    
+      $("#resto3_metros").addClass("label label-success padding");    
+      $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Sobrepasa por: "+(resta_de_metros*-1)+" Metros");
+      }else{
+      $("#resto1_metros").addClass("label label-danger-mio padding");    
+      $("#resto1_metros").removeClass("label label-success padding");    
+      $("#resto1_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+      $("#resto2_metros").addClass("label label-danger-mio padding");    
+      $("#resto2_metros").removeClass("label label-success padding");    
+      $("#resto2_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+
+      $("#resto3_metros").addClass("label label-danger-mio padding");    
+      $("#resto3_metros").removeClass("label label-success padding");    
+      $("#resto3_metros").text("Metros ingresados: "+total_metros_ingresados+" Metros Restantes: "+resta_de_metros)
+      }
+      ba();
 });
-$("#kilos_bobina_seleccionada2").on("blur",function(){
-    var bob1  = parseInt($("#kilos_bobina_seleccionada").val()); 
-    var bob2  = parseInt($("#kilos_bobina_seleccionada2").val());
-    var bobt  = parseInt($("#total_kilos").val());
-    if($("#kilos_bobina_seleccionada").val()==""){bob1=0;}
-    if($("#kilos_bobina_seleccionada2").val()==""){bob2=0;}
-    var resto = parseInt(bobt)-parseInt(bob1+bob2);
-    if(resto<0){
-    $("#resto1").removeClass("label label-danger-mio");    
-    $("#resto1").addClass("label label-success");    
-    $("#resto1").text(" Sobrepasa por: "+(resto*-1));
-    $("#resto2").removeClass("label label-danger-mio");    
-    $("#resto2").addClass("label label-success");    
-    $("#resto2").text(" Sobrepasa por: "+(resto*-1));
-    $("#numero_de_bobina2").val("");
-    $("#numero_de_bobina2_div").hide();
-    }else{
-    $("#resto1").addClass("label label-danger-mio");    
-    $("#resto1").removeClass("label label-success");    
-    $("#resto1").text(" Restante: "+resto)
-    $("#resto2").addClass("label label-danger-mio");    
-    $("#resto2").removeClass("label label-success");    
-    $("#resto2").text(" Restante: "+resto)
-    $("#numero_de_bobina2_div").show();
-    }
-    ba();
-});
+
+
+
+
+
+
+
+
+
 
 function ba(){
 if($("#bobina_adicional").is(":visible")){

@@ -492,7 +492,7 @@
         </div>    
    
 	
-    <h3>Materialidad <strong style="color: red;">(*)</strong></h3>
+    <h3>Datos Técnicos Materialidad <strong style="color: red;">(*)</strong></h3>
     
     <div class="control-group">
 		<label class="control-label" for="usuario">Datos Técnicos</label>
@@ -910,9 +910,9 @@
                 <?php
                 foreach($externos as $externo) { ?>
                         <?php  if (sizeof($datos_cotizacion)>0) {   ?>
-                                <option value="<?php echo $externo->id?>" <?php if($datos_cotizacion->impresion_acabado_impresion_4==$externo->id){echo 'selected="true"';}?>><?php echo $externo->caracteristicas?></option>
+                                <option value="<?php echo $externo->id?>" <?php if($datos_cotizacion->impresion_acabado_impresion_4==$externo->id){echo 'selected="true"';}?>><?php echo $externo->caracteristicas.' - '.$externo->unv.' - '.$externo->valor_venta.'$' ?></option>
                         <?php } else {?>                    
-                                <option value="<?php echo $externo->id?>" <?php if($externo->id==$_POST["acabado_impresion_4"]){echo 'selected="selected"';}?>><?php echo $externo->caracteristicas?></option>
+                                <option value="<?php echo $externo->id?>" <?php if($externo->id==$_POST["acabado_impresion_4"]){echo 'selected="selected"';}?>><?php echo $externo->caracteristicas.' - '.$externo->unv.' - '.$externo->valor_venta.'$' ?></option>
                         <?php } ?>                    
                 <?php
                 }
@@ -930,9 +930,9 @@
                 <?php
                 foreach($externos as $externo) { ?>
                         <?php  if (sizeof($datos_cotizacion)>0) {   ?>
-                                <option value="<?php echo $externo->id?>" <?php if($datos_cotizacion->impresion_acabado_impresion_5==$externo->id){echo 'selected="true"';}?>><?php echo $externo->caracteristicas?></option>
+                                <option value="<?php echo $externo->id?>" <?php if($datos_cotizacion->impresion_acabado_impresion_5==$externo->id){echo 'selected="true"';}?>><?php echo $externo->caracteristicas.' - '.$externo->unv.' - '.$externo->valor_venta.'$' ?></option>
                         <?php } else {?>                    
-                                <option value="<?php echo $externo->id?>" <?php if($externo->id==$_POST["acabado_impresion_5"]){echo 'selected="selected"';}?>><?php echo $externo->caracteristicas?></option>
+                                <option value="<?php echo $externo->id?>" <?php if($externo->id==$_POST["acabado_impresion_5"]){echo 'selected="selected"';}?>><?php echo $externo->caracteristicas.' - '.$externo->unv.' - '.$externo->valor_venta.'$' ?></option>
                         <?php } ?>                    
                 <?php
                 }
@@ -950,9 +950,9 @@
                 <?php
                 foreach($externos as $externo) { ?>
                         <?php  if (sizeof($datos_cotizacion)>0) {   ?>
-                                <option value="<?php echo $externo->id?>" <?php if($datos_cotizacion->impresion_acabado_impresion_6==$externo->id){echo 'selected="true"';}?>><?php echo $externo->caracteristicas?></option>
+                                <option value="<?php echo $externo->id?>" <?php if($datos_cotizacion->impresion_acabado_impresion_6==$externo->id){echo 'selected="true"';}?>><?php echo $externo->caracteristicas.' - '.$externo->unv.' - '.$externo->valor_venta.'$' ?></option>
                         <?php } else {?>                    
-                                <option value="<?php echo $externo->id?>" <?php if($externo->id==$_POST["acabado_impresion_6"]){echo 'selected="selected"';}?>><?php echo $externo->caracteristicas?></option>
+                                <option value="<?php echo $externo->id?>" <?php if($externo->id==$_POST["acabado_impresion_6"]){echo 'selected="selected"';}?>><?php echo $externo->caracteristicas.' - '.$externo->unv.' - '.$externo->valor_venta.'$' ?></option>
                         <?php } ?>                    
                 <?php
                 }

@@ -112,6 +112,7 @@ class materiales_model extends CI_Model{
                 ->join("materiales_tipo as mt","mt.id=m.tipo","inner")
                 ->where(array("m.id"=>$id))
                 ->get();
+//        echo $this->db->last_query();
                 return $query->row();
     }
      public function getMaterialesPorNombre2($id)
