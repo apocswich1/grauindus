@@ -114,10 +114,12 @@ public function getAcabados2PorTipo($tipo)
     public function getAcabadosPorId($id)
     {
           $query=$this->db
-                ->select("a.id,a.proveedor_1,a.proveedor_2,a.codigo,a.caracteristicas,a.tipo,a.unidad_de_compra,a.unidad_de_venta, a.valor_venta,a.fecha_cotizacion,uv.unidad_uso as unv,uc.unidad_uso as unc,a.estado,a.costo_compra,a.costo_fijo,a.procesos_especiales")
+                ->select("a.id,a.proveedor_1,pu.nombre as nombre_proveedor1,pd.nombre as nombre_proveedor2,a.proveedor_2,a.codigo,a.caracteristicas,a.tipo,a.unidad_de_compra,a.unidad_de_venta, a.valor_venta,a.fecha_cotizacion,uv.unidad_uso as unv,uc.unidad_uso as unc,a.estado,a.costo_compra,a.costo_fijo,a.procesos_especiales")
                 ->from("acabados2 as a")
                 ->join("unidades_de_uso as uv","uv.id=a.unidad_de_venta","inner")
                 ->join("unidades_de_uso as uc","uc.id=a.unidad_de_compra","inner")
+                ->join("proveedores as pu","pu.id=a.proveedor_1","left")
+                ->join("proveedores as pd","pd.id=a.proveedor_2","left")
                 ->where(array("a.id"=>$id))
                 ->get();
          // echo $this->db->last_query();exit;

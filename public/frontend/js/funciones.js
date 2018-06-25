@@ -135,29 +135,41 @@ function sumaGrameje()
            $.post(ruta,{valor1:valor1},function(resp)
            {
                var myObj = $.parseJSON(resp);
-
+               $("#tamano_1").val(myObj.ancho_bobina);
+               $("#tamano_2").val(myObj.largo_bobina);
                document.form.tamano_cuchillo_1.value=myObj.cuchillocuchillo;
                document.form.tamano_cuchillo_2.value=myObj.cuchillocuchillo2;
-               document.form.tamano_1.value=myObj.ancho_bobina;
-               document.form.tamano_2.value=myObj.largo_bobina;
+               document.form.ccac_1.value=(parseInt(Math.round(($("#tamano_1").val()-myObj.cuchillocuchillo)*10)));
+               document.form.ccac_2.value=(parseInt(Math.round(($("#tamano_2").val()-myObj.cuchillocuchillo2)*10)));
+               /*document.form.tamano_1.value=myObj.ancho_bobina;*/
+               /*document.form.tamano_2.value=myObj.largo_bobina;*/
                $("#anumeromolde").html(myObj.id);
                $("#anombremolde").html(myObj.nombre);
                $("input[name=nombre_molde]").val(myObj.nombre);
+               $("#texto_nm_sugerido").html("Nombre Molde:");
                document.form.unidades_por_pliego_molde.value=myObj.unidades_productos_completos;
                document.form.piezas_totales_molde.value=myObj.piezas_totales;
                document.form.mcm1.value=myObj.medidas_de_las_cajas;
                document.form.mcm2.value=myObj.medidas_de_las_cajas_2;
                document.form.mcm3.value=myObj.medidas_de_las_cajas_3;
                document.form.mcm4.value=myObj.medidas_de_las_cajas_4;
+               document.form.mdlc.value=myObj.medidas_de_las_cajas;
+               document.form.mdlc2.value=myObj.medidas_de_las_cajas_2;
+               document.form.mdlc3.value=myObj.medidas_de_las_cajas_3;
+               document.form.mdlc4.value=myObj.medidas_de_las_cajas_4;
                $("#unidades_por_pliego").val(myObj.unidades_productos_completos);
                $("#piezas_totales_en_el_pliego").val(myObj.piezas_totales);
                $("#medidas_de_las_cajas").val(myObj.medidas_de_las_cajas);
                $("#medidas_de_las_cajas_2").val(myObj.medidas_de_las_cajas_2);
                $("#medidas_de_las_cajas_3").val(myObj.medidas_de_las_cajas_3);
                $("#medidas_de_las_cajas_4").val(myObj.medidas_de_las_cajas_4);
+               document.form.abobina.value=myObj.ancho_bobina;
+               document.form.lbobina.value=myObj.largo_bobina;
                document.form.largo_molde_1.value=myObj.ancho_bobina;
                document.form.largo_molde_2.value=myObj.largo_bobina;
                document.form.numero_de_molde.value=myObj.id;
+               document.form.cucu1.value=myObj.cuchillocuchillo;
+               document.form.cucu2.value=myObj.cuchillocuchillo2;
                document.form.ccm1.value=myObj.cuchillocuchillo;
                document.form.ccm2.value=myObj.cuchillocuchillo2;
            });
@@ -1193,33 +1205,18 @@ function comparacion(valor){
         $(".unocheck").show();
         $("#uno").removeClass("error");
         }
-//    if(ptm != pti){
-//           var b = 1;
-//           $("#dos").addClass("error");
-//           $(".doscheck").hide();
-//    }else{
-//    var b = 0;
-//    $(".doscheck").show();
-//    $("#dos").removeClass("error");
-//        }
-//    if(ptmolde != piezas_totales_ing){
-//           var b = 1;
-//           $("#dos").addClass("error");
-//           $(".doscheck").hide();
-//    }else{
-//    var b = 0;
-//    $(".doscheck").show();
-//    $("#dos").removeClass("error");
-//        }
+
     if(ptmolde != pti){
         var b = 1;
            $("#dos").addClass("error");
-           $(".check").hide();
+           $(".doscheck").hide();
     }else{
-    $(".check").show();
+    $(".doscheck").show();
+    $("#dos").removeClass("error");
     var b = 0;
         }
-    if(cucu1 != tamano_cuchillo1){
+        
+    if((cucu1 != tamano_cuchillo1) || (ccm1 != tamano_cuchillo1) || (cucu2 != tamano_cuchillo2) || (ccm2 != tamano_cuchillo2)){
            var c = 1;
            $("#cuatro").addClass("error");
            $(".cuatrocheck").hide();
@@ -1228,7 +1225,8 @@ function comparacion(valor){
     $(".cuatrocheck").show();
     $("#cuatro").removeClass("error");
     }
-    if(ccm1 != tamano_cuchillo1){
+    
+/*   if(ccm1 != tamano_cuchillo1){
            var c = 1;
            $("#cuatro").addClass("error");
            $(".cuatrocheck").hide();
@@ -1237,6 +1235,7 @@ function comparacion(valor){
     $(".cuatrocheck").show();
     $("#cuatro").removeClass("error");
     }
+
     if(cucu2 != tamano_cuchillo2){
            var d = 1;
            $("#cuatro").addClass("error");
@@ -1254,8 +1253,13 @@ function comparacion(valor){
     var d = 0;
     $(".cuatrocheck").show();
     $("#cuatro").removeClass("error");
-        }
-    if(abobina != tamano1){
+        }*/
+    /*alert(abobina+'-'+tamano1);
+    alert(tamano1+'-'+largomolde1);
+    alert(lbobina+'-'+tamano2);
+    alert(tamano2+'-'+largomolde2);*/
+    
+    if((abobina != tamano1) || (tamano1 != largomolde1) || (lbobina != tamano2) || (tamano2 != largomolde2)){
            var e = 1;
            $("#cinco").addClass("error");
            $(".cincocheck").hide();
@@ -1264,7 +1268,7 @@ function comparacion(valor){
     $(".cincocheck").show();
     $("#cinco").removeClass("error");
         }
-    if(tamano1 != largomolde1){
+/*    if(tamano1 != largomolde1){
            var e = 1;
            $("#cinco").addClass("error");
            $(".cincocheck").hide();
@@ -1291,32 +1295,32 @@ function comparacion(valor){
     $(".checkcinco").show();
     $("#cinco").removeClass("error");
         }
-     
-    if((mdlc != mdlci) || (mdlc2 != mdlci2) || (mdlc3 != mdlci3) || (mdlc4 != mdlci4)){
+     */
+    /*alert(mdlc+'-'+mdlci);
+    alert(mdlc2+'-'+mdlci2);
+    alert(mdlc3+'-'+mdlci3);
+    alert(mdlc4+'-'+mdlci4);*/
+    if((mdlc != mdlci) || (mdlc2 != mdlci2) || (mdlc3 != mdlci3) || (mdlc4 != mdlci4) || (mcm1 != mdlci) || (mcm2 != mdlci2) || (mcm3 != mdlci3) || (mcm4 != mdlci4)){
            var g = 1;
            $("#tres").addClass("error");
            $(".trescheck").hide();
     }else{
     var g = 0;
-    $(".trescheck").show();}
+    $(".trescheck").show();
+    $("#tres").removeClass("error");
+}
 
-    if((mcm1 != mdlci) || (mcm2 != mdlci2) || (mcm3 != mdlci3) || (mcm4 != mdlci4)){
+    /*if((mcm1 != mdlci) || (mcm2 != mdlci2) || (mcm3 != mdlci3) || (mcm4 != mdlci4)){
            var g = 1;
            $("#tres").addClass("error");
            $(".trescheck").hide();
     }else{
     var g = 0;
-    $(".trescheck").show();}
-    
-     //alert(mdlc+'='+mdlc1);
-//     alert(ccm2+'='+tamano_cuchillo2);
-//     alert(ptmolde+'='+pti);
-//     alert(mdlc+'='+mdlci);
-//     alert(mdlc2+'='+mdlci2);
-//     alert(mdlc3+'='+mdlci3);
-//     alert(mdlc4+'='+mdlci4);
-     
-    var total = a+b+c+d+e+f+g;
+    $(".trescheck").show();
+    $("#tres").removeClass("error");
+    }*/
+       
+    var total = a+b+c+e+g;
     
     if($("#cp").val()=='Nuevo' && $("#nm").val()==1 || $("#nm").val()=='' || $("#nm").val()==11 || $("#nm").val()==12 || $("#nm").val()==13 || $("#nm").val()==14 || $("#nm").val()==15){
         $("#modificarmolde").hide();
@@ -1328,6 +1332,9 @@ function comparacion(valor){
         $("#crearlo").hide();
         $("#crearlo2").hide();
     }else{
+        guardarFormularioAdd2($("#crearlo").val());
+        $("#guardar").removeAttr('data-toggle');
+        $("#liberar").removeAttr('data-toggle');
         $("#modificarmolde").hide();
         $("#crearlo").show();
         $("#crearlo2").hide();
@@ -1408,17 +1415,17 @@ function pegadoyAdhesivos2(id)//81486954 //27151987 13350 2014 //
     }
     
 }
-function pegadoyAdhesivos(id)//81486954 //27151987 13350 2014 // 
+function pegadoyAdhesivos(id)
 {
-    //alert(id);
-    if(id=="3")//PVA E-0002 Cola Blanca
+    
+    if(id=="3")
     {
         document.getElementById("pegado_manual").style.display = "block";
     }else
     {
         document.getElementById("pegado_manual").style.display = "none";
     }
-    if(id=="2")//Latex Consigomismo
+    if(id=="2")
     {
         document.getElementById("lleva_aletas").style.display = "block";
         document.getElementById("total_aplicaciones_adhesivo").style.display = "block";
@@ -1431,10 +1438,10 @@ function pegadoyAdhesivos(id)//81486954 //27151987 13350 2014 //
 }
 function alpha_con_numeros(e){
        key = e.keyCode || e.which;
-       //alert(key);
+     
        tecla = String.fromCharCode(key).toLowerCase();
        letras = " Ã¡Ã©Ã­Ã³ÃºabcdefghijklmnÃ±opqrstuvwxyz1234567890";
-       //especiales = [8,37,39,46];
+     
         especiales = [8,39,45,46,241,225,233,237,243,250,9,13,64];
        tecla_especial = false
        for(var i in especiales){
@@ -1506,21 +1513,24 @@ function moldeparaingenieria()
 
 function llevafondo(id)
 {
-   // var HOLA=document.form.lleva_fondo_negro.value;
-	
-	//alert(HOLA);
+
     if(id=='SI')
     {
         document.form.troquel_por_atras.value='NO';
-	document.form.troquel_por_atras.disabled = true;
+	document.form.troquel_por_atras.disabled = false;
+         $("select[name=troquel_por_atras] option[value='SI']").attr("disabled",true);
         return false;
-    }else
+    }else if(id=='NO')
     {
 		document.form.troquel_por_atras.value='SI';
-		document.form.troquel_por_atras.disabled = true;
-		
-        
-        return false;
+		document.form.troquel_por_atras.disabled = false;
+                $("select[name=troquel_por_atras] option[value='SI']").attr("disabled",false);
+	        return false;
+    }else{
+        document.form.troquel_por_atras.value='';
+		document.form.troquel_por_atras.disabled = false;
+                $("select[name=troquel_por_atras] option[value='SI']").attr("disabled",false);
+	        return false;
     }
 }
 function igualar()
@@ -1535,7 +1545,7 @@ function igualar()
 
 function colores_barniz(id)
 {	
-	//alert(estan_los_moldes);
+
     if(id >= '1')
     {
         document.form.lleva_barniz.value='SI';
@@ -1663,20 +1673,9 @@ function procesosExternos()
         return false;
     }
 }
-//function estanLosMoldes(id)
-//{
-//    if(id=='NO')
-//    {
-//        document.getElementById('molde_select').style.display='none';
-//        //document.getElementById('crea_molde').style.display='block';
-//    }else
-//    {
-//        document.getElementById('molde_select').style.display='block';
-//        //document.getElementById('crea_molde').style.display='none';
-//    }
-//}
 
-function estanLosMoldes(id)
+
+function estanLosMoldess(id)
 {
     if(id=='NO')
     {
@@ -1691,7 +1690,7 @@ function estanLosMoldes(id)
     }
     else if (id=='MOLDE GENERICO')
     {
-//        alert("Molde Generico del Cliente");
+
         document.form.molde_registrado.value="0";        
         document.form.select_estan_los_moldes_genericos.value="SI";
         document.form.select_estan_los_moldes_no_genericos_clientes.value="NO";        
@@ -1702,7 +1701,7 @@ function estanLosMoldes(id)
     }
     else if (id=='SI')
     {
-//        alert("Molde Generico del Cliente");
+
         document.form.molde_registrado.value="0";        
         document.form.select_estan_los_moldes_genericos.value="SI";
         document.form.select_estan_los_moldes_no_genericos_clientes.value="NO";        
@@ -1713,7 +1712,7 @@ function estanLosMoldes(id)
     }
     else if (id=='MOLDE REGISTRADOS DEL CLIENTE')
     {
-//        alert("cliente");   
+
         document.form.molde_generico.value="0";
         document.form.select_estan_los_moldes_genericos.value="NO";
         document.form.select_estan_los_moldes_no_genericos_clientes.value="SI";        
@@ -1723,12 +1722,135 @@ function estanLosMoldes(id)
         document.getElementById('div_estan_los_moldes_clientes').style.display='block';  
     }      
 }
+function estanLosMoldesPropia(id)
+{
+    if(id=='NO')
+    {
+        document.form.molde_registrado.value="0";  
+        document.form.molde_generico.value="0";
+/*        document.form.select_estan_los_moldes_genericos.value="NO";*/
+ /*       document.form.select_estan_los_moldes_no_genericos_clientes.value="NO";        */
+        document.form.select_estan_los_moldes.value="NO";          
+        document.getElementById('div_estan_los_moldes').style.display='block';
+        document.getElementById('div_estan_los_moldes_generico').style.display='none';
+        document.getElementById('div_estan_los_moldes_clientes').style.display='none';
+        document.getElementById('distanciacc').style.display='block';
+        document.getElementById('calccac').style.display='block';
+        document.getElementById('lacortar').style.display='block';
+        document.getElementById('rccac').style.display='block';
+        document.getElementById('distancia_en_molde').style.display='block';
+        document.getElementById('lacortar2').style.display='none';
+        document.getElementById('botones2').style.display='block';
+        document.getElementById('botones').style.display='none';
+    }
+    else if(id=='NO LLEVA')
+    {
+        document.form.molde_registrado.value="0";  
+        document.form.molde_generico.value="0";
+        document.form.hay_que_troquelar.value="NO";
+        document.form.tamano_cuchillo_1.value="";
+        document.form.tamano_cuchillo_2.value="";
+        document.form.ccac_1.value="";
+        document.form.ccac_2.value="";
+     /*   document.form.select_estan_los_moldes_genericos.value="NO";*/
+     /*   document.form.select_estan_los_moldes_no_genericos_clientes.value="NO";        */
+        document.form.nombre_molde.value="";          
+        document.form.select_estan_los_moldes.value="NO LLEVA";          
+        document.getElementById('div_estan_los_moldes').style.display='block';
+        document.getElementById('div_estan_los_moldes_generico').style.display='none';
+        document.getElementById('div_estan_los_moldes_clientes').style.display='none';
+        document.getElementById('distanciacc').style.display='none';
+        document.getElementById('calccac').style.display='none';
+        document.getElementById('lacortar').style.display='none';
+        document.getElementById('rccac').style.display='none';
+        document.getElementById('distancia_en_molde').style.display='none';
+        document.getElementById('lacortar2').style.display='block';
+        document.getElementById('botones2').style.display='block';
+        document.getElementById('botones').style.display='none';
+    }
+    else if (id=='MOLDE GENERICO')
+    {
+        document.form.molde_registrado.value="0"; 
+        document.form.hay_que_troquelar.value="SI";
+     /*   document.form.select_estan_los_moldes_genericos.value="SI";*/
+     /*   document.form.select_estan_los_moldes_no_genericos_clientes.value="NO";        */
+        document.form.select_estan_los_moldes.value="MOLDE GENERICO";          
+        document.getElementById('div_estan_los_moldes').style.display='block';
+        document.getElementById('div_estan_los_moldes_generico').style.display='block';
+        document.getElementById('div_estan_los_moldes_clientes').style.display='none'; 
+        document.getElementById('distanciacc').style.display='block';
+        document.getElementById('calccac').style.display='block';
+        document.getElementById('lacortar').style.display='block';
+        document.getElementById('rccac').style.display='block';
+        document.getElementById('distancia_en_molde').style.display='block';
+        document.getElementById('lacortar2').style.display='none';
+        document.getElementById('botones').style.display='block';
+        document.getElementById('botones2').style.display='none';
+    }
+    else if (id=='SI')
+    {
+
+        document.form.molde_registrado.value="0";   
+        document.form.hay_que_troquelar.value="SI";
+   /*     document.form.select_estan_los_moldes_genericos.value="SI";*/
+   /*     document.form.select_estan_los_moldes_no_genericos_clientes.value="NO";        */
+        document.form.select_estan_los_moldes.value="MOLDE GENERICO";          
+        document.getElementById('div_estan_los_moldes').style.display='block';
+        document.getElementById('div_estan_los_moldes_generico').style.display='block';
+        document.getElementById('div_estan_los_moldes_clientes').style.display='none'; 
+        document.getElementById('distanciacc').style.display='block';
+        document.getElementById('calccac').style.display='block';
+        document.getElementById('lacortar').style.display='block';
+        document.getElementById('rccac').style.display='block';
+        document.getElementById('distancia_en_molde').style.display='block';
+        document.getElementById('lacortar2').style.display='none';
+        document.getElementById('botones').style.display='block';
+        document.getElementById('botones2').style.display='none';
+    }
+    else if (id=='MOLDE REGISTRADOS DEL CLIENTE')
+    {
+        document.form.molde_generico.value="0";
+        document.form.hay_que_troquelar.value="SI";
+    /*    document.form.select_estan_los_moldes_genericos.value="NO";*/
+    /*    document.form.select_estan_los_moldes_no_genericos_clientes.value="SI";        */
+        document.form.select_estan_los_moldes.value="MOLDE REGISTRADOS DEL CLIENTE";    
+        document.getElementById('div_estan_los_moldes').style.display='block';
+        document.getElementById('div_estan_los_moldes_generico').style.display='none';
+        document.getElementById('div_estan_los_moldes_clientes').style.display='block';  
+        document.getElementById('distanciacc').style.display='block';
+        document.getElementById('calccac').style.display='block';
+        document.getElementById('lacortar').style.display='block';
+        document.getElementById('rccac').style.display='block';
+        document.getElementById('distancia_en_molde').style.display='block';
+        document.getElementById('lacortar2').style.display='none';
+        document.getElementById('botones').style.display='block';
+        document.getElementById('botones2').style.display='none';
+    }      
+    else if (id=='CLIENTE LO APORTA')
+    {
+        document.form.molde_generico.value="0";
+        document.form.hay_que_troquelar.value="SI";
+   /*     document.form.select_estan_los_moldes_genericos.value="NO";*/
+    /*    document.form.select_estan_los_moldes_no_genericos_clientes.value="NO";        */
+        document.form.select_estan_los_moldes.value="CLIENTE LO APORTA";    
+        document.getElementById('div_estan_los_moldes').style.display='block';
+        document.getElementById('div_estan_los_moldes_generico').style.display='none';
+        document.getElementById('div_estan_los_moldes_clientes').style.display='block';  
+        document.getElementById('distanciacc').style.display='block';
+        document.getElementById('calccac').style.display='block';
+        document.getElementById('lacortar').style.display='block';
+        document.getElementById('rccac').style.display='block';
+        document.getElementById('distancia_en_molde').style.display='block';
+        document.getElementById('lacortar2').style.display='none';
+        document.getElementById('botones').style.display='block';
+        document.getElementById('botones2').style.display='none';
+    }      
+}
 
 function estanLosMoldes2(id)
 {
     if(id=='NO')
     {
-        //document.getElementById('molde_select').style.display='none';
         document.getElementById('molde_select').style.visibility='hidden';
         document.getElementById('crea_molde').style.display='block';
 		document.getElementById('metroDeCuchillo').style.display='block';
@@ -1736,7 +1858,6 @@ function estanLosMoldes2(id)
     }
     if(id=='SI')
     {
-        //document.getElementById('molde_select').style.display='block';
 		document.getElementById('molde_select').style.visibility='initial';
         document.getElementById('crea_molde').style.display='none';
 		document.getElementById('metroDeCuchillo').style.display='none';
@@ -1744,7 +1865,6 @@ function estanLosMoldes2(id)
     }
     if(id=='NO LLEVA' || id=='CLIENTE LO APORTA')
     {
-        //document.getElementById('molde_select').style.display='none';
         document.getElementById('molde_select').style.visibility='hidden';
         document.getElementById('crea_molde').style.display='none';
 		document.getElementById('metroDeCuchillo').style.display='none';
@@ -1755,7 +1875,6 @@ function estanLosMoldes2(id)
 
 function cotizaciones_grupales(id)
 {
-	//alert("I am an alert box! "+id);
 	
     if(id=='NO')
     {
@@ -2014,6 +2133,16 @@ function verificarCosto2()
   
 }
 
+function guardarHCP()
+{
+    $("#copia").val(0);
+    $("#imprimir").val(0);
+    
+    form.submit();
+    
+    //verificarCosto2();
+
+}
 function guardarHC()
 {
     $("#copia").val(0);
@@ -2024,16 +2153,6 @@ function guardarHC()
     //verificarCosto2();
 
 }
-//function guardarHC()
-//{
-//    $("#copia").val(0);
-//    $("#imprimir").val(0);
-//    
-//    if(confirm('Está seguro de que desea guardar todos los datos de la Hoja de Costos?'))
-//    {
-//        form.submit();
-//    }
-//}
 
 function guardarHCI(vf,ve)
 {
@@ -2041,6 +2160,17 @@ function guardarHCI(vf,ve)
     $("#imprimir").val(1);
     
     verificarCosto(vf, ve);
+    
+    if(confirm('Está seguro de que desea guardar e Imprimir la Hoja de Costos?'))
+        form.submit();
+    {window.print();
+    }
+}
+
+function guardarHCIP()
+{
+    $("#copia").val(0);
+    $("#imprimir").val(1);
     
     if(confirm('Está seguro de que desea guardar e Imprimir la Hoja de Costos?'))
         form.submit();
@@ -2062,6 +2192,14 @@ function guardarHCI2(vf,ve)
 }
 //verificarCosto(document.getElementById('vf1').value,document.getElementById('ve1').value);
 function copiarHC()
+{
+    $("#copia").val(1);
+    if(confirm('Está seguro de que desea copiar la Hoja de Costos?'))
+    {
+        form.submit();
+    }
+}
+function copiarHCP()
 {
     $("#copia").val(1);
     if(confirm('Está seguro de que desea copiar la Hoja de Costos?'))
@@ -2247,18 +2385,6 @@ function PiezasTotales(id)
         return false;
     }	
 }
-
-
- 
-/*
-function validar_listado()
-		{	
-		//document.getElementById("div_condicion").style.display='block';
-		//alert("I am an alert box! "+id);
-		carga_ajax(webroot+'produccion/validar_listado_produccion','1','cuerpo_listado');		
-		
-		}
-*/
 
 function validar_listado()
 		{	
@@ -2801,13 +2927,7 @@ function calculo_ccac()
                 {
                     div="msg_imagen_impresion";
                     $("#"+div+"").html("<strong>Distancia CCAC Invalida</strong>");
-//                    alert("Distancia CCAC Invalida"); 
-                    // cuchillo a cuchillo llevar a cero
-//                    form.lleva_fondo_negro.selectedIndex = &quot;NO&quot;;               
-//                    form.lleva_fondo_negro.value=&quot;NO&quot;;
-//                    form.fondo_otro_color.selectedIndex = &quot;NO&quot;;               
-//                    form.fondo_otro_color.value=&quot;NO&quot;;                
-//                    return false;
+
                 } 
                 if ((total_medida1>6) && (total_medida1<=19))
                 {                
@@ -2821,24 +2941,93 @@ function calculo_ccac()
                     {
                         div="msg_imagen_impresion";
                         $("#"+div+"").html("<strong>Tipo de Troquelado: Automatico</strong>"); 
-//                        alert("Troquelado Automatico");                     
-    //                    form.lleva_fondo_negro.selectedIndex = &quot;NO&quot;;               
-    //                    form.lleva_fondo_negro.value=&quot;NO&quot;; 
-    //                    form.fondo_otro_color.selectedIndex = &quot;NO&quot;;               
-    //                    form.fondo_otro_color.value=&quot;NO&quot;;                     
-    //                    return false;
+
                     }
                 }
                 else
                 {
                     div="msg_imagen_impresion";
                     $("#"+div+"").html("<strong>Tipo de Troquelado: Automatico</strong>"); 
-//                    alert("Troquelado Automatico");                     
-//                    form.lleva_fondo_negro.selectedIndex = &quot;NO&quot;;               
-//                    form.lleva_fondo_negro.value=&quot;NO&quot;; 
-//                    form.fondo_otro_color.selectedIndex = &quot;NO&quot;;               
-//                    form.fondo_otro_color.value=&quot;NO&quot;;                     
-//                    return false;
+
+                }                    
+                    
+            }
+        }        
+    }
+    else 
+    {
+        if((tamano_cuchillo_1!='') && (tamano_cuchillo_2!=''))
+        {
+            if((tamano_1!='') && (tamano_2!=''))
+            {
+                total_medida1=(tamano_1-tamano_cuchillo_1)*10;
+                total_medida2=(tamano_2-tamano_cuchillo_2)*10;
+                document.form.ccac_1.value=total_medida1;
+                document.form.ccac_2.value=total_medida2;   
+                var ccacminima = $("#ccac_o").val();
+                if (total_medida1< $("#ccac_o").val())
+                {
+//                    document.form.tamano_cuchillo_1.value=0;    
+//                    document.form.tamano_cuchillo_2.value=0;  
+//                    document.form.ccac_1.value=0;                      
+//                    document.form.ccac_2.value=0;
+                    div="msg_imagen_impresion";
+                   /* $("#"+div+"").html("<strong>El calculo ccac no puede ser menor a "+ccacminima);    */
+                   // $("#ccacmin").html('<h4 style="color:green">Distancia '+ccacminima+'</h4>');
+                   // alert("El calculo ccac no puede ser menor a "+ccacminima);                     
+                }
+            }
+        }
+    }        
+        
+        
+}
+
+function calculos_ccac()
+{
+    var tamano_cuchillo_1=document.form.tamano_cuchillo_1.value;
+    var tamano_1=document.form.tamano_1.value;
+    var tamano_cuchillo_2=document.form.tamano_cuchillo_2.value;
+    var tamano_2=document.form.tamano_2.value;  
+    var lleva_fondo_negro=document.form.lleva_fondo_negro.value;
+    var fondo_otro_color=document.form.fondo_otro_color.value;
+    
+    if((lleva_fondo_negro=='NO') || (fondo_otro_color=='NO'))    //es menor a 29
+    {
+        if((tamano_cuchillo_1!='') && (tamano_cuchillo_2!=''))
+        {
+            if((tamano_1!='') && (tamano_2!=''))
+            {
+                total_medida1=(tamano_1-tamano_cuchillo_1)*10;
+                total_medida2=(tamano_2-tamano_cuchillo_2)*10;
+                document.form.ccac_1.value=total_medida1;
+                document.form.ccac_2.value=total_medida2;
+                if (total_medida1<=6)
+                {
+                    div="msg_imagen_impresion";
+                    $("#"+div+"").html("<strong>Distancia CCAC Invalida</strong>");
+
+                } 
+                if ((total_medida1>6) && (total_medida1<=19))
+                {                
+                    if ((total_medida1>6) && (total_medida1<=11))
+                    {
+                        div="msg_imagen_impresion";
+                        $("#"+div+"").html("<strong>Tipo de Troquelado: Manual</strong>"); 
+//                        alert("Troquelado Manual"); 
+                     }
+                    if (total_medida1>11)
+                    {
+                        div="msg_imagen_impresion";
+                        $("#"+div+"").html("<strong>Tipo de Troquelado: Automatico</strong>"); 
+
+                    }
+                }
+                else
+                {
+                    div="msg_imagen_impresion";
+                    $("#"+div+"").html("<strong>Tipo de Troquelado: Automatico</strong>"); 
+
                 }                    
                     
             }
@@ -2908,7 +3097,7 @@ function Hay_Que_Bobinar_Carutlina(id)
     {
      if (tamano_a_imprimir_2<=0)
      {
-        document.form.hay_que_bobinar.value='NO';         
+        document.form.hay_que_bobinar.value='Seleccione';         
         alert("Tamaño a imprimir Tiene que ser mayor que cero");
         return false;          
      }
@@ -3382,33 +3571,44 @@ function asignar_producto()
     }
 }
 
+function validar_ancho_bobina_seleccionada()
+{      
+    var ancho_bobina_seleccionada2=document.form.ancho_de_bobina.value; 
+    
+   if (document.form.ancho_seleccionado_de_bobina.value>ancho_bobina_seleccionada2)  
+    {
+      alert("No puedes ingresar un valor menor al Ancho de la bobina cotizada "); 
+    } 
+  }
 
 function validar_kilos_bobina_seleccionada()
 {
     var items=document.form.hay_que_bobinar.value;
-    var kilos_bobina_seleccionada=document.form.kilos_bobina_seleccionada.value;    
+    var kilos_bobina_seleccionada=document.form.kilos_bobina_seleccionada.value; 
+
     
     if((items=='SI') && (kilos_bobina_seleccionada==''))
     {
-        document.form.hay_que_bobinar.value='NO';         
+        document.form.hay_que_bobinar.value='Seleccione';         
         alert("No puedes Bobinar si Kilos de la Bobina Seleccionada esta Vacio");
     }
     else if((items=='SI') && (kilos_bobina_seleccionada==0))
     {
-        document.form.hay_que_bobinar.value='NO';         
+        document.form.hay_que_bobinar.value='Seleccione';         
         alert("No puedes Bobinar si Kilos de la Bobina Seleccionada esta Vacio");
-    }    
+    } 
+    
 }
 
 function guardarOrdenCompraPiezas() 
 {
    var div="prueba";
-   var id=document.form.id_registro.value;   
-   var empresa=document.form.empresa.value;   
-   var envia=document.form.envia.value; 
-   var recibe=document.form.recibe.value;    
-   var tipo_despacho=document.form.tipo_despacho.value;  
-   var tipo_seccion=document.form.tipo_seccion.value;     
+   var id=document.form.id_registro.value;
+   var empresa=document.form.empresa.value;
+   var envia=document.form.envia.value;
+   var recibe=document.form.recibe.value;
+   var tipo_despacho=document.form.tipo_despacho.value;
+   var tipo_seccion=document.form.tipo_seccion.value;
    if (id=='')
    {
        alert("Debe seleccionar un Registro Valido");
@@ -3472,10 +3672,12 @@ function guardarOrdenCompraPiezas()
        alert("Orden de Compra guardada con exito")
        var arreglo = [proveedor1,proveedor2,proveedor3];
        proveedores=remover_repetidos(arreglo);
-       for (x=0;x<proveedores.length;x++){
-           ruta2=webroot+'ordenes/pdf_orden_de_compra_piezas/'+id+'/944/'+proveedores[x];
+       //console.log(proveedores);
+      // for (x=0;x<proveedores.length;x++){
+           ruta2=webroot+'ordenes/pdf_orden_de_compra_piezas/'+id+'/944/'+proveedores[0]+'/'+proveedores[1]+'/'+proveedores[2];
+           
            window.open(ruta2);
-       }       
+      // }       
    });
 }
 
@@ -3966,6 +4168,69 @@ function validacion_gramaje_control_cartulina()
     }
 }
 
+function validacion_ancho_bobina_seleccionada_control_cartulina()
+{
+    var ancho_seleccionado_de_bobina=document.form.ancho_seleccionado_de_bobina.value;
+    if (ancho_seleccionado_de_bobina=="")
+    {
+           document.form.ancho_seleccionado_de_bobina.value=800;      
+           document.form.ancho_seleccionado_de_bobina.focus();  
+           alert("Ancho Seleccionado de Bobina no puede ser menor a 80 Cms ni mayor a 250 Cms"); 
+           return false;
+    }  
+    ancho_seleccionado_de_bobina=parseInt(ancho_seleccionado_de_bobina);   
+    if ((ancho_seleccionado_de_bobina<800)  || (ancho_seleccionado_de_bobina>2500))
+    {
+           document.form.ancho_seleccionado_de_bobina.value=800;      
+           document.form.ancho_seleccionado_de_bobina.focus();  
+           alert("Ancho Seleccionado de Bobina no puede ser menor a 80 Cms ni mayor a 250 Cms"); 
+           return false;
+    }
+
+}
+
+function validacion_ancho_bobina_seleccionada_control_cartulina2()
+{
+    var ancho_seleccionado_de_bobina2=document.form.ancho_seleccionado_de_bobina2.value;
+    if (ancho_seleccionado_de_bobina2=="")
+    {
+           document.form.ancho_seleccionado_de_bobina2.value=800;      
+           document.form.ancho_seleccionado_de_bobina2.focus();  
+           alert("Ancho Seleccionado de Bobina2  no puede ser menor a 80 Cms ni mayor a 250 Cms"); 
+           return false;
+    }  
+    ancho_seleccionado_de_bobina2=parseInt(ancho_seleccionado_de_bobina2);   
+    if ((ancho_seleccionado_de_bobina2<800)  || (ancho_seleccionado_de_bobina2>2500))
+    {
+           document.form.ancho_seleccionado_de_bobina2.value=800;      
+           document.form.ancho_seleccionado_de_bobina2.focus();  
+           alert("Ancho Seleccionado de Bobina 2 no puede ser menor a 80 Cms ni mayor a 250 Cms"); 
+           return false;
+    }
+    
+}
+
+function validacion_ancho_bobina_seleccionada_control_cartulina3()
+{
+    var ancho_seleccionado_de_bobina3=document.form.ancho_seleccionado_de_bobina3.value;
+    if (ancho_seleccionado_de_bobina3=="")
+    {
+           document.form.ancho_seleccionado_de_bobina3.value=800;      
+           document.form.ancho_seleccionado_de_bobina3.focus();  
+           alert("Ancho Seleccionado de Bobina 3 no puede ser menor a 80 Cms ni mayor a 250 Cms"); 
+           return false;
+    }  
+    ancho_seleccionado_de_bobina3=parseInt(ancho_seleccionado_de_bobina3);   
+    if ((ancho_seleccionado_de_bobina3<800)  || (ancho_seleccionado_de_bobina3>2500))
+    {
+           document.form.ancho_seleccionado_de_bobina3.value=800;      
+           document.form.ancho_seleccionado_de_bobina3.focus();  
+           alert("Ancho Seleccionado de Bobina 3 no puede ser menor a 80 Cms ni mayor a 250 Cms"); 
+           return false;
+    }
+    
+}
+  /*
 function validacion_ancho_seleccionado_de_bobina_control_cartulina()
 {
     var ancho_seleccionado_de_bobina=document.form.ancho_seleccionado_de_bobina.value;
@@ -3981,7 +4246,7 @@ function validacion_ancho_seleccionado_de_bobina_control_cartulina()
     {
         Hay_Que_Bobinar_Carutlina('SI');
     }
-}
+}*/
 
 function validacion_kilos_bobina_seleccionada_control_cartulina()
 {
@@ -4003,18 +4268,20 @@ function validacion_kilos_bobina_seleccionada_control_cartulina()
     }
 }
 
+
+
 function validar_kilos_bobina_seleccionada_Onda()
 {
     var items=document.form.hay_que_bobinar.value;
     var kilos_bobina_seleccionada=document.form.kilos_bobina_seleccionada.value;    
     if((items=='SI') && (kilos_bobina_seleccionada==''))
     {
-        document.form.hay_que_bobinar.value='NO';         
+        document.form.hay_que_bobinar.value='Seleccione';         
         alert("No puedes Bobinar si Kilos de la Bobina Seleccionada esta Vacio");
     }
     else if((items=='SI') && (kilos_bobina_seleccionada==0))
     {
-        document.form.hay_que_bobinar.value='NO';         
+        document.form.hay_que_bobinar.value='Seleccione';         
         alert("No puedes Bobinar si Kilos de la Bobina Seleccionada esta Vacio");
     }    
 }
@@ -4429,8 +4696,8 @@ $('select[name=trazados]').on('change',()=>{
     var texto = $("select[name=trazados] option:selected").text(); 
     let cond = $('select[name=condicion_del_producto]').val();
     let nombre = $('input[name=producto]').val();
-    alert(cond);
-    if(cond==0 && nombre==""){    alert();
+    //alert(cond);
+    if(cond==0 && nombre==""){    //alert();
     $('input[name=producto]').val(texto);
     }
 });
@@ -4479,7 +4746,7 @@ $("#cantidades_a_ingresar").on('keyup',function(){
 });     
      
 
-$("select[class=comprobacion]").change(function(){
+$("select[class=comprobacion]").change(function(){ 
   var FN = $("#lleva_fondo_negro").val();
   var CF = $("#imprimir_contra_la_fibra").val();
   var II = $("#imagen_impresion").val();
@@ -4587,59 +4854,19 @@ $("select[class=comprobacion]").change(function(){
       ccac='CCAC: 45mm'
       cal_ccac=45;}
   
-   //alert(cal_ccac);
-  var msg = "El calculo CCAC1:"+ccac_1+" No puede ser menor a "+ccac+". Modifique el ancho a cortar.";
    $("#valorccac").text(ccac);
    $("#ccac_o").val(cal_ccac);
+  var ccac_o = $("#ccac_o").val();
+    var msg = "El calculo CCAC1:"+ccac_1+" No puede ser menor a "+ccac_o+". Modifique el ancho a cortar.";
    
    if(ccac_1 < cal_ccac){
    $("#msgccac").text(msg);
-   $("#tamano_1").focus();
+   //$("#tamano_1").focus();
    }else{
    $("#msgccac").text('');
    }
         
 });
-
-
- $("#tamano_1").on('keyup',function () {
-      var value = $(this).val();
-      var tc_1 = $("input[name=tamano_cuchillo_1]").val();
-      var ccac_o = $("#ccac_o").val();
-      $("#ccac_1").val((value-tc_1)*10);
-      if((value-tc_1)*10 < ccac_o){
-      var msg = "El calculo CCAC1 "+(value-tc_1)*10+" no puede ser menor a "+ccac_o+". Modifique el ancho a cortar.";
-      $("#msgccac").text(msg);
-      $("#tamano_1").focus(); 
-     }else{
-      $("#msgccac").text('');
-      $("#tamano_1").val($(this).val);  
-     }
-     
-      
- }).keyup();
- 
-     $("#tamano_12").on('blur',function () {
-      var value = $(this).val();
-      var ccac_1 = $("#ccac_1").val();
-      var tc_1 = $("input[name=tamano_cuchillo_1]").val();
-      var ccac_o = $("#ccac_o").val();
-      
-      if((value-tc_1)*10 < ccac_o){
-         // alert(ccac_o)
-      var msg = "El calculo CCAC1 "+(value-tc_1)*10+" no puede ser menor a "+ccac_o+". Modifique el ancho a cortar.";
-      
-      $("#msgccac").text(msg);
-      //$("#tamano_1").focus(); 
-      $("#tamano_1").val('');
-     }else{
-      $("#msgccac").text('');
-      //$("#tamano_1").focus(); 
-      $("#tamano_1").val($(this).val);  
-     }
-     
-      
- }).keyup();
  
  $("#ancho_seleccionado_de_bobina").on('blur',function () {
       var value = $(this).val();
@@ -4993,8 +5220,8 @@ function verificar_estatus_cliente(valor,div)
 function verificaAnchoSeleccionadoDeBobina(valor) 
 {
     if (valor>900){
-        setTimeout(Hay_Que_Bobinar_Carutlina('SI'),10000);  
-        document.form.hay_que_bobinar.value='SI';            
+        setTimeout(Hay_Que_Bobinar_Carutlina('NO'),10000);  
+        document.form.hay_que_bobinar.value='NO';            
     }       
 }
 

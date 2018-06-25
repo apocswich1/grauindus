@@ -74,8 +74,8 @@ if( $this->session->userdata('perfil')==1 or $this->session->userdata('perfil')=
                     <li><a href="<?php echo  base_url(); ?>unidades_de_venta" id="dropdown_ususarios" title="Unidades de Venta">Unidades de Venta</a></li>
                     <li><a href="<?php echo  base_url(); ?>piezas_adicionales" id="dropdown_ususarios" title="Piezas Adicionales">Piezas Adicionales</a></li>
                     <li><a href="<?php echo  base_url(); ?>usuarios" id="dropdown_ususarios" title="Usuarios">Usuarios</a></li>                                       
-                    <li><a href="<?php echo  base_url(); ?>acabados" id="dropdown_ususarios" title="Acabados">Acabados</a></li>
-                    <li><a href="<?php echo  base_url(); ?>procesos_especiales" id="dropdown_ususarios" title="Procesos Especiales">Procesos Especiales</a></li>
+                    <li><a href="<?php echo  base_url(); ?>acabados" id="dropdown_ususarios" title="Acabados">Otros Procesos Externos y Acabados</a></li>
+                    <!--<li><a href="<?php //echo  base_url(); ?>procesos_especiales" id="dropdown_ususarios" title="Procesos Especiales">Procesos Especiales</a></li>-->
                     <li><a href="<?php echo  base_url(); ?>procesos" id="dropdown_ususarios" title="Procesos de Empresa">Procesos de Empresa</a></li>
                     <li><a href="<?php echo  base_url(); ?>moldes" id="dropdown_ususarios" title="Moldes">Moldes</a></li>
                     <li><a href="<?php echo  base_url(); ?>rubros" id="dropdown_ususarios" title="Rubros">Rubros</a></li>
@@ -163,17 +163,17 @@ if( $this->session->userdata('perfil')==1)
 					Producción <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="<?php echo  base_url(); ?>produccion/cotizaciones" id="dropdown_ususarios" title="Órdenes de Producción">Órdenes de Producción</a></li>
+					<li><a href="<?php echo  base_url(); ?>produccion/cotizaciones" 									id="dropdown_ususarios" title="Órdenes de Producción">Órdenes de Producción</a></li>
 					<!--<li><a href="<?php echo  base_url(); ?>produccion/listadoproduccion" id="dropdown_ususarios" title="Listado de Producción">Listado de Producción</a></li>-->
-					<li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_vendedor" id="dropdown_ususarios" title="Listado de Producción por Vendedor">Listado de Producción por Vendedor</a></li>
-					<li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_cerradas" id="dropdown_ususarios" title="Listado de Producción Cerradas">Listado de Ordenes Cerradas</a></li>
-          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_fotomecanica" id="dropdown_ususarios" title="Listado de Programa de Fotomecanica">Listado de Programa de Fotomecanica</a></li>
+					<li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_vendedor" 					id="dropdown_ususarios" title="Listado de Producción por Vendedor">Listado de Producción por Vendedor</a></li>
+					<li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_cerradas" 					id="dropdown_ususarios" title="Listado de Producción Cerradas">Listado de Ordenes Cerradas</a></li>
+          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_fotomecanica" 	id="dropdown_ususarios" title="Listado de Programa de Fotomecanica">Listado de Programa de Fotomecanica</a></li>
           <li><a href="<?php echo  base_url(); ?>produccion/cotizaciones_cartulina_liberar" id="dropdown_ususarios" title="Listado de Control de Cartulina por Liberar">Listado de Corte Cartulina por Liberar</a></li>
-          <li><a href="<?php echo  base_url(); ?>produccion/resumen_control_liner" id="dropdown_ususarios" title="RESUMEN CONTROL LINER">Resumen Control Liner</a></li>
-          <li><a href="<?php echo  base_url(); ?>produccion/resumen_control_onda" id="dropdown_ususarios" title="RESUMEN CONTROL ONDA">Resumen Control Onda</a></li>
-          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" id="dropdown_ususarios" title="Listado de Programa de Corrugado">Listado de Programa de Corrugado</a></li>          
-          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" id="dropdown_ususarios" title="Listado de Programa de Emplacado">Listado de Programa de Emplacado</a></li>
-          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_troquelado" id="dropdown_ususarios" title="Listado de Programa de Troquelado">Listado de Programa de Troquelado</a></li>
+          <li><a href="<?php echo  base_url(); ?>produccion/resumen_control_liner" 					id="dropdown_ususarios" title="RESUMEN CONTROL LINER">Resumen Control Liner</a></li>
+          <li><a href="<?php echo  base_url(); ?>produccion/resumen_control_onda" 					id="dropdown_ususarios" title="RESUMEN CONTROL ONDA">Resumen Control Onda</a></li>
+          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" 		id="dropdown_ususarios" title="Listado de Programa de Corrugado">Listado de Programa de Corrugado</a></li>          
+          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_emplacado" 		id="dropdown_ususarios" title="Listado de Programa de Emplacado">Listado de Programa de Emplacado</a></li>
+          <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_troquelado" 		id="dropdown_ususarios" title="Listado de Programa de Troquelado">Listado de Programa de Troquelado</a></li>
           <li>
           	<a><i class="confeccion"></i>Listado de Programa de Confeccion de Molde</a>
           	<ul>
@@ -181,8 +181,26 @@ if( $this->session->userdata('perfil')==1)
               <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_confeccion_revision_liberada_fotomecanica" 		id="dropdown_ususarios">Revision liberada fotomecanica				</a></li>
               <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_confeccion_fabricar_sin_liberar_fotomecanica" 	id="dropdown_ususarios">Por fabricar sin liberar fotomecanica </a></li>
               <li><a href="<?php echo  base_url(); ?>produccion/listado_programa_confeccion_fabricar_liberada_fotomecanica" 		id="dropdown_ususarios">Por fabricar liberada fotomecanica		</a></li>
-          </ul>
+	          </ul>
           </li>
+
+          <li>
+          	<a><i class="confeccion"></i>Listado Control Cartulina</a>
+          	<ul>
+            	<li><a href="<?php echo  base_url(); ?>produccion/listado_control_cartulina_liberadas" 	 					 id="dropdown_ususarios">Ordenes liberadas		</a></li>
+              <li><a href="<?php echo  base_url(); ?>produccion/listado_control_cartulina_por_liberar" 				   id="dropdown_ususarios">Ordenes por liberar	</a></li>
+							<li><a href="<?php echo  base_url(); ?>produccion/listado_control_cartulina_mercaderia_comprada" 	 id="dropdown_ususarios">Mercaderia ya comprada por llegar</a></li>
+	          </ul>
+          </li>
+
+          <li>
+          	<a><i class="confeccion"></i>Listado Corte Cartulina</a>
+          	<ul>
+            	<li><a href="<?php echo  base_url(); ?>produccion/listado_corte_cartulina_por_cortar" id="dropdown_ususarios">Por cortar (Activo)</a></li>
+              <li><a href="<?php echo  base_url(); ?>produccion/listado_corte_cartulina_ya_cortado" id="dropdown_ususarios">Ya cortado (Liberadas)</a></li>
+	          </ul>
+          </li>
+
 				</ul>
 			</li>
             <?php

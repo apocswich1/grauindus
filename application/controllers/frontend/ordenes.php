@@ -75,6 +75,7 @@ class Ordenes extends CI_Controller {
         if($this->session->userdata('id'))
         {
         if(!$id){show_404();}
+        
         //$orden_de_compra=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($id);
         $datos=$this->cotizaciones_model->getCotizacionPorId($id);
         $orden_compra_piezas=$this->piezas_adicionales_model->getPiezasAdicionalesOrdenCompra($id);
@@ -120,7 +121,6 @@ class Ordenes extends CI_Controller {
 //        echo $this->input->post("lleva_troquel",true);
 //        echo $this->input->post("estan_los_moldes",true);
 //       // echo $this->input->post("id_molde",true);
-//        echo $this->input->post("molde",true); exit();
             if($this->input->post("estado",true)== 1 || $this->input->post("estado",true)== 0)  //Liberado o guardado
             {
                
@@ -131,6 +131,8 @@ class Ordenes extends CI_Controller {
 
                 if(sizeof($orden)==0) //No existe op creada
                 {
+//                    echo $this->input->post("estado",true)."-";
+//        echo $this->input->post("cantidad_pedida",true); exit();
                     $datoscliente = str_pad($datos->id_cliente, 4, "0", STR_PAD_LEFT);
                     if($datos->producto_id==0)
                     {//echo "AAA";exit();  
@@ -360,7 +362,7 @@ class Ordenes extends CI_Controller {
                         );  
                       }
                  //  exit(print_r($data));
-                    //$this->db->insert("orden_de_produccion",$data);
+                    $this->db->insert("orden_de_produccion",$data);
                     // actualizo la forma de pago del cliente
                     $data_cliente=array
                     (
@@ -371,7 +373,7 @@ class Ordenes extends CI_Controller {
                     $this->db->update("clientes",$data_cliente);                    
 							   
                 }else //Actualizar 
-                {
+                { 
                     $trazados = $this->trazados_model->getTrazadosPorId($datos->trazado);
                     if(sizeof($trazados)>0){
                             $arraytrazado=array
@@ -591,9 +593,9 @@ class Ordenes extends CI_Controller {
     { 
         if($this->session->userdata('id'))
         {
-            if(!$id or !$ide){show_404();}
+            if(!$id || !$ide){show_404();}
             $datos=$this->cotizaciones_model->getCotizacionPorId($id);
-//            print_r($datos);exit;
+//           print_r($datos);exit;
             $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
             $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
             $orden=$this->orden_model->getOrdenesPorIdCotizacion($id);
@@ -616,6 +618,7 @@ class Ordenes extends CI_Controller {
             $orden_fotomecanica = $this->produccion_model->getFotomecanicaPorTipo(1,$id);
             $orden_ultimas = $this->orden_model->getUltimasOrdenes($orden->producto_id,$id);
             $orden_antiguas = $this->orden_model->getOrdenesAntiguasCliente($datos->id_cliente);
+            $trazadosing=$this->trazados_model->getTrazadosPorId($datos->trazado);
             if(sizeof($datos)==0){show_404();}
             
             if($fotomecanica->condicion_del_producto=='Nuevo')
@@ -647,7 +650,37 @@ class Ordenes extends CI_Controller {
                 $nombre_molde=$this->moldes_model->getMoldesPorId($ordenDeCompra->numero_molde);
            else 
                 $nombre_molde=$this->moldes_model->getMoldesPorId($orden->id_molde);    
-    
+           
+           if(sizeof($orden)==0){
+                $caja=$this->moldes_model->getMoldesPorId($ordenDeCompra->numero_molde);
+                if($caja->medidas_de_las_cajas!=""){
+                   $medidas_de_las_cajas=$caja->medidas_de_las_cajas; 
+                   $medidas_de_las_cajas_2=$caja->medidas_de_las_cajas; 
+                   $medidas_de_las_cajas_3=$caja->medidas_de_las_cajas; 
+                   $medidas_de_las_cajas_4=$caja->medidas_de_las_cajas; 
+                }else{
+                   $medidas_de_las_cajas=$trazadosing->medidas_de_las_cajas; 
+                   $medidas_de_las_cajas_2=$trazadosing->medidas_de_las_cajas; 
+                   $medidas_de_las_cajas_3=$trazadosing->medidas_de_las_cajas; 
+                   $medidas_de_las_cajas_4=$trazadosing->medidas_de_las_cajas; 
+                
+                }
+           }else{ 
+                $caja=$this->moldes_model->getMoldesPorId($orden->id_molde);    
+                if($caja->medidas_de_las_cajas!=""){
+                   $medidas_de_las_cajas=$caja->medidas_de_las_cajas; 
+                   $medidas_de_las_cajas_2=$caja->medidas_de_las_cajas_2; 
+                   $medidas_de_las_cajas_3=$caja->medidas_de_las_cajas_3; 
+                   $medidas_de_las_cajas_4=$caja->medidas_de_las_cajas_4; 
+                }else{
+                   $medidas_de_las_cajas=$trazadosing->medidas_de_las_cajas; 
+                   $medidas_de_las_cajas_2=$trazadosing->medidas_de_las_cajas_2; 
+                   $medidas_de_las_cajas_3=$trazadosing->medidas_de_las_cajas_3; 
+                   $medidas_de_las_cajas_4=$trazadosing->medidas_de_las_cajas_4; 
+                
+                }
+           }
+            //print_r($caja);exit();
 
    
     if($tamano1==60 and $tamano2>100)
@@ -778,9 +811,9 @@ class Ordenes extends CI_Controller {
                 <!--separador 50-->
                     <div class="separador_20"></div>
                 <!--/separador 50-->  
-                <table id="tabla_detalle">
+                <table id="tabla_detalle" style="font-size:14px">
                     <tr>
-                        <td class="celda_15">CANTIDAD</td>
+                        <td class="celda_10">CANTIDAD</td>
                         <td class="celda_40">IDENTIFICACIÓN DEL TRABAJO</td>
                         <td class="celda_40">NOMBRE TRABAJO CLIENTE</td>
                         <td class="celda_15">CPRODUCTO</td>
@@ -797,12 +830,24 @@ class Ordenes extends CI_Controller {
                         <td colspan="4" class="celda_15"><br /></td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="celda_15">CANTIDAD DE PLIEGOS</td><td colspan="3" class="celda_15"><span class="borde"><strong>'.number_format($ordenDeCompra->cantidad_de_cajas,0,'','.').'</strong></span><br /></td>
-                    </tr>
+                        <td colspan="4" class="celda_15">CANTIDAD DE PLIEGOS</td><td colspan="3" class="celda_15"><br /></td>
+                    </tr>';
+                    $cuerpo.='
+                    <tr>
+                        <td colspan="4" class="celda_15"><br /></td>
+                    </tr>    
                     <tr>
                         <td class="celda_25"><span class="borde"><strong>'.number_format($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego).'</strong></span></td>
-                    </tr>
-                </table>
+                    </tr>';
+                    if($molde->observaciones!=""){
+                    $cuerpo.='
+                    <tr>
+                        <td colspan="4" class="celda_15"><br /></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="4" class="celda_15">OBSERVACIONES MOLDE: '.$molde->observaciones.'</td></td>
+                    </tr>';}
+                $cuerpo.='</table>
                 <!--separador 50-->
                     <div class="separador_50"></div>
                 <!--/separador 50--> 
@@ -817,6 +862,12 @@ class Ordenes extends CI_Controller {
                     </tr>
                     <tr>
                         <td class="celda_50">TAMAÑO CUCHILLO A CUCHILLO: &nbsp;<span class="borde">'.$ing->tamano_cuchillo_1.'</span>x<span class="borde">'.$ing->tamano_cuchillo_2.'</span></td><td class="celda_50">ACEPTA EXCEDENTES : '.$acepta_excedentes.'<br /> </td>
+                    </tr>
+                    <tr>
+                        <td><br /></td>
+                    </tr>
+                    <tr>
+                        <td class="celda_50">MEDIDAS DE LA CAJA: &nbsp;<span class="borde">'.$medidas_de_las_cajas.'</span> x <span class="borde">'.$medidas_de_las_cajas_2.'</span> x <span class="borde">'.$medidas_de_las_cajas_3.'</span> x <span class="borde">'.$medidas_de_las_cajas_4.'</span></td>
                     </tr>
                 </table>
                 <!--separador 20-->
@@ -1020,7 +1071,16 @@ class Ordenes extends CI_Controller {
     $cffolia3=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->folia3_molde_selected);
     $cfcuno1=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->cuno1_molde_selected);
     $cfcuno2=$this->procesosespeciales_model->getDetalleProcesosPorId($fotomecanica->cuno2_molde_selected);
-    
+                                
+                                if($fotomecanica->fot_lleva_barniz=="Nada"){
+                                    $reserva="No";
+                                }else{
+                                    if($fotomecanica->fot_reserva_barniz==""){
+                                    $reserva="No Especificado";
+                                    }else{
+                                    $reserva=$fotomecanica->fot_reserva_barniz;    
+                                    }
+                                }
     
 				$cuerpo.='
 				
@@ -1028,7 +1088,7 @@ class Ordenes extends CI_Controller {
                     <tr>
                         <td class="celda_15">COLORES <span class="borde">'.$fotomecanica->colores.'</span></td>
                         <td class="celda_25">BARNIZ <span class="borde">'.$fotomecanica->fot_lleva_barniz.'</span></td>
-						<td class="celda_25">RESERVA <span class="borde">'.$fotomecanica->fot_reserva_barniz.'</span></td>
+						<td class="celda_25">RESERVA <span class="borde">'.$reserva.'</span></td>
                         <td class="celda_25">ACABADOS EXTERNOS <span class="borde">'.$hayAcabados.'</span></td>
                         <td class="celda_25">LUGAR <span class="borde">'.$lugarAcabado.'</span></td>
                     </tr>
@@ -1040,7 +1100,31 @@ class Ordenes extends CI_Controller {
                                 }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_3){
                                         $merma = $hoja->total_merma3;
                                 }else if($ordenDeCompra->cantidad_de_cajas==$datos->cantidad_4){
+                                        $merma = $hoja->total_merma4;
+                                }else{
+                                    $arreglo=array($datos->cantidad_1,$datos->cantidad_2,$datos->cantidad_4,$datos->cantidad_4);
+                                    $arreglo2=[];
+                                    $i = 1;
+                                    foreach ($arreglo as $value) {
+                                        if($value!=0 && $value!=1){
+                                        $valor=abs($ordenDeCompra->cantidad_de_cajas-$value);
+                                        $arreglo2['cantidades'.$i] = array($valor,$value);
+                                        }$i++;    
+                                    }
+                                    sort($arreglo2);
+                                    $cantidad_pedida = $arreglo2[0][1];
+                                 
+                                    if($cantidad_pedida==$datos->cantidad_1){
+                                        $merma = $hoja->total_merma;
+                                }else if($cantidad_pedida==$datos->cantidad_2){
+                                        $merma = $hoja->total_merma2;
+                                }else if($cantidad_pedida==$datos->cantidad_3){
                                         $merma = $hoja->total_merma3;
+                                }else if($cantidad_pedida==$datos->cantidad_4){
+                                        $merma = $hoja->total_merma4;
+                                }
+                                    echo $merma;
+                                    //exit();
                                 }
                                 
                                 $totalpliegos = ($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)+$merma;
@@ -1071,9 +1155,9 @@ class Ordenes extends CI_Controller {
                 <td>Placa </td>
                 <td align="center">'.$tapa->materiales_tipo.'</td>'
                          . '<td align="center">'.$tapa->gramaje.'</td>'
-                         . '<td align="center">'.$ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego.'</td>'
-                         . '<td align="center">'.$merma.'</td>'
-                         . '<td align="center">'.$totalpliegos.'</td>'
+                         . '<td align="center">'.number_format($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego,0,"",".").'</td>'
+                         . '<td align="center">'.number_format($merma,0,"",".").'</td>'
+                         . '<td align="center">'.number_format($totalpliegos,0,"",".").'</td>'
                          . '<td align="center">'.$hoja->kilos_placa.'</td>
                 <tr>';
                 if($fotomecanica->materialidad_datos_tecnicos!=='Cartulina-cartulina' && $fotomecanica->materialidad_datos_tecnicos!=='Solo Cartulina'){
@@ -1082,9 +1166,9 @@ class Ordenes extends CI_Controller {
                 <td>Onda </td>
                 <td align="center">'.$monda->materiales_tipo.'</td>'
                         . '<td align="center">'.$monda->gramaje.'</td>'
-                        . '<td align="center">'.$ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego.'</td>'
-                        . '<td align="center">'.$mermaonda.'</td>'
-                        . '<td align="center">'.$pliegosonda.'</td>'
+                        . '<td align="center">'.number_format($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego,0,"",".").'</td>'
+                        . '<td align="center">'.number_format($mermaonda,0,"",".").'</td>'
+                        . '<td align="center">'.number_format($pliegosonda,0,"",".").'</td>'
                         . '<td align="center">'.$kiloonda.'</td>
                 <tr>';
                 }
@@ -1094,9 +1178,9 @@ class Ordenes extends CI_Controller {
                 <td>Liner </td>
                 <td align="center">'.$mliner->materiales_tipo.'</td>'
                         . '<td align="center">'.$mliner->gramaje.'</td>'
-                        . '<td align="center">'.$ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego.'</td>'
-                        . '<td align="center">'.$mermaliner.'</td>'
-                        . '<td align="center">'.$pliegosliner.'</td>'
+                        . '<td align="center">'.number_format($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego,0,"",".").'</td>'
+                        . '<td align="center">'.number_format($mermaliner,0,"",".").'</td>'
+                        . '<td align="center">'.number_format($pliegosliner,0,"",".").'</td>'
                         . '<td align="center">'.$kiloliner.'</td>
                 <tr>';
                 }
@@ -1350,8 +1434,12 @@ class Ordenes extends CI_Controller {
                 <table id="tabla_detalle">';
                 if ($ing->archivo=="")
                 {
+                if ($datos->trazado!=="")
+                {
+                    $trazado='SI - NRO: '.$datos->trazado;    
+                }else{
                     $trazado='NO';    
-                }else
+                }}else
                 {
                     if($ing->archivo!=="" && $datos->trazado > 0){
                     $trazado='SI - NRO: '.$datos->trazado;
@@ -1390,15 +1478,25 @@ class Ordenes extends CI_Controller {
                 </table>
                 <!--separador 10-->
                     <div class="separador_10"></div>
-                <!--/separador 10--> 
-                <table id="tabla_detalle">
+                <!--/separador 10--> ';
+                if(($fotomecanica->colores=="" || $fotomecanica->colores==0) && ($fotomecanica->fot_lleva_barniz=="" || $fotomecanica->fot_lleva_barniz=="Nada")){
+                $cuerpo.='<table id="tabla_detalle">
+                    <tr>
+                        <td class="celda_40">LUGAR DE IMPRESIÓN <span class="borde">Sin Impresion</span></td>
+                        <td class="celda_20">&nbsp;</td>
+                        <td class="celda_40">MÁQUINA <span class="borde">Sin Impresion</span></td>
+                    </tr>
+                </table>';
+                }else{
+                $cuerpo.='<table id="tabla_detalle">
                     <tr>
                         <td class="celda_40">LUGAR DE IMPRESIÓN <span class="borde">'.$fotomecanica->impresion.'</span></td>
                         <td class="celda_20">&nbsp;</td>
                         <td class="celda_40">MÁQUINA <span class="borde">'.$maquina.'</span></td>
                     </tr>
-                </table>
-                <!--separador 10-->
+                </table>';
+                }
+                $cuerpo.='<!--separador 10-->
                     <div class="separador_10"></div>
                 <!--/separador 10--> 
                 <table id="tabla_detalle">
@@ -3912,18 +4010,34 @@ table
         }
     }
     
-    public function pdf_orden_de_compra_piezas($id=null,$ide=null,$id_proveedor=null)
+    public function pdf_orden_de_compra_piezas($id=null,$ide=null,$id_proveedor=null,$id_proveedor2=null,$id_proveedor3=null)
     {
         if($this->session->userdata('id'))
         {
             if(!$id or !$ide or !$id_proveedor){show_404();}
             $datos=$this->cotizaciones_model->getCotizacionPorId($id);
-            $orden_compra_piezas=$this->piezas_adicionales_model->getPiezasAdicionalesOrdenCompraPorProveedores($id);
+            $orden_compra_piezas=$this->piezas_adicionales_model->getPiezasAdicionalesOrdenCompraPorProveedores($id,1);
+            $orden_compra_piezas2=$this->piezas_adicionales_model->getPiezasAdicionalesOrdenCompraPorProveedores($id,2);
+            $orden_compra_piezas3=$this->piezas_adicionales_model->getPiezasAdicionalesOrdenCompraPorProveedores($id,3);
             $proveedor=$this->proveedores_model->getProveedoresPorId($id_proveedor);
-//            exit(print_r($proveedor));
+            $proveedor2=$this->proveedores_model->getProveedoresPorId($id_proveedor2);
+            $proveedor3=$this->proveedores_model->getProveedoresPorId($id_proveedor3);
+            
+            //echo $id_proveedor;
+            //exit(print_r($orden_compra_piezas));
+            //exit(print_r($orden_compra_piezas2));
+            //exit(print_r($orden_compra_piezas3));
             if ($proveedor->id_forma_pago!='')
             {    
                 $forma_pago=$this->migracion_model->getFormaPagoPorId2($proveedor->id_forma_pago);
+            }            
+            if ($proveedor2->id_forma_pago!='')
+            {    
+                $forma_pago2=$this->migracion_model->getFormaPagoPorId2($proveedor->id_forma_pago);
+            }            
+            if ($proveedor3->id_forma_pago!='')
+            {    
+                $forma_pago3=$this->migracion_model->getFormaPagoPorId2($proveedor->id_forma_pago);
             }            
             if ($orden_compra_piezas->empresa!='')
             {    
@@ -3942,8 +4056,6 @@ table
             elseif ($orden_compra_piezas->tipo_despacho==3) $tipo_despacho="Proveedor Envia por Tercero por cuenta de él";
             elseif ($orden_compra_piezas->tipo_despacho==4) $tipo_despacho="Proveedor Envia por Tercero por cuenta Nuestra";
 
-           
-            
             if ($orden_compra_piezas->tipo_seccion==1) $tipo_seccion="Mantención";
             elseif ($orden_compra_piezas->tipo_seccion==2) $tipo_seccion="Administración";
             elseif ($orden_compra_piezas->tipo_seccion==3) $tipo_seccion="Imprenta";
@@ -3956,6 +4068,14 @@ table
             elseif($proveedor->tipo_cuenta==2) $tipo_cuenta="Cuenta Vista";
             elseif($proveedor->tipo_cuenta==3) $tipo_cuenta="Cuenta Rut";
             elseif($proveedor->tipo_cuenta==4) $tipo_cuenta="Cuenta de Ahorro";             
+            if($proveedor2->tipo_cuenta==1) $tipo_cuenta2="Cuenta Corriente";
+            elseif($proveedor2->tipo_cuenta==2) $tipo_cuenta2="Cuenta Vista";
+            elseif($proveedor2->tipo_cuenta==3) $tipo_cuenta2="Cuenta Rut";
+            elseif($proveedor2->tipo_cuenta==4) $tipo_cuenta2="Cuenta de Ahorro";             
+            if($proveedor3->tipo_cuenta==1) $tipo_cuenta3="Cuenta Corriente";
+            elseif($proveedor3->tipo_cuenta==2) $tipo_cuenta3="Cuenta Vista";
+            elseif($proveedor3->tipo_cuenta==3) $tipo_cuenta3="Cuenta Rut";
+            elseif($proveedor3->tipo_cuenta==4) $tipo_cuenta3="Cuenta de Ahorro";             
 //            print_r($orden_compra_piezas);exit;
             $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
             $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
@@ -3963,17 +4083,6 @@ table
 //            print_r($forma_pago);
 //            exit;
             $ordenDeCompra=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($id);
-//            $cli=$this->clientes_model->getClientePorId($datos->id_cliente);
-//            $datos_clientes=$this->clientes_model->getClientePorIdParaDespacho($cli->id);
-//            print_r($datos_clientes);
-//            exit;            
-//            $vendedor=$this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
-//            $producto=$this->productos_model->getProductosPorId($orden->producto_id);
-//            $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
-//            $tapa = $this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_1);
-//            $monda = $this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_2);
-//            $mliner = $this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_3);
-			
 			
             if(sizeof($datos)==0){show_404();}
             if($datos->condicion_del_producto=='Nuevo')
@@ -3983,9 +4092,9 @@ table
             {
                 $repeticion="SI";
             }
-            $materialidad_1=$this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_1);
-            $materialidad_2=$this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_2);
-            $materialidad_3=$this->materiales_model->getMaterialesPorNombre($fotomecanica->materialidad_3);
+            $materialidad_1=$this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_placa1);
+            $materialidad_2=$this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_onda2);
+            $materialidad_3=$this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_liner3);
             $molde=$this->moldes_model->getMoldesPorId($fotomecanica->numero_molde);
             $tamano1=$ing->tamano_a_imprimir_1;
             $tamano2=$ing->tamano_a_imprimir_2;
@@ -4000,20 +4109,7 @@ table
      
     
     
-    /**
-    * validación máquina
-    * */
-    //if($tamano1>61 or $tamano2 > 120)
-    /*
-    if($tamano1>127 or $tamano2 > 92)
-    {
-       
-        $maquina="Máquina Roland 800";
-    }else
-    {
-         $maquina="Máquina Roland Ultra";
-    }
-    */
+    
     if($tamano1==60 and $tamano2>100)
     {
         $maquina="Máquina Roland 800";
@@ -4034,587 +4130,33 @@ table
         $maquina="R800 Tamano Chico";
     }
 	
-	    /*<table id="tabla_detalle">
-                    <tr>
-                         <!--
-                        <td class="celda_25 centro">N° OT Antiguo <span class="borde">'.number_format($orden->id_antiguo,0,'','.').'</span></td>-->
-                         <td class="celda_25 centro">Orden de Compra <span class="borde">'.number_format($ordenDeCompra->orden_de_compra_cliente,0,'','.').'</span></td>
-						 
-                    </tr>
-                     </table>*/
 	
-	
-	
-            $cuerpo=' <!DOCTYPE html>
-                        <html>
-                        <head>
-                        <meta charset="utf-8" />
-        
-<link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/bootstrap.css" />
-        <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/orden_de_produccion.css" />
-    </head>
-    <body>';
-    $cuerpo.='<div class="container fuente">
-            <header>';
-		
-
-                      
-        $cuerpo.='</header>
-                    <div class="separador_10"></div>
-                    <div class="separador_10"></div>';
-                    $cuerpo.='<table>';     
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>SANTIAGO&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>'.strtoupper($fecha_hoy).'</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td style="font-family: sans-serif;font-size: 18px;">'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'                                
-                                . '&nbsp;<span class="borde">ORDEN DE COMPRA:'.strtoupper($ide).' </span></td>';
-                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                    
-                    $cuerpo.='</table>';   
-     
-
-                    
-                    
-                    $cuerpo.='<table>';  
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td style="font-family: sans-serif;font-size: 32px;">'.strtoupper($empresa->razon_social).' </td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                     
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td style="font-family: sans-serif;font-size: 18px;font-weight: 400;">RUT :'.$empresa->rut.'</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                    
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td style="font-family: sans-serif;font-size: 18px;">DIRECCIÓN '.strtoupper($empresa->direccion).'</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';        
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td style="font-family: sans-serif;font-size: 18px;">REGION '.strtoupper($empresa->region).'</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';  
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td style="font-family: sans-serif;font-size: 18px;">PROVINCIA '.strtoupper($empresa->comuna).'</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';  
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td style="font-family: sans-serif;font-size: 18px;">CIUDAD '.strtoupper($empresa->ciudad).'</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';      
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td style="font-family: sans-serif;font-size: 18px;">FONO '.strtoupper($empresa->telefono).'</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';    
-                    $cuerpo.='</table>';  
-                    $cuerpo.='<table>';                      
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';   
-                    $cuerpo.='</table>';                      
-                    $cuerpo.='<table>
-                                <tr>
-                                    <td class="centro"><h1><span id="titulo" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Orden de Compra de Piezas Adicionales</span></h1>
-                                    </td>
-                                </tr>
-                            </table>';         
-                    $cuerpo.='<table>';           
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';    
-                    $cuerpo.='<tr>';
-//                    exit(print_r($proveedor));
-                    
-                        $cuerpo.='<td>Rut:&nbsp;&nbsp;</td>';
-                        if ($proveedor->rut=='')
-                            $cuerpo.='<td><strong>'.strtoupper($proveedor->rut).'</strong></td>';
-                        else
-                            $cuerpo.='<td><strong>'.strtoupper('Rut No Registrado').'</strong></td>';                            
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                      
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>Señor(es)&nbsp;&nbsp;</td>';
-                        if ($proveedor->razon_social!='')
-                            $cuerpo.='<td><strong>'.strtoupper($proveedor->razon_social).'</strong></td>';
-                        else
-                            $cuerpo.='<td><strong>'.strtoupper($proveedor->nombre).'</strong></td>';                         
-                        $cuerpo.='<td><strong>'.strtoupper().'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';
-//                    $cuerpo.='<tr>';
-//                        $cuerpo.='<td>Forma de Pago&nbsp;&nbsp;</td>';
-//                        $cuerpo.='<td><strong>'.strtoupper($forma_pago->forma_pago).'</strong></td>';
-//                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-//                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-//                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-//                    $cuerpo.='</tr>';                     
-                  
-//                    $cuerpo.='<tr>';
-//                        $cuerpo.='<td>Direcciòn&nbsp;&nbsp;</td>';
-//                        $cuerpo.='<td><strong>'.strtoupper($proveedor->direccion).'</strong></td>';
-//                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-//                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-//                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-//                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>Fono&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td><strong>'.strtoupper($proveedor->telefono).'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';        
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>E-mail:&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td><strong>'.strtoupper($proveedor->correo).'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';   
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>Al Señor:&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td><strong>'.strtoupper($proveedor->contacto).'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                    
-
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                        
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>Por nuestra cuenta lo siguiente:</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                               
-                    $cuerpo.='</table>';  
-                        
-
-                $cuerpo.='<!--separador 10-->';
-                    $cuerpo.='<div class="separador_10"></div>';
-                    $cuerpo.='<div class="separador_20"></div> 
-                    <div style="margin-left:15px; text-align:center;"> 
-                                    <table border="1" style="width:100% !important;">
-                                            <tr>
-                                               <td class="celda_5" colspan="5"><strong>&nbsp;&nbsp;&nbsp;Piezas Adicionales</strong></td>
-                                            </tr>                                    
-                                            <tr>
-                                                <td class="celda_5" style="width:15% !important;text-align: center;">&nbsp;&nbsp;&nbsp;<strong>Cantidad</strong>&nbsp;&nbsp;&nbsp;</td>
-                                                <td class="celda_5" style="width:20% !important;text-align: center;">&nbsp;&nbsp;&nbsp;<strong>Unidad</strong>&nbsp;&nbsp;&nbsp;</td>                                                
-                                                <td class="celda_5" style="width:35% !important;text-align: center;">&nbsp;&nbsp;&nbsp;<strong>Pieza</strong>&nbsp;&nbsp;&nbsp;</td>                                                
-                                                <td class="celda_5" style="width:15% !important;text-align: center;">&nbsp;&nbsp;&nbsp;<strong>Precio</strong>&nbsp;&nbsp;&nbsp;</td>                                                
-                                                <td class="celda_5" style="width:15% !important;text-align: center;">&nbsp;&nbsp;&nbsp;<strong>Total</strong>&nbsp;&nbsp;&nbsp;</td>
-                                            </tr>';
-                                            $total1=0;
-                                            $total2=0;
-                                            $total3=0;
-                                            if ($orden_compra_piezas->id_pieza1!='0')
-                                            {
-                                                if ($orden_compra_piezas->id_proveedor1==$id_proveedor)
-                                                {                                              
-                                                    $cuerpo.='<tr>
-                                                        <td class="celda_5" style"text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.ucwords(strtolower($orden_compra_piezas->cantidad_1)).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                        <td class="celda_5" style"text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.ucwords(strtolower($this->piezas_adicionales_model->getUnidadesUsoPieza($orden_compra_piezas->id_pieza1))).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                                
-                                                        <td class="celda_5" style"text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.ucwords(strtolower($orden_compra_piezas->id_pieza1)).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                                
-                                                        <td class="celda_5" style"text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.number_format($orden_compra_piezas->precio_venta1,0,'','.').'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                                
-                                                        <td class="celda_5" style"text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.number_format(($orden_compra_piezas->precio_venta1*$orden_compra_piezas->cantidad_1),0,'','.').'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                    </tr>';
-                                                    $total1=$orden_compra_piezas->precio_venta1*$orden_compra_piezas->cantidad_1;
-                                                } 
-                                            }
-                                            if ($orden_compra_piezas->id_pieza2!='0')
-                                            {                                            
-                                                if ($orden_compra_piezas->id_proveedor2==$id_proveedor)
-                                                {
-                                                    $cuerpo.='<tr>
-                                                        <td class="celda_5" style"text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.ucwords(strtolower($orden_compra_piezas->cantidad_2)).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                        <td class="celda_5" style"text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.ucwords(strtolower($this->piezas_adicionales_model->getUnidadesUsoPieza($orden_compra_piezas->id_pieza2))).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                                                                                        
-                                                        <td class="celda_5" style"text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.ucwords(strtolower($orden_compra_piezas->id_pieza2)).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                                
-                                                        <td class="celda_5" style"text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.number_format($orden_compra_piezas->precio_venta2,0,'','.').'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                                
-                                                        <td class="celda_5" style"text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.number_format(($orden_compra_piezas->precio_venta2*$orden_compra_piezas->cantidad_2),0,'','.').'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                    </tr>';
-                                                    $total2=$orden_compra_piezas->precio_venta2*$orden_compra_piezas->cantidad_2;
-                                                }
-                                            }
-                                            if ($orden_compra_piezas->id_pieza3!='0')
-                                            {                                               
-                                                if ($orden_compra_piezas->id_proveedor3==$id_proveedor)
-                                                {
-                                                    $cuerpo.='<tr>
-                                                        <td class="celda_5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.ucwords(strtolower($orden_compra_piezas->cantidad_3)).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                        <td class="celda_5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.ucwords(strtolower($this->piezas_adicionales_model->getUnidadesUsoPieza($orden_compra_piezas->id_pieza3))).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                                
-                                                        <td class="celda_5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.ucwords(strtolower($orden_compra_piezas->id_pieza3)).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                                             
-                                                        <td class="celda_5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.number_format($orden_compra_piezas->precio_venta3,0,'','.').'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>                                                
-                                                        <td class="celda_5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.number_format(($orden_compra_piezas->precio_venta3*$orden_compra_piezas->cantidad_3),0,'','.').'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                    </tr>';
-                                                    $total3=$orden_compra_piezas->precio_venta3*$orden_compra_piezas->cantidad_3;                                                
-                                                }
-                                            }
-
-                                            
-                                                $cuerpo.='<tr>
-                                                    <td class="celda_5" colspan="3"></td>
-                                                    <td class="celda_5"><strong>&nbsp;&nbsp;&nbsp;Neto</strong></td>
-                                                    <td class="celda_5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.number_format(($total1+$total2+$total3),0,'','.').'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                </tr>';      
-                                                $cuerpo.='<tr>
-                                                    <td class="celda_5" colspan="3"></td>
-                                                    <td class="celda_5"><strong>&nbsp;&nbsp;&nbsp;IVA</strong></td>
-                                                    <td class="celda_5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.number_format(((($total1+$total2+$total3)*19)/100),0,'','.').'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                </tr>';     
-                                                $cuerpo.='<tr>
-                                                    <td class="celda_5" colspan="3"></td>
-                                                    <td class="celda_5"><strong>&nbsp;&nbsp;&nbsp;Total</strong></td>
-                                                    <td class="celda_5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.number_format(($total1+$total2+$total3+((($total1+$total2+$total3)*19)/100)),0,'','.').'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                </tr>';                                                 
-                                    $cuerpo.='</table>  
-                </div><div class="separador_50"></div>';
-                    $cuerpo.='<table>';  
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';     
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';          
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;<td>';
-                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                          
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>Sección(es): <strong>'.strtoupper($tipo_seccion).'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>Fecha General de Entrega 19/06/2017</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                      
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>En caso de reclamos, contactarse con: </td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td><strong>Pedido por: '.strtoupper($envia_pedido->nombre).'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                    
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td><strong>Celular: '.strtoupper($envia_pedido->telefono).'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                     
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td><strong>Quien Recibe: '.strtoupper($recibe_pedido->nombre).'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td></td>';
-                    $cuerpo.='</tr>';
-                
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;<td>';
-                    $cuerpo.='</tr>';
-
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>'; 
-
-                    
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>ADJUNTAMOS:</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td></td>';
-                    $cuerpo.='</tr>';
-                    
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>Forma de Pago&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td><strong>'.strtoupper($forma_pago->forma_pago).'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                      
-                    
-                    if ($proveedor->id_forma_pago==100)
-                    {        
-                        $cuerpo.='<tr>';
-                            $cuerpo.='<td>Tipo de Cuenta&nbsp;&nbsp;</td>';
-                            $cuerpo.='<td><strong>'.strtoupper($tipo_cuenta).'</strong></td>';
-                            $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                            $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                            $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='</tr>';   
-                        $cuerpo.='<tr>';
-                            $cuerpo.='<td>Numero de Cuenta&nbsp;&nbsp;</td>';
-                            $cuerpo.='<td><strong>'.strtoupper($proveedor->num_cuenta).'</strong></td>';
-                            $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                            $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                            $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='</tr>';    
-                        $cuerpo.='<tr>';
-                            $cuerpo.='<td>Titular de Cuenta&nbsp;&nbsp;</td>';
-                            $cuerpo.='<td><strong>'.strtoupper($proveedor->titular_cuenta).'</strong></td>';
-                            $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                            $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                            $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='</tr>';   
-                    }
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;<td>';
-                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;<td>';
-                    $cuerpo.='</tr>';
-
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>Sírvase Entregar a:</td>';
-                        $cuerpo.='<td><strong>'.strtoupper($tipo_despacho).'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                       
-                    $cuerpo.='</table>';   
-                    $cuerpo.='<table>';     
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;<td>';
-                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>'; 
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;<td>';
-                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>'; 
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;<td>';
-                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>'; 
-                    $cuerpo.='</table>';     
-//                   $cuerpo.='<table>
-//                    <tr>';
-//                        if ($datos->ot_antigua!='')
-//                            $cuerpo.='<td class="celda_25 centro">N° OT '.number_format($ide,0,'','.').' ANTIGUA: '.number_format($datos->ot_antigua,0,'','.').'</td>';
-//                        else
-//                            $cuerpo.='<td class="celda_25 centro">N° OT '.number_format($ide,0,'','.').'</td>';						
-//                        if($orden->id_antiguo >= 1)
-//                        {
-//                            $cuerpo.='<td class="celda_25 centro">N° OT Antiguo '.number_format($orden->id_antiguo,0,'','.').'</td>';
-//			}
-//						
-//                        if($datos->id_antiguo >= 1)
-//                        {
-//                            $cuerpo.='<td class="celda_25 centro">N° H.C.A '.number_format($datos->id_antiguo,0,'','.').'</td>';
-//			}
-//			$cuerpo.='
-//                        <td class="celda_25 centro">N° H.C '.number_format($id,0,'','.').'</td>';
-//                        if ($datos->ot_antigua!='')
-//                            $cuerpo.='<td class="celda_25 centro">Fecha ingreso O.C Antigua: >'.fecha_con_slash($datos->fecha).'</td>';
-//                        else
-//                            $cuerpo.='<td class="celda_25 centro">Fecha ingreso O.C: '.fecha_con_slash($ordenDeCompra->fecha).'</td>';
-//                    $cuerpo.='</tr>';
-//                $cuerpo.='</table>';  
-                    $cuerpo.='<table>';     
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                    
-                    $cuerpo.='</table>';                  
-                    $cuerpo.='<table style="width:100% !important;">';                      
-//                    $cuerpo.='<tr>';
-//                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-//                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-//                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-//                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-//                        $cuerpo.='<td></td>';
-//                    $cuerpo.='</tr>';
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__________________________________________________</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>'; 
-                    $cuerpo.='<tr>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        if (($total1+$total2+$total3+((($total1+$total2+$total3)*19)/100)>100000))
-                            $cuerpo.='<td><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.strtoupper('Enrique Grau').'</strong></td>';
-                        else
-                            $cuerpo.='<td><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                                . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.strtoupper($envia_pedido->nombre).'</strong></td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                        $cuerpo.='<td>&nbsp;&nbsp;&nbsp;</td>';
-                    $cuerpo.='</tr>';                     
-                    $cuerpo.='</table>';                       
-		
-		
-		
-    $cuerpo.='</body>
-</html>';
+            /********aqui va manillas 1*****/
     
-		//echo $cuerpo;exit;
+		//echo $id_proveedor;exit;
 		//$mpdf=new mPDF('c'); 
         $this->mpdf->SetDisplayMode('fullpage');
         $css1 = file_get_contents('bootstrap/orden_de_produccion.css');
         $css2 = file_get_contents('bootstrap/bootstrap.css');
+        
+        if(sizeof($orden_compra_piezas)>0){
+         $this->mpdf->AddPage('P','','','','',5,5,10,10,10,10);
+         include('application/views/frontend/ordenes/manillas1.php');        
             $this->mpdf->WriteHTML($css2,1);
             $this->mpdf->WriteHTML($css1,1);
-    		$this->mpdf->WriteHTML($cuerpo);
+        $this->mpdf->WriteHTML($cuerpo);}
+        if(sizeof($orden_compra_piezas2)>0){
+         $this->mpdf->AddPage('P','','','','',5,5,10,10,10,10);
+         include('application/views/frontend/ordenes/manillas2.php');        
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+        $this->mpdf->WriteHTML($cuerpo2);}
+        if(sizeof($orden_compra_piezas3)>0){
+         $this->mpdf->AddPage('P','','','','',5,5,10,10,10,10);
+         include('application/views/frontend/ordenes/manillas3.php');        
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+        $this->mpdf->WriteHTML($cuerpo3);}
     		$this->mpdf->Output();
     		exit;
         }else

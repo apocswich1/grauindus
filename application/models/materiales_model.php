@@ -299,7 +299,8 @@ $sql="select m.id,m.codigo,m.nombre,m.id_proveedor,m.reverso,m.id_materiales_pro
 				." from materiales as m"
 				." INNER JOIN proveedores as p ON p.id=m.id_proveedor"
 				." INNER JOIN materiales_tipo as mt ON mt.id=m.tipo"
-				." where m.estado = 1 and m.tipo=1 or m.tipo = 10 or m.tipo = 14 or m.tipo = 15 or m.tipo = 3 or m.tipo = 4"
+				." where m.estado = 1"
+				//." where m.estado = 1 and m.tipo=1 or m.tipo = 10 or m.tipo = 14 or m.tipo = 15 or m.tipo = 3 or m.tipo = 4"
 				//." ORDER BY m.nombre asc";
 				." ORDER BY m.gramaje asc";
 				

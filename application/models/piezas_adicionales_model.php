@@ -136,14 +136,15 @@ class piezas_adicionales_model extends CI_Model{
         return true;
     }
 
-    public function getPiezasAdicionalesOrdenCompraPorProveedores($id)
+    public function getPiezasAdicionalesOrdenCompraPorProveedores($id,$x)
     {
            $query=$this->db
-                ->select("*")
-                ->from("ordenes_compras_piezas_adicionales")
+                ->select("o.*,p.valor_compra")
+                ->from("ordenes_compras_piezas_adicionales o")
+                ->join("piezas_adicionales p","p.piezas_adicionales = o.id_pieza$x","inner")
                 ->where(array("id_cotizacion"=>$id))
                 ->get();
-//                echo $this->db->last_query();exit;
+              // echo $this->db->last_query();exit;
                 return $query->row();
     }      
     

@@ -144,9 +144,9 @@ class cotizaciones_model extends CI_Model{
                 ->or_like('upper(co.id)',strtoupper($buscar),'both')                    
                 ->or_like('upper(cl.razon_social)',strtoupper($buscar),'both')                    
                 ->order_by("co.id","desc")
-                ->limit($porpagina,$pagina)
+              //  ->limit($porpagina,$pagina)
                 ->get();
-                //echo $this->db->last_query();
+              //  echo $this->db->last_query();
                 
                 return $query->result();
             break;
@@ -425,7 +425,7 @@ class cotizaciones_model extends CI_Model{
         {
             case 'limit':
                 $query=$this->db
-                ->select("id,id_usuario,id_cliente,nombre_cliente,id_vendedor,condicion_del_producto,producto,cantidad_1,cantidad_2,cantidad_3,cantidad_4,acepta_excedentes,precio_1,precio_2,precio_3,precio_4,comentario_medidas,piezas_adicionales,comentario_piezas_adicionales,comentario_piezas_adicionales,materialidad_datos_tecnicos,materialidad_eleccion,materialidad_1,materialidad_2,materialidad_solicita_muestra,impresion_colores,impresion_metalicos,impresion_acabado_impresion_1,impresion_acabado_impresion_2,impresion_acabado_impresion_3,impresion_acabado_impresion_4,impresion_hacer_cromalin,procesos_especiales_folia,procesos_especiales_folia_valor,procesos_especiales_cuno,procesos_especiales_cuno_valor,producto_se_entrega_armado,tiene_desgajado,montaje_pieza_especial,pegado_instrucciones,cantidad_especifica,envasado,despacho_fuera_de_santiago,retira_cliente,tota_o_parcial,can_despacho_1,can_despacho_2,can_despacho_3,forma_pago,comision_agencia,costo_comercial,cliente_entrega_1,fecha,estado,fecha_de_liberacion_de_producto_ingenieria,fecha_de_liberacion_de_producto_fotomecanica")
+                ->select("id,id_usuario,id_cliente,nombre_cliente,id_vendedor,condicion_del_producto,producto,cantidad_1,cantidad_2,cantidad_3,cantidad_4,acepta_excedentes,precio_1,precio_2,precio_3,precio_4,comentario_medidas,piezas_adicionales,comentario_piezas_adicionales,comentario_piezas_adicionales,materialidad_datos_tecnicos,materialidad_eleccion,materialidad_1,materialidad_2,materialidad_solicita_muestra,impresion_colores,impresion_metalicos,impresion_acabado_impresion_1,impresion_acabado_impresion_2,impresion_acabado_impresion_3,impresion_acabado_impresion_4,impresion_hacer_cromalin,procesos_especiales_folia,procesos_especiales_folia_valor,procesos_especiales_cuno,procesos_especiales_cuno_valor,producto_se_entrega_armado,tiene_desgajado,montaje_pieza_especial,pegado_instrucciones,cantidad_especifica,envasado,despacho_fuera_de_santiago,retira_cliente,tota_o_parcial,can_despacho_1,can_despacho_2,can_despacho_3,forma_pago,comision_agencia,costo_comercial,cliente_entrega_1,fecha,estado,fecha_de_liberacion_de_producto_ingenieria,fecha_de_liberacion_de_producto_fotomecanica,trazado")
                 ->from("cotizaciones")
                 ->where(array("id_cliente"=>$buscar))
                 ->order_by("id","desc")
@@ -820,6 +820,45 @@ class cotizaciones_model extends CI_Model{
         return false;
         
     }
+    
+    public function getOrdenesProveedoresPorNombre($nombre,$id)
+    {
+        $query=$this->db
+                ->select("")
+                ->from("ordenes_proveedores")
+                ->where(array("nombre"=>$nombre,"id_cotizacion"=>$id))
+                ->get();
+                //echo $this->db->last_query();exit;
+                return $query->row();
+    }
+    
+     public function getOrdenesProveedores($id)
+    {
+        $query=$this->db
+                ->select("*")
+                ->from("ordenes_proveedores")
+                ->where(array("id_cotizacion"=>$id))
+                ->get();
+                //echo $this->db->last_query();exit;
+                return $query->result();
+    }
+     
+    public function insertar_ordenes_proveedores($data=array())
+    {
+        $query =  $this->db->insert("ordenes_proveedores",$data);
+        if($query)
+            return $this->db->insert_id();
+        else
+        return false;
+        
+    }
+    
+    public function delete_ordenes_proveedores($id)
+    {
+        $this->db->where('id_cotizacion', $id);
+         $this->db->delete("ordenes_proveedores");
+         return true;
+    }
      
     public function insertar_bl($data=array())
     {
@@ -897,6 +936,12 @@ class cotizaciones_model extends CI_Model{
          $this->db->insert("cotizacion_archivo_cliente",$data);
         return true;
         
+    }   
+    
+     public function insertarArchivosGrupos($data=array())
+    {
+         $this->db->insert("archivo_cotizacion_grupal",$data);
+        return true;
     }    
     
 	//21/01/2017
@@ -907,7 +952,7 @@ class cotizaciones_model extends CI_Model{
         
     }
 	
-	 public function getCotizacionesGrupalesPorId($id)
+    public function getCotizacionesGrupalesPorId($id)
     {
          $query=$this->db
                 ->select("id")
@@ -916,6 +961,34 @@ class cotizaciones_model extends CI_Model{
                 ->get();
                 //echo $this->db->last_query();exit;
                 return $query->row();
+    }
+    public function getArchivoCotizacionGrupalPorId($id)
+    {
+         $query=$this->db
+                ->select("*")
+                ->from("archivo_cotizacion_grupal")
+                ->where(array("id_grupo"=>$id))
+                ->get();
+                //echo $this->db->last_query();exit;
+                return $query->row();
+    }
+     public function UpdateArchivoCotizacionGrupalPorId($data,$id)
+    {
+         $this->db->where('id_grupo', $id);
+         $this->db->update("archivo_cotizacion_grupal",$data);
+         //echo $this->db->last_query();exit;
+        return true;
+    }
+    
+    public function getArchivosCotizacionesGrupalesPorId($id)
+    {
+         $query=$this->db
+                ->select("*")
+                ->from("archivo_cotizacion_grupal")
+                ->where(array("id_grupo"=>$id))
+                ->get();
+                //echo $this->db->last_query();exit;
+                return $query->result();
     }
 	
 	public function getCotizacionesGrupalesPorIdCotizacionPrimera($id)
@@ -1438,19 +1511,19 @@ class cotizaciones_model extends CI_Model{
     $tamano1=$ing->tamano_a_imprimir_1;
     $tamano2=$ing->tamano_a_imprimir_2;
     
-    if($tamano1==60 and $tamano2>100)
+    if($tamano1==60 && $tamano2>100)
     {
         $maquina="Máquina Roland 800";
-    }elseif($tamano1==70 and $tamano2>120)
+    }elseif($tamano1==70 && $tamano2>120)
     {
         $maquina="Máquina Roland 800";
-    }elseif($tamano1==80 and $tamano2>89)
+    }elseif($tamano1==80 && $tamano2>89)
     {
         $maquina="Máquina Roland 800";
-    }elseif($tamano1==90 and $tamano2>89)
+    }elseif($tamano1==90 && $tamano2>89)
     {
         $maquina="Máquina Roland 800";
-    }elseif($tamano1>90 and $tamano2>60)
+    }elseif($tamano1>90 && $tamano2>60)
     {
         $maquina="Máquina Roland 800";
     }else
@@ -1725,8 +1798,8 @@ class cotizaciones_model extends CI_Model{
                 (
                     "total_merma"=>$sum,
                 );
-                $this->db->where('id', $hoja->id);
-                $this->db->update("hoja_de_costos_datos",$arreglo55);
+//                $this->db->where('id', $hoja->id);
+//                $this->db->update("hoja_de_costos_datos",$arreglo55);
         }
        /**
         * fin validaciones mermas

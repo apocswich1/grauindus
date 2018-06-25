@@ -42,6 +42,7 @@
 	<tr>
                 <th>Número</th>
                 <th>Tipo</th>
+                <th>Fecha Creacion</th>
                 <th>Nombre</th>
                 <th>Cliente 1</th>
                 <th>Instruccion</th>
@@ -71,6 +72,7 @@
             <tr>
             <td><?php echo $dato->numero?></td>
             <td><?php echo $dato->tipo?></td>
+            <td><?php echo fecha($dato->fecha)?></td>
             <td><?php echo $dato->nombre?></td>
             <!--<td><?php //echo $dato->razon_social?></td>-->
             <td><?php echo $cliente->razon_social?></td>

@@ -1,4 +1,5 @@
 <script type = 'text/javascript' src = "<?php echo base_url(); ?>js/mis_funciones.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>public/frontend/js/fnc_reving.js"></script>
 <script type = 'text/javascript' src = "<?php echo base_url(); ?>public/frontend/bootstrap_file_input/"></script>
 <link href="<?php echo base_url(); ?>public/frontend/bootstrap_file_input/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 <script src="<?php echo base_url(); ?>public/frontend/bootstrap_file_input/js/plugins/piexif.min.js" type="text/javascript"></script>
@@ -200,7 +201,7 @@ function getField($campo,$datos,$ing)
             <td> <p>
                 <table>
                     <tr>
-                        <td colspan="2"><?php if($moldes2->tipo=='Exclusivo'){echo 'No se puede modificar el cliente por tener un molde "Exclusivo"';}?></td>
+                        <td colspan="2" <?php if($moldes2->tipo=='Exclusivo'){ echo 'style="background-color: orange;color:white;"'; } ?>><?php if($moldes2->tipo=='Exclusivo'){echo 'No se puede modificar el cliente por tener un molde "Exclusivo, debe cambiar el molde Nro '. $moldes2->id.' a generico y recordarlo para luego reasignar este mismo molde en la Revision Ingenieria"';}?></td>
                     </tr>
                     <tr>
                         <td><?php if($moldes2->tipo=='Exclusivo'){ echo "";}else{ ?>
@@ -454,33 +455,7 @@ function getField($campo,$datos,$ing)
         </div>
     <?php } ?>
     <hr />	
-    <?php
-    if ($this->session->userdata('perfil') != 2) {
-        ?>
-    
-    <div class="control-group">
-            <label class="control-label" for="usuario"><strong>PDF Trazado Ingeniería</strong></label>
-            <div class="controls">
-                    <?php //echo $ing->archivo;// print_r($trazadosing) //my code is here ?>
-                <?php if ($ing->archivo == "") {
-                    if($moldes2->archivo == "" && $trazadosing->archivo==""){ ?>
-                    <a href='#'>No Existe Archivo de Trazado Ingenieria</a>
-                    <?php }else{ if($trazadosing->archivo==""){ ?>
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $moldes2->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>    
-                    <?php }else{ ?>
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero  ?></a>        
-                    <?php } }}else{ if ($ing->archivo == "") { ?>
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
-                    <?php }else{ if($trazadosing->archivo==""){ ?>
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
-                    <?php }else{ ?> 
-                    <a href='<?php echo base_url() . $this->config->item('direccion_pdf') . $trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero  ?></a>            
-                    <?php }}} ?>
-                <?php //var_dump($ing); ?>
-            </div>
-        </div>
-    <?php } ?>
-    <hr />
+    <?php include('plantilla_trazado_ingenieria.php'); ?>
      <div  class="control-group">
         <label class="control-label" for="usuario" data-toggle="modal" data-target="#asociar_grupo"><a href="#" id="link_grupo">Crear Grupo a partir de cotizaciones</a></label>
     </div>
@@ -944,13 +919,33 @@ th {
     
     
      <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Cantidades a Cotizadas</label><!--onkeypress="nextOnEnter(this,event);"-->
+		<label class="control-label" for="usuario">Cantidades Cotizadas</label><!--onkeypress="nextOnEnter(this,event);"-->
 		<div class="controls">
                     <?php  if (sizeof($datos)>0) {   ?>
                     <input type="text" id="can1" name="can1" style="width: 100px;" id="can1" onkeypress="return soloNumeros(event)" placeholder="Cantidad 1" value="<?php echo $datos->cantidad_1?>" /> - <input type="text" id="can2" name="can2" id="can2" style="width: 100px;" onkeypress="return soloNumeros(event)" placeholder="Cantidad 2" value="<?php echo $datos->cantidad_2?>" /> - <input type="text" name="can3" id="can3" style="width: 100px;" onkeypress="return soloNumeros(event)" placeholder="Cantidad 3" value="<?php echo $datos->cantidad_3?>" /> - <input type="text" name="can4" id="can4" style="width: 100px;" onkeypress="return soloNumeros(event)" placeholder="Cantidad 4" value="<?php echo $datos->cantidad_4?>" />
                     <?php } ?>                        
 		</div>
-	</div>    
+	</div> 
+    <div class="control-group">
+		<label class="control-label" for="usuario">Acepta Excedentes</label>
+		<div class="controls">
+		<select name="acepta_excedentes" style="width: 100px;" onchange="aceptaExcedentes();">
+                            <option value="">Seleccione.....</option>
+                      <?php  if (sizeof($datos)>0) {   ?>
+                            <option value="SI" <?php if($datos->acepta_excedentes=="SI"){echo 'selected="true"';}?>>SI</option>
+                            <option value="NO" <?php if($datos->acepta_excedentes=="NO"){echo 'selected="true"';}?>>NO</option>
+                      <?php } else {?>                    
+                            <option value="SI" <?php if(($_POST["acepta_excedentes"]) and $_POST["acepta_excedentes"]=='SI'){echo 'selected="selected"';}?>>SI</option>
+                            <option value="NO" <?php if(($_POST["acepta_excedentes"]) and $_POST["acepta_excedentes"]=='NO'){echo 'selected="selected"';}?>>NO</option>
+                    <?php } ?>                       
+
+                </select> 
+            <span id="acepta_excedentes">Acepta excedentes mas o menos 10%</span>
+            <input type="hidden" name="acepta_excedentes_extra" value="Acepta pagar extra por cantidad exacta" readonly="true" />
+            
+        
+		</div>
+	</div>
     
     <!--órdenes de producción asociadas-->
     <div id="ordenes_de_producción" class="control-group"></div>
@@ -993,15 +988,15 @@ th {
 		<div class="controls">
                     <?php  //print_r($moldes2); ?>
 		<?php if(sizeof($ing) >0) {echo $ing->medidas_de_las_cajas;?>                    
-                   L  <input type="text" name="medidas_de_las_cajas"   id="medidas_de_las_cajas"   placeholder="L"  value="<?php if($ing->medidas_de_la_caja==""){echo $moldes2->medidas_de_las_cajas;}else{echo $ing->medidas_de_la_caja;}?>"   style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDecimales('medidas_de_las_cajas',Formato);" />
-                   A  <input type="text" name="medidas_de_las_cajas_2" id="medidas_de_las_cajas_2" placeholder="A"  value="<?php if($ing->medidas_de_la_caja_2==""){echo $moldes2->medidas_de_las_cajas_2;}else{echo $ing->medidas_de_la_caja_2;}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDecimales('medidas_de_las_cajas_2',Formato);"/>
-                   H  <input type="text" name="medidas_de_las_cajas_3" id="medidas_de_las_cajas_3" placeholder="H"  value="<?php if($ing->medidas_de_la_caja_3==""){echo $moldes2->medidas_de_las_cajas_3;}else{echo $ing->medidas_de_la_caja_3;}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDecimales('medidas_de_las_cajas_3',Formato);"/>
-                   AT <input type="text" name="medidas_de_las_cajas_4" id="medidas_de_las_cajas_4" placeholder="AT" value="<?php if($ing->medidas_de_la_caja_4==""){echo $moldes2->medidas_de_las_cajas_4;}else{echo $ing->medidas_de_la_caja_4;}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDecimales('medidas_de_las_cajas_4',Formato);"/>
+                   L  <input type="text" name="medidas_de_las_cajas"   id="medidas_de_las_cajas"   placeholder="L"  value="<?php if($ing->medidas_de_la_caja==""){echo $moldes2->medidas_de_las_cajas;}else{echo $ing->medidas_de_la_caja;}?>"   style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDeecimales('medidas_de_las_cajas',Formato);" />
+                   A  <input type="text" name="medidas_de_las_cajas_2" id="medidas_de_las_cajas_2" placeholder="A"  value="<?php if($ing->medidas_de_la_caja_2==""){echo $moldes2->medidas_de_las_cajas_2;}else{echo $ing->medidas_de_la_caja_2;}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDeecimales('medidas_de_las_cajas_2',Formato);"/>
+                   H  <input type="text" name="medidas_de_las_cajas_3" id="medidas_de_las_cajas_3" placeholder="H"  value="<?php if($ing->medidas_de_la_caja_3==""){echo $moldes2->medidas_de_las_cajas_3;}else{echo $ing->medidas_de_la_caja_3;}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDeecimales('medidas_de_las_cajas_3',Formato);"/>
+                   AT <input type="text" name="medidas_de_las_cajas_4" id="medidas_de_las_cajas_4" placeholder="AT" value="<?php if($ing->medidas_de_la_caja_4==""){echo $moldes2->medidas_de_las_cajas_4;}else{echo $ing->medidas_de_la_caja_4;}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDeecimales('medidas_de_las_cajas_4',Formato);"/>
                 <?php }else {?>  
-                   L  <input type="text" name="medidas_de_las_cajas"   id="medidas_de_las_cajas"   placeholder="L"  value="<?php if($moldes2->medidas_de_las_cajas==""){echo $_POST["medidas_de_las_cajas"];}else{if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas;}else{echo $moldes2->medidas_de_las_cajas;}}?>"   style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDecimales('medidas_de_las_cajas',Formato);" />
-                   A  <input type="text" name="medidas_de_las_cajas_2" id="medidas_de_las_cajas_2" placeholder="A"  value="<?php if($moldes2->medidas_de_las_cajas_2==""){echo $_POST["medidas_de_las_cajas_2"];}else{if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas_2;}else{echo $moldes2->medidas_de_las_cajas_2;}}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDecimales('medidas_de_las_cajas_2',Formato);"/>
-                   H  <input type="text" name="medidas_de_las_cajas_3" id="medidas_de_las_cajas_3" placeholder="H"  value="<?php if($moldes2->medidas_de_las_cajas_3==""){echo $_POST["medidas_de_las_cajas_3"];}else{if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas_3;}else{echo $moldes2->medidas_de_las_cajas_3;}}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDecimales('medidas_de_las_cajas_3',Formato);"/>
-                   AT <input type="text" name="medidas_de_las_cajas_4" id="medidas_de_las_cajas_4" placeholder="AT" value="<?php if($moldes2->medidas_de_las_cajas_4==""){echo $_POST["medidas_de_las_cajas_4"];}else{if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas_4;}else{echo $moldes2->medidas_de_las_cajas_4;}}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDecimales('medidas_de_las_cajas_4',Formato);"/>
+                   L  <input type="text" name="medidas_de_las_cajas"   id="medidas_de_las_cajas"   placeholder="L"  value="<?php if($moldes2->medidas_de_las_cajas==""){if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas;}else{echo $_POST["medidas_de_las_cajas"];}}else{if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas;}else{echo $moldes2->medidas_de_las_cajas;}}?>"   style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDeecimales('medidas_de_las_cajas',Formato);" />
+                   A  <input type="text" name="medidas_de_las_cajas_2" id="medidas_de_las_cajas_2" placeholder="A"  value="<?php if($moldes2->medidas_de_las_cajas_2==""){if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas_2;}else{echo $_POST["medidas_de_las_cajas_2"];}}else{if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas_2;}else{echo $moldes2->medidas_de_las_cajas_2;}}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDeecimales('medidas_de_las_cajas_2',Formato);"/>
+                   H  <input type="text" name="medidas_de_las_cajas_3" id="medidas_de_las_cajas_3" placeholder="H"  value="<?php if($moldes2->medidas_de_las_cajas_3==""){if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas_3;}else{echo $_POST["medidas_de_las_cajas_3"];}}else{if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas_3;}else{echo $moldes2->medidas_de_las_cajas_3;}}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDeecimales('medidas_de_las_cajas_3',Formato);"/>
+                   AT <input type="text" name="medidas_de_las_cajas_4" id="medidas_de_las_cajas_4" placeholder="AT" value="<?php if($moldes2->medidas_de_las_cajas_4==""){if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas_4;}else{echo $_POST["medidas_de_las_cajas_4"];}}else{if($datos->estan_los_moldes=="NO" && $datos->existe_trazado=="SI"){echo $trazadosing->medidas_de_las_cajas_4;}else{echo $moldes2->medidas_de_las_cajas_4;}}?>" style="width: 50px;" onkeypress="return soloNumerosConPuntos(event)" onblur="funcionDeecimales('medidas_de_las_cajas_4',Formato);"/>
                 <?php }?>                     
 		</div>
 	</div>
@@ -1168,7 +1163,7 @@ th {
            <div class="control-group">
                      <label class="control-label" for="usuario">Hay que Imprimir Contra la Fibra</label>
                      <div class="controls">
-                        <select class="comprobacion" id="imprimir_contra_la_fibra" name="imprimir_contra_la_fibra" onchange="validar_ccac();" style="width: 150px;" >
+                        <select class="" id="imprimir_contra_la_fibra" name="imprimir_contra_la_fibra" onchange="return calculo_ccac_minimo();" style="width: 150px;" >
                         <option value="">Seleccione......</option>  
                         <?php if (sizeof($ing)>0)  { ?>
                             <option value="SI" <?php if($ing->imprimir_contra_la_fibra=="SI"){echo 'selected="selected"';}?>>Sí</option>
@@ -1304,7 +1299,7 @@ th {
    	    <div class="control-group">
 		<label class="control-label" for="usuario">Lleva Fondo Negro</label>
 		<div class="controls">
-                    <select class="comprobacion" id="lleva_fondo_negro" name="lleva_fondo_negro" style="width: 100px;" onchange="llevafondo(this.value);msg_fondo();calculo_ccac();validar_ccac();">
+                    <select class="comprobacion" id="lleva_fondo_negro" name="lleva_fondo_negro" style="width: 100px;" onchange="llevafondo(this.value);msg_fondo();calculo_ccac_minllevafondoimo();">
                     <option value="">Seleccione......</option>   
                     <?php if(sizeof($ing)>0) { ?>
                         <option value="NO" <?php if($ing->lleva_fondo_negro=="NO"){echo 'selected="selected"';}?>>NO</option>
@@ -1331,7 +1326,7 @@ th {
       	    <div class="control-group">
 		<label class="control-label" for="usuario">Imagen Impresión</label>
 		<div class="controls">
-		<select class="comprobacion" id="imagen_impresion" name="imagen_impresion" style="width: 100px;" onchange="msg_fondo();">
+		<select class="comprobacion" id="imagen_impresion" name="imagen_impresion" style="width: 100px;" onchange="msg_fondo();calculo_ccac_minimo();">
                     <option value="">Seleccione......</option>   
                     <option value="CE" <?php if($imagen_impresion=="CE"){echo 'selected="selected"';}?>>Al CENTRO</option>
                     <option value="CO" <?php if($imagen_impresion=="CO"){echo 'selected="selected"';}?>>AL CORTE</option>
@@ -1342,52 +1337,7 @@ th {
 		</div>
 		</div>
    <h3>Troquelado <strong style="color: red;">(*)</strong></h3>
-    <div class="control-group">
-		<label class="control-label" for="id_antiguo">Lleva troquelado?</label>
-		<div class="controls">
-		<?php
-          //  print_r($datos);exit();
-		if(sizeof($ing)==0) { ?>
-		<input type="text" name="lleva_troquelado"  value="<?php if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE"){echo 'SI';} if($datos->estan_los_moldes=="MOLDE GENERICO"){echo 'SI';} if($datos->estan_los_moldes=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="NO"){echo 'NO';} if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO LLEVA"){echo 'NO';} if($datos->estan_los_moldes=="CLIENTE LO APORTA"){echo 'SI';} ?>" />
-		<?php } elseif(sizeof($ing)>= 1) { ?>
-		<input type="text" name="lleva_troquelado"  value="<?php echo $ing->lleva_troquelado ?>" />
-		<?php } ?>
-		</div>
-	</div> 
     
-    <div class="control-group" id="hacer_troquel" style="display: block;">
-		<label class="control-label" for="id_antiguo">Hay que hacer troquel</label>
-		<div class="controls">
-		<?php
-                if(sizeof($ing)>0) 
-                { 
-                    $hacer_troquel=$ing->hacer_troquel;
-                }
-                else
-	        {
-                    if($datos->estan_los_moldes=="MOLDE GENERICO")
-                        $hacer_troquel='NO';
-                    if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE")
-                        $hacer_troquel='NO';
-                    if($datos->estan_los_moldes=="SI")
-                        $hacer_troquel='NO';
-                    if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="SI")
-                        $hacer_troquel='SI';
-                    if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="NO")
-                        $hacer_troquel='NO';
-                    if($datos->estan_los_moldes=="NO LLEVA")
-                        $hacer_troquel='NO';
-                    if($datos->estan_los_moldes=="CLIENTE LO APORTA")
-                        $hacer_troquel='NO';
-                }                    
-                ?>
-                    <input type="text" id="dato_hacer_troquel" name="hacer_troquel"  value="<?php echo $hacer_troquel; ?>" />
-                    
-		</div>
-                <?php $molde=$this->moldes_model->getMoldesPorId($datos->numero_molde) ?>
-                
-                <?php $distancia=$molde->cuchillocuchillo." X ".$molde->cuchillocuchillo2; ?>
-	</div> 
      <div class="control-group" id="div_hay_que_troquelar">
 		<label class="control-label" for="usuario">Hay que Troquelar?</label>
 		<div class="controls">
@@ -1418,6 +1368,52 @@ th {
                         ?>   
                         </select> </div>
         </div>
+   <div class="control-group">
+		<label class="control-label" for="id_antiguo">Lleva troquelado?</label>
+		<div class="controls">
+		<?php
+          //  print_r($datos);exit();
+		if(sizeof($ing)==0) { ?>
+		<input type="text" name="lleva_troquelado"  value="<?php if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE"){echo 'SI';} if($datos->estan_los_moldes=="MOLDE GENERICO"){echo 'SI';} if($datos->estan_los_moldes=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="NO"){echo 'NO';} if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="SI"){echo 'SI';} if($datos->estan_los_moldes=="NO LLEVA"){echo 'NO';} if($datos->estan_los_moldes=="CLIENTE LO APORTA"){echo 'SI';} ?>" />
+		<?php } elseif(sizeof($ing)>= 1) { ?>
+		<input type="text" name="lleva_troquelado"  value="<?php echo $ing->lleva_troquelado ?>" />
+		<?php } ?>
+		</div>
+	</div> 
+    
+    <div class="control-group" id="hacer_troquel" style="display: block;">
+		<label class="control-label" for="id_antiguo">Hay que hacer troquel</label>
+		<div class="controls">
+		<?php //echo $datos->estan_los_moldes;
+                if(sizeof($ing)>0) 
+                { 
+                    $hacer_troquel=$ing->hacer_troquel;
+                }
+                else
+	        {
+                    if($datos->estan_los_moldes=="MOLDE GENERICO")
+                        $hacer_troquel='NO';
+                    if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE")
+                        $hacer_troquel='NO';
+                    if($datos->estan_los_moldes=="SI")
+                        $hacer_troquel='NO';
+                    if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="SI")
+                        $hacer_troquel='SI';
+                    if($datos->estan_los_moldes=="NO" && $datos->hay_que_troquelar=="NO")
+                        $hacer_troquel='NO';
+                    if($datos->estan_los_moldes=="NO LLEVA")
+                        $hacer_troquel='NO';
+                    if($datos->estan_los_moldes=="CLIENTE LO APORTA")
+                        $hacer_troquel='NO';
+                }                    
+                ?>
+                    <input type="text" id="dato_hacer_troquel" name="hacer_troquel"  value="<?php echo $hacer_troquel; ?>" />
+                    
+		</div>
+                <?php $molde=$this->moldes_model->getMoldesPorId($datos->numero_molde) ?>
+                
+                <?php $distancia=$molde->cuchillocuchillo." X ".$molde->cuchillocuchillo2; ?>
+	</div> 
         <div class="control-group">
                 <label class="control-label" for="usuario">Lleva desgajado automatico:</label>
                 <div class="controls">
@@ -1442,7 +1438,7 @@ th {
 			<!--<input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php //echo $ing->unidades_por_pliego;?>" /><a style="color:#BBBBBB"> [<?php //echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>-->
                         <input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php if($ing->unidades_por_pliego!=""){echo $ing->unidades_por_pliego;}else{if($moldes2->unidades_productos_completos!=""){if($trazadosing->unidades_productos_completos==""){echo $moldes2->unidades_productos_completos;}else{echo $trazadosing->unidades_productos_completos;}}else{echo $_POST["unidades_por_pliego"];}}?>" /><a style="color:#BBBBBB"> [<?php echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>
                 <?php } else {?>  
-                        <input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php if($moldes2->unidades_productos_completos!=""){if($trazadosing->unidades_productos_completos==""){echo $moldes2->unidades_productos_completos;}else{echo $trazadosing->unidades_productos_completos;}}else{echo $_POST["unidades_por_pliego"];}?>" /><a style="color:#BBBBBB"> [<?php echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>
+                        <input type="text" name="unidades_por_pliego" placeholder="Unidades por pliego" id="unidades_por_pliego" onkeypress="return soloNumeros(event)" value="<?php if($moldes2->unidades_productos_completos!=""){if($trazadosing->unidades_productos_completos==""){echo $moldes2->unidades_productos_completos;}else{echo $trazadosing->unidades_productos_completos;}}else{if($trazadosing->unidades_productos_completos!=""){echo $trazadosing->unidades_productos_completos;}else{echo $_POST["unidades_por_pliego"];}}?>" /><a style="color:#BBBBBB"> [<?php echo number_format($datos->unidades_por_pliego,0,'','.')?>] </a>
                 <?php }?>                       
          
 		</div>
@@ -1454,7 +1450,7 @@ th {
                     <?php if(sizeof($ing)>0) { ?>
                         <input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php if($ing->unidades_por_pliego!=""){echo $ing->piezas_totales_en_el_pliego;}else{if($moldes2->piezas_totales!=""){if($trazadosing->piezas_totales!=""){echo $trazadosing->piezas_totales;}else{echo $moldes2->piezas_totales;}}else{echo $datos->piezas_totales_en_el_pliego;}}?>" /> <a style="color:#BBBBBB"> [<?php if($ing->piezas_totales_en_el_pliego!=0){echo number_format($ing->piezas_totales_en_el_pliego,0,'','.');}?>] </a>
                     <?php } elseif(sizeof($datos)>0) { ?>
-                        <input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php if($moldes2->piezas_totales!=""){if($trazadosing->piezas_totales!=""){echo $trazadosing->piezas_totales;}else{echo $moldes2->piezas_totales;}}else{echo $datos->piezas_totales_en_el_pliego;}?>" /><a style="color:#BBBBBB"> [<?php if($datos->piezas_totales_en_el_pliego!=0){echo number_format($datos->piezas_totales_en_el_pliego,0,'','.');}?>] </a>
+                        <input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php if($moldes2->piezas_totales!=""){if($trazadosing->piezas_totales!=""){echo $trazadosing->piezas_totales;}else{echo $moldes2->piezas_totales;}}else{if($trazadosing->piezas_totales!=""){echo $trazadosing->piezas_totales;}else{echo $datos->piezas_totales_en_el_pliego;}}?>" /><a style="color:#BBBBBB"> [<?php if($datos->piezas_totales_en_el_pliego!=0){echo number_format($datos->piezas_totales_en_el_pliego,0,'','.');}?>] </a>
                     <?php } else { ?>                
 			<input type="text" name="piezas_totales_en_el_pliego" placeholder="piezas totales en el pliego (para desgajado)" id="piezas_totales_en_el_pliego" onkeypress="return soloNumeros(event)" onblur="formatear(this.value,this.id); PiezasTotales(this.value);" value="<?php echo $_POST["piezas_totales_en_el_pliego"] ?>" /><a style="color:#BBBBBB"> [<?php echo number_format($_POST["piezas_totales_en_el_pliego"],0,'','.')?>] </a>
                     <?php }  ?>                     
@@ -1532,9 +1528,14 @@ th {
              if ($ing->estan_los_moldes!='')
             {
                 $estan_los_moldes=$ing->estan_los_moldes;
-                if ($estan_los_moldes=='MOLDE GENERICO') $estan="SI";
-                elseif ($estan_los_moldes=='MOLDE REGISTRADOS DEL CLIENTE') $estan="SI";                    
-                else $estan="NO"; 
+                if ($estan_los_moldes=='MOLDE GENERICO'){ $estan="SI";}
+                //elseif ($estan_los_moldes=='SI') $estan="SI";                    
+                else{
+                    if($estan_los_moldes=='MOLDE REGISTRADOS DEL CLIENTE'){
+                        $estan="SI"; 
+                    }else{ 
+                            $estan="NO";
+                        }}
                 $numero_moldes=$ing->numero_molde;        
             }
         }
@@ -1584,85 +1585,11 @@ th {
     
     /*******************************/
     ?>
-        <div class="control-group" id="div_estan_los_moldes" <?php if($estan!='NO') { echo 'style="display: none;"'; } else { echo 'style="display: block;"';} ?>>
-		<label class="control-label" for="usuario">Están los moldes?</label>
-		<div class="controls">
-			<!--<select name="select_estan_los_moldes" style="width: 300px;" onchange="estanLosMoldes(this.value);condicionParaMoldesGenericos(this.value);">-->
-                    <select name="select_estan_los_moldes" style="width: 300px;" onchange="estanLosMoldes(this.value);">
-                            <?php  if (sizeof($ing)>0) {  ?>                      
-                                <option value="">Seleccione.....</option>
-                                <option value="SI" <?php if($ing->estan_los_moldes=="SI"){echo 'selected="selected"';}?>>SI</option>
-                                <option value="NO" <?php if($ing->estan_los_moldes=="NO"){echo 'selected="selected"';}?>>NO (HAY QUE FABRICAR)</option>
-                                <option value="NO LLEVA"<?php if($ing->estan_los_moldes=="NO LLEVA"){echo 'selected="selected"';}?>>NO LLEVA</option>
-                                <option value="CLIENTE LO APORTA" <?php if($ing->estan_los_moldes=="CLIENTE LO APORTA"){echo 'selected="selected"';}?>>CLIENTE LO APORTA</option>
-                                <option value="MOLDE GENERICO" <?php if($ing->estan_los_moldes=="MOLDE GENERICO"){echo 'selected="selected"';}?>>MOLDE GENERICO</option>
-                                <option value="MOLDE REGISTRADOS DEL CLIENTE" <?php if($ing->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE"){echo 'selected="selected"';}?>>MOLDE REGISTRADOS DEL CLIENTE</option>
-                            <?php } else { ?>  
-                                <option value="">Seleccione.....</option>
-                                <option value="SI" <?php if($datos->estan_los_moldes=="SI"){echo 'selected="selected"';}?>>SI</option>
-                                <option value="NO" <?php if($datos->estan_los_moldes=="NO"){echo 'selected="selected"';}?>>NO (HAY QUE FABRICAR)</option>
-                                <option value="NO LLEVA"<?php if($datos->estan_los_moldes=="NO LLEVA"){echo 'selected="selected"';}?>>NO LLEVA</option>
-                                <option value="CLIENTE LO APORTA" <?php if($datos->estan_los_moldes=="CLIENTE LO APORTA"){echo 'selected="selected"';}?>>CLIENTE LO APORTA</option>
-                                <option value="MOLDE GENERICO" <?php if($datos->estan_los_moldes=="MOLDE GENERICO"){echo 'selected="selected"';}?>>MOLDE GENERICO</option>
-                                <option value="MOLDE REGISTRADOS DEL CLIENTE" <?php if($datos->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE"){echo 'selected="selected"';}?>>MOLDE REGISTRADOS DEL CLIENTE</option>
-                            <?php }  ?> 
-                    </select> 
-		</div>
-	</div>
-	<?php //print_r($moldes); //my code is here ?>
-	<div class="control-group" id="div_estan_los_moldes_generico" <?php if(($estan_los_moldes=="MOLDE GENERICO")) { echo 'style="display: block;"'; } else { echo 'style="display: none;"';} ?>>
-		<label class="control-label" for="usuario">Moldes Genéricos</label>
-		<div class="controls">
-			<select name="select_estan_los_moldes_genericos" style="width: 600px;" onchange="estanLosMoldes(this.value);">
-                        <option value="SI" <?php if($estan=='SI'){echo 'selected="selected"';}?>>SI</option> 
-                        <option value="NO" <?php if($estan=='NO'){echo 'selected="selected"';}?>>NO</option>
-                    </select> 
-                    <div id="molde_select">
-                        <select name="molde_generico" class="chosen-select" id="molde_generico" style="width: 400px;" onchange="carga_ajax5('<?php echo base_url();?>moldes/detalle_ajax',this.value,'div_moldes');carga_ajax_cambio_molde('<?php echo base_url();?>moldes/detalle_ajax_cambio_molde',this.value,'div_moldes')";>
-                            <?php
-                              foreach($moldes as $molde)
-                              {
-                                  ?>
-                            <option value="<?php echo $molde->id?>" <?php if($numero_moldes==$molde->id){echo 'selected="selected"';}?>><?php echo $molde->nombre?> (N° <?php echo $molde->numero?>) <?php if($molde->archivo!=""){ echo 'Tiene Pdf'; } ?></option>
-                                  <?php
-                              }
-                              ?>
-                          </select> 
-                          <span id="div_moldes"></span>
-                    </div> <?php if($moldes2->razon_social!=""){echo "Propietario: ".$moldes2->razon_social;} ?>
-		</div>
-        </div>
-    
-    
-	<div class="control-group" id="div_estan_los_moldes_clientes" <?php if($estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE")  { echo 'style="display: block;"'; } else { echo 'style="display: none;"';} ?>>
-		<label class="control-label" for="usuario">Moldes del Cliente</label>
-		<div class="controls">
-			<select name="select_estan_los_moldes_no_genericos_clientes" style="width: 300px;" onchange="estanLosMoldes(this.value);">
-                        <option value="SI" <?php if($estan=='SI'){echo 'selected="selected"';}?>>SI</option> 
-                        <option value="NO" <?php if($estan=='NO'){echo 'selected="selected"';}?>>NO</option>
-                    </select> 
-                    <div id="molde_select_cliente">
-                          <select name="molde_registrado" id="molde_registrado" style="width: 600px;" onchange="carga_ajax5('<?php echo base_url();?>moldes/detalle_ajax',this.value,'div_moldes');carga_ajax_cambio_molde('<?php echo base_url();?>moldes/detalle_ajax_cambio_molde',this.value,'div_moldes')";>
-                            <option value="0">Seleccione......</option>
-                              <?php
-                              $error_molde=false;                              
-                              if (sizeof($moldes_clientes)>0) 
-                              {                                 
-                                foreach($moldes_clientes as $molde)
-                                {
-                                    ?>
-                                    <option value="<?php echo $molde->id?>" <?php if($numero_moldes==$molde->id){echo 'selected="selected"';}?>><?php echo $molde->nombre?> (N° <?php echo $molde->numero?>)</option>
-                                    <?php
-                                }
-                              }  else { $error_molde=true; }?>                                
-                          </select> 
-                          <span id="div_moldes2"></span>
-                          <?php if ($error_molde) { ?>
-                                    <div style="background-color: #b13b28; color:white; width: 100%;">&nbsp;&nbsp;Error en el Molde Pertenece a otro Cliente, o no esta activo, no se grabaran los moldes!!</div>
-                          <?php } ?>                              
-                    </div> <?php if($moldes2->razon_social!=""){echo "Propietario: ".$moldes2->razon_social;} ?>                   
-		</div>
-        </div>       
+   <div class="control-group" id="producto">
+       <!-----------------------------------------------Contenido en Mantenimiento------------------------------------------------------<br /><br />-->
+       <?php include('parcialMoldesTrazados.php'); ?>
+       <!------------------------------------------------------------------------------------------------------------------------------------------->
+   </div>
         
    <div id="div_existe_trazado" <?php if($datos->existe_trazado=="SI" && $estan_los_moldes=='NO'){echo '';}else{echo 'hidden="true"';}  ?>>
       <div class="control-group">
@@ -1729,7 +1656,7 @@ th {
     {
         if($ing->estan_los_moldes=="NO" && $datos->condicion_del_producto=="Nuevo"){?>        
         <div class="control-group" id="crea_molde">
-		<label class="control-label" for="usuario"><strong>Nombre Molde sugerido;</strong><strong style="color: red;">(*)</strong></label>
+            <label class="control-label" for="usuario"><strong id="nombre_molde_texto">Nombre Molde sugerido</strong><strong style="color: red;">(*)</strong></label>
 		<div class="controls">
 			<input style="width: 600px;" type="text" name="nombre_molde" placeholder="Nombre Molde sugerido" value="<?php echo $ing->nombre_molde?>" /> 
 		</div>
@@ -1737,14 +1664,14 @@ th {
         <?php
         } else { if($ing->estan_los_moldes=="NO LLEVA" && $datos->condicion_del_producto=="Nuevo"){ ?>
             <div class="control-group" id="crea_molde">
-		<label class="control-label" for="usuario"><strong>Nombre Molde sugerido;</strong></label>
+		<label class="control-label" for="usuario"><strong>Nombre Molde sugerido</strong></label>
 		<div class="controls">
                     <input style="width: 600px;" readonly="true" type="text" name="nombre_molde" placeholder="Nombre Molde sugerido" value="" /> 
 		</div>
 	</div>
         <?php }else{ ?>
         <div class="control-group" id="crea_molde">
-		<label class="control-label" for="usuario"><strong>Nombre Molde sugerido;</strong></label>
+            <label class="control-label" for="usuario"><strong id="texto_nm_sugerido"><?php if(sizeof($moldes2)>0 && $moldes2->id != 1 && $moldes2->id != 21){echo "Nombre Molde:";}else{echo "Nombre Molde Sugerido:";}?></strong></label>
 		<div class="controls">
                     <input style="width: 600px;" readonly="true" type="text" name="nombre_molde" placeholder="Nombre Molde sugerido" value="<?php echo $ing->nombre_molde?>" /> 
 		</div>
@@ -1810,78 +1737,54 @@ th {
             </table>
         </div>
     </div>
-    
-<?php //print_r($molde); //my code is here ?>
+   <?php include('calculo_ccac.php'); ?>
    <table border='0' class="tablita table-no-bordered">
        <tr>
            <td>
-               
- <div class="control-group" id="producto">
-   <label class="control-label" for="usuario">Distancia en molde:<strong style="color: red;">(*<?php echo $distancia;?>)</strong></label>    
-   </div>  
-<div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Distancia cuchillo a cuchillo<strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-                    <?php if(sizeof($ing)>0) { ?>
-                        <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php if($ing->tamano_cuchillo_1=="" || $ing->tamano_cuchillo_1=="0"){ echo $moldes2->cuchillocuchillo; }else{ echo $ing->tamano_cuchillo_1;} ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php if($ing->tamano_cuchillo_2=="" || $ing->tamano_cuchillo_2=="0"){echo $moldes2->cuchillocuchillo2; }else{echo $ing->tamano_cuchillo_2;} ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
-                    <?php } elseif(sizeof($datos)>0) { ?>
-			<!--<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php //echo $datos->tamano_cuchillo_1; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php //echo $datos->tamano_cuchillo_2; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms.--> 
-                        <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->cuchillocuchillo;}else{echo $moldes2->cuchillocuchillo; }?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->cuchillocuchillo2;}else{echo $moldes2->cuchillocuchillo2; }?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms.
-                    <?php } else { ?>      
-			<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php echo $_POST["tamano_cuchillo_1"]; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php echo $_POST["tamano_cuchillo_2"]; ?>" placeholder="0" onblur="cuchillo();calculo_ccac();" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
-                    <?php }  ?>                      
-        	<div id="msg_imagen_impresion">
-                    
-		</div>    		
-                </div>
-            
-	</div>	
- <?php //print_r($moldes2); //my code is here ?>
-   <input type="hidden" name="ccac_o" id="ccac_o" value="45">
-    <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Largo a cortar por Tamaño a cortar:<strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-                    <?php if(sizeof($ing)>0) { ?>
-                        <input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php if($ing->tamano_a_imprimir_1==""){echo $moldes2->ancho_bobina;}else{ echo $ing->tamano_a_imprimir_1; } ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php if($ing->tamano_a_imprimir_2==""){echo $moldes2->largo_bobina;}else{ echo $ing->tamano_a_imprimir_2; } ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php if($ing->tamano_a_imprimir_1==""){echo $moldes2->ancho_bobina;}else{ echo $ing->tamano_a_imprimir_1; } ?>" X "<?php if($ing->tamano_a_imprimir_2==""){echo $moldes2->largo_bobina;}else{ echo $ing->tamano_a_imprimir_2; }" Cms" ?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
-                    <?php } elseif(sizeof($datos)>0) { ?>
-			<!--<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php //echo $datos->tamano_a_imprimir_1; ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php //echo $datos->tamano_a_imprimir_1." X ".$datos->tamano_a_imprimir_2." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccac"></h3></div>-->
-			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->ancho_bobina;}else{echo $moldes2->ancho_bobina; }?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php if(sizeof($trazadosing)>0){ echo $trazadosing->largo_bobina;}else{echo $moldes2->largo_bobina; }?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> [<?php echo $_POST["tamano_1"]." X ".$_POST["tamano_2"]." Cms"?>] </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
-                    <?php } else { ?>                
-			<input type="text" name="tamano_1" onblur="tamano2NoMasDe100();" style="width: 100px;" id="tamano_1" onkeypress="return soloNumerosConPuntos(event)"  value="<?php echo $_POST["tamano_1"]; ?>" placeholder="0" onblur="tamano1NoMasDe100(); funcionDecimales('tamano_1',Formato);calculo_ccac();" /> X <input type="text" name="tamano_2" id="tamano_2" style="width: 100px;" onkeypress="return soloNumerosConPuntos(event)" value="<?php echo $_POST["tamano_2"]; ?> ?>" placeholder="0" onblur="tamano2NoMasDe100(); funcionDecimales('tamano_2',Formato);calculo_ccac();" /> Cms.<a style="color:#BBBBBB"> </a> <div class="pull-right span6"><h3 id="msgccacx"></h3></div>
-                    <?php }  ?>                        
-                
-		</div>
-	</div>
-    
-   <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Calculo CCAC<strong style="color: red;">(*)</strong></label>
-		<div class="controls">
-                    <?php if(sizeof($ing)>0) { ?>
-                    <?php if ($ing->ccac_1>0) { ?>
-                        <input id="ccac_1" type="text" value="<?php echo $ing->ccac_1; ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo $ing->ccac_2; ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                    <?php } else { ?>
-                        <?php if (($ing->tamano_cuchillo_1>0) and ($ing->tamano_cuchillo_2>0)){ ?>
-                            <input id="ccac_1" type="text" value="<?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10); ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                        <?php } else { ?>    
-                            <input id="ccac_1" type="text" value="<?php echo $ing->tamano_a_imprimir_1; ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo $ing->tamano_a_imprimir_2; ?>"" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                        <?php }  ?>                                
-                    <?php } ?>                        
-                    <?php } else { ?>   
-                        <input id="ccac_1" type="text" value="<?php echo (($_POST["tamano_1"]-$_POST["tamano_cuchillo_1"])*10); ?>" readonly="true" name="ccac_1" style="width: 100px;" /> X <input type="text" value="<?php echo (($_POST["tamano_2"]-$_POST["tamano_cuchillo_2"])*10); ?>" readonly="true" name="ccac_2" style="width: 100px;" /> Mms. 
-                    <?php }  ?>                         
-		</div>
-	</div>   
-           </td>
-           <td><h3 id="msgccac"></h3>
+               <div class="control-group" id="distancia_en_molde"  style="<?php if($ing->estan_los_moldes=="NO LLEVA"){echo "display:none";}?>">
+                   <label class="control-label" for="usuario">Distancia en molde:<strong style="color: red;">(*<?php echo $distancia; ?>) Molde Nro: <?php echo $moldes2->id  ?> </strong></label>    
+               </div>
+               <div class="control-group" id="distanciacc" style="<?php if($ing->estan_los_moldes=="NO LLEVA"){echo "display:none";}?>">
+                   <label class="control-label" for="usuario">Distancia cuchillo a cuchillo<strong style="color: red;">(*)</strong></label>
+                   <div class="controls">
+                       <input id="tamano_cuchillo_1" type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php echo $tamano_cuchillo_1 ?>" placeholder="0" onkeyup="return calculo_ccac_minimo()" onkeypress="return soloNumerosConPuntos(event),calculo_ccac_minimo();" /> X 
+                       <input id="tamano_cuchillo_2" type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php echo $tamano_cuchillo_2 ?>" placeholder="0" onkeyup="return calculo_ccac_minimo()" onkeypress="return soloNumerosConPuntos(event),calculo_ccac_minimo();" /> Cms. 
+                   </div>
+               </div>
+               <div class="control-group" id="lacortar">
+                   <label class="control-label" for="usuario">Largo a Cortar x Tamaño a Cortar<strong style="color: red;">(*)</strong></label>
+                   <div class="controls">
+                       <input id="tamano_1" type="text" name="tamano_1" style="width: 100px;"  value="<?php echo $tamano_1 ?>" placeholder="0" onkeypress="return soloNumerosConPuntos(event),calculo_ccac_minimo();" /> X 
+                       <input id="tamano_2" type="text" name="tamano_2" style="width: 100px;" value="<?php echo $tamano_2 ?>" placeholder="0" onkeypress="return soloNumerosConPuntos(event),calculo_ccac_minimo();" /> Cms. 
+                   </div>
+               </div>
+               <div class="control-group" id="lacortar2" style="display:none">
+                   <label class="control-label" for="usuario">Largo a Cortar x Tamaño a Cortar2<strong style="color: red;">(*)</strong></label>
+                   <div class="controls">
+                       <input id="tamano_1" type="text" name="tamano_1" style="width: 100px;"  value="<?php echo $tamano_1 ?>" placeholder="0" /> X 
+                       <input id="tamano_2" type="text" name="tamano_2" style="width: 100px;" value="<?php echo $tamano_2 ?>" placeholder="0" /> Cms. 
+                   </div>
+               </div>
+               <div class="control-group" id="calccac" style="<?php if($ing->estan_los_moldes=="NO LLEVA"){echo "display:none";}?>">
+                   <label class="control-label" for="usuario">Calculo CCAC</label>
+                   <div class="controls">
+                       <input type="text" id="ccac_1" name="ccac_1" style="width: 100px;"  value="<?php echo $ccac_1 ?>" placeholder="0" onkeypress="return soloNumerosConPuntos(event);" /> X 
+                       <input type="text" id="ccac_2" name="ccac_2" style="width: 100px;" value="<?php echo $ccac_2 ?>" placeholder="0" onkeypress="return soloNumerosConPuntos(event);" /> Cms. 
+                   </div>
+               </div>
+               </td>
+               <td  style="<?php if($ing->estan_los_moldes=="NO LLEVA"){echo "display:none";}?>"><h3 id="msgccac"></h3>
                <ul id='rccac' style="list-style: none">
-                   <li id='fn'></li>
-                   <li id="im"></li>
-                   <li id="pr"></li>
-                   <li id="ccacmin"></li>
+                   <li id='etiquetaicf'></li>
+                   <li id="etiquetatfn"></li>
+                   <li id="etiquetaimp"></li>
+                   <li id="etiquetaccacmin"></li>
+                   <li id="alertaccacmin"></li>
                </ul>
            </td>
        </tr>
    </table>
+               <!------------------------------------------------------------------------------------------------------------------->
 <h3>Materialidad <strong style="color: red;">(*)</strong></h3>
     
     <div class="control-group">
@@ -2792,7 +2695,7 @@ th {
                     }
                    
                     ?>
-                    <option class="piezas_adicionales" value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales==$pieza->piezas_adicionales){echo 'selected="true"';} echo 'descripcion="'.$pieza->valor_venta.' '.$pieza->unidades_de_venta.'"'?>><?php echo $pieza->piezas_adicionales?></option>
+                    <option class="piezas_adicionales" value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales==$pieza->piezas_adicionales){echo 'selected="true"';} echo 'descripcion="'.$pieza->valor_venta.' '.$pieza->unidades_de_venta.'"'?>><?php echo $pieza->piezas_adicionales.' Precio:'.$pieza->valor_venta ?></option>
                     <?php
                 }
                 ?>
@@ -2819,7 +2722,7 @@ th {
                     }
                    
                     ?>
-                    <option value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales==$pieza->piezas_adicionales){echo 'selected="true"';} echo 'descripcion="'.$pieza->valor_venta.' '.$pieza->unidades_de_venta.'"'?>><?php echo $pieza->piezas_adicionales?></option>
+                    <option value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales==$pieza->piezas_adicionales){echo 'selected="true"';} echo 'descripcion="'.$pieza->valor_venta.' '.$pieza->unidades_de_venta.'"'?>><?php echo $pieza->piezas_adicionales.' Precio:'.$pieza->valor_venta ?></option>
                     <?php
                 }
                 ?>
@@ -2845,7 +2748,7 @@ th {
                     }
                    
                     ?>
-                    <option value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales==$pieza->piezas_adicionales){echo 'selected="true"';} echo 'descripcion="'.$pieza->valor_venta.' '.$pieza->unidades_de_venta.'"'?>><?php echo $pieza->piezas_adicionales?></option>
+                    <option value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales==$pieza->piezas_adicionales){echo 'selected="true"';} echo 'descripcion="'.$pieza->valor_venta.' '.$pieza->unidades_de_venta.'"'?>><?php echo $pieza->piezas_adicionales.' Precio:'.$pieza->valor_venta ?></option>
                     <?php
                 }
                 ?>
@@ -2954,8 +2857,7 @@ th {
                    <?php }  ?>                      
 		</div>
 	</div>
-    
-     
+
     
     <div class="control-group" id="doblado">
 		<label class="control-label" for="usuario">Doblado</label>
@@ -2990,19 +2892,7 @@ th {
             <br />
 		</div>
 	</div>
-<!--    
-    <div class="control-group" id="pegado_manual">
-		<label class="control-label" for="usuario">Pegado Manual</label>
-		<div class="controls">
-     
-			<select name="tipo_pegado">
-                <option value="Pegado manual" <?php //if($ing->tipo_pegado=="Pegado manual"){echo 'selected="selected"';}?>>Pegado manual</option>
-                <option value="Pegado máquina" <?php //if($ing->tipo_pegado=="Pegado máquina"){echo 'selected="selected"';}?>>Pegado automático</option>
-                
-            </select>
-		</div>
-	</div>
-    -->
+
     <div class="control-group" id="pegado_puntos">
 		<label class="control-label" for="usuario">Pegado puntos</label>
 		<div class="controls">
@@ -3059,11 +2949,7 @@ th {
             
 		</div>
 	</div>
-    
-	
-	
-	
-	
+
     <div class="control-group"  id="tamano_pieza_a_empaquetar">
 		<label class="control-label" for="usuario">Tamaño de pieza a empaquetar</label>
 		<div class="controls">
@@ -3093,28 +2979,6 @@ th {
 		</div>
 	</div>
      <h3>Otros datos</h3>
-    
-    <div class="control-group">
-		<label class="control-label" for="usuario">Acepta Excedentes</label>
-		<div class="controls">
-		<select name="acepta_excedentes" style="width: 100px;" onchange="aceptaExcedentes();">
-                            <option value="">Seleccione.....</option>
-                      <?php  if (sizeof($datos)>0) {   ?>
-                            <option value="SI" <?php if($datos->acepta_excedentes=="SI"){echo 'selected="true"';}?>>SI</option>
-                            <option value="NO" <?php if($datos->acepta_excedentes=="NO"){echo 'selected="true"';}?>>NO</option>
-                      <?php } else {?>                    
-                            <option value="SI" <?php if(($_POST["acepta_excedentes"]) and $_POST["acepta_excedentes"]=='SI'){echo 'selected="selected"';}?>>SI</option>
-                            <option value="NO" <?php if(($_POST["acepta_excedentes"]) and $_POST["acepta_excedentes"]=='NO'){echo 'selected="selected"';}?>>NO</option>
-                    <?php } ?>                       
-
-                </select> 
-            <span id="acepta_excedentes">Acepta excedentes mas o menos 10%</span>
-            <input type="hidden" name="acepta_excedentes_extra" value="Acepta pagar extra por cantidad exacta" readonly="true" />
-            
-        
-		</div>
-	</div>
-    
     
     <div class="control-group" id="producto">
 		<label class="control-label" for="usuario">Es impresión compartida? (% porcentaje de cada producto)</label>
@@ -3156,9 +3020,6 @@ th {
 		</div>
 		</div>
 	</div>
-	
-	
-	 
     
     <div class="control-group">
 		<label class="control-label" for="usuario">Trabajos adicionales</label>
@@ -3181,32 +3042,7 @@ th {
         
 		</div>
 	</div>
-    
-    <!--<h3>Ingrese PDF de trazado</h3>-->
-    
-    <?php 
-  //  echo "<h1>" . $trazadoarchivo . "</h1>";
-    ?>
-<!--    <div class="control-group">
-		<label class="control-label" for="usuario">Ingrese PDF del trazado</label>
-		<div class="controls">
-                    <input type="file" id="file" name="file" onchange="alertpdf();"/>&nbsp;&nbsp;<span id="etiquetapdf" style="color:red; font-size: 15px; font-weight: bold;"></span>  
-                        <?php //if ($ing->archivo!=""){ ?>   
-			<div id="nomarch" style="background-color: #ec5c00; color:white; width: 30%;">&nbsp;&nbsp;Archivo Ya fue Cargado con Exito...</div>
-                        <?php  //} else if($molde->archivo!="") {?>
-                        <div id="nomarch" style="background-color: #ec5c00; color:white; width: 30%;">&nbsp;&nbsp;Archivo Ya fue Cargado con Exito...</div>    
-                        <?php  //}else{ ?>  
-			<div id="nomarch">Seleccione el Archivo...</div>                        
-                        <?php  //}  ?>                          
-		</div>
-	</div>-->
-	
-	<?php
-//	if($datos->cliente_entrega_1 == 'Información Digital')
-//	{
-	?>	
-		
-	  <h3>Ingrese archivo de: Información Digital (Cliente)</h3>
+  	  <h3>Ingrese archivo de: Información Digital (Cliente)</h3>
     
     <div class="control-group">
 		<label class="control-label" for="usuario">Información Digital</label>
@@ -3252,20 +3088,24 @@ th {
                           <input type="hidden" name="pagina" value="<?php echo $pagina ?>" />
                           <input type="hidden" name="estado" />
                           <div id="botones"> <?php include 'plantilla_botones.php'; //my code is here ?></div>
+                          <div id="botones2" style="display:none"> 
+                          <input id="guardar" type="button" value="Guardar" class="btn btn-success" onclick="guardarFormularioAdd2(0);"/>
+                          <input id="liberar" type="button" value="Liberar" class="btn btn-warning" onclick="guardarFormularioAdd2(1);"/>
+                          </div>
                       </div>
                       <ol  class= "breadcrumb" style="left:250px">  
                           <li><a href="<?php echo base_url() ?>cotizaciones/index/<?php echo $pagina ?>">Cotizaciones &gt;&gt;</a></li>
                           <li>Revisión Ingeniería</li>
                       </ol>
                   </div>
-    <?php // } 
-    } else { ?>
-        <?php  if($datos->rev==1){?>
+    <?php } else { ?>
+       <?php  if($datos->rev==1 || $ing->estado!=1){?>
             <div class="control-group">
                 <div class="form-actions">
                     <input type="hidden" name="id" value="<?php echo $id?>" />
                     <input type="hidden" name="pagina" value="<?php echo $pagina?>" />
                     <input type="hidden" name="estado" />
+                    <input id="guardar" type="button" value="Guardar" class="btn btn-success" onclick="guardarFormularioAdd2(0);"/>
                     <input id="liberar" type="button" value="Liberar" class="btn <?php if($ing->estado==1){echo 'btn-warning';}?>"  data-toggle="modal" data-target="" onclick="guardarFormularioAdd2(1);" />
                 </div></div>
             <?php }else{ ?>
@@ -3320,7 +3160,6 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 
-calculo_ccac();
  var Formato = /^\s*-?[1-9]\d*(\.\d{1,2})?\s*$/;
 
  function funcionDecimales(id, restrictionType) 
@@ -3331,17 +3170,14 @@ calculo_ccac();
   if(evaluar!=='')
   {
    if(restrictionType.test(evaluar)){
-     <!-- alert('Correcto!'); -->
+   //  alert('Correcto!'); 
    }else{
-    <!-- alert('Malo'); -->	
         document.getElementById(id).value = "";
    }
   }
   return;
     
- }
- 
-  
+ }  
  </script>
  
  <script type="text/javascript">
@@ -3365,26 +3201,10 @@ $("select[name=tiene_color_modificado_ing]").change(function(){
 		}, 300);
 	});
  
-	$(window).scroll(function(){
-//		if( $(this).scrollTop() > 0 ){
-//			$('.ir-arriba').slideDown(300);
-//		} else {
-//			$('.ir-arriba').slideUp(300);
-//		}
-	});
-        
 	$('.ir-arriba2').click(function(){
 		$('body, html').animate({
 			scrollTop: '4700px'
 		}, 300);
-	});
- 
-	$(window).scroll(function(){
-//		if( $(this).scrollTop() > 0 ){
-//			$('.ir-arriba2').slideUp(300);
-//		} else {
-//			$('.ir-arriba2').slideDown(300);
-//		}
 	});
  
 $("select[name=select_estan_los_moldes]").on('change',function(){
@@ -3428,9 +3248,9 @@ switch (x) {
         var x = this.value;
         var ruta = "../../../trazados/datos/";
 
-      $.post(ruta,{valor1:x},function(resp)
-           {
-               var myObj = $.parseJSON(resp);
+    $.post(ruta,{valor1:x},function(resp){
+               
+    var myObj = $.parseJSON(resp);
               
     switch (myObj.materialidad_opcion1) {
     case '1':
@@ -3448,11 +3268,13 @@ switch (x) {
     default:
         var materialidad = '-- Seleccione --';
         break;
-}
-               
+    }
+                //alert(myObj.unidades_productos_completos+'-'+myObj.piezas_totales);
                var m1 = myObj.mat1+' ( '+myObj.matt1+" - $"+myObj.precio1+" ) ( "+myObj.reverso1+" )"; 
                var m2 = myObj.mat2+' ( '+myObj.matt2+" - $"+myObj.precio2+" ) ( "+myObj.reverso2+" )";
                var m3 = myObj.mat3+' ( '+myObj.matt3+" - $"+myObj.precio3+" ) ( "+myObj.reverso3+" )";
+                $("input[name=unidades_por_pliego]").val(myObj.unidades_productos_completos);
+                $("input[name=piezas_totales_en_el_pliego]").val(myObj.piezas_totales);
                 $("select[name=datos_tecnicos]").val(myObj.materialidad_opcion1);
                 $("select[name=materialidad_1]").val(myObj.placa1);
                 $("select[name=materialidad_2]").val(myObj.onda1);
@@ -3468,166 +3290,19 @@ switch (x) {
                 $("input[name=tamano_cuchillo_2]").val(myObj.cuchillocuchillo2);
                 $("#tamano_1").val(myObj.ancho_bobina);
                 $("#tamano_2").val(myObj.largo_bobina);
+                $("#ccac_1").val((myObj.ancho_bobina-myObj.cuchillocuchillo)*10);
+                $("#ccac_2").val((myObj.largo_bobina-myObj.cuchillocuchillo2)*10);
+                $("input[name=nombre_molde]").val(myObj.nombre);
                 
-           });   
+        });   
     });
     
-    $("select[name=imprimir_contra_la_fibra]").on("change",function(){
-       var pr = $("select[name=imprimir_contra_la_fibra]").val();
-       var prv='';
-       if(pr=="SI"){
-           prv = ': 45mm';
-       }else if(pr==""){
-           prv = 'SI: 45mm';
-       }else{
-           prv = '';
-       }      
-    $("#pr").html('<h4>IMPRESION CONTRA LA FIBRA '+pr+prv+'</h4>');
-       <!--//*************************-->
-       var fn = $("select[name=lleva_fondo_negro]").val();
-    var im = $("select[name=imagen_impresion]").val();
-    var pr = $("select[name=imprimir_contra_la_fibra]").val();
-    var ccacmin='';
-    
-    if(pr=="" || pr=="SI"){
-        ccacmin="CCAC Min: 45 mm";
-    }else{
-        if(im=='CE'){
-            ccacmin="CCAC Min: 10 mm";
-        }else if(im=='CO'){
-            ccacmin="CCAC Min: 20 mm";
-        }else{
-            if(fn=="SI"){
-                ccacmin="CCAC Min: 25 mm";
-         }else{
-                ccacmin="CCAC Min: 20 mm";
-         }
-        }
-        }
-        $("#ccacmin").html('<h4 style="color:green">Distancia '+ccacmin+'</h4>');
-    });
-    
-    $("select[name=lleva_fondo_negro]").on("change",function(){
-       var fn='';
-       if(this.value=="SI"){
-           fn = ': 25mm';
-       }else if(this.value==""){
-            fn = 'SI: 25mm';
-       }       
-    $("#fn").html('<h4>FONDO NEGRO '+this.value+' '+fn+'</h4>');
-    
-       <!--//*************************-->
-       var fn = $("select[name=lleva_fondo_negro]").val();
-    var im = $("select[name=imagen_impresion]").val();
-    var pr = $("select[name=imprimir_contra_la_fibra]").val();
-    var ccacmin='';
-    
-    if(pr=="" || pr=="SI"){
-        ccacmin="CCAC Min: 45 mm";
-    }else{
-        if(im=='CE'){
-            ccacmin="CCAC Min: 10 mm";
-        }else if(im=='CO'){
-            ccacmin="CCAC Min: 20 mm";
-        }else{
-            if(fn=="SI"){
-                ccacmin="CCAC Min: 25 mm";
-         }else{
-                ccacmin="CCAC Min: 20 mm";
-         }
-        }
-        }
-        $("#ccacmin").html('<h4 style="color:green">Distancia '+ccacmin+'</h4>');
-    });
-    
-    $("select[name=imagen_impresion]").on("change",function(){
-       var imv='';
-       if(this.value=="CE"){
-           imv = 'AL CENTRO: 10mm';
-       }else if(this.value=='CO'){
-            imv='AL CORTE: 20mm';
-       }else if(this.value=="NO"){
-            imv='';
-       }
-       $("#im").html('<h4>IMG IMPRESION '+imv+'</h4>');
-       
-       <!--//*************************-->
-       var fn = $("select[name=lleva_fondo_negro]").val();
-    var im = $("select[name=imagen_impresion]").val();
-    var pr = $("select[name=imprimir_contra_la_fibra]").val();
-    var ccacmin='';
-    
-    if(pr=="" || pr=="SI"){
-        ccacmin="CCAC Min: 45 mm";
-    }else{
-        if(im=='CE'){
-            ccacmin="CCAC Min: 10 mm";
-        }else if(im=='CO'){
-            ccacmin="CCAC Min: 20 mm";
-        }else{
-            if(fn=="SI"){
-                ccacmin="CCAC Min: 25 mm";
-         }else{
-                ccacmin="CCAC Min: 20 mm";
-         }
-        }
-        }
-        $("#ccacmin").html('<h4 style="color:green">Distancia '+ccacmin+'</h4>');
-       });
-    
-    var fn = $("select[name=lleva_fondo_negro]").val();
-    var im = $("select[name=imagen_impresion]").val();
-    var pr = $("select[name=imprimir_contra_la_fibra]").val();
-    var fnv='';
-    var imv='';
-    var prv='';
-    var ccacmin='';
-    
-    if(pr=="" || pr=="SI"){
-        ccacmin="CCAC Min: 45 mm";
-    }else{
-        if(im=='CE'){
-            ccacmin="CCAC Min: 10 mm";
-        }else if(im=='CO'){
-            ccacmin="CCAC Min: 20 mm";
-        }else{
-            if(fn=="SI"){
-                ccacmin="CCAC Min: 25 mm";
-         }else{
-                ccacmin="CCAC Min: 20 mm";
-         }
-        }
-        }
-    
-       if(im=="CE"){
-           imv = 'AL CENTRO: 10mm';
-       }else if(im=='CO'){
-            imv='AL CORTE: 20mm';
-       }else if(im=="NO"){
-            imv='';
-       }else if(im==""){
-            imv='NO';
-       }
-       if(fn=="SI"){
-           fnv = ': 25mm';
-       }else if(fn==""){
-           fnv = ': 25mm';
-       }else{
-           fnv = '';
-       }
-       if(pr=="SI"){
-           prv = ': 45mm';
-       }else if(pr==""){
-           prv = ': 45mm';
-       }else{
-           prv = '';
-       }
        
     $("#fn").html('<h4>FONDO NEGRO '+fn+' '+fnv+'</h4>');
     $("#im").html('<h4>IMG IMPRESION '+imv+'</h4>');
     $("#pr").html('<h4>IMPRESION CONTRA LA FIBRA '+pr+prv+'</h4>');
-    $("#ccacmin").html('<h4 style="color:green">Distancia '+ccacmin+'</h4>');
-    
+    /*$("#ccacmin").html('<h4 style="color:green">Distancia '+ccacmin+'</h4>');*/
+    $("#vccacminimo").val(vccacmin);
     $("select[name=hay_que_troquelar]").on('change',()=>{
         var a=$("select[name=hay_que_troquelar]").val();
        //alert($("select[name=hay_que_troquelar]").val());
@@ -3652,7 +3327,7 @@ switch (x) {
         $('select[name=troquel_por_atras]').val('NO')
         $('#etiquetatroquel').text('No Puede ser retiro porque lleva fondo negro');
         $('select[name=troquel_por_atras]').prop('disabled',false);
-        $("select[name=troquel_por_atras] option[value='SI']").attr("disabled","true");
+        $("select[name=troquel_por_atras] option[value='SI']").attr("disabled",false);
     }else{
         $('select[name=troquel_por_atras]').prop('disabled',false);
         $('#etiquetatroquel').text('');
@@ -3660,14 +3335,6 @@ switch (x) {
     }
     });
     
-    if($('#lleva_fondo_negro').val()=="SI"){
-     $('#etiquetatroquel').text('No Puede ser retiro porque lleva fondo negro');
-     //$("select[name=troquel_por_atras] option[value='NO']").attr("selected",true);
-     $("select[name=troquel_por_atras] option[value='SI']").attr("disabled","true");
-    }else{
-     $('#etiquetatroquel').text('');
-     $("select[name=troquel_por_atras] option[value='SI']").removeAttr("disabled");
-    }
     
     if($("select[name=hay_que_troquelar]").val()=="NO"){
      $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").attr("selected","true");
@@ -3682,15 +3349,16 @@ switch (x) {
      $("#dato_hacer_troquel").val("SI");
      }else{
         if($("select[name=hay_que_troquelar]").val()=="SI" && $("input[name=nm]").val()!==""){
-            $("select[name=select_estan_los_moldes]").val("");
+     $("select[name=select_estan_los_moldes]").val("SI");
      $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").removeAttr("selected");
      $("input[name=lleva_troquelado]").val("SI");
-     $("#dato_hacer_troquel").val("NO");
+     if($("input[name=nm]").val()=="21" || ($("select[name=existe_trazado]").val()=="SI")){
+     $("#dato_hacer_troquel").val("SI");
+        }else{
+     $("#dato_hacer_troquel").val("NO");       
+        }
         }
       }
      }
-    }
-    
-    alert($("input[name=nm]").val());
-    
 </script>
+<script type = 'text/javascript' src = "<?php echo base_url(); ?>js/fnc_reving.js"></script>

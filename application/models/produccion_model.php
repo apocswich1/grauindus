@@ -2469,6 +2469,7 @@ WHERE `ppp`.`cuando` BETWEEN '".$desde."' AND '".$hasta."'  ORDER BY `ppp`.`orde
 			
                  $query=$this->db
 	       ->set("rev","1")
+	       ->set("fecha_rev",date('Y-m-d'))
 	       ->set("fecha_revision_molde",date('Y-m-d'))
 	       ->where(array("id"=>$id))
                ->update("cotizaciones");

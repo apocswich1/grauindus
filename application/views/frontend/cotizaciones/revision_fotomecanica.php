@@ -396,27 +396,28 @@ function getField($campo,$datos,$ing)
     <hr />	
 	
 	 <?php
-				 if( $this->session->userdata('perfil')!=2)
-					{
+				// if( $this->session->userdata('perfil')!=2)
+				//	{
+         $moldes2=$this->moldes_model->getMoldesPorId($datos->numero_molde);    
 		?>
-    
-  <div class="control-group">
+        <?php include('plantilla_trazado_ingenieria.php'); ?>
+<!--  <div class="control-group">
 		<label class="control-label" for="usuario"><strong>PDF Trazado Ingeniería</strong></label>
 		<div class="controls">
-                        <?php if ($ing->archivo==""){ if($trazadosing->archivo!=""){ ?>
-                          <a href='<?php echo base_url().$this->config->item('direccion_pdf').$trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
-                        <?php }else{ ?>
+                        <?php //if ($ing->archivo==""){ if($trazadosing->archivo!=""){ ?>
+                          <a href='<?php // echo base_url().$this->config->item('direccion_pdf').$trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
+                        <?php //}else{ ?>
 			      <a href='#'>No Existe Archivo</a>
-                        <?php } }else{ if($trazadosing->archivo!=""){ ?>
-                                  <a href='<?php echo base_url().$this->config->item('direccion_pdf').$trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero; ?></a>
-                              <?php }else{ ?>
-                                  <a href='<?php echo base_url().$this->config->item('direccion_pdf').$ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
-                              <?php }}?>
+                        <?php //} }else{ if($trazadosing->archivo!=""){ ?>
+                                  <a href='<?php // echo base_url().$this->config->item('direccion_pdf').$trazadosing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i><?php echo $trazadosing->numero; ?></a>
+                              <?php //}else{ ?>
+                                  <a href='<?php // echo base_url().$this->config->item('direccion_pdf').$ing->archivo ?>' title="Descargar" target="_blank"><i class="icon-search"></i></a>
+                              <?php //}}?>
 				  
 		</div>
-	</div>
+	</div>-->
 	
-	<?php }?>
+	<?php //}?>
     <hr />	
 	<?php
 				 if( $this->session->userdata('perfil')!=2)
@@ -454,6 +455,7 @@ function getField($campo,$datos,$ing)
   </div>
     <hr />
     <input type="hidden" name="nm" id="nm" value="<?php echo $ing->numero_molde ?>"/>
+    <input type="hidden" name="existe_trazado" id="existe_trazado" value="<?php echo $datos->existe_trazado?>"/>
   <div class="control-group">
 		<label class="control-label" for="usuario">Condición del Producto</label>
 		<div class="controls">
@@ -771,19 +773,114 @@ function getField($campo,$datos,$ing)
 		if(sizeof($fotomecanica)>0)
                 {
 		?>
-                    <input type="text" id="tamano_pliego" name="tamano_pliego"  value="<?php echo $fotomecanica->tamano_pliego; ?>" />
+                    <input type="text" id="tamano_pliego" name="tamano_pliego"  value="<?php echo $ing->tamano_a_imprimir_1.' x '.$ing->tamano_a_imprimir_2; ?>" />
 		<?php
                 }
 		else
                 {
 		?>
-                    <input type="text" id="tamano_pliego" name="tamano_pliego"  value="" />
+                    <input type="text" id="tamano_pliego" name="tamano_pliego"  value="<?php echo $ing->tamano_a_imprimir_1.' x '.$ing->tamano_a_imprimir_2; ?>" />
 		<?php
 		}                
 		?>
 		</div>
 	</div> 
-   <div class="control-group">
+   
+<?php
+            
+//echo $reving->ing_lleva_barniz."<br />";
+//echo $reving->ing_reserva_barniz."<br />";
+//echo $reving->ing_cala_caucho."<br />";
+//echo "-----------------------------------------<br />";
+//echo $fotomecanica->fot_lleva_barniz."<br />";
+//echo $fotomecanica->fot_reserva_barniz."<br />";
+//echo $fotomecanica->fot_cala_caucho."<br />";
+?>
+      
+    
+    <?php
+//    $estan="NO";
+    if(sizeof($fotomecanica)>0)
+    {
+        if ($fotomecanica->estan_los_moldes!='')
+        {$numero_moldes=$fotomecanica->numero_molde;
+            $estan_los_moldes=$fotomecanica->estan_los_moldes;
+            if ($estan_los_moldes=='MOLDE GENERICO'){
+                $estan="SI";
+            }else{
+                if ($estan_los_moldes=='MOLDE REGISTRADOS DEL CLIENTE'){
+                    $estan="SI";                    
+                }else{ $estan="NO"; 
+            $numero_moldes=$fotomecanica->numero_molde;        
+        }}}
+    }
+    else
+    {
+        if ($ing->estan_los_moldes!='')
+        {
+            $estan_los_moldes=$ing->estan_los_moldes;
+            if ($estan_los_moldes=='MOLDE GENERICO'){ $estan="SI";
+            }elseif ($estan_los_moldes=='MOLDE REGISTRADOS DEL CLIENTE'){ $estan="SI";                    
+            }else{ $estan="NO";             
+            $numero_moldes=$ing->numero_molde;      
+            }
+        }else {
+            if(($datos->estan_los_moldes=="NO") || ($datos->estan_los_moldes=="NO LLEVA"))
+            {
+                $estan_los_moldes="NO"; 
+                $estan="NO";
+            }            
+            else
+            {                
+                if ($datos->estan_los_moldes!='')
+                {
+                    $estan_los_moldes=$datos->estan_los_moldes;
+                    if ($estan_los_moldes=='MOLDE GENERICO') $estan="SI";
+                    elseif ($estan_los_moldes=='MOLDE REGISTRADOS DEL CLIENTE') $estan="SI";                    
+                    else $estan="NO";             
+                    $numero_moldes=$datos->numero_molde;      
+                }  
+            }
+        }
+    }
+   
+    $moldes=$this->moldes_model->getMoldes2();
+    $moldes_clientes=$this->moldes_model->getMoldesClientes($datos->id_cliente);    
+    ?>
+   
+   <?php // print_r($ing);?>
+    <div class="control-group" id="div_hay_que_troquelar">
+		<label class="control-label" for="usuario">Hay que Troquelar?</label>
+		<div class="controls">
+			<select name="hay_que_troquelar" style="width: 100px;" onchange="">
+                        <?php
+                        if($fotomecanica->hay_que_troquelar=="" && $ing->hay_que_troquelar!=""){
+                            
+                         if (sizeof($ing)>0)  { ?>
+                            <option value="SI" <?php if($ing->hay_que_troquelar=='SI'){echo 'selected="true"';}?>>SI</option> 
+                            <option value="NO" <?php if($ing->hay_que_troquelar=="NO"){echo 'selected="true"';}?>>NO</option>
+                            <option value="NO SE" <?php if($ing->hay_que_troquelar=="NO SE"){echo 'selected="true"';}?>>NO SE</option>
+                        <?php } else { ?>
+                            <option value="SI" <?php if(($_POST["hay_que_troquelar"])=='SI'){echo 'selected="selected"';}?>>SI</option> 
+                            <option value="NO" <?php if(($_POST["hay_que_troquelar"])=='NO'){echo 'selected="selected"';}?>>NO</option>
+                            <option value="NO SE" <?php if(($_POST["hay_que_troquelar"])=='NO SE'){echo 'selected="selected"';}?>>NO SE</option>
+                        <?php }  
+                        }else{
+                            //if (sizeof($fotomecanica)>0)  { 
+                            if (sizeof($ing)>0)  { ?>
+                            <option value="SI" <?php if($ing->hay_que_troquelar=='SI'){echo 'selected="true"';}?>>SI</option> 
+                            <option value="NO" <?php if($ing->hay_que_troquelar=="NO"){echo 'selected="true"';}?>>NO</option>
+                            <option value="NO SE" <?php if($ing->hay_que_troquelar=="NO SE"){echo 'selected="true"';}?>>NO SE</option>
+                        <?php } else { ?>
+                            <option value="SI" <?php if(($_POST["hay_que_troquelar"])=='SI'){echo 'selected="selected"';}?>>SI</option> 
+                            <option value="NO" <?php if(($_POST["hay_que_troquelar"])=='NO'){echo 'selected="selected"';}?>>NO</option>
+                            <option value="NO SE" <?php if(($_POST["hay_que_troquelar"])=='NO SE'){echo 'selected="selected"';}?>>NO SE</option>
+                        <?php }
+                        }
+                        ?>   
+                        </select> </div>
+        </div>
+        <div class="control-group">
 		<label class="control-label" for="id_antiguo">Lleva troquelado</label>
 		<div class="controls">
 
@@ -831,161 +928,79 @@ function getField($campo,$datos,$ing)
 		?>
                     <input type="text" id="hacer_troquel2" name="hacer_troquel"  value="NO SE SABE" />
 		<?php
-		}                
+		} 
+                
+                
 		?>
  		</div>
-	</div> 
-<?php
-            
-//echo $reving->ing_lleva_barniz."<br />";
-//echo $reving->ing_reserva_barniz."<br />";
-//echo $reving->ing_cala_caucho."<br />";
-//echo "-----------------------------------------<br />";
-//echo $fotomecanica->fot_lleva_barniz."<br />";
-//echo $fotomecanica->fot_reserva_barniz."<br />";
-//echo $fotomecanica->fot_cala_caucho."<br />";
-?>
-      
-    
-    <?php
-    $estan="NO";
-    if(sizeof($fotomecanica)>0)
-    {
-        if ($fotomecanica->estan_los_moldes!='')
-        {
-            $estan_los_moldes=$fotomecanica->estan_los_moldes;
-            if ($estan_los_moldes=='MOLDE GENERICO') $estan="SI";
-            elseif ($estan_los_moldes=='MOLDE REGISTRADOS DEL CLIENTE') $estan="SI";                    
-            else $estan="NO"; 
-            $numero_moldes=$fotomecanica->numero_molde;        
-        }
-    }
-    else
-    {
-        if ($ing->estan_los_moldes!='')
-        {
-            $estan_los_moldes=$ing->estan_los_moldes;
-            if ($estan_los_moldes=='MOLDE GENERICO') $estan="SI";
-            elseif ($estan_los_moldes=='MOLDE REGISTRADOS DEL CLIENTE') $estan="SI";                    
-            else $estan="NO";             
-            $numero_moldes=$ing->numero_molde;      
-        }
-        else {
-            if(($datos->estan_los_moldes=="NO") or ($datos->estan_los_moldes=="NO LLEVA"))
-            {
-                $estan_los_moldes="NO"; 
-                $estan="NO";
-            }            
-            else
-            {                
-                if ($datos->estan_los_moldes!='')
-                {
-                    $estan_los_moldes=$datos->estan_los_moldes;
-                    if ($estan_los_moldes=='MOLDE GENERICO') $estan="SI";
-                    elseif ($estan_los_moldes=='MOLDE REGISTRADOS DEL CLIENTE') $estan="SI";                    
-                    else $estan="NO";             
-                    $numero_moldes=$datos->numero_molde;      
-                }  
-            }
-        }
-    }    
-    $moldes=$this->moldes_model->getMoldes2();
-    $moldes_clientes=$this->moldes_model->getMoldesClientes($datos->id_cliente);    
-    ?>
-   
-   <?php // print_r($ing);?>
-    <div class="control-group" id="div_hay_que_troquelar">
-		<label class="control-label" for="usuario">Hay que Troquelar?</label>
-		<div class="controls">
-			<select name="hay_que_troquelar" style="width: 100px;" onchange="">
-                        <?php
-                        if($fotomecanica->hay_que_troquelar=="" && $ing->hay_que_troquelar!=""){
-                            
-                         if (sizeof($ing)>0)  { ?>
-                            <option value="SI" <?php if($ing->hay_que_troquelar=='SI'){echo 'selected="true"';}?>>SI</option> 
-                            <option value="NO" <?php if($ing->hay_que_troquelar=="NO"){echo 'selected="true"';}?>>NO</option>
-                            <option value="NO SE" <?php if($ing->hay_que_troquelar=="NO SE"){echo 'selected="true"';}?>>NO SE</option>
-                        <?php } else { ?>
-                            <option value="SI" <?php if(($_POST["hay_que_troquelar"])=='SI'){echo 'selected="selected"';}?>>SI</option> 
-                            <option value="NO" <?php if(($_POST["hay_que_troquelar"])=='NO'){echo 'selected="selected"';}?>>NO</option>
-                            <option value="NO SE" <?php if(($_POST["hay_que_troquelar"])=='NO SE'){echo 'selected="selected"';}?>>NO SE</option>
-                        <?php }  
-                        }else{
-                            if (sizeof($fotomecanica)>0)  { ?>
-                            <option value="SI" <?php if($fotomecanica->hay_que_troquelar=='SI'){echo 'selected="true"';}?>>SI</option> 
-                            <option value="NO" <?php if($fotomecanica->hay_que_troquelar=="NO"){echo 'selected="true"';}?>>NO</option>
-                            <option value="NO SE" <?php if($fotomecanica->hay_que_troquelar=="NO SE"){echo 'selected="true"';}?>>NO SE</option>
-                        <?php } else { ?>
-                            <option value="SI" <?php if(($_POST["hay_que_troquelar"])=='SI'){echo 'selected="selected"';}?>>SI</option> 
-                            <option value="NO" <?php if(($_POST["hay_que_troquelar"])=='NO'){echo 'selected="selected"';}?>>NO</option>
-                            <option value="NO SE" <?php if(($_POST["hay_que_troquelar"])=='NO SE'){echo 'selected="selected"';}?>>NO SE</option>
-                        <?php }
-                        }
-                        ?>   
-                        </select> </div>
+	</div>
+         <?php $molde=$this->moldes_model->getMoldesPorId($datos->numero_molde) ?>
+         <div class="control-group" id="producto">
+       <!-----------------------------------------------Contenido en Mantenimiento------------------------------------------------------<br /><br />-->
+       <?php include('parcialMoldesTrazadosFotomecanica.php'); ?>
+       <!------------------------------------------------------------------------------------------------------------------------------------------->
         </div>
-   
-        <div class="control-group" id="div_estan_los_moldes" <?php if($estan!='NO') { echo 'style="display: none;"'; } else { echo 'style="display: block;"';} ?>>
+<!--        <div class="control-group" id="div_estan_los_moldes" <?php //if($estan!='NO') { echo 'style="display: none;"'; } else { echo 'style="display: block;"';} ?>>
 		<label class="control-label" for="usuario">Están los moldes?</label>
 		<div class="controls">
-			<!--<select name="select_estan_los_moldes" style="width: 300px;" onchange="estanLosMoldes(this.value);condicionParaMoldesGenericos(this.value);">-->
+			<select name="select_estan_los_moldes" style="width: 300px;" onchange="estanLosMoldes(this.value);condicionParaMoldesGenericos(this.value);">
                     <select name="select_estan_los_moldes" style="width: 300px;" onchange="estanLosMoldes(this.value);">
-                        <option value="NO" <?php if($estan_los_moldes=="CLIENTE LO APORTA") {echo 'selected="selected"';}?>>NO</option>
-                        <option value="NO LLEVA" <?php if($estan_los_moldes=="NO LLEVA") {echo 'selected="selected"';}?>>NO LLEVA</option>
-                        <option value="CLIENTE LO APORTA" <?php if($estan_los_moldes=="CLIENTE LO APORTA") {echo 'selected="selected"';}?>>CLIENTE LO APORTA</option>
-                        <option value="MOLDE GENERICO" <?php if($estan_los_moldes=="MOLDE GENERICO") {echo 'selected="selected"';}?>>MOLDE GENERICO</option>
-                        <option value="MOLDE REGISTRADOS DEL CLIENTE" <?php if($estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE") {echo 'selected="selected"';}?>>MOLDE REGISTRADOS DEL CLIENTE</option>
+                        <option value="NO" <?php //if($estan_los_moldes=="CLIENTE LO APORTA") {echo 'selected="selected"';}?>>NO</option>
+                        <option value="NO LLEVA" <?php //if($estan_los_moldes=="NO LLEVA") {echo 'selected="selected"';}?>>NO LLEVA</option>
+                        <option value="CLIENTE LO APORTA" <?php //if($estan_los_moldes=="CLIENTE LO APORTA") {echo 'selected="selected"';}?>>CLIENTE LO APORTA</option>
+                        <option value="MOLDE GENERICO" <?php //if($estan_los_moldes=="MOLDE GENERICO") {echo 'selected="selected"';}?>>MOLDE GENERICO</option>
+                        <option value="MOLDE REGISTRADOS DEL CLIENTE" <?php //if($estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE") {echo 'selected="selected"';}?>>MOLDE REGISTRADOS DEL CLIENTE</option>
                     </select> 
 		</div>
-	</div>
+	</div>-->
 	
-	<div class="control-group" id="div_estan_los_moldes_generico" <?php if($estan_los_moldes=="MOLDE GENERICO") { echo 'style="display: block;"'; } else { echo 'style="display: none;"';} ?>>
+<!--	<div class="control-group" id="div_estan_los_moldes_generico" <?php //if($estan_los_moldes=="MOLDE GENERICO") { echo 'style="display: block;"'; } else { echo 'style="display: none;"';} ?>>
 		<label class="control-label" for="usuario">Moldes Genéricos</label>
 		<div class="controls">
 			<select name="select_estan_los_moldes_genericos" style="width: 600px;" onchange="estanLosMoldes(this.value);">
-                        <option value="SI" <?php if($estan=='SI'){echo 'selected="selected"';}?>>SI</option> 
-                        <option value="NO" <?php if($estan=='NO'){echo 'selected="selected"';}?>>NO</option>
+                        <option value="NO" <?php //if($estan=='NO'){echo 'selected="selected"';}?>>NO</option>
+                        <option value="SI" <?php //if($estan=='SI'){echo 'selected="selected"';}?>>SI</option> 
                     </select> 
                     <div id="molde_select">
-                          <select name="molde_generico" id="molde_generico" style="width: 400px;" onchange="carga_ajax5('<?php echo base_url();?>moldes/detalle_ajax',this.value,'div_moldes')";>
+                          <select name="molde_generico" id="molde_generico" style="width: 400px;" onchange="carga_ajax5('<?php// echo base_url();?>moldes/detalle_ajax',this.value,'div_moldes')";>
                               <?php
-                              foreach($moldes as $molde)
-                              {
+                             // foreach($moldes as $molde)
+                             // {
                                   ?>
-                                  <option value="<?php echo $molde->id?>" <?php if($numero_moldes==$molde->id){echo 'selected="selected"';}?>><?php echo $molde->nombre?> (N° <?php echo $molde->numero?>)</option>
+                                  <option value="<?php //echo $molde->id?>" <?php //if($numero_moldes==$molde->id){echo 'selected="selected"';}?>><?php //echo $molde->nombre?> (N° <?php //echo $molde->numero?>)</option>
                                   <?php
-                              }
+                             // }
                               ?>
                           </select> 
                           <span id="div_moldes"></span>
                     </div>
 		</div>
-        </div>
+        </div>-->
     
     
-	<div class="control-group" id="div_estan_los_moldes_clientes" <?php if($estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE")  { echo 'style="display: block;"'; } else { echo 'style="display: none;"';} ?>>
+<!--	<div class="control-group" id="div_estan_los_moldes_clientes" <?php// if($estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE")  { echo 'style="display: block;"'; } else { echo 'style="display: none;"';} ?>>
 		<label class="control-label" for="usuario">Moldes del Cliente</label>
 		<div class="controls">
 			<select name="select_estan_los_moldes_no_genericos_clientes" style="width: 300px;" onchange="estanLosMoldes(this.value);">
-                        <option value="SI" <?php if($estan=='SI'){echo 'selected="selected"';}?>>SI</option> 
-                        <option value="NO" <?php if($estan=='NO'){echo 'selected="selected"';}?>>NO</option>
+                        <option value="SI" <?php //if($estan=='SI'){echo 'selected="selected"';}?>>SI</option> 
+                        <option value="NO" <?php //if($estan=='NO'){echo 'selected="selected"';}?>>NO</option>
                     </select> 
                     <div id="molde_select_cliente">
-                          <select name="molde_registrado" id="molde_registrado" style="width: 600px;" onchange="carga_ajax5('<?php echo base_url();?>moldes/detalle_ajax',this.value,'div_moldes')";>
+                          <select name="molde_registrado" id="molde_registrado" style="width: 600px;" onchange="carga_ajax5('<?php// echo base_url();?>moldes/detalle_ajax',this.value,'div_moldes')";>
                             <option value="0">Seleccione......</option>
                               <?php
-                              foreach($moldes_clientes as $molde)
-                              {
-                                  ?>
-                                  <option value="<?php echo $molde->id?>" <?php if($numero_moldes==$molde->id){echo 'selected="selected"';}?>><?php echo $molde->nombre?> (N° <?php echo $molde->numero?>)</option>
+                           //   foreach($moldes_clientes as $molde)
+                           //   {
+                           //       ?>
+                                  <option value="<?php// echo $molde->id?>" <?php //if($numero_moldes==$molde->id){echo 'selected="selected"';}?>><?php// echo $molde->nombre?> (N° <?php// echo $molde->numero?>)</option>
                                   <?php
-                              }
+                            //  }
                               ?>
                           </select> 
                           <span id="div_moldes2"></span>
                     </div>                    
 		</div>
-        </div>     
+        </div>     -->
     
     
     <h3>Trabajos Internos</h3>        
@@ -2088,7 +2103,7 @@ function getField($campo,$datos,$ing)
                 foreach($piezas as $pieza)
                 {
                     ?>
-                    <option value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales==$pieza->piezas_adicionales){echo 'selected="true"';}?>><?php echo $pieza->piezas_adicionales?></option>
+                    <option value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales==$pieza->piezas_adicionales){echo 'selected="true"';}?>><?php echo $pieza->piezas_adicionales.' Precio:'.$pieza->valor_venta ?></option>
                     <?php
                 }
                 ?>
@@ -2119,7 +2134,7 @@ function getField($campo,$datos,$ing)
                 foreach($piezas as $pieza)
                 {
                     ?>
-                    <option value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales2==$pieza->piezas_adicionales){echo 'selected="true"';}?>><?php echo $pieza->piezas_adicionales?></option>
+                    <option value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales2==$pieza->piezas_adicionales){echo 'selected="true"';}?>><?php echo $pieza->piezas_adicionales.' Precio:'.$pieza->valor_venta ?></option>
                     <?php
                 }
                 ?>
@@ -2150,7 +2165,7 @@ function getField($campo,$datos,$ing)
                 foreach($piezas as $pieza)
                 {
                     ?>
-                    <option value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales3==$pieza->piezas_adicionales){echo 'selected="true"';}?>><?php echo $pieza->piezas_adicionales?></option>
+                    <option value="<?php echo $pieza->piezas_adicionales?>" <?php if($piezas_adicionales3==$pieza->piezas_adicionales){echo 'selected="true"';}?>><?php echo $pieza->piezas_adicionales.' Precio:'.$pieza->valor_venta ?></option>
                     <?php
                 }
                 ?>
@@ -2892,25 +2907,30 @@ function priceFormatter(value) {
     
 </script>
 <script type="text/javascript">
-$(document).ready(()=>{
-       if($("select[name=hay_que_troquelar]").val()=="NO"){
-     $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").attr("selected","true");
-     $("#lleva_troquelado").val("NO");
-     $("#hacer_troquel2").val("NO"); 
-    }else{
-        if($("select[name=hay_que_troquelar]").val()=="SI" && $("input[name=nm]").val()==""){
-            $("select[name=select_estan_los_moldes]").val("");
-            $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").removeAttr("selected");
-            $("#lleva_troquelado").val("SI");
-            $("#hacer_troquel2").val("SI"); 
-        }else{
-            if($("select[name=hay_que_troquelar]").val()=="SI" && $("input[name=nm]").val()!==""){
-                $("select[name=select_estan_los_moldes]").val("");
-                $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").removeAttr("selected");
-                $("#lleva_troquelado").val("SI");
-                $("#hacer_troquel2").val("NO"); 
-            }
-        }
-     }
-});
+//$(document).ready(()=>{
+//       if($("select[name=hay_que_troquelar]").val()=="NO"){
+//     $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").attr("selected","true");
+//     $("#lleva_troquelado").val("NO");
+//     $("#hacer_troquel2").val("NO"); 
+//    }else{
+//        if($("select[name=hay_que_troquelar]").val()=="SI" && $("input[name=nm]").val()==""){
+//            $("select[name=select_estan_los_moldes]").val("");
+//            $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").removeAttr("selected");
+//            $("#lleva_troquelado").val("SI");
+//            $("#hacer_troquel2").val("SI"); 
+//        }else{
+//            if($("select[name=hay_que_troquelar]").val()=="SI" && $("input[name=nm]").val()!==""){
+//                $("select[name=select_estan_los_moldes]").val("SI");
+//                $("select[name=select_estan_los_moldes] option[value='NO LLEVA']").removeAttr("selected");
+//                $("#lleva_troquelado").val("SI");
+//                if($("input[name=nm]").val()=="21" || ($("input[name=existe_trazado]").val()=="SI")){
+//                 $("#hacer_troquel2").val("SI");
+//                    }else{
+//                 $("#hacer_troquel2").val("NO");       
+//                    }
+//                /*$("#hacer_troquel2").val("NO"); */
+//            }
+//        }
+//     }
+//});
 </script>

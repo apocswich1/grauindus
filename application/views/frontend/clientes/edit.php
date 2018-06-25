@@ -190,7 +190,7 @@
                     if($datos->id_ciudad==$ciudad->id)
                     {
                         ?>
-                    <option value="<?php echo $ciudad->id?>" selected="selected"><?php echo $ciudad->nombre?></option>
+                <option value="<?php echo $ciudad->id?>" selected="selected"><?php echo $ciudad->nombre ?></option>
                     <?php
                     }else
                     {

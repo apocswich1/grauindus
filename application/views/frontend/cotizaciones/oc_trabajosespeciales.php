@@ -40,7 +40,7 @@ $iva=19;
                 <table class="textos interlineado">
                     <tr><td colspan="4"><h1></h1></td></tr>
                     <tr><td width="80px"><b>Santiago,</b></td><td colspan="3"><?php echo $fecha; ?></td></tr>
-                    <tr><td><b>Señores:</b></td><td width="420px"><?php echo $var['razon']; ?></td><td width="80px"><b>Rut:</b></td><td><?php echo $var['cuenta']; ?></td></tr>
+                    <tr><td><b>Señores:</b></td><td width="420px"><?php echo $var['razon']; ?></td><td width="80px"><b>Rut:</b></td><td><?php echo $var['rut']; ?></td></tr>
                     <tr><td>Direcci&oacute;n:</td><td><?php echo $var['direccion']; ?></td><td><b>Ciudad:</b></td><td><?php echo $var['ciudad']; ?></td></tr>
                     <tr><td>Contacto:</td><td><?php echo $var['contacto']; ?></td><td><b>Telefono:</b></td><td><?php echo $var['telefono']; ?></td></tr>
                 </table>
@@ -60,7 +60,7 @@ $iva=19;
                             <td width="125">Precio</td>
                             <td width="125">Total</td></tr>
                         <tr>
-                            <td class="alto" valign="top"><?php echo number_format($var['cantidad'],0,',','.'); ?></td>
+                            <td class="alto" valign="top"><?php echo number_format(($var['cantidad']/$var['unidades_por_pliego']),0,',','.'); ?></td>
                             <td class="alto" valign="top"><?php echo $var['codigo'];; ?></td>
                             <td class="alto" valign="top" align="left"><?php echo $var['descripcion']; ?></td>
                             <td class="alto" valign="top" align="right"><?php echo number_format($var['precio'],0,',','.'); ?></td>

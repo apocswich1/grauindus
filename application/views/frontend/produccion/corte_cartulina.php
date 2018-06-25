@@ -1,7 +1,47 @@
 <?php $this->layout->element('admin_mensaje_validacion'); ?>
 <?php // print_r($tapa); ?>
 
-
+<style>
+    .cuadros_bobinas{
+        position: absolute;
+        right: 0;
+        top: 110%;
+        vertical-align: top
+    }
+    .bobina2,.bobina3{
+        display: inline-block;
+    }
+    .bobina2 label,.bobina3 label{
+        padding-right: 10px
+    }
+    .bobina2{
+        margin-right: -20px;
+    }
+    .bobina3{
+        padding-right: 20px
+    }
+    .totales_parcial{
+      display: inline-block;
+      width: 24%;
+      margin-top: 10px;
+    }
+    .padding1{
+      margin-left: 10px;
+    }
+    .totales_parcial span{
+      width: 48%  !important;
+      display: inline-block;
+      float: left;
+      padding-top: 4px
+    }
+    .totales_parcial input{
+      width: 110px !important;
+      float: right;
+      margin-right: 75px;
+      background: transparent;
+    }
+    
+</style>
 <div id="contenidos">
 <?php echo form_open(null, array('class' => 'form-horizontal','name'=>'form','id'=>'form')); ?>
 <!-- Migas -->
@@ -203,6 +243,12 @@
                      <li>Barniz : <strong><?php echo $fotomecanica2->fot_lleva_barniz; ?></strong></li>                     
                      <li>Reserva : <strong><?php echo $fotomecanica2->fot_reserva_barniz; ?></strong></li>        
                      <li>Total merma : <strong><?php  echo $hoja->total_merma; ?></strong></li>
+                     <?php  if ($control_cartulina->fecha_liberada=='0000-00-00 00:00:00' || $control_cartulina->fecha_liberada==null ) {
+                         $fecha_liberada_control_cartulina='<br> La orden debe ser liberada de <b>Control Cartulina</b>';
+                     } else {
+                        $fecha_liberada_control_cartulina=fecha($control_cartulina->fecha_liberada);
+                     } ?>
+                     <li>Fecha de liberacion de Control Cartulina : <strong><?php  echo $fecha_liberada_control_cartulina; ?></strong></li>
                 </ul>
             	</div>
 		<div class="controls"  style="margin-left: 0px;width:30%;float:left;margin-top: 0%;">
@@ -231,29 +277,209 @@
        </div>
 	</div> 
   
-    
-    <div class="control-group">
-		<label class="control-label" for="usuario">Descripción de la Tapa Seleccionada</label>
-		<div class="controls">
-			<input type="text" name="descripcion_de_la_tapa_referencia" value="<?php echo $control_cartulina->descripcion_de_la_tapa; ?>" readonly="true" />
-       </div>
-	</div>
 
-    <div class="control-group">
-		<label class="control-label" for="usuario">Gramaje Seleccionado</label>
-		<div class="controls">
-			<input type="text" name="gramaje_referencia" id="gramaje" value="<?php echo $control_cartulina->gramaje; ?>" readonly="true" />
+    <!--MUESTRA SOLO LOS DATOS GUARDADOS DE LA PRIMERA LIBERADA PARCIAL-->
+    
+        <div class="control-group">
+    		<label class="control-label" for="usuario">Descripción de la Tapa Seleccionada</label>
+    		<div class="controls">
+    			<input type="text" name="descripcion_de_la_tapa_referencia" value="<?php echo $control_cartulina->descripcion_de_la_tapa; ?>" readonly="true" />
+           </div>
+    	</div>
+
+        <div class="control-group">
+    		<label class="control-label" for="usuario">Gramaje Seleccionado</label>
+    		<div class="controls">
+    			<input type="text" name="gramaje_referencia" id="gramaje" value="<?php echo $control_cartulina->gramaje; ?>" readonly="true" />
+            </div>
+    	</div>    
+        
+        
+        <div class="control-group">
+    		<label class="control-label" for="usuario">Ancho de bobina</label>
+    		<div class="controls">
+    			<input type="text" name="ancho_bobina" value="<?php echo $control_cartulina->ancho_de_bobina?>" readonly="true" />
+    		</div>
+    	</div>
+
+        <div class="control-group">
+            <label class="control-label" for="usuario">Kilos de la Bobina Seleccionada</label>
+            <div class="controls">
+                <input type="text" name="kilos_bobina_seleccionada" value="<?php echo $control_cartulina->kilos_bobina_seleccionada?>" readonly="true" />
+            </div>
         </div>
-	</div>    
-    
-    
-    <div class="control-group">
-		<label class="control-label" for="usuario">Ancho de bobina</label>
-		<div class="controls">
-			<input type="text" name="ancho_bobina" value="<?php echo $control_cartulina->ancho_de_bobina?>" readonly="true" />
-		</div>
-	</div>
-    
+        <?php /* 
+        <!--MUESTRA UN CUADRO CON LOS DATOS DE LA BOBINA 2 Y 3 GUARDADA ** SOLO FUNCIONA CON LA ULTIMA GUARDADA**-->
+        <div class="cuadros_bobinas">
+            <!--INICIO - BOBINA 2 -->
+            <div class="bobina2">
+                <div class="control-group">
+                    <label class="control-label">Descripción de la Tapa <br>Seleccionada 2da Bobina</label>
+                    <input type="text" name="ancho_bobina" value="<?php echo $control_cartulina->descripcion_de_la_tapa2; ?>" readonly="true" />
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Gramaje Seleccionado <br> 2da Bobina</label>
+                    <input type="text" name="ancho_bobina" value="<?php echo $control_cartulina->gramaje_seleccionado2; ?>" readonly="true" />
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Ancho de bobina <br> 2da Bobina</label>
+                    <input type="text" name="ancho_bobina" value="<?php echo $control_cartulina->ancho_seleccionado_de_bobina2 ?>" readonly="true" />
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Kilos de la 2da Bobina <br> Seleccionada</label>
+                    <input type="text" name="kilos_bobina_seleccionada2" value="<?php echo $control_cartulina->kilos_bobina_seleccionada2 ?>" readonly="true" />
+                </div>
+            </div>
+            <!--FIN - BOBINA 2 -->
+
+            <!--INICIO - BOBINA 3 -->
+            <div class="bobina3">
+                <div class="control-group">
+                    <label class="control-label">Descripción de la Tapa <br>Seleccionada 3ra Bobina</label>
+                    <input type="text" name="ancho_bobina" value="<?php echo $control_cartulina->descripcion_de_la_tapa3; ?>" readonly="true" />
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Gramaje Seleccionado <br> 3ra Bobina</label>
+                    <input type="text" name="ancho_bobina" value="<?php echo $control_cartulina->gramaje_seleccionado3; ?>" readonly="true" />
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Ancho de bobina <br> 3ra Bobina</label>
+                    <input type="text" name="ancho_bobina" value="<?php echo $control_cartulina->ancho_seleccionado_de_bobina3 ?>" readonly="true" />
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Kilos de la 3ra Bobina <br> Seleccionada</label>
+                    <input type="text" name="kilos_bobina_seleccionada3" value="<?php echo $control_cartulina->kilos_bobina_seleccionada3 ?>" readonly="true" />
+                </div>
+            </div>
+            <!--FIN - BOBINA 3 -->
+            <!--FIN - MUESTRA UN CUADRO CON LOS DATOS DE LA BOBINA 2 Y 3 GUARDADA ** SOLO FUNCIONA CON LA ULTIMA GUARDADA**-->
+        </div>
+        <br><br><br><br>
+        */ ?>
+    <!--FIN - MUESTRA DATOS DE LA PRIMERA LIBERADA PARCIAL-->
+    <!-- INICIO - DATOS LIBERADAS PARCIALES -->
+        <?php if ($control_cartulina->situacion=='Parcial' && ($control_cartulina->fecha_liberada!='0000-00-00 00:00:00' || $control_cartulina->fecha_liberada!=null)) { ?>
+          <!--INICIO - PRIMERA LIBERACION PARCIAL-->
+              <div class="totales_parcial padding1">
+                  <span>Fecha Liberada 1</span>
+                  <div class="controls">
+                    <input type="text"  id="fecha_liberada_parcial_1" name="fecha_liberada_parcial_1" value="<?php echo $control_cartulina->fecha_liberada; ?>" readonly="true" /> 
+                  </div>
+              </div>
+
+              <!--<div class="totales_parcial">
+                  <span>Metros Ingresados</span>
+                  <div class="controls">
+                    <input type="text"  id="total_metros_ingresados_parcial_1" name="total_metros_ingresados_parcial_1" value="<?php echo $control_cartulina->total_metros_ingresados_parcial_1; ?>" readonly="true" /> 
+                  </div>
+              </div>-->
+             
+              <div class="totales_parcial">
+                  <span>Kilos Ingresados</span>
+                  <div class="controls">
+                    <input type="text"  id="total_kilos_ingresados_parcial_1" name="total_kilos_ingresados_parcial_1" value="<?php if($control_cartulina->total_kilos_ingresados==null || $control_cartulina->total_kilos_ingresados==''){echo 0;}else{echo $control_cartulina->total_kilos_ingresados;} ?>" readonly="true" /> 
+                  </div>
+              </div>
+
+              <div class="totales_parcial">
+                  <span>Kilos Restantes</span>
+                  <div class="controls">
+                    <input type="text"  id="total_kilos_restantes_parcial_1" name="total_kilos_restantes_parcial_1" value="<?php echo $kilos_restantes_parcial_1 = $control_cartulina->total_kilos_restantes; ?>" readonly="true" /> 
+                  </div>
+              </div>
+              
+              <div class="totales_parcial">
+                  <span>Metros Restantes</span>
+                  <div class="controls">
+                    <input type="text"  id="total_metros_restantes_parcial_1" name="total_metros_restantes_parcial_1" value="<?php if($control_cartulina->total_metros_restantes==null || $control_cartulina->total_metros_restantes==''){echo 0;}else{echo $control_cartulina->total_metros_restantes;} ?>" readonly="true" /> 
+                  </div>
+              </div>
+          <!--FIN - PRIMERA LIBERACION PARCIAL-->
+        <br>
+        <?php } if($control_cartulina->fecha_liberada_parcial_2!='0000-00-00 00:00:00' && $control_cartulina->fecha_liberada_parcial_2!=null) { ?>
+          <!--INICIO - Segunda LIBERACION PARCIAL-->
+              <div class="totales_parcial padding1">
+                  <span>Fecha Liberada 2</span>
+                  <div class="controls">
+                    <input type="text"  id="fecha_liberada_parcial_2" name="fecha_liberada_parcial_2" value="<?php echo $control_cartulina->fecha_liberada_parcial_2; ?>" readonly="true" /> 
+                  </div>
+              </div>
+
+              <!--<div class="totales_parcial">
+                  <span>Metros Ingresados</span>
+                  <div class="controls">
+                    <input type="text"  id="total_metros_ingresados_parcial_2" name="total_metros_ingresados_parcial_2" value="<?php echo $control_cartulina->total_metros_ingresados_parcial_2; ?>" readonly="true" /> 
+                  </div>
+              </div>-->    
+              
+              <div class="totales_parcial">
+                  <span>Kilos Ingresados</span>
+                  <div class="controls">
+                    <input type="text"  id="total_kilos_ingresados_parcial_2" name="total_kilos_ingresados_parcial_2" value="<?php if($control_cartulina->total_kilos_ingresados_parcial_2==null || $control_cartulina->total_kilos_ingresados_parcial_2==''){echo 0;}else{echo $control_cartulina->total_kilos_ingresados_parcial_2;} ?>" readonly="true" /> 
+                  </div>
+              </div>
+
+              <div class="totales_parcial">
+                  <span>Kilos Restantes</span>
+                  <div class="controls">
+                    <input type="text"  id="total_kilos_restantes_parcial_2" name="total_kilos_restantes_parcial_2" value="<?php echo $kilos_restantes_parcial_2 = $control_cartulina->total_kilos_restantes_parcial_2; ?>" readonly="true" /> 
+                  </div>
+              </div>
+
+              <div class="totales_parcial">
+                  <span>Metros Restantes</span>
+                  <div class="controls">
+                    <input type="text"  id="total_metros_restantes_parcial_2" name="total_metros_restantes_parcial_2" value="<?php if($control_cartulina->total_metros_restantes_parcial_2==null || $control_cartulina->total_metros_restantes_parcial_2==''){echo 0;}else{echo $control_cartulina->total_metros_restantes_parcial_2;} ?>" readonly="true" /> 
+                  </div>
+              </div>
+          <!--FIN - SEGUNDA LIBERACION PARCIAL-->
+        <br>
+        <?php } if($control_cartulina->fecha_liberada_parcial_3!='0000-00-00 00:00:00' && $control_cartulina->fecha_liberada_parcial_3!=null) { ?>
+          <!--INICIO - Tercera LIBERACION PARCIAL-->
+              <div class="totales_parcial padding1">
+                  <span>Fecha Liberada 3</span>
+                  <div class="controls">
+                    <input type="text"  id="fecha_liberada_parcial_3" name="fecha_liberada_parcial_3" value="<?php echo $control_cartulina->fecha_liberada_parcial_3; ?>" readonly="true" /> 
+                  </div>
+              </div>
+
+              <!--<div class="totales_parcial">
+                  <span>Metros Ingresados</span>
+                  <div class="controls">
+                    <input type="text"  id="total_metros_ingresados_parcial_3" name="total_metros_ingresados_parcial_3" value="<?php echo $control_cartulina->total_metros_ingresados_parcial_3; ?>" readonly="true" /> 
+                  </div>
+              </div>-->
+              
+              <div class="totales_parcial">
+                  <span>Kilos Ingresados</span>
+                  <div class="controls">
+                    <input type="text"  id="total_kilos_ingresados_parcial_3" name="total_kilos_ingresados_parcial_3" value="<?php if($control_cartulina->total_kilos_ingresados_parcial_3==null || $control_cartulina->total_kilos_ingresados_parcial_3==''){echo 0;}else{echo $control_cartulina->total_kilos_ingresados_parcial_3;} ?>" readonly="true" /> 
+                  </div>
+              </div>
+
+              <div class="totales_parcial">
+                  <span>Kilos Restantes</span>
+                  <div class="controls">
+                    <input type="text"  id="total_kilos_restantes_parcial_3" name="total_kilos_restantes_parcial_3" value="<?php echo $control_cartulina->total_kilos_restantes_parcial_3; ?>" readonly="true" /> 
+                  </div>
+              </div>
+
+              <div class="totales_parcial">
+                  <span>Metros Restantes</span>
+                  <div class="controls">
+                    <input type="text"  id="total_metros_restantes_parcial_3" name="total_metros_restantes_parcial_3" value="<?php if($control_cartulina->total_metros_restantes_parcial_3==null || $control_cartulina->total_metros_restantes_parcial_3==''){echo 0;}else{echo $control_cartulina->total_metros_restantes_parcial_3;} ?>" readonly="true" /> 
+                  </div>
+              </div>
+            <!--FIN - Tercera LIBERACION PARCIAL-->
+        <?php } ?>
+    <!-- FIN - DATOS LIBERADAS PARCIALES-->
+    <br> <br> <?php //<br><br>  ?>
     <div class="control-group">
 		<label class="control-label" for="usuario">Gramaje Tapa Realmente Seleccionado</label>
 		<div class="controls">
@@ -431,18 +657,22 @@
             <input type="hidden" name="id_cliente" value="<?php if($tipo==1){echo $datos->id_cliente;}else{echo $datos->cliente;}?>" />
 			<input type="hidden" name="indicador" />
             <input type="hidden" name="estado" />
-			<input type="button" value="Guardar" class="btn <?php if($control->estado==0){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('0');" />
-   		    <input type="button" value="Rechazar" class="btn <?php if($control->estado==2){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('2');" />
-			<?php
+
+            <?php if ($control_cartulina->situacion == 'Liberada' || $control_cartulina->situacion == 'Parcial') { ?>
+                <input type="button" value="Guardar" class="btn <?php if($control->estado==0){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('0');" />
+                <input type="button" value="Rechazar" class="btn <?php if($control->estado==2){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('2');" />
+            <?php } else {
+                echo "La orden debe ser liberada de <b>Control Cartulina</b>";
+            }
 			
-			if($control->estado == 1) 
+			if($control->estado == 1)
 				{
 					echo 'Corte Cartulina Liberado!';
 				}
 				else
 				{
-					if($control_cartulina->estado == 1 or  $bobinado_cartulina->estado == 1) 
-						{							
+					if($control_cartulina->estado == 1 or  $bobinado_cartulina->estado == 1)
+						{
 			?>	
            <input type="button" value="Liberar" class="btn <?php if($control->estado==1){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('1');" id='btnliberar'/>
 		   <input type="button" value="Parcial" class="btn <?php if($control->estado==3){echo 'btn-warning';}?>" onclick="guardarFormularioAdd('3');" id='btnparcial'/>

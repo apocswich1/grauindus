@@ -8,7 +8,7 @@
       <li>Acabados</li>
     </ol>
    <!-- /Migas -->
-<div class="page-header"><h3>Acabados</h3></div>
+<div class="page-header"><h3>Otros Procesos Externos y Acabados</h3></div>
 
 
 

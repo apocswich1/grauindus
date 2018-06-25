@@ -42,6 +42,30 @@
 	</div>
         
     <div class="control-group">
+		<label class="control-label" for="usuario">Banco</label>
+		<div class="controls">
+		<select name="banco">
+                    <option value="" <?php if(($_POST['banco'])==""){echo "selected='selected'";}  ?>>-- Seleccione --</option>
+                    <option value="BANCO ESTADO" <?php if(($_POST['banco'])=="BANCO ESTADO"){echo "selected='selected'";}  ?>>BANCO ESTADO</option>
+                    <option value="BANCO DE CHILE" <?php if(($_POST['banco'])=="BANCO DE CHILE"){echo "selected='selected'";}  ?>>BANCO DE CHILE</option>
+                    <option value="BANCO INTERNACIONAL" <?php if(($_POST['banco'])=="BANCO INTERNACIONAL"){echo "selected='selected'";}  ?>>BANCO INTERNACIONAL</option>
+                    <option value="SCOTIABANK CHILE" <?php if(($_POST['banco'])=="SCOTIABANK CHILE"){echo "selected='selected'";}  ?>>SCOTIABANK CHILE</option>
+                    <option value="BANCO DE CREDITO E INVERSIONES" <?php if(($_POST['banco'])=="BANCO DE CREDITO E INVERSIONES"){echo "selected='selected'";}  ?>>BANCO DE CREDITO E INVERSIONES</option>                    
+                    <option value="BANCO BICE" <?php if(($_POST['banco'])=="BANCO BICE"){echo "selected='selected'";}  ?>>BANCO BICE</option>                    
+                    <option value="HSBC BANK" <?php if(($_POST['banco'])=="HSBC BANK"){echo "selected='selected'";}  ?>>HSBC BANK</option>                    
+                    <option value="BANCO SANTANDER" <?php if(($_POST['banco'])=="BANCO SANTANDER"){echo "selected='selected'";}  ?>>BANCO SANTANDER</option>                    
+                    <option value="ITAÚ CORPBANCA" <?php if(($_POST['banco'])=="ITAÚ CORPBANCA"){echo "selected='selected'";}  ?>>ITAÚ CORPBANCA</option>                    
+                    <option value="BANCO SECURITY" <?php if(($_POST['banco'])=="BANCO SECURITY"){echo "selected='selected'";}  ?>>BANCO SECURITY</option>                    
+                    <option value="BANCO FALABELLA" <?php if(($_POST['banco'])=="BANCO FALABELLA"){echo "selected='selected'";}  ?>>BANCO FALABELLA</option>                    
+                    <option value="BANCO RIPLEY" <?php if(($_POST['banco'])=="BANCO RIPLEY"){echo "selected='selected'";}  ?>>BANCO RIPLEY</option>                    
+                    <option value="BANCO CONSORCIO" <?php if(($_POST['banco'])=="BANCO CONSORCIO"){echo "selected='selected'";}  ?>>BANCO CONSORCIO</option>                    
+                    <option value="BANCO BBVA" <?php if(($_POST['banco'])=="BANCO BBVA"){echo "selected='selected'";}  ?>>BANCO BBVA</option>                    
+                    <option value="BANCO BTG PACTUAL CHILE" <?php if(($_POST['banco'])=="BANCO BTG PACTUAL CHILE"){echo "selected='selected'";}  ?>>BANCO BTG PACTUAL CHILE</option>                    
+                    <option value="OTRO" <?php if(($_POST['banco'])=="OTRO"){echo "selected='selected'";}  ?>>OTRO</option>                    
+                </select> 		
+                </div>
+	</div>             
+    <div class="control-group">
 		<label class="control-label" for="usuario">Tipo de  Cuenta</label>
 		<div class="controls">
 		<select name="tipo_cuenta">

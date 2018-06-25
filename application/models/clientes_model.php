@@ -400,6 +400,17 @@ class clientes_model extends CI_Model{
       //  echo $this->db->last_query();exit;
         return $query->row(); 
     }
+     public function getFormasPagoPorIdCliente($id)
+    {
+        $query=$this->db
+        ->select("f.id,f.dias,f.forma_pago")
+        ->from("clientes c")
+        ->join("formas_pago f","c.id_forma_pago=f.id","left")        
+        ->where(array("c.id"=>$id))
+        ->get();
+        //echo $this->db->last_query();exit;
+        return $query->row(); 
+    }
 	  public function getFormasPagoPorId2($id)
     {
         $query=$this->db

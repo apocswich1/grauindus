@@ -20,7 +20,7 @@
 -->
 <!-- Buscador -->
     <div class="pull-right">
-	<?php echo form_open(base_url()."moldes/search", array('class' => 'form-search pull-right')); ?>
+	<?php echo form_open(base_url()."trazados/search", array('class' => 'form-search pull-right')); ?>
 		<input type="text" class="input-medium search-query" name="buscar" placeholder="Buscar" />
 		<button type="submit" class="btn">Buscar</button>
 		
@@ -92,8 +92,8 @@
                 ?>
             </td>
 			<td>
-               <a href="<?php echo base_url()?>moldes/edit/<?php echo $dato->id?>/<?php echo $pagina?>" title="Editar"><i class="icon-pencil"></i></a>	
-           		<a href="javascript:void(0);" onclick="eliminar('<?php echo base_url()?>moldes/delete/<?php echo $dato->id?>/<?php echo $pagina?>');" title="Eliminar"><i class="icon-trash"></i></a>	
+               <a href="<?php echo base_url()?>trazados/edit/<?php echo $dato->id?>/<?php echo $pagina?>" title="Editar"><i class="icon-pencil"></i></a>	
+           		<a href="javascript:void(0);" onclick="eliminar('<?php echo base_url()?>trazados/delete/<?php echo $dato->id?>/<?php echo $pagina?>');" title="Eliminar"><i class="icon-trash"></i></a>	
             </td>
     </tbody>
     <?php

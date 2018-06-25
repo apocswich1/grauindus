@@ -260,7 +260,7 @@ padding-left: 70px;">Materialidad Opcion Principal</label>
     <div class="control-group">
 		<label class="control-label" for="usuario">Tamaño Caja <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" id="titulo" name="tamano_caja" value="<?php echo $datos->tamano_caja?>" placeholder="Tamaño Caja" />
+                    <input type="text" id="tamano_caja" name="tamano_caja" value="<?php echo $datos->tamano_caja?>" readonly="true" placeholder="Tamaño Caja" />
 		</div>
 	</div>
     <div class="control-group" id="glosa" style="<?php if($datos->pauta==1){echo "display: true";}else{echo "display: none";}?>">
@@ -401,14 +401,14 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
     <div class="control-group" id="producto">
 		<label class="control-label" for="usuario">Distancia cuchillo a cuchillo<strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php echo $datos->cuchillocuchillo; ?>" placeholder="0" onblur="cuchillo();" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php echo $datos->cuchillocuchillo2 ?>" placeholder="0" onblur="cuchillo();" /> Cms. 
+                    <input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php echo $datos->cuchillocuchillo; ?>" placeholder="0" onblur="cuchillo();" /> X <input type="text" id="tamanocuchillo2" name="tamano_cuchillo_2" style="width: 100px;" value="<?php echo $datos->cuchillocuchillo2 ?>" placeholder="0" onblur="cuchillo();" /> Cms. 
 		</div>
 	</div>
     
     <div class="control-group" id="producto">
 		<label class="control-label" for="usuario">Tamaño a imprimir Ancho por Largo (largo a cortar) <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" name="ancho_bobina" style="width: 100px;" value="<?php echo $datos->ancho_bobina?>" placeholder="Ancho" /> X <input type="text" name="largo_bobina" style="width: 100px;" value="<?php echo $datos->largo_bobina?>" placeholder="Largo" /> 
+                    <input type="text" name="ancho_bobina" style="width: 100px;" value="<?php echo $datos->ancho_bobina?>" placeholder="Ancho" /> X <input type="text" id="largobobina" name="largo_bobina" style="width: 100px;" value="<?php echo $datos->largo_bobina?>" placeholder="Largo" /> 
 		</div>
 	</div>
     
@@ -529,6 +529,40 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
             $("#div_materialidad_33").show();
         }
         
+    });
+
+function hacer_medidas(){
+   var a = $("#medidas_de_las_cajas").val(),
+    b = $("#medidas_de_las_cajas_2").val(),
+    c = $("#medidas_de_las_cajas_3").val(),
+    d = $("#medidas_de_las_cajas_4").val();
+    
+    $("#tamano_caja").val(a+' x '+b+' x '+c+' x '+d);
+    }
+    
+$("#medidas_de_las_cajas").on('keyup',function(){
+    hacer_medidas();
+});
+$("#medidas_de_las_cajas_2").on('keyup',function(){
+    hacer_medidas();
+});
+$("#medidas_de_las_cajas_3").on('keyup',function(){
+    hacer_medidas();
+});
+$("#medidas_de_las_cajas_4").on('keyup',function(){
+    hacer_medidas();
+});
+
+$("#largobobina").on("keyup",function(){
+        var a = $(this).val();
+        var tamano2 = $("#tamanocuchillo2").val();
+            if(parseInt(a) < parseInt(tamano2)){
+            if (!$("#etiquetaerror").length > 0 ) {
+            $(this).after("<label style='color:red' id='etiquetaerror'>No puede ser menor al tamaño de la cuchilla</label>");
+            }
+            }else{
+                $("#etiquetaerror").remove();
+            }    
     });
 </script>
 </div>

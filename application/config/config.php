@@ -362,5 +362,6 @@ $config['proxy_ips'] = '';
 
 
 $config['direccion_pdf'] = 'public/uploads/';
+$config['direccion_img'] = 'public/uploadsimg/';
 $config['tamaño_archivo'] = '10240';
 $config['rut_repetido'] = '92384000-1';

@@ -61,6 +61,81 @@ class Proveedores extends CI_Controller {
         }
         
 	}
+        
+    public function search()
+	{
+        
+        //echo $session_id;exit;
+        if($this->session->userdata('id'))
+        {
+           if( $this->session->userdata('perfil')==2){redirect(base_url().'index/no_acceso',  301); }
+           if ( $this->input->post() )
+             {
+                //$this->session->set_userdata("chelasybares");
+                $this->session->set_userdata('valor', str_replace('.', '', $this->input->post('buscar',true)));
+                $buscar= $this->session->userdata('valor');
+             }else
+             {
+                $buscar= $this->session->userdata('valor');
+             }
+            //print_r($_POST);exit;
+           
+           if($this->uri->segment(3))
+            {
+                $pagina=$this->uri->segment(3);
+            }else
+            {
+               $pagina=0;
+            }
+            $porpagina=10;
+        $datos=$this->proveedores_model->getProveedoresPaginacionPorSearch($pagina,$porpagina,"limit",$buscar);
+        $cuantos=$this->proveedores_model->getProveedoresPaginacionPorSearch($pagina,$porpagina,"cuantos",$buscar);
+        $config['base_url'] = base_url().'proveedores/search';
+            $config['total_rows'] = $cuantos;
+            $config['per_page'] = $porpagina;
+            $config['uri_segment'] = '3';
+            $config['num_links'] = '4';
+            $config['first_link'] = 'Primero';
+            $config['next_link'] = 'Siguiente';
+            $config['prev_link'] = 'Anterior';
+            $config['last_link'] = 'Ultimo';
+            $config['full_tag_open'] = '<ul class="pagination">';
+            $config['full_tag_close'] = '</ul>';
+            $config['first_tag_open'] = '<li>';
+            $config['first_tag_close'] = '</li>';
+            $config['last_tag_open'] = '<li>';
+            $config['last_tag_close'] = '</li>';
+            $config['next_tag_open'] = '<li>';
+            $config['next_tag_close'] = '</li>';
+            $config['prev_tag_open'] = '<li>';
+            $config['prev_tag_close'] = '</li>';
+            $config['cur_tag_open'] = '<li><a><b>';
+            $config['cur_tag_close'] = '</b></a></li>';
+            $config['num_tag_open'] = '<li>';
+            $config['num_tag_close'] = '</li>';
+            $this->pagination->initialize($config);
+             $this->layout->css
+            (
+                array
+                (
+                    base_url()."public/backend/fancybox/jquery.fancybox.css"
+                )
+            );
+            $this->layout->js
+            (
+                array
+                (
+                    base_url()."public/backend/fancybox/jquery.fancybox.js"
+                )
+            ); 
+           $this->layout->view('search',compact('datos','cuantos','buscar')); 
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+        
+	}
+        
      public function add()
     {
           if($this->session->userdata('id'))
@@ -87,6 +162,7 @@ class Proveedores extends CI_Controller {
                                 "horario"=>$this->input->post("horario",true),                                         
                                 "direccion"=>$this->input->post("direccion",true),                                         
                                 "rut"=>$this->input->post("rut",true),                                         
+                                "banco"=>$this->input->post("banco",true),                                         
                              );
                               $guardar=$this->proveedores_model->insertar($data);
                             if($guardar)
@@ -148,6 +224,7 @@ class Proveedores extends CI_Controller {
                                 "horario"=>$this->input->post("horario",true),                                                
                                 "direccion"=>$this->input->post("direccion",true),                                                
                                 "rut"=>$this->input->post("rut",true),                                                
+                                "banco"=>$this->input->post("banco",true),                                                
                              );
                               $guardar=$this->proveedores_model->update($data,$this->input->post("id",true));
                             if($guardar)

@@ -56,8 +56,7 @@ class Hoja extends CI_Controller {
                 echo "<pre>".
                 print_r($array).
                 "</pre>";
-            }
-            
+            }           
 //            formatear($datos);
 //            formatear($ing);
 //            formatear($fotomecanica);
@@ -105,9 +104,9 @@ class Hoja extends CI_Controller {
                     "valor_acabado_1"=>$this->input->post("valor_acabado_1",true),
                     "valor_acabado_2"=>$this->input->post("valor_acabado_2",true),
                     "valor_acabado_3"=>$this->input->post("valor_acabado_3",true),
-                    "valor_empresa_2"=>$this->input->post("valor_empresa_2",true),
-                    "valor_empresa_3"=>$this->input->post("valor_empresa_3",true),
-                    "valor_empresa_4"=>$this->input->post("valor_empresa_4",true),
+                    "valor_empresa_2"=>$this->input->post("valor_empresa2",true),
+                    "valor_empresa_3"=>$this->input->post("valor_empresa3",true),
+                    "valor_empresa_4"=>$this->input->post("valor_empresa4",true),
                     "fecha"=>date('Y-m-d'),
                     "valor_extra"=>$this->input->post("valor_extra",true),                        
                     "total_merma2"=>$this->input->post("total_merma2",true),                        
@@ -115,14 +114,13 @@ class Hoja extends CI_Controller {
                     "total_merma4"=>$this->input->post("total_merma4",true),                        
                     "impreso"=>$impreso,                        
                 );
-           // echo $this->input->post("ve1",true);
-                //print_r($data);             //   exit();
+          
             $data_act=array
                 (
                     "precio_1"=>$this->input->post("valor_empresa",true),    
-                    "precio_2"=>$this->input->post("valor_empresa_2",true),    
-                    "precio_3"=>$this->input->post("valor_empresa_3",true),    
-                    "precio_4"=>$this->input->post("valor_empresa_4",true),    
+                    "precio_2"=>$this->input->post("valor_empresa2",true),    
+                    "precio_3"=>$this->input->post("valor_empresa3",true),    
+                    "precio_4"=>$this->input->post("valor_empresa4",true),    
                     "pegado_migrado"=>$pegado,
                     "margen_migrado"=>$margen,
                     "dias_de_entrega"=>$this->input->post("dias_de_entrega",true),                
@@ -135,14 +133,9 @@ class Hoja extends CI_Controller {
                     "despacho_fuera_de_santiago"=>$despacho_fuera_de_santiago,                
                     "retira_cliente"=>$retira_cliente,                
                 );
-           // print_r($data);exit();
-//                echo $hoja;
-//                exit(print_r($data));
-               
+  
             if(sizeof($hoja)==0)
-            {
-//                    echo "guardo---100".$this->input->post("id",true);
-//                    exit(print_r($data));    
+            { 
                 $this->db->insert("hoja_de_costos_datos",$data);
                 $this->db->insert("hoja_de_costos_cambios",$data);
                 $this->db->insert("hoja_de_costos_alt",$data_alt);
@@ -156,6 +149,177 @@ class Hoja extends CI_Controller {
                 $this->db->update("hoja_de_costos_cambios",$data);
                 $this->db->where('id_cotizacion', $this->input->post('id',true));
                 $this->db->update("hoja_de_costos_alt",$data_alt);
+                 //exit(print_r($data));
+            }
+            $data2=array
+                (
+                    "id_cotizacion"=>$this->input->post("id",true),
+                    "seccion"=>"Se guardó completa Hoja de Costos",
+                    "glosa"=>"Se guardó completa Hoja de Costos",
+                    "quien"=>$this->session->userdata('id'),
+                    "cuando"=>date("Y-m-d"),
+                );
+                $this->db->insert("hoja_de_costos",$data2);    
+            $this->session->set_flashdata('ControllerMessage', 'Se ha modificado Hoja de Costos exitosamente.');
+            redirect($this->input->post("url",true),  301);
+        }else
+        {
+            show_404();
+        }
+        
+    }
+    public function save2()
+    {
+                
+        if($this->input->post())
+        {
+            //procedimiento de copiar hc
+            $idcopia=$this->input->post("numerocopia",true);
+            $copia = $this->input->post("copia",true);
+            if($copia==1){
+            //duplicando cotizacion
+            $datos=$this->cotizaciones_model->getCotizacionPorId($idcopia);
+            //duplicando revision ingenieria
+            $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($idcopia);
+            //duplicando revision fotomecanica
+            $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($idcopia);
+            //duplicando hoja de costos    
+            $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($idcopia);
+            //numero de copias
+            $copias=$this->cotizaciones_model->obtenerMaximoIdCopias($idcopia);
+            
+            $maximo=$this->cotizaciones_model->obtenerMaximoId();
+            $idnuevo=$maximo->id_max+1;
+            $maximocopias = count($copias)+1;
+            
+            //Reasignacion de id para la recotizacion;
+            $datos->id = $idnuevo;
+            unset($ing->id);
+            $ing->id_cotizacion = $idnuevo;
+            unset($fotomecanica->id);
+            $fotomecanica->id_cotizacion = $idnuevo;
+            unset($hoja->id);
+            $hoja->id_cotizacion = $idnuevo;
+            unset($hoja->impreso);
+            $hoja->impreso = 0;
+            
+            if($hoja->codigo_duplicado!=""){
+            $hoja->codigo_duplicado = substr($hoja->codigo_duplicado, 0,5).(substr($hoja->codigo_duplicado, 5)+1);
+            }else{    
+            $hoja->codigo_duplicado = $idcopia.'-'.$maximocopias;
+            }
+           // echo $hoja->codigo_duplicado;exit();
+            
+            function formatear($array){
+                echo "<pre>".
+                print_r($array).
+                "</pre>";
+            }           
+//            formatear($datos);
+//            formatear($ing);
+//            formatear($fotomecanica);
+//            formatear($hoja);
+            //Creacion de registros en cotizacion;
+            $guardar=$this->cotizaciones_model->insertar($datos);
+            //Creacion de registros en ingenieria;
+            $this->cotizaciones_model->insertarIngenieria($ing);
+            //Creacion de registros en fotomecanica;
+            $this->cotizaciones_model->insertarFotomecanica($fotomecanica);
+            //Creacion de registros en hoja de costos;
+            $this->db->insert("hoja_de_costos_datos",$hoja);
+            
+            
+            $this->session->set_flashdata('ControllerMessage', 'Se ha Copiado la Hoja de Costos exitosamente.');
+            redirect("/cotizaciones/hoja_de_costos_propia/$idnuevo",  301);
+            }
+            
+            $impreso = $this->input->post("imprimir",true);
+            $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($this->input->post("id",true));
+            if ($this->input->post("margen",true)==""){
+                $margen=15;
+                $margen_migrado=15;
+            }else{
+                $margen=$this->input->post("margen",true);         
+                $margen_migrado=$this->input->post("margen",true);         
+            }
+            if ($this->input->post("pegado",true)==""){
+                $pegado=30;
+                $pegado=30;
+        }else{
+                $pegado=$this->input->post("pegado",true);                     
+                $pegado_migrado=$this->input->post("pegado",true);                     
+        
+        }
+        
+            $data=array
+                (
+                    "id_usuario"=>$this->session->userdata('id'),
+                    "id_cotizacion"=>$this->input->post("id",true),
+                    "valor_empresa"=>$this->input->post("valor_empresa",true),
+                    "pegado"=>$pegado,
+                    "costo_adicional"=>$this->input->post("costo_adicional",true),
+                    "dias_de_entrega"=>$this->input->post("dias_de_entrega",true),
+                    "margen"=>$margen,
+                    "valor_acabado_1"=>$this->input->post("valor_acabado_1",true),
+                    "valor_acabado_2"=>$this->input->post("valor_acabado_2",true),
+                    "valor_acabado_3"=>$this->input->post("valor_acabado_3",true),
+                    "valor_empresa_2"=>$this->input->post("valor_empresa2",true),
+                    "valor_empresa_3"=>$this->input->post("valor_empresa3",true),
+                    "valor_empresa_4"=>$this->input->post("valor_empresa4",true),
+                    "fecha"=>date('Y-m-d'),
+                    "valor_extra"=>$this->input->post("valor_extra",true),                        
+                    "total_merma"=>$this->input->post("total_merma",true),                        
+                    "total_merma2"=>$this->input->post("total_merma2",true),                        
+                    "total_merma3"=>$this->input->post("total_merma3",true),                        
+                    "total_merma4"=>$this->input->post("total_merma4",true),                        
+                    "kilos_placa"=>$this->input->post("placa_kilo",true),                        
+                    "placa_kilo"=>$this->input->post("placa_kilo",true),                        
+                    "onda_kilo"=>$this->input->post("onda_kilo",true),                        
+                    "kilos_onda"=>$this->input->post("kilos_onda",true),                        
+                    "kilos_liner"=>$this->input->post("kilos_liner",true),                        
+                    "total_pliegos"=>$this->input->post("total_pliegos",true),                        
+                    "impreso"=>$impreso,                        
+                );
+        
+            $data_act=array
+                (
+                    "precio_1"=>$this->input->post("valor_empresa",true),    
+                    "precio_2"=>$this->input->post("valor_empresa2",true),    
+                    "precio_3"=>$this->input->post("valor_empresa3",true),    
+                    "precio_4"=>$this->input->post("valor_empresa4",true),    
+                    "pegado_migrado"=>$pegado,
+                    "margen_migrado"=>$margen,
+                    "dias_de_entrega"=>$this->input->post("dias_de_entrega",true),                
+                    "precio_migrado"=>$this->input->post("valor_empresa",true),                
+                    "precio_migrado2"=>$this->input->post("valor_empresa2",true),                
+                    "precio_migrado3"=>$this->input->post("valor_empresa3",true),                
+                    "precio_migrado4"=>$this->input->post("valor_empresa4",true),                
+                );
+            
+            $data_alt=array
+                (
+                    "id_cotizacion"=>$this->input->post("id",true),
+                    "despacho_fuera_de_santiago"=>$despacho_fuera_de_santiago,                
+                    "retira_cliente"=>$retira_cliente,                
+                );
+  
+            if(sizeof($hoja)==0)
+            { 
+                $this->db->insert("hoja_de_costos_datos",$data);
+                $this->db->insert("hoja_de_costos_cambios",$data);
+                $this->db->insert("hoja_de_costos_alt",$data_alt);
+                $this->db->where('id', $this->input->post('id',true));
+                $this->db->update("cotizaciones",$data_act);
+            }else
+            {
+                $this->db->where('id_cotizacion', $this->input->post('id',true));
+                $this->db->update("hoja_de_costos_datos",$data);
+                $this->db->where('id_cotizacion', $this->input->post('id',true));
+                $this->db->update("hoja_de_costos_cambios",$data);
+                $this->db->where('id_cotizacion', $this->input->post('id',true));
+                $this->db->update("hoja_de_costos_alt",$data_alt);
+                $this->db->where('id', $this->input->post('id',true));
+                $this->db->update("cotizaciones",$data_act);
                  //exit(print_r($data));
             }
             $data2=array
@@ -337,9 +501,26 @@ class Hoja extends CI_Controller {
              $data=array
             (
                 "cantidad_1"=>$this->input->post("cantidad_1",true),
+                "precio_1"=>"0",
+                "precio_migrado"=>"0",
             );
             $this->db->where('id', $this->input->post('id',true));
             $this->db->update("cotizaciones",$data);
+             $data=array
+            (
+                "cantidad_1"=>$this->input->post("cantidad_1",true),
+            );
+            $this->db->where('id', $this->input->post('id',true));
+            $this->db->update("cotizaciones",$data);
+            
+             $data=array
+                        (
+                            "valor_empresa"=>"0",
+                        );
+            
+            $this->db->where('id_cotizacion', $this->input->post('id',true));
+            $this->db->update("hoja_de_costos_datos",$data);
+            
             $data2=array
             (
                 "id_cotizacion"=>$this->input->post("id",true),
@@ -547,6 +728,7 @@ class Hoja extends CI_Controller {
         if(!$id){show_404();}
         $datos=$this->cotizaciones_model->getCotizacionPorId($id);
         $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+      //  echo $this->input->post('url');exit();
         if($this->input->post())
         {
              switch($valor)
@@ -555,6 +737,8 @@ class Hoja extends CI_Controller {
                     $data=array
                         (
                             "cantidad_2"=>$this->input->post("cantidad_1",true),
+                            "precio_2"=>"0",
+                            "precio_migrado2"=>"0",
                         );
                         
                 break;  
@@ -562,18 +746,31 @@ class Hoja extends CI_Controller {
                     $data=array
                         (
                             "cantidad_3"=>$this->input->post("cantidad_1",true),
+                            "precio_3"=>"0",
+                            "precio_migrado3"=>"0",
                         );
                 break;
                 case '4':
                     $data=array
                         (
                             "cantidad_4"=>$this->input->post("cantidad_1",true),
+                            "precio_4"=>"0",
+                            "precio_migrado4"=>"0",
                         );
                 break;              
              }
              
             $this->db->where('id', $this->input->post('id',true));
             $this->db->update("cotizaciones",$data);
+            
+             $data=array
+                        (
+                            "valor_empresa_2"=>"0",
+                        );
+            
+            $this->db->where('id_cotizacion', $this->input->post('id',true));
+            $this->db->update("hoja_de_costos_datos",$data);
+            
             $data2=array
             (
                 "id_cotizacion"=>$this->input->post("id",true),
@@ -613,7 +810,9 @@ class Hoja extends CI_Controller {
                 case '2':
                     $data=array
                         (
-                            "cantidad_3"=>$this->input->post("cantidad_1",true),
+                            "cantidad_2"=>$this->input->post("cantidad_1",true),
+                            "precio_2"=>"0",
+                            "precio_migrado2"=>"0",
                         );
                         
                 break;  
@@ -621,18 +820,31 @@ class Hoja extends CI_Controller {
                     $data=array
                         (
                             "cantidad_3"=>$this->input->post("cantidad_1",true),
+                            "precio_3"=>"0",
+                            "precio_migrado3"=>"0",
                         );
                 break;
                 case '4':
                     $data=array
                         (
                             "cantidad_4"=>$this->input->post("cantidad_1",true),
+                            "precio_4"=>"0",
+                            "precio_migrado4"=>"0",
                         );
                 break;              
              }
              
             $this->db->where('id', $this->input->post('id',true));
             $this->db->update("cotizaciones",$data);
+            
+             $data=array
+                        (
+                            "valor_empresa_3"=>"0",
+                        );
+            
+            $this->db->where('id_cotizacion', $this->input->post('id',true));
+            $this->db->update("hoja_de_costos_datos",$data);
+            
             $data2=array
             (
                 "id_cotizacion"=>$this->input->post("id",true),
@@ -672,7 +884,9 @@ class Hoja extends CI_Controller {
                 case '2':
                     $data=array
                         (
-                            "cantidad_3"=>$this->input->post("cantidad_1",true),
+                            "cantidad_2"=>$this->input->post("cantidad_1",true),
+                            "precio_2"=>"0",
+                            "precio_migrado2"=>"0",
                         );
                         
                 break;  
@@ -680,18 +894,30 @@ class Hoja extends CI_Controller {
                     $data=array
                         (
                             "cantidad_3"=>$this->input->post("cantidad_1",true),
+                            "precio_3"=>"0",
+                            "precio_migrado3"=>"0",
                         );
                 break;
                 case '4':
                     $data=array
                         (
                             "cantidad_4"=>$this->input->post("cantidad_1",true),
+                            "precio_4"=>"0",
+                            "precio_migrado4"=>"0",
                         );
                 break;              
              }
              
             $this->db->where('id', $this->input->post('id',true));
             $this->db->update("cotizaciones",$data);
+            
+            $data=array
+                        (
+                            "valor_empresa_4"=>"0",
+                        );
+            
+            $this->db->where('id_cotizacion', $this->input->post('id',true));
+            $this->db->update("hoja_de_costos_datos",$data);
             $data2=array
             (
                 "id_cotizacion"=>$this->input->post("id",true),
@@ -775,6 +1001,122 @@ class Hoja extends CI_Controller {
         }
         $this->layout->view('cambio_vendedor',compact('id','pagina','datos','vendedores'));  
     }
+     public function cambio_barniz($id=null,$pagina=null)
+    {
+        if(!$id){show_404();}
+        $datos=$this->cotizaciones_model->getCotizacionPorId($id);
+        $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+        $vendedores=$this->vendedores_model->getVendedoresSelect();
+        if($this->input->post())
+        {
+             $data=array
+            (
+                "fot_lleva_barniz"=>$this->input->post("fot_lleva_barniz",true),
+            );
+            //print_r($data);exit();
+            $this->db->where('id_cotizacion', $this->input->post('id',true));
+            $this->db->update("cotizacion_fotomecanica",$data);
+            $data2=array
+            (
+                "id_cotizacion"=>$this->input->post("id",true),
+                "seccion"=>"Barniz -> Tipo",
+                "glosa"=>$this->input->post("glosa",true),
+                "quien"=>$this->session->userdata('id'),
+                "cuando"=>date("Y-m-d"),
+            );
+            $this->db->insert("hoja_de_costos",$data2);
+             $this->session->set_flashdata('ControllerMessage', 'Se ha modificado el registro exitosamente.');
+             redirect($this->input->post("url",true),  301);
+        }
+        $this->layout->view('cambio_barniz',compact('id','pagina','datos','vendedores','fotomecanica'));  
+    }
+     public function acepta_excedentes($id=null,$pagina=null)
+    {
+        if(!$id){show_404();}
+        $datos=$this->cotizaciones_model->getCotizacionPorId($id);
+        $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+        $vendedores=$this->vendedores_model->getVendedoresSelect();
+        $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
+        if($this->input->post())
+        {
+            if(sizeof($hoja)==0)
+            {
+             $data=array
+            (
+                "acepta_excedentes"=>$this->input->post("acepta_excedentes",true),
+                "acepta_excedentes_extra"=>$this->input->post("acepta_excedentes_extra",true),
+            );
+            //print_r($data);exit();
+            $this->db->where('id', $this->input->post('id',true));
+            $this->db->update("cotizaciones",$data);
+             
+            $data_cot=array
+            (
+                "valor_acepeta_exce"=>$this->input->post("valor_acepeta_exce",true),
+                "id_cotizacion"=>$this->input->post('id',true),
+            );
+            $this->db->insert("hoja_de_costos_datos",$data_cot);
+            
+            }else{
+            $data=array
+            (
+                "acepta_excedentes"=>$this->input->post("acepta_excedentes",true),
+                "acepta_excedentes_extra"=>$this->input->post("acepta_excedentes_extra",true),
+            );
+            //print_r($data);exit();
+            $this->db->where('id', $this->input->post('id',true));
+            $this->db->update("cotizaciones",$data);
+            
+            $data_cot=array
+            (
+                "valor_acepeta_exce"=>$this->input->post("valor_acepeta_exce",true),
+            );
+            $this->db->where("id_cotizacion",$this->input->post('id',true));
+            $this->db->update("hoja_de_costos_datos",$data_cot);
+            }
+            $data2=array
+            (
+                "id_cotizacion"=>$this->input->post("id",true),
+                "seccion"=>"Acepta Excedentes -> Cambio Excedentes",
+                "glosa"=>$this->input->post("glosa",true),
+                "quien"=>$this->session->userdata('id'),
+                "cuando"=>date("Y-m-d"),
+            );
+            $this->db->insert("hoja_de_costos",$data2);
+             $this->session->set_flashdata('ControllerMessage', 'Se ha modificado el registro exitosamente.');
+             redirect($this->input->post("url",true),  301);
+        }
+        $this->layout->view('acepta_excedentes',compact('id','pagina','datos','vendedores','fotomecanica'));  
+    }
+     public function visto_bueno($id=null,$pagina=null)
+    {
+        if(!$id){show_404();}
+        $datos=$this->cotizaciones_model->getCotizacionPorId($id);
+        $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+        $vendedores=$this->vendedores_model->getVendedoresSelect();
+        if($this->input->post())
+        {
+             $data=array
+            (
+                "vb_maquina"=>$this->input->post("vb_maquina",true),
+            );
+            //print_r($data);exit();
+            $this->db->where('id', $this->input->post('id',true));
+            $this->db->update("cotizaciones",$data);
+            $data2=array
+            (
+                "id_cotizacion"=>$this->input->post("id",true),
+                "seccion"=>"VB Maquina -> Cambio VB Maquina",
+                "glosa"=>$this->input->post("glosa",true),
+                "quien"=>$this->session->userdata('id'),
+                "cuando"=>date("Y-m-d"),
+            );
+            $this->db->insert("hoja_de_costos",$data2);
+             $this->session->set_flashdata('ControllerMessage', 'Se ha modificado el registro exitosamente.');
+             redirect($this->input->post("url",true),  301);
+        }
+        $this->layout->view('visto_bueno',compact('id','pagina','datos','vendedores','fotomecanica'));  
+    }
     public function datos_fotomecanica($id=null,$pagina=null)
     {
         if(!$id){show_404();}
@@ -835,7 +1177,7 @@ class Hoja extends CI_Controller {
                     "id_usuario"=>$this->session->userdata('id'),
                     "id_cotizacion"=>$this->input->post("id",true),
                     "valor_empresa"=>$this->input->post("valor_empresa",true),
-                    "pegado"=>'0',
+                    "pegado"=>$this->input->post("pegado",true),
                     "costo_adicional"=>'0',
                     "dias_de_entrega"=>'20',
                     "margen"=>'15',
@@ -847,6 +1189,14 @@ class Hoja extends CI_Controller {
 //                    exit(print_r($data));    
                 
                 $this->db->insert("hoja_de_costos_datos",$data);
+                
+                $data=array
+                (
+                    "precio_migrado"=>$this->input->post("valor_empresa",true),
+                );
+               
+                 $this->db->where('id', $this->input->post('id',true));
+                 $this->db->update("cotizaciones",$data);
             }else
             {
                $data=array
@@ -855,6 +1205,14 @@ class Hoja extends CI_Controller {
                 );
                  $this->db->where('id_cotizacion', $this->input->post('id',true));
                  $this->db->update("hoja_de_costos_datos",$data);
+               
+               $data=array
+                (
+                    "precio_migrado"=>$this->input->post("valor_empresa",true),
+                );
+               
+                 $this->db->where('id', $this->input->post('id',true));
+                 $this->db->update("cotizaciones",$data);
             }
             
             $data2=array
@@ -1096,131 +1454,20 @@ class Hoja extends CI_Controller {
             if(sizeof($hoja)==0)
             {
 //                exit($valor);
-                switch($valor)
-                {
-                    case '1':
+               
                         $data=array
                         (
                             "id_usuario"=>$this->session->userdata('id'),
                             "id_cotizacion"=>$this->input->post("id",true),
-                            "valor_empresa"=>'0',
-                            "pegado"=>'0',
-                            "costo_adicional"=>'0',
-                            "dias_de_entrega"=>'20',
-                            "margen"=>'15',
-                            "valor_acabado_1"=>$this->input->post("valor",true),
-                            "valor_acabado_2"=>'0',
-                            "valor_acabado_3"=>'0',
-                            "valor_externo"=>'0',
-                            "valor_piezas"=>'0',                             
+                            "valor_externo"=>$this->input->post("valor_externo",true),                           
                         );
-                    break;
-                    case '2':
-                        $data=array
-                        (
-                            "id_usuario"=>$this->session->userdata('id'),
-                            "id_cotizacion"=>$this->input->post("id",true),
-                            "valor_empresa"=>'0',
-                            "pegado"=>'0',
-                            "costo_adicional"=>'0',
-                            "dias_de_entrega"=>'20',
-                            "margen"=>'15',
-                            "valor_acabado_1"=>'0',
-                            "valor_acabado_2"=>$this->input->post("valor",true),
-                            "valor_acabado_3"=>'0',
-                            "valor_externo"=>'0',
-                            "valor_piezas"=>'0',                             
-                        );
-                    break;
-                    case '3':
-                        $data=array
-                        (
-                            "id_usuario"=>$this->session->userdata('id'),
-                            "id_cotizacion"=>$this->input->post("id",true),
-                            "valor_empresa"=>'0',
-                            "pegado"=>'0',
-                            "costo_adicional"=>'0',
-                            "dias_de_entrega"=>'20',
-                            "margen"=>'15',
-                            "valor_acabado_1"=>'0',
-                            "valor_acabado_2"=>'0',
-                            "valor_acabado_3"=>$this->input->post("valor",true),
-                            "valor_externo"=>'0',
-                            "valor_piezas"=>'0',                            
-                        );
-                    break;
-                    case '4':
-                        $data=array
-                        (
-                            "id_usuario"=>$this->session->userdata('id'),
-                            "id_cotizacion"=>$this->input->post("id",true),
-                            "valor_empresa"=>'0',
-                            "pegado"=>'0',
-                            "costo_adicional"=>'0',
-                            "dias_de_entrega"=>'20',
-                            "margen"=>'15',
-                            "valor_acabado_1"=>'0',
-                            "valor_acabado_2"=>'0',
-                            "valor_acabado_3"=>'0',
-                            "valor_piezas"=>'0',
-                            "valor_externo"=>$this->input->post("valor",true),                            
-                        );
-                    break;   
-                    case '5':
-                        $data=array
-                        (
-                            "id_usuario"=>$this->session->userdata('id'),
-                            "id_cotizacion"=>$this->input->post("id",true),
-                            "valor_empresa"=>'0',
-                            "pegado"=>'0',
-                            "costo_adicional"=>'0',
-                            "dias_de_entrega"=>'20',
-                            "margen"=>'15',
-                            "valor_acabado_1"=>'0',
-                            "valor_acabado_2"=>'0',
-                            "valor_acabado_3"=>'0',                            
-                            "valor_externo"=>'0',
-                            "valor_piezas"=>$this->input->post("valor",true),                            
-                        );
-                    break;                 
-                }
+              
                 $this->db->insert("hoja_de_costos_datos",$data);
             }else
-            {
-               
-                switch($valor)
-                {
-                    case '1':
-                        $data=array
+            {           $data=array
                             (
-                                "valor_acabado_1"=>$this->input->post("valor",true),
+                                "valor_externo"=>$this->input->post("valor_externo",true),
                             );
-                    break;
-                    case '2':
-                        $data=array
-                            (
-                                "valor_acabado_2"=>$this->input->post("valor",true),
-                            );
-                    break;
-                    case '3':
-                        $data=array
-                            (
-                                "valor_acabado_3"=>$this->input->post("valor",true),
-                            );
-                    break;
-                    case '4':
-                        $data=array
-                            (
-                                "valor_externo"=>$this->input->post("valor",true),
-                            );
-                    break;     
-                    case '5':
-                        $data=array
-                            (
-                                "valor_piezas"=>$this->input->post("valor",true),
-                            );
-                    break;                  
-                }
                
                  $this->db->where('id_cotizacion', $this->input->post('id',true));
                  $this->db->update("hoja_de_costos_datos",$data);
@@ -1280,6 +1527,13 @@ class Hoja extends CI_Controller {
                                    //exit(print_r($data));    
                  $this->db->where('id_cotizacion', $this->input->post('id',true));
                  $this->db->update("hoja_de_costos_datos",$data);
+                 
+                 $data=array
+                (
+                    "precio_migrado2"=>$this->input->post("valor_empresa",true),
+                );
+                 $this->db->where('id', $this->input->post('id',true));
+                 $this->db->update("cotizaciones",$data);
             }
             
             $data2=array
@@ -1336,6 +1590,13 @@ class Hoja extends CI_Controller {
                                    //exit(print_r($data));    
                  $this->db->where('id_cotizacion', $this->input->post('id',true));
                  $this->db->update("hoja_de_costos_datos",$data);
+                 $data=array
+                (
+                    "precio_migrado3"=>$this->input->post("valor_empresa",true),
+                );
+                 $this->db->where('id', $this->input->post('id',true));
+                 $this->db->update("cotizaciones",$data);
+                 
             }
             
             $data2=array
@@ -1392,6 +1653,13 @@ class Hoja extends CI_Controller {
                                    //exit(print_r($data));    
                  $this->db->where('id_cotizacion', $this->input->post('id',true));
                  $this->db->update("hoja_de_costos_datos",$data);
+                 
+                 $data=array
+                (
+                    "precio_migrado4"=>$this->input->post("valor_empresa",true),
+                );
+                 $this->db->where('id', $this->input->post('id',true));
+                 $this->db->update("cotizaciones",$data);
             }
             
             $data2=array

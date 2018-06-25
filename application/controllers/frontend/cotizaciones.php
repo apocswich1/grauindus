@@ -226,6 +226,22 @@ class Cotizaciones extends CI_Controller {
     }
     
     
+    public function ordenes_proveedores()
+    {
+       $datos = $this->input->post("datos",true);
+       $id = $this->input->post("id",true);
+       $this->cotizaciones_model->delete_ordenes_proveedores($id);
+       //print_r($datos);exit();
+       echo $id;
+       foreach ($datos as $value) {
+       $data = array(
+               'id_cotizacion'=>$id,
+               'nombre'=>$value[0],
+               'proveedor'=>$value[1],
+               );    
+       $this->cotizaciones_model->insertar_ordenes_proveedores($data);
+       }
+    }
     public function oc($idc)
     {
          if($this->session->userdata('id'))
@@ -235,13 +251,17 @@ class Cotizaciones extends CI_Controller {
              $correlativo="0";
              $orden_compra=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($id);
              $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+             $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
              $datos=$this->cotizaciones_model->getCotizacionPorId($id);
+             $orp=$this->cotizaciones_model->getOrdenesProveedores($id);
              $cantidad=$datos->cantidad_1;             
+             $materialidad_1=$this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_placa1);
              $folia1_ps=$fotomecanica->folia1_proceso_seletec;             
              $folia2_ps=$fotomecanica->folia2_proceso_seletec;             
              $folia3_ps=$fotomecanica->folia3_proceso_seletec;             
              $cuno1_ps=$fotomecanica->cuno1_proceso_seletec;             
-             $cuno2_ps=$fotomecanica->cuno2_proceso_seletec;             
+             $cuno2_ps=$fotomecanica->cuno2_proceso_seletec;   
+             
              /************************************************/
              $folia1=$this->procesosespeciales_model->getDetalleProcesosPorId($folia1_ps);
              $folia2=$this->procesosespeciales_model->getDetalleProcesosPorId($folia2_ps);
@@ -275,62 +295,88 @@ class Cotizaciones extends CI_Controller {
              $tesp10=$fotomecanica->cuno2_molde_selected;
              
              $prov = json_decode($orden_compra->proveedores);
+           //  print_r($orp);exit();
 //             echo "<pre>";
 //             print_r($prov);echo "</pre>";//exit();
              //contabilizo variable cantidad de procesos especiales
+          //   echo $prov->folia1->pfolia1;exit();
              if($tesp1!=0){ 
                  $procesosespeciales++; 
-                 //$proveedor1=$this->proveedores_model->getProveedoresTodoPorId($prov->nfolia1);} 
-                 $proveedor1=$this->proveedores_model->getProveedoresPorNombreClave($prov->folia1->pfolia1);} 
-                   
+                 $proveedorfolia1 = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('folia1',$datos->id);
+                 $proveedor1=$this->proveedores_model->getProveedoresPorNombreClave($proveedorfolia1->proveedor);}             
+                 //$proveedor1=$this->proveedores_model->getProveedoresPorNombreClave($prov->folia1->pfolia1);}             
              if($tesp2!=0){ 
                  $procesosespeciales++; 
-                 $proveedor2=$this->proveedores_model->getProveedoresPorNombreClave($prov->folia2->pfolia2);} 
+                 $proveedorfolia2 = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('folia2',$datos->id);
+                 $proveedor2=$this->proveedores_model->getProveedoresPorNombreClave($proveedorfolia2->proveedor);} 
+                 //$proveedor2=$this->proveedores_model->getProveedoresPorNombreClave($prov->folia2->pfolia2);} 
              if($tesp3!=0){ 
                  $procesosespeciales++; 
-                 $proveedor3=$this->proveedores_model->getProveedoresPorNombreClave($prov->folia3->pfolia3);} 
+                 $proveedorfolia3 = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('folia3',$datos->id);
+                 $proveedor3=$this->proveedores_model->getProveedoresPorNombreClave($proveedorfolia3->proveedor);} 
              if($tesp4!=0){ 
                  $procesosespeciales++;  
-                 $proveedor4=$this->proveedores_model->getProveedoresPorNombreClave($prov->cuno1->pcuno1);} 
+                 $proveedorcuno1 = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('cuno1',$datos->id);
+                 $proveedor4=$this->proveedores_model->getProveedoresPorNombreClave($proveedorcuno1->proveedor);} 
+                 //$proveedor4=$this->proveedores_model->getProveedoresPorNombreClave($prov->cuno1->pcuno1);} 
              if($tesp5!=0){ 
                  $procesosespeciales++;  
-                 $proveedor5=$this->proveedores_model->getProveedoresPorNombreClave($prov->cuno2->pcuno2);} 
+                 $proveedorcuno2 = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('cuno2',$datos->id);
+                 $proveedor5=$this->proveedores_model->getProveedoresPorNombreClave($proveedorcuno2->proveedor);} 
+                 //$proveedor5=$this->proveedores_model->getProveedoresPorNombreClave($prov->cuno2->pcuno2);} 
              if($tesp6!=0){ 
                  $procesosespeciales++;  
-                 $proveedor6=$this->proveedores_model->getProveedoresPorNombreClave($prov->cffolia1->mpfolia1);} 
+                 $proveedorcffolia1 = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('cffolia1',$datos->id);
+                 $proveedor6=$this->proveedores_model->getProveedoresPorNombreClave($proveedorcffolia1->proveedor);} 
              if($tesp7!=0){ 
                  $procesosespeciales++;  
-                 $proveedor7=$this->proveedores_model->getProveedoresPorNombreClave($prov->cffolia2->mpfolia2);} 
+                 $proveedorcffolia2 = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('cffolia2',$datos->id);
+                 $proveedor7=$this->proveedores_model->getProveedoresPorNombreClave($proveedorfolia2->proveedor);} 
+                 //$proveedor7=$this->proveedores_model->getProveedoresPorNombreClave($prov->cffolia2->mpfolia2);} 
              if($tesp8!=0){ 
                  $procesosespeciales++;  
-                 $proveedor8=$this->proveedores_model->getProveedoresPorNombreClave($prov->cffolia3->mpfolia3);} 
+                 $proveedorcffolia3 = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('cffolia3',$datos->id);
+                 $proveedor8=$this->proveedores_model->getProveedoresPorNombreClave($proveedorcffolia3->proveedor);} 
+                 //$proveedor8=$this->proveedores_model->getProveedoresPorNombreClave($prov->cffolia3->mpfolia3);} 
              if($tesp9!=0){ 
                  $procesosespeciales++;  
-                 $proveedor9=$this->proveedores_model->getProveedoresPorNombreClave($prov->cfcuno1->mpcuno1);} 
+                 $proveedorcfcuno1 = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('cfcuno1',$datos->id);
+                 $proveedor9=$this->proveedores_model->getProveedoresPorNombreClave($proveedorcfcuno1->proveedor);} 
              if($tesp10!=0){ 
                  $procesosespeciales++;  
-                 $proveedor10=$this->proveedores_model->getProveedoresPorNombreClave($prov->cfcuno2->mpcuno2);} 
-            
-                function array_oc($p,$folia,$proveedor,$datos,$procesosespeciales,$correlativo){
+                 $proveedorcfcuno2 = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('cfcuno2',$datos->id);
+                 $proveedor10=$this->proveedores_model->getProveedoresPorNombreClave($proveedorcfcuno2->proveedor);} 
+                 
+                function array_oc($p,$folia,$proveedor,$datos,$procesosespeciales,$correlativo,$ing){
                 $precio=$folia->costo_compra;
-                if($folia->codigo==111 || $folia->codigo==113){
+                if($folia->codigo==111 || $folia->codigo==113 || $folia->codigo=='102 nn'){
                 $descripcion=$folia->caracteristicas." (Monto Fijo)";
                 $total=$precio;
                 $total=$folia->costo_compra;    
                 }else{
+                if($folia->caracteristicas=="Folia (golpe)"){
+                $descripcion=$folia->caracteristicas;
+                $total=($datos->cantidad_1/$ing->unidades_por_pliego)*($precio/$ing->unidades_por_pliego);    
+                }else if($folia->unv=="Metros-2"){    
+                $descripcion=$folia->caracteristicas;
+                $total=((($datos->cantidad_1*$precio*$ing->tamano_a_imprimir_1*$ing->tamano_a_imprimir_2)/$ing->unidades_por_pliego))/10000;    
+                }else{
                 $descripcion=$folia->caracteristicas;
                 $total=$datos->cantidad_1*$precio;
+                }
                 //$total=$folia->costo_compra*$cantidad;       
                 }
                 $contacto=$proveedor->contacto;
                 $codigo=$folia->codigo;
                 $razon=$proveedor->nombre;
+                $rut=$proveedor->rut;
                 $formapago=$proveedor->forma_pago;
                 $direccion="Santiago";
                 $ciudad="Santiago";
                 $telefono=$proveedor->telefono;
                 $cuenta=$proveedor->num_cuenta;
                 $correo=$proveedor->correo;
+                $unidades_por_pliego=$ing->unidades_por_pliego;
                 $tipocuenta=$proveedor->tipo_cuenta;
                 if($tipocuenta==1){$tipocuenta="Cuenta Corriente";}
                 if($tipocuenta==2){$tipocuenta="Cuenta Vista";}
@@ -338,12 +384,14 @@ class Cotizaciones extends CI_Controller {
                 if($tipocuenta==4){$tipocuenta="Cuenta Ahorro";}
 
                     $data = array(
+                        'unidad_venta'=>$unidad_venta,
                         'descripcion'=>$descripcion,
                         'contacto'=>$contacto,
                         'codigo'=>$codigo,
                         'precio'=>$precio,
                         'total'=>$total,
                         'razon'=>$razon,
+                        'rut'=>$rut,
                         'formapago'=>$formapago,
                         'direccion'=>$direccion,
                         'ciudad'=>$ciudad,
@@ -355,23 +403,360 @@ class Cotizaciones extends CI_Controller {
                         'cotizacion'=>$datos->id,
                         'grupo'=>$procesosespeciales,
                         'correlativo'=>$correlativo,
+                        'unidades_por_pliego'=>$unidades_por_pliego,
                     );
 
                     return $data;
                 }
+                function array_oc2($p,$folia,$proveedor,$datos,$procesosespeciales,$costo_unitario4,$acabado_4,$correlativo,$fotomecanica,$materialidad_1,$ing,$unidad_venta){
+                //echo $unidad_venta;exit();
+                $precio=$costo_unitario4;
+                if($unidad_venta=='Monto Fijo'){
+                $descripcion=$acabado_4;
+                $total=$precio;
+                }else{
+                $descripcion=$acabado_4;
+                if($descripcion=='Folia (golpe)'){
+                $total=($datos->cantidad_1/$ing->unidades_por_pliego)*($precio/$ing->unidades_por_pliego);      
+                }else if($unidad_venta=="Metros-2"){    
+                $descripcion=$acabado_4;
+                $total=((($datos->cantidad_1*$precio*$ing->tamano_a_imprimir_1*$ing->tamano_a_imprimir_2)/$ing->unidades_por_pliego))/10000;    
+                }else{
+                $descripcion=$folia->caracteristicas;
+                $total=$datos->cantidad_1*$precio;
+                }
+                //$total=$folia->costo_compra*$cantidad;       
+                }
+                $unidades_por_pliego=$ing->unidades_por_pliego;
+                $contacto=$proveedor->contacto;
+                $codigo=$fotomecanica->acabado_impresion_4;
+                $razon=$proveedor->nombre;
+                $rut=$proveedor->rut;
+                $formapago=$proveedor->forma_pago;
+                $direccion="Santiago";
+                $ciudad="Santiago";
+                $telefono=$proveedor->telefono;
+                $cuenta=$proveedor->num_cuenta;
+                $correo=$proveedor->correo;
+                $tipocuenta=$proveedor->tipo_cuenta;
+                
+                if($tipocuenta==1){$tipocuenta="Cuenta Corriente";}
+                if($tipocuenta==2){$tipocuenta="Cuenta Vista";}
+                if($tipocuenta==3){$tipocuenta="Cuenta Rut";}
+                if($tipocuenta==4){$tipocuenta="Cuenta Ahorro";}
+
+                    $data = array(
+                        'unidad_venta'=>$unidad_venta,
+                        'descripcion'=>$descripcion,
+                        'contacto'=>$contacto,
+                        'codigo'=>$codigo,
+                        'precio'=>$precio,
+                        'total'=>$total,
+                        'razon'=>$razon,
+                        'rut'=>$rut,
+                        'formapago'=>$formapago,
+                        'direccion'=>$direccion,
+                        'ciudad'=>$ciudad,
+                        'telefono'=>$telefono,
+                        'cuenta'=>$cuenta,
+                        'correo'=>$correo,
+                        'tipocuenta'=>$tipocuenta,
+                        'cantidad'=>$datos->cantidad_1,
+                        'cotizacion'=>$datos->id,
+                        'grupo'=>$procesosespeciales,
+                        'correlativo'=>$correlativo,
+                        'materialidad'=>$materialidad_1->nombre,
+                        'materialidad_gramaje'=>$materialidad_1->gramaje,
+                        'reserva'=>$fotomecanica->fot_reserva_barniz,
+                        'tamano_pliego'=>$ing->tamano_a_imprimir_1.' x '.$ing->tamano_a_imprimir_2,
+                        'unidades_por_pliego'=>$unidades_por_pliego,
+                    );
+
+                    return $data;
+                }
+                $datoscantidad1 = $datos->cantidad_1;
+                $tamano1 = $ing->tamano_a_imprimir_1;
+                $tamano2 = $ing->tamano_a_imprimir_2;
+                		if($fotomecanica->acabado_impresion_4=="1700")
+                                {   $acabado_4="";
+                                    $acabado_4Valor="";
+                                    $acabado_4MedidaMasValorVenta="";
+                                    $acabado_4Unitario="";
+                                    $acabado_4UnidadVentaNombre="";
+                                }else
+                                {   $altura=1 + $altura;
+                                    $acabado_4Array=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_4);
+                                    $acabado_4=$acabado_4Array->caracteristicas; // Nombre acabado
+                                    $acabado_4UnidadVentaNombre=$acabado_4Array->unv; //Nombre unidad de venta
+                                    $acabado_4Valor=$acabado_4Array->costo_compra; // ej: 52
+                                    $acabado_4MedidaMasValorVenta=($tamano1*$tamano2*$acabado_4Valor)/10000; // (ancho x largo x valor venta) /10000									
+                                    $acabado_4CostoFijo=$acabado_4Array->costo_fijo;	
+							
+                                 
+                                    if ($acabado_4Array->unidad_de_venta == '1') //Metros
+                                    {
+                                        $costo_unitario4=$acabado_4MedidaMasValorVenta;
+                                        $precio_total_4=($acabado_4MedidaMasValorVenta*$datoscantidad1);
+                                        $cantidad_4=$datoscantidad1;
+                                    }
+                                    elseif ($acabado_4Array->unidad_de_venta == '2') //Kilos
+                                    {
+                                        $precio_total_4=($acabado_4Valor*$fotomecanica->input_variable_externo_4);
+                                        $costo_unitario4=$acabado_4Valor;
+                                        $cantidad_4=$fotomecanica->input_variable_externo_4;
+                                    }  
+                                    elseif ($acabado_4Array->unidad_de_venta == '3') //tONELADA
+                                    {
+                                        $precio_total_4=($acabado_4MedidaMasValorVenta*$datoscantidad1);
+                                    }                                    
+                                    elseif ($acabado_4Array->unidad_de_venta == '4') //caja de carton
+                                    {
+                                        $precio_total_4=($acabado_4MedidaMasValorVenta*$datoscantidad1);
+                                    }                                            
+                                    elseif ($acabado_4Array->unidad_de_venta == '5') //unidad
+                                    {
+                                        $costo_unitario4=$acabado_4Valor;                                        
+                                        $precio_total_4=($datoscantidad1*$acabado_4Valor);
+                                        $cantidad_4=$datoscantidad1;
+                                    }       
+                                    elseif ($acabado_4Array->unidad_de_venta == '6') //cm2
+                                    {
+                                        $precio_total_4=($acabado_4Valor*$fotomecanica->input_variable_externo_4);
+                                        $costo_unitario4=$acabado_4Valor;     
+                                        $cantidad_4=$fotomecanica->input_variable_externo_4;
+                                    }   
+                                    elseif ($acabado_4Array->unidad_de_venta == '7') //mt2
+                                    {
+                                        $costo_unitario4=$acabado_4MedidaMasValorVenta/$ing->unidades_por_pliego;
+                                        $precio_total_4=($acabado_4MedidaMasValorVenta/$ing->unidades_por_pliego)*$datoscantidad1;
+                                        $cantidad_4=$datoscantidad1;
+                                        
+                                    }
+                                    elseif ($acabado_4Array->unidad_de_venta == '8') //cms
+                                    {
+                                        $precio_total_4=($acabado_4MedidaMasValorVenta*$datoscantidad1);
+                                    }           
+                                    elseif ($acabado_4Array->unidad_de_venta == '9') //Monto Fijo 
+                                    {
+                                        $costo_unitario4=$acabado_4Valor;                                        
+                                        $precio_total_4=($acabado_4Valor*$fotomecanica->input_variable_externo_4);
+                                        $cantidad_4=$fotomecanica->input_variable_externo_4;
+                                    }     
+                                    elseif ($acabado_4Array->unidad_de_venta == '10') //Por Pasada 
+                                    {
+                                        $costo_unitario4=$acabado_4Valor;                                        
+                                        $precio_total_4=($acabado_4Valor*$datoscantidad1);
+                                        $cantidad_4=$datoscantidad1;                                        
+                                    }
+                                    
+                                }
+                              //  echo $acabado_4UnidadVentaNombre;exit();
+                                if(sizeof($acabado_4Array>0)){ 
+                                $procesosespeciales++; 
+                                $proveedoruno = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('uno',$datos->id);
+                                $proveedoresp1=$this->proveedores_model->getProveedoresPorNombreClave($proveedoruno->proveedor);
+                                }             
+                                //echo $acabado_4;exit();
+                              //  print_r($acabado_4Array);exit();
+                                if($fotomecanica->acabado_impresion_5=="1700")
+                                {
+                                    $acabado_5="";
+                                    $acabado_5Valor="";
+                                    $acabado_5MedidaMasValorVenta="";
+                                    $acabado_5Unitario="";
+                                    $acabado_5UnidadVentaNombre="";
+                                }else
+                                {   $altura=1 + $altura;                                 
+                                    $acabado_5Array=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_5);
+                                    $acabado_5=$acabado_5Array->caracteristicas;
+                                    $acabado_5UnidadVentaNombre=$acabado_5Array->unv; //Nombre unidad de venta
+                                    $acabado_5Valor=$acabado_5Array->costo_compra; // ej: 52
+                                    $acabado_5MedidaMasValorVenta=($tamano1*$tamano2*$acabado_5Valor)/10000; // (ancho x largo x valor venta) /10000									
+                                    $acabado_5CostoFijo=$acabado_5Array->costo_fijo;		
+                                  if ($acabado_5Array->unidad_de_venta == '1') //mt2
+                                    {
+                                        $costo_unitario5=$acabado_5MedidaMasValorVenta;
+                                        $precio_total_5=($acabado_5MedidaMasValorVenta*$datoscantidad1);                                      
+                                        $cantidad_5=$datoscantidad1;
+                                    }
+                                    elseif ($acabado_5Array->unidad_de_venta == '2') //Kilos
+                                    {
+                                        $precio_total_5=($acabado_5Valor*$fotomecanica->input_variable_externo_5);
+                                        $costo_unitario5=$acabado_5Valor; 
+                                        $cantidad_5=$fotomecanica->input_variable_externo_5;
+                                    }    
+                                    elseif ($acabado_5Array->unidad_de_venta == '3') //mt2
+                                    {
+                                        $precio_total_5=($acabado_5MedidaMasValorVenta*$datoscantidad1);
+                                    }                                    
+                                    elseif ($acabado_5Array->unidad_de_venta == '4') //mt2
+                                    {
+                                        $precio_total_5=($acabado_5MedidaMasValorVenta*$datoscantidad1);
+                                    }                                            
+                                    elseif ($acabado_5Array->unidad_de_venta == '5') //unidad
+                                    {
+                                        $costo_unitario5=$acabado_5Valor;                                        
+                                        $precio_total_5=($datoscantidad1*$acabado_5Valor);
+                                        $cantidad_5=$datoscantidad1;
+                                    }       
+                                    elseif ($acabado_5Array->unidad_de_venta == '6') //mt2
+                                    {
+                                        $precio_total_5=($acabado_5Valor*$fotomecanica->input_variable_externo_5);
+                                        $costo_unitario5=$acabado_5Valor;
+                                        $cantidad_5=$fotomecanica->input_variable_externo_5;
+                                    }   
+                                    elseif ($acabado_5Array->unidad_de_venta == '7') //mt2
+                                    {
+                                        $costo_unitario5=$acabado_5MedidaMasValorVenta/$ing->unidades_por_pliego;
+                                        $precio_total_5=($acabado_5MedidaMasValorVenta/$ing->unidades_por_pliego)*$datoscantidad1;
+                                        $cantidad_5=$datoscantidad1;
+                                    }
+                                    elseif ($acabado_5Array->unidad_de_venta == '8') //mt2
+                                    {
+                                        $precio_total_5=($acabado_5MedidaMasValorVenta*$datoscantidad1);
+                                    }           
+                                    elseif ($acabado_5Array->unidad_de_venta == '9') //Monto Fijo 
+                                    { 
+                                        $costo_unitario5=$acabado_5Valor;                                        
+                                        //$precio_total_5=($acabado_5Valor*$fotomecanica->input_variable_externo_5);
+                                        $precio_total_5=$acabado_5Valor;
+                                        $cantidad_5=$fotomecanica->input_variable_externo_5;
+                                    }   
+                                    elseif ($acabado_5Array->unidad_de_venta == '10') //Por Pasada 
+                                    {
+                                        $costo_unitario5=$acabado_5Valor;                                        
+                                        $precio_total_5=($acabado_5Valor*$datoscantidad1);
+                                        $cantidad_5=$datoscantidad1;
+                                    }                                      
+                                }    
+                                
+                                if(sizeof($acabado_5Array>0)){ 
+                                $procesosespeciales++; 
+                                $proveedordos = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('dos',$datos->id);
+                                $proveedoresp2=$this->proveedores_model->getProveedoresPorNombreClave($proveedordos->proveedor);
+                                }             
+                                
+                                if($fotomecanica->acabado_impresion_6=="1700")
+                                {
+                                    $acabado_6="";
+                                    $acabado_6Valor="";
+                                    $acabado_6MedidaMasValorVenta="";
+                                    $acabado_6Unitario="";
+                                    $acabado_6UnidadVentaNombre="";
+                                }else
+                                {   $altura=1 + $altura;
+                                    $acabado_6Array=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresion_6);
+                                    $acabado_6=$acabado_6Array->caracteristicas;
+                                    $acabado_6UnidadVentaNombre=$acabado_6Array->unv; //Nombre unidad de venta
+                                    $acabado_6Valor=$acabado_6Array->costo_compra; // ej: 52
+                                    $acabado_6MedidaMasValorVenta=($tamano1*$tamano2*$acabado_6Valor)/10000; // (ancho x largo x valor venta) /10000									
+                                    $acabado_6CostoFijo=$acabado_6Array->costo_fijo;		
+                                  
+                                    if ($acabado_6Array->unidad_de_venta == '1') //mt2
+                                    {
+                                        $precio_total_6=($acabado_6MedidaMasValorVenta*$datoscantidad1);
+                                    }
+                                    elseif ($acabado_6Array->unidad_de_venta == '2') //Kilos
+                                    {
+                                        $precio_total_6=($acabado_6Valor*$fotomecanica->input_variable_externo_6);
+                                        $costo_unitario6=$acabado_6Valor; 
+                                        $cantidad_6=$fotomecanica->input_variable_externo_6;
+                                    }  
+                                    elseif ($acabado_6Array->unidad_de_venta == '3') //mt2
+                                    {
+                                        $precio_total_6=($acabado_6MedidaMasValorVenta*$datoscantidad1);
+                                    }                                    
+                                    elseif ($acabado_6Array->unidad_de_venta == '4') //mt2
+                                    {
+                                        $precio_total_6=($acabado_6MedidaMasValorVenta*$datoscantidad1);
+                                    }                                            
+                                    elseif ($acabado_6Array->unidad_de_venta == '5') //unidad
+                                    {
+                                        $costo_unitario6=$acabado_6Valor;                                        
+                                        $precio_total_6=($datoscantidad1*$acabado_6Valor);
+                                        $cantidad_6=$datoscantidad1;
+                                    }       
+                                    elseif ($acabado_6Array->unidad_de_venta == '6') //mt2
+                                    {
+                                        $precio_total_6=($acabado_6Valor*$fotomecanica->input_variable_externo_6);
+                                        $costo_unitario6=$acabado_6Valor;
+                                        $cantidad_6=$fotomecanica->input_variable_externo_6;
+                                    }   
+                                    elseif ($acabado_6Array->unidad_de_venta == '7') //mt2
+                                    {
+                                        $costo_unitario6=$acabado_6MedidaMasValorVenta/$ing->unidades_por_pliego;
+                                        $precio_total_6=($acabado_6MedidaMasValorVenta/$ing->unidades_por_pliego)*$datoscantidad1;
+                                        $cantidad_6=$datoscantidad1;
+                                    }
+                                    elseif ($acabado_6Array->unidad_de_venta == '8') //cms
+                                    {
+                                        $precio_total_6=($acabado_6MedidaMasValorVenta*$datoscantidad1);
+                                    }           
+                                    elseif ($acabado_6Array->unidad_de_venta == '9') //Monto Fijo 
+                                    {
+                                        $costo_unitario6=$acabado_6Valor;                                        
+                                        $precio_total_6=($acabado_6Valor*$fotomecanica->input_variable_externo_6);
+                                        $cantidad_6=$fotomecanica->input_variable_externo_6;
+                                    } 
+                                    elseif ($acabado_6Array->unidad_de_venta == '10') //Por Pasada 
+                                    {
+                                        $costo_unitario6=$acabado_6Valor;                                        
+                                        $precio_total_6=($acabado_6Valor*$datoscantidad1);
+                                        $cantidad_6=$datoscantidad1;
+                                    }                                      
+
+                                }
+                                
+                                if(sizeof($acabado_6Array>0)){ 
+                                $procesosespeciales++; 
+                                $proveedortres = $this->cotizaciones_model->getOrdenesProveedoresPorNombre('tres',$datos->id);
+                                $proveedoresp3=$this->proveedores_model->getProveedoresPorNombreClave($proveedortres->proveedor);
+                                }             
+                                
                 
 //                $var = array_oc(1,$cuno2, $proveedor5, $datos, $procesosespeciales,$correlativo);
 //              $prov = print_r($cuno2);
-//             echo "<pre>";
+          //echo $acabado_4;
                //print_r($data);exit();
              //fin de datos para la vista
              $this->load->library('mPDF');
              $css= file_get_contents('public/frontend/css/oc.css');
              
+//             echo "<pre>";
+//             print_r($ing);
+             //echo $acabado_4;exit();
+//             echo "</pre>";exit();
              $this->mPDF->pdf = new mPDF();
+             if($acabado_4!=""){
+              $procesosespeciales++;     
+             $correlativo++;
+             $var = array_oc2(1,$folia1, $proveedoresp1, $datos, $procesosespeciales, $acabado_4Valor,$acabado_4,$correlativo,$fotomecanica,$materialidad_1,$ing,$acabado_4UnidadVentaNombre);
+             $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales_2', compact('var'),true); 
+             $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
+             $this->mPDF->pdf->WriteHTML($css,1);
+             $this->mPDF->pdf->WriteHTML($html);
+             }
+             if($acabado_5!=""){  
+             $procesosespeciales++; 
+             $correlativo++;
+             $var = array_oc2(1,$folia1, $proveedoresp2, $datos, $procesosespeciales, $acabado_5Valor,$acabado_5,$correlativo,$fotomecanica,$materialidad_1,$ing,$acabado_5UnidadVentaNombre);
+             $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales_2', compact('var'),true); 
+             $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
+             $this->mPDF->pdf->WriteHTML($css,1);
+             $this->mPDF->pdf->WriteHTML($html);
+             }
+             if($acabado_6!=""){
+              $procesosespeciales++; 
+             $correlativo++;
+             $var = array_oc2(1,$folia1, $proveedoresp3, $datos, $procesosespeciales, $acabado_6Valor,$acabado_6,$correlativo,$fotomecanica,$materialidad_1,$ing,$acabado_6UnidadVentaNombre);
+             $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales_2', compact('var'),true); 
+             $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
+             $this->mPDF->pdf->WriteHTML($css,1);
+             $this->mPDF->pdf->WriteHTML($html);
+             }
              if($tesp1!=0){  
              $correlativo++;
-             $var = array_oc(1,$folia1, $proveedor1, $datos, $procesosespeciales,$correlativo);
+             $var = array_oc(1,$folia1, $proveedor1, $datos, $procesosespeciales,$correlativo,$ing);
              //print_r($var);exit();
              $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales', compact('var'),true); 
              $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
@@ -380,7 +765,7 @@ class Cotizaciones extends CI_Controller {
              }
              if($tesp2!=0){
              $correlativo++;
-             $var = array_oc(1,$folia2, $proveedor2, $datos, $procesosespeciales,$correlativo);
+             $var = array_oc(1,$folia2, $proveedor2, $datos, $procesosespeciales,$correlativo,$ing);
              $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales', compact('var'),true); 
              $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
              $this->mPDF->pdf->WriteHTML($css,1);
@@ -388,7 +773,7 @@ class Cotizaciones extends CI_Controller {
              }
              if($tesp3!=0){
              $correlativo++;
-             $var = array_oc(1,$folia3, $proveedor3, $datos, $procesosespeciales,$correlativo);
+             $var = array_oc(1,$folia3, $proveedor3, $datos, $procesosespeciales,$correlativo,$ing);
              $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales', compact('var'),true); 
              $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
              $this->mPDF->pdf->WriteHTML($css,1);
@@ -396,7 +781,7 @@ class Cotizaciones extends CI_Controller {
              }
              if($tesp4!=0){
              $correlativo++;
-             $var = array_oc(1,$cuno1, $proveedor4, $datos, $procesosespeciales,$correlativo);
+             $var = array_oc(1,$cuno1, $proveedor4, $datos, $procesosespeciales,$correlativo,$ing);
              $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales', compact('var'),true); 
              $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
              $this->mPDF->pdf->WriteHTML($css,1);
@@ -404,7 +789,7 @@ class Cotizaciones extends CI_Controller {
              }
              if($tesp5!=0){
              $correlativo++;
-             $var = array_oc(1,$cuno2, $proveedor5, $datos, $procesosespeciales,$correlativo);
+             $var = array_oc(1,$cuno2, $proveedor5, $datos, $procesosespeciales,$correlativo,$ing);
             // print_r($prov);echo "</pre>";exit();
              $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales', compact('var'),true); 
              $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
@@ -413,7 +798,7 @@ class Cotizaciones extends CI_Controller {
              }
              if($tesp6!=0){
              $correlativo++;
-             $var = array_oc(1,$mfolia1, $proveedor6, $datos, $procesosespeciales,$correlativo);
+             $var = array_oc(1,$mfolia1, $proveedor6, $datos, $procesosespeciales,$correlativo,$ing);
              $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales', compact('var'),true); 
              $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
              $this->mPDF->pdf->WriteHTML($css,1);
@@ -421,7 +806,7 @@ class Cotizaciones extends CI_Controller {
              }
              if($tesp7!=0){
              $correlativo++;
-             $var = array_oc(1,$mfolia2, $proveedor7, $datos, $procesosespeciales,$correlativo);
+             $var = array_oc(1,$mfolia2, $proveedor7, $datos, $procesosespeciales,$correlativo,$ing);
              $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales', compact('var'),true); 
              $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
              $this->mPDF->pdf->WriteHTML($css,1);
@@ -429,7 +814,7 @@ class Cotizaciones extends CI_Controller {
              }
              if($tesp8!=0){
              $correlativo++;
-             $var = array_oc(1,$mfolia3, $proveedor8, $datos, $procesosespeciales,$correlativo);
+             $var = array_oc(1,$mfolia3, $proveedor8, $datos, $procesosespeciales,$correlativo,$ing);
              $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales', compact('var'),true); 
              $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
              $this->mPDF->pdf->WriteHTML($css,1);
@@ -437,7 +822,7 @@ class Cotizaciones extends CI_Controller {
              }
              if($tesp9!=0){
              $correlativo++;
-             $var = array_oc(1,$mcuno1, $proveedor9, $datos, $procesosespeciales,$correlativo);
+             $var = array_oc(1,$mcuno1, $proveedor9, $datos, $procesosespeciales,$correlativo,$ing);
              $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales', compact('var'),true); 
              $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
              $this->mPDF->pdf->WriteHTML($css,1);
@@ -445,7 +830,7 @@ class Cotizaciones extends CI_Controller {
              }
              if($tesp10!=0){
              $correlativo++;
-             $var = array_oc(1,$mcuno2, $proveedor10, $datos, $procesosespeciales,$correlativo);
+             $var = array_oc(1,$mcuno2, $proveedor10, $datos, $procesosespeciales,$correlativo,$ing);
              $html=$this->load->view('frontend/cotizaciones/oc_trabajosespeciales', compact('var'),true); 
              $this->mPDF->pdf->AddPage('P','','','','',5,5,10,10,10,10);
              $this->mPDF->pdf->WriteHTML($css,1);
@@ -1802,7 +2187,7 @@ class Cotizaciones extends CI_Controller {
 
      public function borrar_items(){
          $objetos = $this->input->post('numeros',true);
-         //print_r($objetos);exit();
+       //  print_r($objetos);exit();
          for($i=0; $i<sizeof($objetos); $i++ ) {
             $cot = $this->cotizaciones_model->getCotizacionPorId($objetos[$i]);
             $cot_ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($objetos[$i]);
@@ -2891,8 +3276,12 @@ $cuerpo2.='<table class="tabla">';
         $idc = substr($hoja->codigo_duplicado,0,4);
         if($idc!=""){
         $copias=$this->cotizaciones_model->obtenerMaximoIdCopias($idc);}
-        if (is_numeric($datos->forma_pago)) $forma_pago=$this->clientes_model->getFormasPagoPorId($datos->forma_pago); 
-        else $forma_pago=$this->clientes_model->getFormasPagoPorNombre($datos->forma_pago);
+        if (is_numeric($datos->forma_pago)){ 
+        $forma_pago=$this->clientes_model->getFormasPagoPorId($datos->forma_pago); 
+        if(sizeof($forma_pago)==0){
+        $forma_pago = $this->clientes_model->getFormasPagoPorIdCliente($datos->id_cliente);    
+        }
+        }else{ $forma_pago=$this->clientes_model->getFormasPagoPorNombre($datos->forma_pago);}
         $orden=$this->orden_model->getOrdenesPorCotizacion($id);
 
 		
@@ -2921,7 +3310,7 @@ $cuerpo2.='<table class="tabla">';
                         "valor_extra"=>$this->input->post("valor_extra",true),                        
                         "costo_adicional"=>'0',
                         "dias_de_entrega"=>'20',
-                        "margen"=>'15',
+                        "margen"=>$this->input->post("margen",true),  
                         "valor_acabado_1"=>'0',
                         "valor_acabado_2"=>'0',
                         "valor_acabado_3"=>'0',
@@ -2943,22 +3332,14 @@ $cuerpo2.='<table class="tabla">';
                     "valor_empresa_2"=>$this->input->post("valor_empresa2",true),
                     "valor_extra"=>$this->input->post("valor_extra",true),                        
                 );
-                   
-//                 $this->db->where('id_cotizacion', $this->input->post('id',true));
-//                 $this->db->update("hoja_de_costos_datos",$data);
-               //  print_r($data);exit();
+
             }
-       	
-        //print_r($datos);exit;
+
         if(sizeof($datos)==0){show_404();}
         $this->layout->setLayout('template_ajax');
-       // print_r($hoja);exit();
-//        if($hoja->impreso==1){
-//            $hoja = $hoja2;
-//        $this->layout->view('hoja_de_costos2',compact('copias','datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden'));      
-//        }else{
+
         $this->layout->view('hoja_de_costos',compact('copias','datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden'));          
-        //}
+
         }else
         {
             redirect(base_url().'usuarios/login',  301);
@@ -3017,7 +3398,7 @@ $cuerpo2.='<table class="tabla">';
                         "valor_extra"=>$this->input->post("valor_extra",true),                        
                         "costo_adicional"=>'0',
                         "dias_de_entrega"=>'20',
-                        "margen"=>'15',
+                        "margen"=>$this->input->post("margen",true),
                         "valor_acabado_1"=>'0',
                         "valor_acabado_2"=>'0',
                         "valor_acabado_3"=>'0',
@@ -3039,16 +3420,12 @@ $cuerpo2.='<table class="tabla">';
                     "valor_empresa_2"=>$this->input->post("valor_empresa2",true),
                     "valor_extra"=>$this->input->post("valor_extra",true),                        
                 );
-                   
-//                 $this->db->where('id_cotizacion', $this->input->post('id',true));
-//                 $this->db->update("hoja_de_costos_datos",$data);
-               //  print_r($data);exit();
+
             }
-       	
-        //print_r($orden);exit;
+
         if(sizeof($datos)==0){show_404();}
         $this->layout->setLayout('template_ajax');
-        $this->layout->view('hoja_de_costos2',compact('copias','datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden'));  
+        $this->layout->view('hc_propia2',compact('copias','datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden'));  
         }else
         {
             redirect(base_url().'usuarios/login',  301);
@@ -3061,8 +3438,11 @@ $cuerpo2.='<table class="tabla">';
 	{
 	if($this->session->userdata('id'))
         {
- 
-        if(!$id){show_404();}
+        //retornando la cotizacion copiada
+        $copia = $this->input->post("copia",true);
+        
+        if($copia==1){$id = $copia;}
+        //*******************************************************
         $datos=$this->cotizaciones_model->getCotizacionPorId($id);
         $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
         $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
@@ -3072,20 +3452,24 @@ $cuerpo2.='<table class="tabla">';
         $cli=$this->clientes_model->getClientePorId($datos->id_cliente);
         $presupuesto=$this->cotizaciones_model->getCotizacionCotizacionPrespuestoPorIdCotizacion($id);
         $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
-        if (is_numeric($datos->forma_pago)) $forma_pago=$this->clientes_model->getFormasPagoPorId($datos->forma_pago); 
-        else $forma_pago=$this->clientes_model->getFormasPagoPorNombre($datos->forma_pago);
+        $hoja2=$this->cotizaciones_model->getHojaDeCostos2PorIdCotizacion($id);
+        $idc = substr($hoja->codigo_duplicado,0,4);
+        if($idc!=""){
+        $copias=$this->cotizaciones_model->obtenerMaximoIdCopias($idc);}
+//print_r($copias);exit();
+        if (is_numeric($datos->forma_pago)){ 
+        $forma_pago=$this->clientes_model->getFormasPagoPorId($datos->forma_pago); 
+        if(sizeof($forma_pago)==0){
+        $forma_pago = $this->clientes_model->getFormasPagoPorIdCliente($datos->id_cliente);    
+        }
+        }else{ $forma_pago=$this->clientes_model->getFormasPagoPorNombre($datos->forma_pago);}
         $orden=$this->orden_model->getOrdenesPorCotizacion($id);
-
-		
-            if(sizeof($hoja)==0)
+          if(sizeof($hoja)==0)
             {
-          
-                
                 if($this->input->post("pegado",true) == '')
                 {
                         $pegado= '30';
                 }else{
-
                         $pegado= $this->input->post("pegado",true);
                 }
           
@@ -3106,7 +3490,6 @@ $cuerpo2.='<table class="tabla">';
                         "valor_acabado_3"=>'0',
                     );
                 }
-
             }
             else
             {
@@ -3116,16 +3499,10 @@ $cuerpo2.='<table class="tabla">';
                     "valor_empresa_2"=>$this->input->post("valor_empresa2",true),
                     "valor_extra"=>$this->input->post("valor_extra",true),                        
                 );
-                   
-//                 $this->db->where('id_cotizacion', $this->input->post('id',true));
-//                 $this->db->update("hoja_de_costos_datos",$data);
-               //  print_r($data);exit();
             }     	
-        //print_r($orden);exit;
         if(sizeof($datos)==0){show_404();}
         $this->layout->setLayout('template_ajax');
-        //$this->layout->view('hc_propia',compact('datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden'));  
-        $this->layout->view('hc_propia',compact('datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden'));  
+        $this->layout->view('hc_propia',compact('datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden','copias'));  
         }else
         {
             redirect(base_url().'usuarios/login',  301);
@@ -3565,8 +3942,8 @@ $cuerpo2.='<table class="tabla">';
                                                 (
                                                     "total_merma"=>$sum,
                                                 );
-                                                $this->db->where('id', $hoja->id);
-                                                $this->db->update("hoja_de_costos_datos",$arreglo55);
+//                                                $this->db->where('id', $hoja->id);
+//                                                $this->db->update("hoja_de_costos_datos",$arreglo55);
                                         }
        /**
         * fin validaciones mermas
@@ -7911,15 +8288,15 @@ $cuerpo2.='<table class="tabla">';
                             $producto=$this->input->post("producto",true);
                         }    
                         
-                       if (($this->form_validation->run($valida)) and (!$error) and (!$error_producto))
+                       if (($this->form_validation->run($valida)) && (!$error) and (!$error_producto))
                        {
                             
-                                if($this->input->post("colores") <= 3 and $this->input->post("hacer_cromalin") == 'SI') 
+                                if($this->input->post("colores") <= 3 && $this->input->post("hacer_cromalin") == 'SI') 
                                 {									   
                                          $hacer_cromalin="SI";
                                 }
 
-                                if($this->input->post("colores") <= 3 and $this->input->post("hacer_cromalin") == 'NO') 
+                                if($this->input->post("colores") <= 3 && $this->input->post("hacer_cromalin") == 'NO') 
                                 {									   
                                          $hacer_cromalin="NO";
                                 }
@@ -8141,6 +8518,13 @@ $cuerpo2.='<table class="tabla">';
                                     $hacer_troquel="NO";
                                     $lleva_troquelado="NO";                                    
                                 }
+                               if($this->input->post("select_estan_los_moldes",true)=='NO' && $this->input->post("hay_que_troquelar",true)=='SI' && $this->input->post("existe_trazado",true)=='SI')
+                               {
+                                    $numeroMolde = 21;
+                                    $estanlosmoldes = 'NO';
+                                    $hacer_troquel="SI";
+                                    $lleva_troquelado="SI";                                    
+                                }
 								
                                if (($this->input->post("select_estan_los_moldes",true)=='MOLDE GENERICO') && ($this->input->post("select_estan_los_moldes_genericos",true)=='SI'))
                                {
@@ -8191,7 +8575,9 @@ $cuerpo2.='<table class="tabla">';
                                     $matnombre1 = $this->materiales_model->getMaterialesNombrePorId($this->input->post("materialidad_1",true));
                                     $matnombre2 = $this->materiales_model->getMaterialesNombrePorId($this->input->post("materialidad_2",true));
                                     $matnombre3 = $this->materiales_model->getMaterialesNombrePorId($this->input->post("materialidad_3",true));
-                                // echo "<h1>".$this->input->post('cliente',true).'</h1>';
+                                 echo "<h1>".$estanlosmoldes.'</h1>';
+                                 echo "<h1>".$hacer_troquel.'</h1>';
+                                 echo "<h1>".$lleva_troquelado.'</h1>';
                                  $data=array
                                  (
                                     "id_usuario"=>$this->session->userdata('id'),
@@ -8307,7 +8693,7 @@ $cuerpo2.='<table class="tabla">';
                                     "existe_trazado"=> $this->input->post('existe_trazado',true), 
                                     "trazado"=> $this->input->post('trazados',true), 
                                      );
-                              //  exit(print_r($data));
+                             //   exit(print_r($data));
                                     if (sizeof($datos_cotizacion)>0)
                                     {
 //                                        exit("1");
@@ -9488,28 +9874,17 @@ $cuerpo2.='<table class="tabla">';
             $nombreProducto=$this->productos_model->getProductosPorNombre($datos->producto);
             
             if($this->input->post())
-            {
-//                echo $this->input->post("hacer_troquel",true);
-//                echo $this->input->post("lleva_troquelado",true);
-//                echo $this->input->post("select_estan_los_moldes",true);
-//                                echo $hacer_troquel;
-//                                echo    $lleva_troquelado;  exit();
-//            echo $datos->numero_molde."<br />";
-//            echo $this->input->post('nm',true)."<br />";exit();
-              //echo $this->input->post('nombre_molde',true)."<br />";exit();
-               
+            {                       
                 if($this->input->post("nm",true)!=11 && $this->input->post("nm",true)!=12 && $this->input->post("nm",true)!=13 && $this->input->post("nm",true)!=14 && $this->input->post("nm",true)!=15 && $this->input->post("nm",true)!=21){
                 if($datos->numero_molde!=$this->input->post("nm",true) && $datos->condicion_del_producto=='Nuevo'){
-                    $condicion_del_producto='Repetición Con Cambios';
-                    
+                    $condicion_del_producto='Repetición Con Cambios';                    
                 }else{
                     $condicion_del_producto=$datos->condicion_del_producto;
                     
                 }}else{
                 $condicion_del_producto=$datos->condicion_del_producto;
                 }
-               
-              //  exit();
+
                 $arreglo_archivo_cliente=$this->cotizaciones_model->getCampoArchivoClientePorId($id);
                 $archivo_a_borrar_trazado=$ing->archivo;
                 $archivo_a_borrar_cliente=$arreglo_archivo_cliente->archivo;
@@ -9538,7 +9913,6 @@ $cuerpo2.='<table class="tabla">';
                            }else{
                                $file_name_dos="";	
                            }
-
                         }else
                         {
                            $error=NULL;
@@ -9571,8 +9945,7 @@ $cuerpo2.='<table class="tabla">';
                            $this->cotizaciones_model->insertarArchivoCliente_RevisionIngenieria($datos_archivo_cliente);    
                            $this->upload->initialize($config);                           
                          }                    
-                    
-                    
+                                       
                         if(empty($_FILES["file"]["name"]))
                         {
                              if(sizeof($ing->archivo) > 0)
@@ -9642,83 +10015,59 @@ $cuerpo2.='<table class="tabla">';
 //                        if($this->input->post('estado',true)==1)
 //                        {
                               $quien=$this->session->userdata('id');
-                              $cuando=date("Y-m-d");
-
-						   
+                              $cuando=date("Y-m-d");			   
 			       //Verificar tipo de molde seleccionado
                                $estanlosmoldes = 'NO';
                                $hacer_troquel="";
                                $lleva_troquelado="";   
-                               if($this->input->post("select_estan_los_moldes",true)=='SI')
-                               {
-                                    $numeroMolde = 1;
-                                    $estanlosmoldes = 'SI';
-                                    $hacer_troquel="NO";
-                                    $lleva_troquelado="SI";                                    
-                               }
                                
-                               
-                               if($this->input->post("select_estan_los_moldes",true)=='NO LLEVA' && $this->input->post("hay_que_troquelar",true)=='NO')
-                               {
-                               //echo $this->input->post("molde_generico",true);exit(aaa);
-                               //echo $this->input->post("select_estan_los_moldes",true);exit();
-                                    //$numeroMolde = $this->input->post("molde_generico",true);
-                                    $numeroMolde = $this->input->post("nm",true);
-                                    $estanlosmoldes = 'NO LLEVA';
-                                    $hacer_troquel="NO";
-                                    $lleva_troquelado="NO";                                       
-                               }
-							   
-                               if($this->input->post("select_estan_los_moldes",true)=='CLIENTE LO APORTA')
-                               {
-                                    $numeroMolde = 2;
-                                    $estanlosmoldes = 'CLIENTE LO APORTA';
-                                    $hacer_troquel="NO";
-                                    $lleva_troquelado="SI";                                      
-                                }
-						   
-                               if($this->input->post("select_estan_los_moldes",true)=='NO' && $this->input->post("hay_que_troquelar",true)=='SI')
-                               {
-                                    $numeroMolde = 1;
-                                    $estanlosmoldes = 'NO';
-                                    $hacer_troquel="SI";
-                                    $lleva_troquelado="SI";                                      
-				}
-                               if($this->input->post("select_estan_los_moldes",true)=='' && $this->input->post("hay_que_troquelar",true)=='SI')
-                               {
-                                    $numeroMolde = 21;
-                                    $estanlosmoldes = 'NO';
-                                    $hacer_troquel="SI";
-                                    $lleva_troquelado="SI";                                      
-				}
-                               if($this->input->post("select_estan_los_moldes",true)=='NO' && $this->input->post("hay_que_troquelar",true)=='NO')
-                               {
-                                    $numeroMolde = 21;
-                                    $estanlosmoldes = 'NO';
-                                    $hacer_troquel="NO";
-                                    $lleva_troquelado="NO";                                      
-				}
-//                                echo $this->input->post("select_estan_los_moldes",true)."holaaa";
-								
-                               if (($this->input->post("select_estan_los_moldes",true)=='MOLDE GENERICO') && ($this->input->post("select_estan_los_moldes_genericos",true)=='SI'))
-                               {
-                                    $numeroMolde = $this->input->post("molde_generico",true);
+                               if($this->input->post("select_estan_los_moldes",true)=='SI' || $this->input->post("select_estan_los_moldes",true)=='MOLDE GENERICO'){
                                     $estanlosmoldes = 'MOLDE GENERICO';
                                     $hacer_troquel="NO";
-                                    $lleva_troquelado="SI";                                    
-                                }
-                                elseif (($this->input->post("select_estan_los_moldes",true)=='MOLDE REGISTRADOS DEL CLIENTE') && ($this->input->post("select_estan_los_moldes_no_genericos_clientes",true)=='SI'))
-                                {
-                                    $numeroMolde = $this->input->post("molde_registrado",true);
+                                    $lleva_troquelado="SI";
+                                    $hay_que_troquelar="SI";
+                                    $numeroMolde =$this->input->post("nm",true);
+                               }
+                               if($this->input->post("select_estan_los_moldes",true)=='NO'){
+                                    $estanlosmoldes = 'NO';
+                                    $hacer_troquel="SI";
+                                    $lleva_troquelado="SI";
+                                    $hay_que_troquelar="SI";
+                                    $numeroMolde ="21";
+                               }
+                               if($this->input->post("select_estan_los_moldes",true)=='NO LLEVA'){
+                                    $estanlosmoldes = 'NO LLEVA';
+                                    $hacer_troquel="NO";
+                                    $lleva_troquelado="NO";
+                                    $hay_que_troquelar="NO";
+                                    $numeroMolde ="";
+                               }
+                               if($this->input->post("select_estan_los_moldes",true)=='CLIENTE LO APORTA'){
+                                    $estanlosmoldes = 'CLIENTE LO APORTA';
+                                    $hacer_troquel="NO";
+                                    $lleva_troquelado="NO";
+                                    $hay_que_troquelar="NO";
+                                    $numeroMolde ="";
+                               }
+                               if($this->input->post("select_estan_los_moldes",true)=='MOLDE REGISTRADOS DEL CLIENTE'){
                                     $estanlosmoldes = 'MOLDE REGISTRADOS DEL CLIENTE';
                                     $hacer_troquel="NO";
-                                    $lleva_troquelado="SI";                                       
-                                }  
+                                    $lleva_troquelado="SI";
+                                    $hay_que_troquelar="SI";
+                                    $numero="SI";
+                                    $numeroMolde =$this->input->post("nm",true);
+                               }
+                               
                                 
-//                          echo $condicion_del_producto;
-//                          echo $numeroMolde;
-//              echo $datos->numero_molde."<br />";
-//            echo $this->input->post('nm',true)."<br />";exit();
+                                    echo $condicion_del_producto."<br>";
+                                    echo $this->input->post("select_estan_los_moldes_genericos",true)."<br>";
+                                    echo $this->input->post("select_estan_los_moldes",true)."<br>";
+                                    echo "Estan?".$estanlosmoldes."<br>";
+                                    echo "Hacer?".$hacer_troquel."<br>";
+                                    echo "LLeva?".$lleva_troquelado."<br>";
+                                    echo "Nro M".$numeroMolde."<br>";
+                                    echo $datos->numero_molde . "<br />";
+                                    echo $this->input->post('nm',true)."<br />";//exit();
             
                         $suma_largo_aleta=$this->input->post("ancho_1",true)+$this->input->post("ancho_2",true)+$this->input->post("largo_1",true)+$this->input->post("largo_2",true)+$this->input->post("aleta_pegado",true);
                         
@@ -9732,21 +10081,7 @@ $cuerpo2.='<table class="tabla">';
                                 $file_name = $file_name;
                             }
                         }
-                        /***************************************/
-//                        if($this->input->post('numero_de_molde',true)!=""){
-//                        $data_molde=array(
-//                            "cuchillocuchillo"=>$this->input->post('cci1'),
-//                            "cuchillocuchillo2"=>$this->input->post('cci2'),
-//                            "ancho_bobina"=>$this->input->post('ancho_ing_1'),
-//                            "largo_bobina"=>$this->input->post('largo_ing_2'),
-//                            "unidades_productos_completos"=>$this->input->post('unidades_por_pliego_ing'),
-//                            "piezas_totales"=>$this->input->post('piezas_totales_ing'),
-//                            "medidas_de_las_cajas"=>$this->input->post('mci1'),
-//                            "medidas_de_las_cajas_2"=>$this->input->post('mci2'),
-//                            "medidas_de_las_cajas_3"=>$this->input->post('mci3'),
-//                            "medidas_de_las_cajas_4"=>$this->input->post('mci4'),
-//                        );
-                        //echo $file_name."<br />"; 
+                                               
                         $archivomolde=$this->moldes_model->getMoldesPorId($this->input->post('numero_de_molde',true));
                         if(sizeof($archivomolde)>0 && $archivomolde->id!=1){
                             if($archivomolde->archivo!=""){
@@ -9763,6 +10098,7 @@ $cuerpo2.='<table class="tabla">';
 //                        $this->db->where('id', $this->input->post('numero_de_molde',true));
 //                        $this->db->update("moldes_grau",$data_molde);}
                         /***************************************/
+                        
                         if($datos->existe_trazado=='SI' && $datos->estan_los_moldes=='NO'){
                             $cuchillo1=$this->input->post('tamano_cuchillo_1',true);
                             $cuchillo2=$this->input->post('tamano_cuchillo_2',true);
@@ -9770,6 +10106,13 @@ $cuerpo2.='<table class="tabla">';
                             $cuchillo1=$this->input->post('cci1',true);
                             $cuchillo2=$this->input->post('cci2',true);
                         }
+                        
+                        if($datos->estan_los_moldes!='NO'){
+                            $cuchillo1=$this->input->post('tamano_cuchillo_1',true);
+                            $cuchillo2=$this->input->post('tamano_cuchillo_2',true);
+                        }
+                        $cuchillo1=$this->input->post('tamano_cuchillo_1',true);
+                        $cuchillo2=$this->input->post('tamano_cuchillo_2',true);
                         
                         $trazadosing = $this->trazados_model->getTrazadosPorId($datos->id);
                         if($trazadosing>0){
@@ -9788,6 +10131,7 @@ $cuerpo2.='<table class="tabla">';
                             $ccac1=$this->input->post('ccac_1',true);
                             $ccac1=$this->input->post('ccac_2',true);
                         }
+                        
                         $data=array
                         (
                             "id_usuario"=>$this->session->userdata('id'),
@@ -9849,7 +10193,7 @@ $cuerpo2.='<table class="tabla">';
                             "tipo_fondo"=>$this->input->post("tipo_fondo",true),
                             "lleva_aletas"=>$this->input->post("lleva_aletas",true),
                             "total_aplicaciones_adhesivo"=>$this->input->post("total_aplicaciones_adhesivo",true),
-                            "id_molde"=>1,//alerta con este campo ehndz
+                            "id_molde"=>$numeroMolde,//alerta con este campo ehndz
                             "aleta_pegado"=>$this->input->post("aleta_pegado",true),
                             "ancho_1"=>$this->input->post("ancho_1",true),
                             "ancho_2"=>$this->input->post("ancho_2",true),
@@ -9903,6 +10247,7 @@ $cuerpo2.='<table class="tabla">';
                             "ing_reserva_barniz"=>$this->input->post("ing_reserva_barniz",true),                             
                             "ing_cala_caucho"=>$this->input->post("ing_cala_caucho",true), 
                             "colores"=>$this->input->post("colores",true),                             
+                            //"hay_que_troquelar"=>$this->input->post("hay_que_troquelar",true),                             
                             "hay_que_troquelar"=>$this->input->post("hay_que_troquelar",true),                             
                             "folia1_molde_selected"=>$this->input->post("folia1_molde_selected",true),                             
                             "folia2_molde_selected"=>$this->input->post("folia2_molde_selected",true),                             
@@ -9916,7 +10261,7 @@ $cuerpo2.='<table class="tabla">';
                             "id_mat_liner3"=>$this->input->post("materialidad_3",true),
                             "desgajado_automatico"=>$this->input->post("desgajado_automatico",true),
                             );
-                      // exit(print_r($data));
+                       //exit(print_r($data));
                         
                             //guardar auditoria materialidad
                                     
@@ -10003,9 +10348,24 @@ $cuerpo2.='<table class="tabla">';
                                     }
                             }else
                             {
-                               // print_r($data);exit();
+                                //print_r($data);exit();
                                 $this->db->where('id_cotizacion', $this->input->post('id',true));
                                 $this->db->update("cotizacion_ingenieria",$data);
+                                
+                                $dataf=array(
+                                            "numero_molde"=>$numeroMolde,
+                                            "estan_los_moldes"=>$estanlosmoldes,
+                                            "hay_que_troquelar"=>$hay_que_troquelar,
+                                            "lleva_troquelado"=>$lleva_troquelado,
+                                            "hacer_troquel"=>$hacer_troquel,
+                                            "nombre_molde"=>$this->input->post("nombre_molde",true),
+                                );
+                                
+                                if(sizeof($fotomecanica)){
+                                    $this->db->where('id_cotizacion', $this->input->post('id',true));
+                                    $this->db->update("cotizacion_fotomecanica",$dataf);
+                                }
+                                
                                 if($this->input->post("estado",true)==2)
                                 {
                                     $vendedor=$this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
@@ -10050,19 +10410,24 @@ $cuerpo2.='<table class="tabla">';
                                         $id_del_grupo = $id_cotizaciones_grupales->cotizacion_grupal;
                                         $this->db->where('id', $id_del_grupo);
                                         $this->db->update("cotizaciones_grupales",$data_grupales1);
-                                        /*$data_grupales_en_revision_ingenieria=array
-                                          (
-                                             "cotizacion_grupal"=>$id_del_grupo,
-                                          );	  
-                                        //Se guarda Id del grupo de cotizaciones
-                                        $this->db->where('id_cotizacion', $this->input->post('id',true));
-                                        $this->db->update("cotizacion_ingenieria",$data_grupales_en_revision_ingenieria);
-                                        */
+                                
                                     }
                                 }
                             }
-
+                            if($this->input->post("cliente",true) != $datos->id_cliente && $estanlosmoldes == "MOLDE REGISTRADOS DEL CLIENTE"){
+                                echo "Eureka";
+                                exit();
+                            }
                             // actualizo los moldes en cotizacion
+                            if($estanlosmoldes=="NO"){
+                                $trazado=$this->input->post("trazados",true);
+                                $existe_trazado=$this->input->post("existe_trazado",true);
+                            }else{
+                                $trazado="";
+                                $existe_trazado="";
+                            }
+                            
+                         
                             $data_cotizacion=array
                             (
                                // moldes
@@ -10123,8 +10488,8 @@ $cuerpo2.='<table class="tabla">';
                                 "distancia"=>quitarPuntosNumero($this->input->post("distancia",true)),
                                 "cantidad_de_despachos"=>quitarPuntosNumero($this->input->post("cantidad_de_despachos",true)),
                                 "forma_pago"=>$this->input->post("forma_pago",true),
-                                "trazado"=>$this->input->post("trazados",true),
-                                "existe_trazado"=>$this->input->post("existe_trazado",true),
+                                "trazado"=>$trazado,
+                                "existe_trazado"=>$existe_trazado,
                                 "id_cliente"=>$this->input->post("cliente",true),
                                 "condicion_del_producto"=>$condicion_del_producto,
                                 "acepta_excedentes"=>$this->input->post("acepta_excedentes",true),
@@ -10182,6 +10547,10 @@ $cuerpo2.='<table class="tabla">';
                                     "id_mat_onda2"=>$this->input->post("materialidad_2",true),
                                     "id_mat_liner3"=>$this->input->post("materialidad_3",true),
                                     "producto"=>$this->input->post("producto",true),
+                                    "fot_lleva_barniz"=>$this->input->post("ing_lleva_barniz",true),                             
+                                    "fot_reserva_barniz"=>$this->input->post("ing_reserva_barniz",true),                             
+                                    "fot_cala_caucho"=>$this->input->post("ing_cala_caucho",true), 
+                                    "colores"=>$this->input->post("colores",true),    
                            
                                   );                            
                             $this->db->where('id_cotizacion', $this->input->post('id',true));
@@ -10305,9 +10674,6 @@ $cuerpo2.='<table class="tabla">';
            $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
            $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
            $orden=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($id);
-           
-//           print_r($orden);
-//           exit;
            $presupuesto=$this->cotizaciones_model->getCotizacionImpresionPresupuestoPorIdCotizacion($id);
            $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
            $archivo_cliente = $this->cotizaciones_model->getArchivoClientePorCotizacion($id);
@@ -10525,8 +10891,8 @@ $cuerpo2.='<table class="tabla">';
                         $this->db->update("cotizaciones",$datacot);
                     }else
                     {
+                        //exit();
 			$valorxx = $this->cotizaciones_model->CantidadPorXXX($this->input->post('id',true),$this->input->post('cantidad_de_cajas',true),1);
-                        
                          //***********************************************************
                         $proveedores = array(
                                         'folia1'=>[
@@ -10634,7 +11000,11 @@ $cuerpo2.='<table class="tabla">';
                          $this->db->where('id', $this->input->post('id',true));
                         $this->db->update("cotizaciones",$datacot);
                     }
-                    $this->session->set_flashdata('ControllerMessage', 'Se ha editado el registro exitosamente.');
+                    if($this->input->post('estado',true)==1){    
+                    $this->session->set_flashdata('ControllerMessage', 'Se ha Liberado el registro exitosamente.');
+                    }else{    
+                    $this->session->set_flashdata('ControllerMessage', 'Se ha guardado el registro exitosamente.');
+                    }
                     redirect(base_url().'cotizaciones/orden_de_compra/'.$this->input->post("id",true).'/'.$this->input->post("pagina",true),  301); 
 //                    redirect(base_url().'cotizaciones/index/'.$this->input->post("pagina",true),  301);
                 }
@@ -10768,54 +11138,56 @@ $cuerpo2.='<table class="tabla">';
 //                                  $cuando="0000-00-00"; 
 //                               }
                                
-                               
 			       //Verificar tipo de molde seleccionado
                                $estanlosmoldes = 'NO';
                                $hacer_troquel="";
                                $lleva_troquelado="";                                 
-                               if($this->input->post("select_estan_los_moldes",true)=='NO LLEVA')
-                               {
-                                    $numeroMolde = 1;
-                                    $estanlosmoldes = 'NO LLEVA';
-                                    $hacer_troquel="NO";
-                                    $lleva_troquelado="NO";                                      
-                               }
-							   
-                               if($this->input->post("select_estan_los_moldes",true)=='CLIENTE LO APORTA')
-                               {
-                                    $numeroMolde = 2;
-                                    $estanlosmoldes = 'CLIENTE LO APORTA';
-                                    $hacer_troquel="NO";
-                                    $lleva_troquelado="SI";                                     
-                                }
-						   
-                               if($this->input->post("select_estan_los_moldes",true)=='NO')
-                               {
-                                    $numeroMolde = 1;
-                                    $estanlosmoldes = 'NO';
-                                    $hacer_troquel="NO";
-                                    $lleva_troquelado="NO";                                      
-				}
-//                                echo $this->input->post("select_estan_los_moldes",true)."holaaa";
-								
-                               if (($this->input->post("select_estan_los_moldes",true)=='MOLDE GENERICO') and ($this->input->post("select_estan_los_moldes_genericos",true)=='SI'))
-                               {
-//                                   exit('paso1');
-                                    $numeroMolde = $this->input->post("molde_generico",true);
+                               if($this->input->post("select_estan_los_moldes",true)=='SI' || $this->input->post("select_estan_los_moldes",true)=='MOLDE GENERICO'){
                                     $estanlosmoldes = 'MOLDE GENERICO';
                                     $hacer_troquel="NO";
-                                    $lleva_troquelado="SI";                                    
-                                }
-                                elseif (($this->input->post("select_estan_los_moldes",true)=='MOLDE REGISTRADOS DEL CLIENTE') and ($this->input->post("select_estan_los_moldes_no_genericos_clientes",true)=='SI'))
-                                {
-//                                   exit('paso2');                                    
-                                    $numeroMolde = $this->input->post("molde_registrado",true);
+                                    $lleva_troquelado="SI";
+                                    $hay_que_troquelar="SI";
+                                    $numeroMolde =$this->input->post("nm",true);
+                               }
+                               if($this->input->post("select_estan_los_moldes",true)=='NO'){
+                                    $estanlosmoldes = 'NO';
+                                    $hacer_troquel="SI";
+                                    $lleva_troquelado="SI";
+                                    $hay_que_troquelar="SI";
+                                    $numeroMolde ="21";
+                               }
+                               if($this->input->post("select_estan_los_moldes",true)=='NO LLEVA'){
+                                    $estanlosmoldes = 'NO LLEVA';
+                                    $hacer_troquel="NO";
+                                    $lleva_troquelado="NO";
+                                    $hay_que_troquelar="NO";
+                                    $numeroMolde ="";
+                               }
+                               if($this->input->post("select_estan_los_moldes",true)=='CLIENTE LO APORTA'){
+                                    $estanlosmoldes = 'CLIENTE LO APORTA';
+                                    $hacer_troquel="NO";
+                                    $lleva_troquelado="NO";
+                                    $hay_que_troquelar="NO";
+                                    $numeroMolde ="";
+                               }
+                               if($this->input->post("select_estan_los_moldes",true)=='MOLDE REGISTRADOS DEL CLIENTE'){
                                     $estanlosmoldes = 'MOLDE REGISTRADOS DEL CLIENTE';
                                     $hacer_troquel="NO";
-                                    $lleva_troquelado="SI";                                    
-                                }       
+                                    $lleva_troquelado="SI";
+                                    $hay_que_troquelar="SI";
+                                    $numero="SI";
+                                    $numeroMolde =$this->input->post("nm",true);
+                               }
 //                                exit($numeroMolde.'---'.$estanlosmoldes);                                
-                               
+//                               echo $numeroMolde."-";
+//                               echo $estanlosmoldes."-";
+//                                 echo "<h1>".$this->input->post("nm",true)."</h1>";
+//                                 echo "<h1>".$this->input->post("hay_que_troquelar",true)."</h1>";
+//                                 echo "<h1>".$this->input->post("select_estan_los_moldes_genericos",true)."</h1>";
+//                                 echo "<h1>".$estanlosmoldes."</h1>";
+//                                 echo "<h1>".$hacer_troquel."</h1>";
+//                                 echo "<h1>".$lleva_troquelado."</h1>";exit();
+//                               echo $this->input->post("select_estan_los_moldes_genericos",true);exit();
 //                               exit($this->input->post("folia_se",true).'hola');
 							   
                                 $matnombre1 = $this->materiales_model->getMaterialesNombrePorId($this->input->post("materialidad_1",true));
@@ -10894,7 +11266,8 @@ $cuerpo2.='<table class="tabla">';
                                         "fot_lleva_barniz"=>$this->input->post("fot_lleva_barniz",true),                                            
                                        "fot_reserva_barniz"=>$this->input->post("fot_reserva_barniz",true),                                            
                                        "fot_cala_caucho"=>$this->input->post("fot_cala_caucho",true),                                            
-                                       "hay_que_troquelar"=>$this->input->post("hay_que_troquelar",true),                                            
+                                       //"hay_que_troquelar"=>$this->input->post("hay_que_troquelar",true),                                            
+                                       "hay_que_troquelar"=>$hay_que_troquelar,                                            
                                        "conteo"=>$this->input->post("conteo",true),                                            
                                        "conteo2"=>$this->input->post("conteo2",true),
                                        "folia1_molde_selected"=>$this->input->post("folia1_molde_selected",true),                             
@@ -11070,7 +11443,7 @@ $cuerpo2.='<table class="tabla">';
                                        "piezas_adicionales2"=>$this->input->post("piezas_adicionales2",true),
                                        "piezas_adicionales3"=>$this->input->post("piezas_adicionales3",true),                                     
                                        "comentario_piezas_adicionales"=>$this->input->post("comentario_piezas_adicionales",true),    
-                                        "hay_que_troquelar"=>$this->input->post("hay_que_troquelar",true), 
+                                        "hay_que_troquelar"=>$hay_que_troquelar, 
                                         "estado"=>$this->input->post("estado",true),
                                         "id_mat_placa1"=>$this->input->post("materialidad_1",true),
                                         "id_mat_onda2"=>$this->input->post("materialidad_2",true),
@@ -11126,7 +11499,7 @@ $cuerpo2.='<table class="tabla">';
                                        "tiene_color_modificado"=>$this->input->post("tiene_color_modificado",true),                                                                      
                                         "numero_color_modificado"=>$this->input->post("numero_color_modificado",true),  
                                        "colores"=>$this->input->post("colores",true),
-                                        "hay_que_troquelar"=>$this->input->post("hay_que_troquelar",true),                                            
+                                        "hay_que_troquelar"=>$hay_que_troquelar,                                            
                                     );
                                    // print_r($data_cotizacion_revision);
                                    //exit();
@@ -11443,7 +11816,7 @@ $cuerpo2.='<table class="tabla">';
     public function ajax_recotizar() {
         if ($this->session->userdata('id')) {
             $id=$this->input->post("num",true);
-                      
+                   //echo "aaa";exit();   
             $cantidad1=$this->input->post("valor1",true);
             $cantidad2=$this->input->post("valor2",true);
             $cantidad3=$this->input->post("valor3",true);
@@ -11454,6 +11827,7 @@ $cuerpo2.='<table class="tabla">';
             $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
             $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
             $produccion=$this->produccion_model->getFotomecanicaPorTipo(1,$id);
+            $archivoCliente=$this->cotizaciones_model->getArchivoClientePorCotizacion($id);
             $maximo=$this->cotizaciones_model->obtenerMaximoId();
             $idnuevo=$maximo->id_max+1;
             
@@ -11480,11 +11854,14 @@ $cuerpo2.='<table class="tabla">';
             $datos->cantidad_3 = $cantidad3;
             $datos->cantidad_4 = $cantidad4;
             $datos->fecha_registro = date('Y-m-d');
+            $datos->fecha = date('Y-m-d');
             
             unset($ing->id);
             $ing->id_cotizacion = $idnuevo;
+            $ing->estado = 0;
             unset($fotomecanica->id);
             $fotomecanica->id_cotizacion = $idnuevo;
+            $fotomecanica->estado = 0;    
             if(sizeof($produccion)>0){
             $fotomecanica->pdf_imagen_imprimir = $produccion->pdf_imagen;    
             }
@@ -11500,6 +11877,13 @@ $cuerpo2.='<table class="tabla">';
             $hoja->impreso = "";
             
             $this->db->insert("hoja_de_costos_datos",$hoja);
+            }
+            
+            if(sizeof($archivoCliente)>0){    
+            unset($archivoCliente->id);
+            $archivoCliente->id_cotizacion = $idnuevo;
+            $archivoCliente->fecha = date('Y-m-d');
+            $this->cotizaciones_model->insertarArchivoCliente_RevisionIngenieria($archivoCliente);
             }
             //Creacion de registros en cotizacion;
             $guardar=$this->cotizaciones_model->insertar($datos);
@@ -11537,8 +11921,10 @@ $cuerpo2.='<table class="tabla">';
             
             unset($ing->id);
             $ing->id_cotizacion = $idnuevo;
+            $ing->estado = 0;
             unset($fotomecanica->id);
             $fotomecanica->id_cotizacion = $idnuevo;
+            $fotomecanica->estado = 0;
             if(sizeof($produccion)>0){
             $fotomecanica->pdf_imagen_imprimir = $produccion->pdf_imagen;    
             }
@@ -11551,6 +11937,12 @@ $cuerpo2.='<table class="tabla">';
             $hoja->codigo_duplicado = "";
             $hoja->impreso = "";
            
+            if(sizeof($archivoCliente)>0){    
+            unset($archivoCliente->id);
+            $archivoCliente->id_cotizacion = $idnuevo;
+            $archivoCliente->fecha = date('Y-m-d');
+            $this->cotizaciones_model->insertarArchivoCliente_RevisionIngenieria($archivoCliente);
+            }
             //Creacion de registros en cotizacion;
             $guardar=$this->cotizaciones_model->insertar($datos);
             //Creacion de registros en ingenieria;
@@ -11583,18 +11975,28 @@ $cuerpo2.='<table class="tabla">';
             $datos->cantidad_3 = $cantidad3;
             $datos->cantidad_4 = $cantidad4;
             
-            if(sizeof($fotomecanica)>0){    
+            if(sizeof($ing)>0){    
             unset($ing->id);
             $ing->id_cotizacion = $idnuevo;
+            $ing->estado = 0;
             $this->cotizaciones_model->insertarIngenieria($ing);
             }
             
             if(sizeof($fotomecanica)>0){    
             unset($fotomecanica->id);
             $fotomecanica->id_cotizacion = $idnuevo;
+            $fotomecanica->estado = 0;
             $this->cotizaciones_model->insertarFotomecanica($fotomecanica);
             }
-           
+            
+            if(sizeof($archivoCliente)>0){    
+            unset($archivoCliente->id);
+            $archivoCliente->id_cotizacion = $idnuevo;
+            $archivoCliente->fecha = date('Y-m-d');
+            $this->cotizaciones_model->insertarArchivoCliente_RevisionIngenieria($archivoCliente);
+            }
+            //print_r($archivoCliente);exit();
+            
             if(sizeof($hoja)>0){
             unset($hoja->id);
             $hoja->id_cotizacion = $idnuevo;
@@ -13289,8 +13691,8 @@ $cuerpo2.='<table class="tabla">';
                 (
                     "total_merma"=>$sum,
                 );
-                $this->db->where('id', $hoja->id);
-                $this->db->update("hoja_de_costos_datos",$arreglo55);
+//                $this->db->where('id', $hoja->id);
+//                $this->db->update("hoja_de_costos_datos",$arreglo55);
         }
        /**
         * fin validaciones mermas

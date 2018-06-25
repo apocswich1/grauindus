@@ -11,7 +11,18 @@
     <br /><br />
 
 </div>
-
+<div>
+    <br /><br />
+	<!-- Buscador -->
+    <div class="pull-right">
+	<?php echo form_open(base_url()."proveedores/search", array('class' => 'form-search pull-right')); ?>
+		<input type="text" class="input-medium search-query" name="buscar" placeholder="Buscar" />
+		<button type="submit" class="btn">Buscar</button>
+		
+	</form>
+</div>
+    <!-- /Buscador -->
+</div>
 <table class="table table-bordered table-striped indice">
 	<thead>
 		<tr>

@@ -104,7 +104,8 @@
         <td><?php echo $dato->id?></td>
         <td><?php echo fecha($dato->fecha)?></td>
         <td><?php echo $cliente?><br /><?php echo $nombre_cliente ?><br /><?php echo "Colores: ".$ing->colores?><br /><?php echo "Molde: ".$dato->numero_molde?></td>
-        <td><?php echo $dato->producto;
+        <td><?php if(sizeof($ing)>=1 || sizeof($fotomecanica)>=1){
+            echo $ing->producto;
             echo "<br />";
             if(sizeof($hoja)>0){
             echo "C1: ".$dato->cantidad_1." P1: ".number_format($hoja->valor_empresa,0,"",".");
@@ -118,18 +119,40 @@
             if($dato->cantidad_4!=1 && $dato->cantidad_4!=0){
             echo "C4: ".$dato->cantidad_4." P4: ".number_format($hoja->valor_empresa_4,0,"",".");
             echo " - ";}
+            if($dato->rev==1 && $dato->fecha_rev!=""){
+            echo "<label style='background-color:green; color:white; font-weight:bold;'>Reversada en fecha: ".fecha($dato->fecha_rev)."<br />"
+                    . "Nro Ot: ".$orden->id."</label>";
             }
-       ?>
+            }
+        }else{
+            echo $dato->producto;
+            echo "<br />";
+            if(sizeof($hoja)>0){
+            echo "Cant 1: ".$dato->cantidad_1." Precio: ".number_format($hoja->valor_empresa,0,"",".");
+            echo "<br />";
+            if($dato->cantidad_2!=1 && $dato->cantidad_2!=0){
+            echo "Cant 2: ".$dato->cantidad_2." Precio: ".number_format($hoja->valor_empresa_2,0,"",".");
+            echo "<br />";}
+            if($dato->cantidad_3!=1 && $dato->cantidad_3!=0){
+            echo "Cant 3: ".$dato->cantidad_3." Precio: ".number_format($hoja->valor_empresa_3,0,"",".");
+            echo "<br />";}
+            if($dato->cantidad_4!=1 && $dato->cantidad_4!=0){
+            echo "Cant 4: ".$dato->cantidad_4." Precio: ".number_format($hoja->valor_empresa_4,0,"",".");
+            echo "<br />";}
+            }
+        }?>
         </td>
-        <td><?php 
+        <td><?php
         $cotizacionmolde=$this->cotizaciones_model->getCotizacionPorId($dato->id);
         $molde=$this->moldes_model->getMoldesPorId($cotizacionmolde->numero_molde);
         
         if($ing->archivo !="" || $molde->archivo!=""){?>
             <input id="btn_recotizar" mivalor="<?php echo $dato->id?>" type="button" name="recotizar" value="Recotizar" onclick="asignar_num(<?php echo $dato->id ?>);" class="button btn-success" data-toggle="modal" data-target="#myModal"/>
+        <?php }else{ if($dato->trazado!=""){ ?>
+            <input id="btn_recotizar" mivalor="<?php echo $dato->id?>" type="button" name="recotizar" value="Recotizar" onclick="asignar_num(<?php echo $dato->id ?>);" class="button btn-success" data-toggle="modal" data-target="#myModal"/>
         <?php }else{ ?>
             <input id="" mivalor="" type="button" name="" value="Recotizar" onclick="alert('Debe contener el archivo de la revision de ingenieria');" class="button btn-success"/>
-        <?php } ?>
+         <?php }} ?>
         </td>
         <td style="text-align: right; width: 200px;">
             <?php
@@ -162,12 +185,15 @@
             <a href="<?php echo base_url()?>cotizaciones/orden_de_compra/<?php echo $dato->id?>/<?php echo $pagina?>" title="Orden de Compra"><span style="font-size: 10px;<?php if(sizeof($orden)>=1){echo 'color:#ff0000; font-weight: bold;';}?>">Orden de Compra</span><i class="icon-shopping-cart"></i></a>
             
         </td>
+            <?php $fot_pro=$this->produccion_model->getFotomecanicaPorTipo(1,$dato->id); ?>
          <td style="text-align: center; width: 10px;">		
             <?php if ($fotomecanica->pdf_imagen_imprimir!=""){ ?>
-		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen_imprimir ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Imagen a Imprimir" title="PDF Cliente"></a>
-            <?php } else { ?>    
+		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen_imprimir ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Imagen a Imprimir" title="PDF Imagen a Imprimir"></a>
+            <?php } else { if($fot_pro->pdf_imagen!=""){ ?>    
+		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$fot_pro->pdf_imagen ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Imagen a Imprimir" title="PDF Imagen a Imprimir"></a>
+            <?php } else {  ?>    
 		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de Imagen a Imprimir" title="No existe PDF de Imagen a Imprimir">
-            <?php } ?>                <br />
+            <?php } } ?>                <br />
             <?php if ($archivo_cliente->archivo!=""){ ?>
 		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$archivo_cliente->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Cliente" title="PDF Cliente"></a>
             <?php } else { ?>    

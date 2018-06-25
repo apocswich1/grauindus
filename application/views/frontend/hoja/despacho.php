@@ -31,7 +31,7 @@
       <div class="control-group">
 		<div class="form-actions">
          <input type="hidden" name="id" value="<?php echo $id?>" />
-         <input type="hidden" name="url" value="<?php echo base_url()."cotizaciones/hoja_de_costos/".$id."/".$pagina;?>" />
+         <input type="hidden" name="url" value="<?php echo base_url()."cotizaciones/hoja_de_costos_propia/".$id."/".$pagina;?>" />
 			<input type="submit" value="Guardar" class="btn btn-default" />
 		   
 		</div>

@@ -4,7 +4,13 @@
 <?php if ( $this->session->flashdata('ControllerMessage') != '' ) : ?>
 <div class="alert alert-success"><?php echo $this->session->flashdata('ControllerMessage'); ?></div>
 <?php endif; ?>
-<div class="page-header"><h3>Solicituds de Cotizaciones ( <?php echo $cuantos?> en total)</h3></div>
+<div class="page-header"><h3>Solicitud de Cotizaciones ( <?php echo $cuantos?> en total)</h3>
+<button type="button" class="btn btn-primary">
+  Notifications <span class="badge badge-light">4</span>
+</button>
+    <div id="messages"></div>
+</div>
+
 
 
 <div class="control-group">
@@ -164,7 +170,13 @@
         <td><?php echo $dato->ot_antigua?></td>       
         <td><?php echo $dato->ot_migrada?></td>                
         <td><?php echo $dato->fecha//echo fecha($dato->fecha)?></td>
-        <td><?php echo $cliente?> <?php if($cli->estado==2){echo '(BLOQUEADO)';}?><br /><?php echo "Colores: ".$ing->colores?><br /><?php echo "Molde: ".$dato->numero_molde."<br />T1: ".$ing->tamano_a_imprimir_1." T2: ".$ing->tamano_a_imprimir_2?></td>
+        <td><?php echo $cliente?> <?php if($cli->estado==2){echo '(BLOQUEADO)';}?><br /><?php echo "Colores: ".$ing->colores?><br /><?php echo "Molde: ".$dato->numero_molde."<br />T1: ".$ing->tamano_a_imprimir_1." T2: ".$ing->tamano_a_imprimir_2?>
+        <?php 
+        if($dato->numero_molde==21){
+        echo "<br />Trazado: ".$dato->trazado;
+        }
+        ?>
+        </td>
         <!--<td><?php //echo $dato->producto?></td> -->
         <td><?php if(sizeof($ing)>=1 || sizeof($fotomecanica)>=1){
             echo $ing->producto;
@@ -181,6 +193,10 @@
             if($dato->cantidad_4!=1 && $dato->cantidad_4!=0){
             echo "C4: ".$dato->cantidad_4." P4: ".number_format($hoja->valor_empresa_4,0,"",".");
             echo " - ";}
+            if($dato->rev==1 && $dato->fecha_rev!=""){
+            echo "<label style='background-color:green; color:white; font-weight:bold;'>Reversada en fecha: ".fecha($dato->fecha_rev)."<br />"
+                    . "Nro Ot: ".$orden->id."</label>";
+            }
             }
         }else{
             echo $dato->producto;
@@ -276,7 +292,7 @@
                <a href="<?php echo base_url()?>cotizaciones/revision_fotomecanica/<?php echo $dato->id?>/<?php echo $pagina?>" title="Revisión Fotomecánica"><span style="font-size: 10px; font-weight: bold;<?php echo $colorFotomecanica?>">Revisión Fotomecánica</span><i class="icon-film"></i></a>
             <?php
 //            }
-            if(sizeof($hoja)>=1 and $fotomecanica->estado==1 and $ing->estado==1)
+            if(sizeof($hoja)>=1 && $fotomecanica->estado==1 && $ing->estado==1)
             {
          ?>
 		 
@@ -306,7 +322,11 @@
 			  {
 					?>		  
 					<br />
-					<a href="<?php echo base_url()?>cotizaciones/orden_de_compra/<?php echo $dato->id?>/<?php echo $pagina?>" title="Ingreso Orden de Compra"><span style="font-size: 10px; font-weight: bold; <?php echo $colorOrden;?>">Ingreso Orden de Compra</span><i class="icon-shopping-cart"></i></a>
+                                        <?php if($hoja->impreso!=1){ ?>
+                <a href="#" onclick="alert('Debe completar la hoja de costos, y ésta debe haberse guardado e impreso!!!'); return false;" title="Cotización de Cliente"><span style="font-size: 10px; font-weight: bold; color:<?php echo $colorOrdenProduccion?>">Ingreso Orden de Compra</span><i class="icon-shopping-cart"></i></a>
+            <?php }else{ ?>
+                		<a href="<?php echo base_url()?>cotizaciones/orden_de_compra/<?php echo $dato->id?>/<?php echo $pagina?>" title="Ingreso Orden de Compra"><span style="font-size: 10px; font-weight: bold; <?php echo $colorOrden;?>">Ingreso Orden de Compra</span><i class="icon-shopping-cart"></i></a>
+            <?php } ?>
 					<?php
 			  }
             }
@@ -363,21 +383,25 @@
             }
             ?>
         </td>
-        <td style="text-align: center; width: 10px;">		
+        <td style="text-align: center; width: 10px;">
+             <?php $fot_pro=$this->produccion_model->getFotomecanicaPorTipo(1,$dato->id); ?>
+            <?php $moldes2=$this->moldes_model->getMoldesPorId($dato->numero_molde); ?>
             <?php if ($fotomecanica->pdf_imagen_imprimir!=""){ ?>
-		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen_imprimir ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Imagen a Imprimir" title="PDF Cliente"></a>
+		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen_imprimir ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Imagen a Imprimir" title="PDF Imagen a Imprimir"></a>
+            <?php } else { if($fot_pro->pdf_imagen!=""){ ?>    
+		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$fot_pro->pdf_imagen ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Imagen a Imprimir" title="PDF Imagen a Imprimir"></a>
             <?php } else { ?>    
 		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de Imagen a Imprimir" title="No existe PDF de Imagen a Imprimir">
-            <?php } ?>                <br />
+            <?php } } ?>                <br />
             <?php if ($archivo_cliente->archivo!=""){ ?>
 		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$archivo_cliente->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Cliente" title="PDF Cliente"></a>
             <?php } else { ?>    
 		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de  Cliente" title="No existe PDF de  Cliente">
             <?php } ?>                <br />
-            <?php if($ing->archivo!=""){ if($trazadosing->archivo!=""){?>
+            <?php if($moldes2->archivo!=""){ if($trazadosing->archivo!=""){ ?>
 		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$trazadosing->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Revisión Ingenieria" title="PDF Revisión Ingenieria"></a>
             <?php }else{ ?>
-                <a href='<?php echo base_url().$this->config->item('direccion_pdf').$ing->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Revisión Ingenieria" title="PDF Revisión Ingenieria"></a>
+                <a href='<?php echo base_url().$this->config->item('direccion_pdf').$moldes2->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Revisión Ingenieria" title="PDF Revisión Ingenieria"></a>
             <?php } } else { ?>    
 		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de  Revisión Ingenieria" title="No existe PDF de  Revisión Ingenieria">
             <?php } ?>                <br />
@@ -393,15 +417,16 @@
             <?php } ?>  	                          
         </td>        
           <td style="text-align: center; width: 100px;">
+                  <?php $trazadosing=$this->trazados_model->getTrazadosPorId($dato->trazado); ?>
                   <?php if($dato->condicion_del_producto == 'Repetición Sin Cambios'){
                       if($ing->estado==1 && $fotomecanica->estado==1){
-                          if($ing->archivo!=""){ ?>
-                              <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                          if($moldes2->archivo!="" || $trazadosing->archivo!=""){ ?>
+                              <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
                          <?php }else{
                              if($ing->estan_los_moldes=="NO LLEVA" && $ing->hay_que_troquelar=="NO"){ ?>
-                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a><?php if($hoja->impreso==1){echo "L";}?>
                              <?php }else{ ?>
-                              <a href="javascript:void(0);" onclick="alert('Debe Incluir en Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
+                              <a href="javascript:void(0);" onclick="alert('Debe Incluir Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
                          <?php } }
                       }else{ ?>
                           <a href="javascript:void(0);" onclick="alert('Debe Completar Ingeniería y Fotomecanica');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
@@ -409,11 +434,11 @@
                   }?>
                   <?php if($dato->condicion_del_producto == 'Repetición Con Cambios'){
                       if($ing->estado==1 && $fotomecanica->estado==1){
-                          if($ing->archivo!=""){ ?>
-                              <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                          if($moldes2->archivo!="" || $trazadosing->archivo!=""){ ?>
+                              <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a><?php if($hoja->impreso==1){echo "L";}?>
                          <?php }else{
                              if($ing->estan_los_moldes=="NO LLEVA" && $ing->hay_que_troquelar=="NO"){ ?>
-                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a><?php if($hoja->impreso==1){echo "L";}?>
                              <?php }else{ ?>
                               <a href="javascript:void(0);" onclick="alert('Debe Incluir en Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
                          <?php } }
@@ -423,11 +448,11 @@
                   }?>
                   <?php if($dato->condicion_del_producto == 'Nuevo'){
                       if($ing->estado==1 && $fotomecanica->estado==1){
-                          if($ing->archivo!=""){ ?>
-                              <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                          if($moldes2->archivo!="" || $trazadosing->archivo!=""){ ?>
+                              <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a><?php if($hoja->impreso==1){echo "L";}?>
                          <?php }else{
                              if($ing->estan_los_moldes=="NO LLEVA" && $ing->hay_que_troquelar=="NO"){ ?>
-                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a><?php if($hoja->impreso==1){echo "L";}?>
                              <?php }else{ ?>
                               <a href="javascript:void(0);" onclick="alert('Debe Incluir en Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
                          <?php } }
@@ -437,11 +462,11 @@
                   }?>
                   <?php if($dato->condicion_del_producto == 'Repetici?n Sin Cambios'){
                       if($ing->estado==1 && $fotomecanica->estado==1){
-                          if($ing->archivo!=""){ ?>
-                              <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                          if($moldes2->archivo!="" || $trazadosing->archivo!=""){ ?>
+                              <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a><?php if($hoja->impreso==1){echo "L";}?>
                          <?php }else{
                              if($ing->estan_los_moldes=="NO LLEVA" && $ing->hay_que_troquelar=="NO"){ ?>
-                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a><?php if($hoja->impreso==1){echo "L";}?>
                              <?php }else{ ?>
                               <a href="javascript:void(0);" onclick="alert('Debe Incluir en Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
                          <?php } }
@@ -451,11 +476,11 @@
                   }?>
                   <?php if($dato->condicion_del_producto == 'Producto Genérico'){
                       if($ing->estado==1 && $fotomecanica->estado==1){
-                          if($ing->archivo!=""){ ?>
-                              <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                          if($moldes2->archivo!="" || $trazadosing->archivo!=""){ ?>
+                              <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a><?php if($hoja->impreso==1){echo "L";}?>
                          <?php }else{
                              if($ing->estan_los_moldes=="NO LLEVA" && $ing->hay_que_troquelar=="NO"){ ?>
-                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a>
+                             <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>/<?php echo $pagina?>" title="Hoja de Costos"><i class="icon-file"></i></a><?php if($hoja->impreso==1){echo "L";}?>
                              <?php }else{ ?>
                               <a href="javascript:void(0);" onclick="alert('Debe Incluir en Trazado de Ingeniería');" title="Hoja de Costos"><i class="icon-eye-close"></i></a>   
                          <?php } }
@@ -572,13 +597,15 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button id="confirmado" type="button" class="btn btn-primary" oncllllick="borrar_cotizaciones(<?php echo $datos->id ?>);">Borrar</button>
+        <button id="confirmado" type="button" class="btn btn-primary" onclick="borrar_cotizaciones(<?php echo $datos->id ?>);">Borrar</button>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript" src="<?php echo base_url()?>public/frontend/js/chosen.jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>public/frontend/js/prism.js"></script>
+<script type="text/javascript" src="<?php echo base_url()?>public/mensajes/public/sockets-1.1.1.js"></script>
+<script type="text/javascript" src="<?php echo base_url()?>public/mensajes/public/sockets.js"></script>
 <script type="text/javascript">
     var config = {
       '.chosen-select'           : {},

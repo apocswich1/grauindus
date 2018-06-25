@@ -42,7 +42,7 @@
     $totaltrabajosespeciales=$folia1->valor_venta+$folia2->valor_venta+$folia3->valor_venta+$cuno1->valor_venta+$cuno2->valor_venta;
     
     
-    if ($datos->cantidad_1 == "" || $datos->cantidad_1 === 0) {
+if ($datos->cantidad_1 == "" || $datos->cantidad_1 === 0) {
     $datoscantidad1 = 1;
 } else {
     $datoscantidad1 = $datos->cantidad_1;
@@ -205,7 +205,7 @@ $distancia=$datos->distancia;
             }
         }
          
-         $canTotal=number_format($datoscantidad1/5000,0,"","")-1;//6000 1
+         $canTotal=number_format($datoscantidad1/5000,0,"","");//6000 1
          //echo $canTotal;exit;
          if (($datoscantidad1>0) and ($ing->unidades_por_pliego>0))
             $cantidad_1=$datoscantidad1/$ing->unidades_por_pliego;
@@ -326,9 +326,11 @@ $distancia=$datos->distancia;
         
         $barniz=substr($fotomecanica->acabado_impresion_1,0,6);
         //echo $barniz;exit;
+       // echo $datoscantidad1;exit;
          if(($fotomecanica->fot_lleva_barniz!='') && ($fotomecanica->fot_lleva_barniz!='Nada'))
          {
             $cantidadBarniz=$datoscantidad1-1000;
+            
             if($cantidadBarniz<1000)
             {
                 if($maquina=="Máquina Roland 800")
@@ -679,7 +681,7 @@ $distancia=$datos->distancia;
                 $emplacado_fijo = 50; /*Multiplicar entero del emplacado por 15*/
                 $emplacado = $Entero * $mermaEmplacadoArray->precio; /*Multiplicar entero del emplacado por 15*/
                 $emplacado_merma = $mermaEmplacadoArray->precio;
-                
+         
         }
         
         //emplacado 2
@@ -718,7 +720,7 @@ $distancia=$datos->distancia;
         {
 
             $mermaTroqueladoArray=$this->variables_cotizador_model->getVariablesCotizadorPorId(36);
-            if (($datoscantidad1>0) and ($ing->unidades_por_pliego>0))
+            if (($datoscantidad1>0) && ($ing->unidades_por_pliego>0))
                 $troquelado=$datoscantidad1/$ing->unidades_por_pliego;
             else 
                 $troquelado=0;
@@ -1671,7 +1673,8 @@ page[size="A4"][layout="portrait"] {
                                          
                                             
                                          }   
-                                        
+                                        echo "<h1>" . $tira1 . "</h1>";
+                                         echo "<h1>" . $tira2 . "</h1>";
                                         if ($materialidad_2->gramaje>0)
                                             $GramosMetroCuadrado=$materialidad_2->gramaje+($materialidad_2->gramaje*($variable_cotizador->precio/100))+$materialidad_3->gramaje;
 					else 	
@@ -1786,11 +1789,11 @@ page[size="A4"][layout="portrait"] {
                                         if ($materialidad_3->precio>0) $materialidad_precio3=($materialidad_3->precio/1000); else $materialidad_precio3=0;
                                         if ($materialidad_2->gramaje>0) $materialidad_gramaje2=($materialidad_2->gramaje/1000); else $materialidad_gramaje2=0;
                                         $costo_kilo=0;
-                                        if (($materialidad_2->gramaje>0) and ($materialidad_3->gramaje>0) and ($materialidad_2->precio>0))
-                                            $costo_kilo=((($materialidad_2->gramaje*($materialidad_2->precio/1000)+(($materialidad_2->gramaje*($variable_cotizador->precio/100)*$materialidad_2->precio/1000))+$materialidad_3->gramaje*$materialidad_3->precio/1000)/($materialidad_2->gramaje+($materialidad_2->gramaje*($variable_cotizador->precio/100))+$materialidad_3->gramaje)))*1000;           
-					else 	
+                                        if (($materialidad_2->gramaje>0) && ($materialidad_3->gramaje>0) && ($materialidad_2->precio>0)){
+                                            $costo_kilo=((($materialidad_2->gramaje*($materialidad_2->precio/1000)+(($materialidad_2->gramaje*($variable_cotizador->precio/100)*$materialidad_2->precio/1000))+$materialidad_3->gramaje*$materialidad_3->precio/1000)/($materialidad_2->gramaje+($materialidad_2->gramaje*($variable_cotizador->precio/100))+$materialidad_3->gramaje)))*1000;           		                                         
+                                        }else{ 	
                                             $costo_kilo=0;
-									
+                                        }			
                                         if($materialidad_3->tipo == 14 and  $materialidad_3->reverso == 'Blanca')//valdivia
                                         {
                                                  $recargoCostoKilo=$this->variables_cotizador_model->getVariablesCotizadorPorId(44);
@@ -1821,8 +1824,9 @@ page[size="A4"][layout="portrait"] {
                                                  $recargoCostoKilo=$this->variables_cotizador_model->getVariablesCotizadorPorId(41);
                                                  $costo_kilo_obtenido=$recargoCostoKilo->precio;                                                 
                                         }
-                                        else
+                                        else{
                                         $costo_kilo_obtenido=140;
+                                        }
                                         
                                         $costo_kilo=$costo_kilo+$costo_kilo_obtenido;
                                         
@@ -1846,6 +1850,9 @@ page[size="A4"][layout="portrait"] {
                                          {
                                             $tiraje=((($datoscantidad1/$ing->unidades_por_pliego)+$sum)*$factor_rango+$base_imprenta->precio )*($fotomecanica->colores+$barniz2);  
                                          }   
+                                         
+                                         echo "<h1>" . $tira1 . "</h1>";
+                                         echo "<h1>" . $tira2 . "</h1>";
                                         if ($materialidad_2->gramaje>0)
                                         {    
                                             $GramosMetroCuadrado=$materialidad_2->gramaje+($materialidad_2->gramaje*($variable_cotizador->precio/100))+$materialidad_3->gramaje;
@@ -1992,36 +1999,39 @@ page[size="A4"][layout="portrait"] {
                                         $base_imprenta=$this->variables_cotizador_model->getVariablesCotizadorPorId(6);
                                         $formula=$materialidad_1->gramaje+($materialidad_1->gramaje*($variable_cotizador->precio/100))+$materialidad_3->gramaje;
                                         //echo $materialidad_2->gramaje."sss";exit;
+                                        echo $materialidad_3->tipo;
                                         
-                                        if (($materialidad_2->precio>0) and ($materialidad_3->gramaje>0) and ($materialidad_3->precio>0))
+                                        if (($materialidad_2->precio>0) && ($materialidad_3->gramaje>0) && ($materialidad_3->precio>0)){
                                            $costo_kilo=((($materialidad_2->gramaje*($materialidad_2->precio/1000)+(($materialidad_2->gramaje*($variable_cotizador->precio/100)*$materialidad_2->precio/1000))+$materialidad_3->gramaje*$materialidad_3->precio/1000)/($materialidad_2->gramaje+($materialidad_2->gramaje*($variable_cotizador->precio/100))+$materialidad_3->gramaje)))*1000;           
-                                        else 
-                                            $costo_kilo=0;                                        
-                                        if($materialidad_3->tipo == 14 and  $materialidad_3->reverso == 'Blanca')//valdivia
+                                        }else{ 
+                                        $costo_kilo=0;                                        }
+                                        if($materialidad_3->tipo == 14 &&  $materialidad_3->reverso == 'Blanca')//valdivia
                                         {
                                                  $recargoCostoKilo=$this->variables_cotizador_model->getVariablesCotizadorPorId(44);
                                         }
-                                        if($materialidad_3->tipo == 15 and  $materialidad_3->reverso == 'Blanca')//maule
+                                        if($materialidad_3->tipo == 15 &&  $materialidad_3->reverso == 'Blanca')//maule
                                         {
                                                  $recargoCostoKilo=$this->variables_cotizador_model->getVariablesCotizadorPorId(45);
                                         }
-                                        if($materialidad_3->tipo == 1 and  $materialidad_3->reverso == 'Blanca') //Cartulina Importada
+                                        if($materialidad_3->tipo == 1 &&  $materialidad_3->reverso == 'Blanca') //Cartulina Importada
                                         {
                                                  $recargoCostoKilo=$this->variables_cotizador_model->getVariablesCotizadorPorId(43);
                                         }
-                                        if($materialidad_3->tipo == 5 and  $materialidad_3->reverso == 'Blanco') // papel reverso blanco
+                                        if($materialidad_3->tipo == 5 &&  $materialidad_3->reverso == 'Blanco') // papel reverso blanco
                                         {
                                                  $recargoCostoKilo=$this->variables_cotizador_model->getVariablesCotizadorPorId(42);
                                         }
-                                        if($materialidad_3->tipo == 3 and  $materialidad_3->reverso == 'Blanco') // papel reverso blanco/ white top
+                                        if($materialidad_3->tipo == 3 &&  $materialidad_3->reverso == 'Blanco') // papel reverso blanco/ white top
                                         {
                                                  $recargoCostoKilo=$this->variables_cotizador_model->getVariablesCotizadorPorId(42);
                                         }
-                                        if($materialidad_3->tipo == 4 and  $materialidad_3->reverso == 'Café') // papel reverso cafe
+                                        if($materialidad_3->tipo == 4 && ($materialidad_3->reverso == 'Café' || $materialidad_3->reverso == 'Cafe')) // papel reverso cafe
                                         {
-                                                 $recargoCostoKilo=$this->variables_cotizador_model->getVariablesCotizadorPorId(41);
+                                              $recargoCostoKilo=$this->variables_cotizador_model->getVariablesCotizadorPorId(41);
                                         }
+                                       
                                         $costo_kilo=$costo_kilo+$recargoCostoKilo->precio;
+                                        
                                         if($fotomecanica->fot_lleva_barniz=='Nada' || $fotomecanica->fot_lleva_barniz=='')
                                         {
                                             $barniz2=0;
@@ -2574,7 +2584,8 @@ page[size="A4"][layout="portrait"] {
                                         $cantidad_6=$datoscantidad1;
                                     }                                      
 
-                                } //echo "<h1>" . $folia1->unidad_de_venta . "</h1>";
+                                } 
+                    
                ?>
                <?php if($procesosespeciales>0 && $tesp1 != 0){ ?>
                <tr>
@@ -2890,12 +2901,12 @@ page[size="A4"][layout="portrait"] {
                                 <td colspan="6"><hr class="hr_punteada" /></td>
                             </tr>
                         <?php
-                            if (($datoscantidad1>0) and ($ing->unidades_por_pliego>0)){
+                            if (($datoscantidad1>0) && ($ing->unidades_por_pliego>0)){
                                 $costoPlacaKilo=($datoscantidad1/$ing->unidades_por_pliego)+$sum;
                             }else{ 
                             $costoPlacaKilo=0;
                             }
-                           //elvis echo "<h1>" . $costoPlacaKilo . "</h1>";
+                           
                             $valorPlacaKilo=($costoPlacaKilo*$tamano1*$tamano2*$tapaGramaje)/10000000;
                             $totalPlacaKilo=$valorPlacaKilo*$tapaPrecio;
                             
@@ -3008,16 +3019,18 @@ page[size="A4"][layout="portrait"] {
                     <?php
                         if($maquina=="Máquina Roland 800")
                         {
-                           if (($datoscantidad1>0) and ($ing->unidades_por_pliego>0))
+                           if (($datoscantidad1>0) && ($ing->unidades_por_pliego>0)){
                                 $costoOndaKilo=((($datoscantidad1/$ing->unidades_por_pliego)*1.04)+100)+4;
-                            else 
+                           }else{ 
                                 $costoOndaKilo=0;                            
+                           }
                         }else
                         {
-                           if (($datoscantidad1>0) and ($ing->unidades_por_pliego>0))
-                                $costoOndaKilo=(($datoscantidad1/$ing->unidades_por_pliego)+100)+4;
-                            else 
+                           if (($datoscantidad1>0) && ($ing->unidades_por_pliego>0)){
+                                $costoOndaKilo=((($datoscantidad1/$ing->unidades_por_pliego)*1.04)+100)+4;
+                           }else{ 
                                 $costoOndaKilo=0;                               
+                           }
                         }
                         
                         if($fotomecanica->materialidad_datos_tecnicos == 'Sólo Cartulina')
@@ -3129,11 +3142,12 @@ page[size="A4"][layout="portrait"] {
                                                 }else{ 
                                                     $pegado_migrado=$datos->pegado_migrado;
                                                 }
-                                           }else{
+                                           }else{                                               
                                                     $pegado_migrado=$hoja->pegado;
                                            }
                                            
                                            $totalPegado=$datoscantidad1*$pegado_migrado*$variablePegado->precio;
+                                           
                                            //$totalPegadoTres=$datoscantidad3*$pegado_migrado*$variablePegado->precio;
                                         
                                         ?>    
@@ -3147,9 +3161,6 @@ page[size="A4"][layout="portrait"] {
                                            <input type="hidden" name="pegado" placeholder="Descripcion técnica" value="<?php echo $hoja->pegado ?>" /></td> 
                                         <?php } ?>
                                                                                  
-                                            
-<!--                                            <td class="celda_33"><?php // if($hoja->pegado == ''){echo '30';}else{echo $hoja->pegado;}?><a href="<?php // echo base_url()?>hoja/pegado/<?php // echo $id?>/<?php // echo $pagina?>" class="fancybox fancybox.ajax"><img src="<?php // echo base_url()?>public/frontend/images/edit.png" class="img_16" /></a><input type="hidden" name="pegado" placeholder="Descripcion técnica" value="<?php // echo $hoja->pegado?>" /></td>-->
-                                                <!--<td class="celda_33"><?php //echo number_format($totalPegado,0,'','.')?>-->
                                                 <td class="celda_33"> <?php if($totalPegado>150000 && $totalPegado<=235000){echo number_format(150000,0,'','.');}else{
                                                     if($totalPegado<150000){echo number_format($totalPegado,0,'','.');}else{
                                                         if($totalPegado>235000){
@@ -3232,7 +3243,8 @@ page[size="A4"][layout="portrait"] {
                                                          
                                                                 }
 
-                                                              
+//                                                   echo "<h1>AAAA" . $valorPlacaKilo . "</h1>";           
+//                                                   echo "<h1>AAAA" . $valorOndaKilo . "</h1>";           
                                                 if($mdt=='Cartulina-cartulina' || $mdt=='Sólo Cartulina'){
                                                     $des = calcularDespacho($valorPlacaKilo, $valorPlacaKilo2, $retiro, $mdt, $fuerasantiago, $distancia);  
                                                 }else{
@@ -3291,25 +3303,20 @@ page[size="A4"][layout="portrait"] {
 
                      </tr>
 					 <?php
-					 $variableEmplacado=$this->variables_cotizador_model->getVariablesCotizadorPorId(39);
-					 if($fotomecanica->lleva_barniz == 'SI' and $fotomecanica->reserva_barniz == 'SI')
-					 {
-						 $otrosCaucho = $variableEmplacado->precio; 
-					 }else
-					 {
-						$otrosCaucho = 0;
-					 }
-                                         if($fotomecanica->fot_cala_caucho== 'Si')
-										 {
-											 $otrosCaucho = 50000; 
-										 }else
-										 {
-											$otrosCaucho = 0;
-										 }
-					 
-					 ?>
+                     $variableEmplacado = $this->variables_cotizador_model->getVariablesCotizadorPorId(39);
+                     if ($fotomecanica->fot_lleva_barniz == 'SI' && $fotomecanica->fot_reserva_barniz == 'SI') {
+                         $otrosCaucho = $variableEmplacado->precio;
+                     } else {
+                         $otrosCaucho = 0;
+                     }
+                     if ($fotomecanica->fot_cala_caucho == 'Si') {
+                         $otrosCaucho = 50000;
+                     } else {
+                         $otrosCaucho = 0;
+                     }
+                     ?>
 					 <tr>
-                                            <td class="celda_33">CAUCHO</td>
+                                            <td class="celda_33">CAUCHO CALADO</td>
                                             <td class="celda_33">&nbsp;</td>
                                             <td class="celda_33"><?php echo number_format($otrosCaucho,0,'','.');?></td>
                                             
@@ -3460,6 +3467,7 @@ page[size="A4"][layout="portrait"] {
                       //$costoVentaValor=(($corte+$merma+$totalOndaKilo+$totalPlacaKilo+$totalPreImpresion+$totalProduccion)*$costoVenta->precio)/100;
                       //  $costoVentaValor=$corte+$merma+$totalProduccion+$totalPreImpresion+$totalMerma;
                       $costoVentaValor=(($totalPlacaKilo+$corte+$totalPlacaKilo2+$merma+$totalProduccion+$totalPreImpresion)*0.17)/2;
+                     
                      ?>
                      <tr>
                                             <td class="celda_33">COSTO VENTA</td>
@@ -3703,7 +3711,7 @@ page[size="A4"][layout="portrait"] {
                                 <td class="celda_3">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td class="celda_3">CROMALÍN <?php echo $coloresCromalin?></td>
+                                <td class="celda_3">CROMALÍN<?php echo $coloresCromalin?></td>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3"><?php echo number_format($cromalin,0,'','.')?></td>
                             </tr>
@@ -3759,6 +3767,17 @@ page[size="A4"][layout="portrait"] {
                                 <td class="celda_3">TOTAL PRODUCCIÓN</td>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3"><?php echo number_format($totalProduccion,0,'','.')?></td>
+                                <td class="celda_3">&nbsp;</td>
+                                <td class="celda_3">&nbsp;</td>
+                                <td class="celda_3">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">-------------------------------------------------------------------------------------------------------------------</td>
+                            </tr>
+                            <tr>
+                                <td class="celda_3">SUB TOTAL</td>
+                                <td class="celda_3">&nbsp;</td>
+                                <td class="celda_3"><?php echo number_format(($totalProduccion+$totalPreImpresion+$totalMateriaPrima),0,'','.')?></td>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3">&nbsp;</td>
                                 <td class="celda_3">&nbsp;</td>
@@ -3822,7 +3841,7 @@ page[size="A4"][layout="portrait"] {
                                 <td class="celda_3"><?php echo number_format($valorFinal,0,'','.')?></td>
                             </tr>
                         
-                <?php
+                <?php       
                             $vcostoFinanciero=$this->variables_cotizador_model->getVariablesCotizadorPorId(33);
                             $recargoPorCantidadJusta=$this->variables_cotizador_model->getVariablesCotizadorPorId(37);
 										
@@ -3880,7 +3899,7 @@ page[size="A4"][layout="portrait"] {
                            
                                 if(sizeof($hoja)==0)
                                 {
-                                    if(($fotomecanica->materialidad_datos_tecnicos=="Indefinido") or ($fotomecanica->materialidad_datos_tecnicos=="Microcorrugado") or ($fotomecanica->materialidad_datos_tecnicos=="Corrugado")  or ($fotomecanica->materialidad_datos_tecnicos=="Cartulina-cartulina"))
+                                    if(($fotomecanica->materialidad_datos_tecnicos=="Indefinido") || ($fotomecanica->materialidad_datos_tecnicos=="Microcorrugado") || ($fotomecanica->materialidad_datos_tecnicos=="Corrugado")  || ($fotomecanica->materialidad_datos_tecnicos=="Cartulina-cartulina"))
                                     {        
                                         $valorEmpresa=$datos->precio_migrado;
                                     }
@@ -3890,7 +3909,7 @@ page[size="A4"][layout="portrait"] {
                                 }else
                                 {
                                     
-                                    if(($fotomecanica->materialidad_datos_tecnicos=="Indefinido") or ($fotomecanica->materialidad_datos_tecnicos=="Microcorrugado") or ($fotomecanica->materialidad_datos_tecnicos=="Corrugado")  or ($fotomecanica->materialidad_datos_tecnicos=="Cartulina-cartulina"))
+                                    if(($fotomecanica->materialidad_datos_tecnicos=="Indefinido") || ($fotomecanica->materialidad_datos_tecnicos=="Microcorrugado") || ($fotomecanica->materialidad_datos_tecnicos=="Corrugado")  || ($fotomecanica->materialidad_datos_tecnicos=="Cartulina-cartulina"))
                                     {        
                                         $valorEmpresa=$datos->precio_migrado;
                                         if($valorEmpresa==0){
@@ -8068,12 +8087,7 @@ if(sizeof($hoja)>=1)
                                 <td></td>
                             </tr>
                             <tr>
-                                <td>&nbsp;</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td colspan="5">---------------------------------------------------------------------</td>
                             </tr>
                             <tr>
                                 <td>Sub Total</td>
@@ -12055,6 +12069,8 @@ if(sizeof($hoja)>=1)
                                             
                                          }   
                                         
+                                         
+                                         
                                         if ($materialidad_2->gramaje>0)
                                             $GramosMetroCuadrado=$materialidad_2->gramaje+($materialidad_2->gramaje*($variable_cotizador->precio/100))+$materialidad_3->gramaje;
 					else 	

@@ -9,7 +9,7 @@
     <div class="control-group">
 		<label class="control-label" for="usuario">Valor</label>
 		<div class="controls">
-			<input type="text" name="valor" name="valorAcabado" value="<?php echo $datos->cantidad_1?>" onkeypress="return soloNumerosConPuntos(event)" />
+			<input type="text" name="valor_externo" value="<?php echo $hoja->valor_externo;?>" onkeypress="return soloNumerosConPuntos(event)" />
 		</div>
 	</div>
      <div class="control-group">
@@ -22,7 +22,7 @@
       <div class="control-group">
 		<div class="form-actions">
          <input type="hidden" name="id" value="<?php echo $id?>" />
-         <input type="hidden" name="url" value="<?php echo base_url()."cotizaciones/hoja_de_costos/".$id."/".$pagina;?>" />
+         <input type="hidden" name="url" value="<?php echo base_url()."cotizaciones/hoja_de_costos_propia/".$id."/".$pagina;?>" />
 			<input type="submit" value="Guardar" class="btn btn-default" />
 		   
 		</div>

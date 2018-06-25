@@ -41,7 +41,7 @@ class orden_model extends CI_Model{
                 ->join("cotizaciones_orden_de_compra oc","oc.id_cotizacion=o.id_cotizacion","inner")
                 ->where(array('c.id_cliente'=>$cliente,'o.id_molde'=>$molde))
                 ->order_by("o.id","desc")
-                //->limit(15)
+                ->limit(10)
                 ->get();
               //  echo $this->db->last_query();exit();
                 return $query->result();
@@ -55,7 +55,7 @@ class orden_model extends CI_Model{
                 ->join("cotizaciones_orden_de_compra oc","oc.id_cotizacion=o.id_cotizacion","inner")
                 ->where("c.id_cliente = $cliente and c.fecha > '2016-12-31'")
                 ->order_by("o.id","asc")
-                ->limit(15)
+                ->limit(10)
                 ->get();
               //  echo $this->db->last_query();exit();
                 return $query->result();
@@ -67,7 +67,7 @@ class orden_model extends CI_Model{
                 ->from("cotizaciones c")
                 ->where("c.id_cliente = $cliente and ot_migrada <> $vacio")
                 ->order_by("c.id","asc")
-                ->limit(15)
+                ->limit(10)
                 ->get();
               //  echo $this->db->last_query();exit();
                 return $query->result();
@@ -952,6 +952,88 @@ echo $query->num_rows();
                                                 LEFT JOIN moldes_grau mg                    ON mg.id = op.id_molde
                                                 WHERE op.estado <> 2 AND op.estado <> 0 AND op.estado <> '3' AND op.estado <> '4' AND op.fecha>'2017-12-12'
                                                 ORDER BY coc.id");                
+
+                //echo '<pre>';
+                //print_r($query->result());
+                //exit;
+                //echo $this->db->last_query();exit;
+                return $query->result();
+
+    }
+
+    public function getListadoControlCartulina(){
+                $query=$this->db->query("SELECT 
+                                                coc.id as ot,
+                                                op.fecha,
+                                                op.id_cotizacion,
+                                                pf.fecha_liberada,
+                                                pf.situacion,
+                                                cl.razon_social,
+                                                c.producto,
+                                                ci.desgajado_automatico,
+                                                ci.es_una_maquina,
+                                                coc.id_molde,
+                                                cf.condicion_del_producto,
+                                                c.trazado,
+                                                c.cantidad_1,
+                                                c.cantidad_2,
+                                                c.cantidad_3,
+                                                c.cantidad_4,
+                                                ci.tamano_cuchillo_1,
+                                                ci.tamano_cuchillo_2,
+                                                cf.hay_que_troquelar,
+                                                mg.id as mg_id,
+                                                pf.conf_sal_pel_fecha,
+                                                pf.conf_sal_pel_desgajado,
+                                                ci.ccac_1,
+                                                ci.ccac_2,
+                                                ci.tamano_a_imprimir_1,
+                                                ci.tamano_a_imprimir_2,
+                                                pcc.total_kilos_ingresados,
+                                                pcc.total_kilos_restantes,
+                                                pcc.estado as estado_pcc,
+                                                ci.materialidad_datos_tecnicos,
+                                                ci.troquel_por_atras,
+                                                pf.recepcion_maqueta_fecha,
+                                                coc.cantidad_de_cajas,
+                                                ci.unidades_por_pliego,
+                                                pcc.situacion as situacion_pcc,
+                                                pcc.fecha_liberada as fecha_liberada_pcc,
+                                                hcd.total_merma,
+                                                hcd.total_merma2,
+                                                hcd.total_merma3,
+                                                hcd.total_merma4,
+                                                ma.gramaje,
+                                                hcd.placa_kilo,
+                                                pcc.total_kilos,
+                                                pcc.existencia,
+                                                pcc.FechaEstimada_CompraTotal,
+                                                pcc.FechaEstimada_ComprarSaldo_StockParcial,
+                                                pcc.FechaEstimada_ComprarParcial,
+                                                pcc.FechaRecepcion_CompraTotal,
+                                                pcc.FechaRecepcion_ComprarSaldo_StockParcial,
+                                                pcc.FechaRecepcion_ComprarParcial,
+                                                pcc.Opciones_ComprarParcial,
+                                                pcc.Proveedor_ComprarSaldo_ComprarParcial,
+                                                pcc.Proveedor_ComprarParcial,
+                                                pcc.FechaEstimada_ComprarSaldo_ComprarParcial,
+                                                pcc.FechaRecepcion_ComprarSaldo_ComprarParcial,
+                                                pcc.*,
+                                                op.estado
+                                                FROM orden_de_produccion op
+                                                LEFT JOIN produccion_fotomecanica pf        ON pf.id_nodo = op.id_cotizacion
+                                                LEFT JOIN cotizaciones c                    ON c.id = op.id_cotizacion
+                                                LEFT JOIN clientes cl                       ON cl.id = c.id_cliente
+                                                LEFT JOIN produccion_control_cartulina pcc  ON pcc.id_nodo = op.id_cotizacion
+                                                LEFT JOIN cotizacion_ingenieria ci          ON ci.id_cotizacion = op.id_cotizacion
+                                                LEFT JOIN cotizacion_fotomecanica cf        ON cf.id_cotizacion = op.id_cotizacion
+                                                LEFT JOIN hoja_de_costos_datos hcd          ON hcd.id_cotizacion = op.id_cotizacion
+                                                LEFT JOIN cotizaciones_orden_de_compra coc  ON coc.id_cotizacion = op.id_cotizacion
+                                                LEFT JOIN materiales ma                     ON ma.id= c.id_mat_placa1
+                                                LEFT JOIN moldes_grau mg                    ON mg.id = op.id_molde
+                                                WHERE op.estado <> 2 AND op.estado <> 0 AND op.estado <> '3' AND op.estado <> '4' AND op.fecha>'2017-12-12'
+                                                ORDER BY coc.id");
+
 
                 //echo '<pre>';
                 //print_r($query->result());

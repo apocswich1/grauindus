@@ -106,7 +106,7 @@
         $vendedor=$this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
         ?>
             <li>Cliente : <b><?php echo $cliente?></b></li>
-            <li>Cotización N° : <b><?php echo $id?></b></li>
+            <li>Cotización N° : <b id="nc"><?php echo $id?></b></li>
             <li>Fecha : <b><?php echo fecha($datos->fecha)?></b></li>
             <li>Vendedor : <b><?php echo $vendedor->nombre?></b></li>
             <?php if($datos->trazado!=""){ ?>
@@ -206,6 +206,7 @@
     
     <div class="control-group" id="producto">
 		<label class="control-label" for="usuario">Moldes</label>
+                <?php //echo "<h1>" . $fotomecanica->estan_los_moldes . "</h1>"; //my code is here ?>
 		<div class="controls">
         <?php
         if(sizeof($orden)==0)
@@ -371,15 +372,179 @@
         }
     } 
     
+    $datoscantidad1 = $datos->cantidad_1;
+    $tamano1= $ing->tamano_a_imprimir_1;
+    $tamano2= $ing->tamano_a_imprimir_2;
+    
     function printr($array){
     echo '<pre>';
     print_r($array);
     echo '</pre>';
+    
 }
-//printr($array);
+    
+
 ?> 
+<?php include('parcialTrabajosEspeciales.php'); ?>
+<style type="text/css">
+    .tabledark .titulocuadro{
+        color:#ffffff;
+        font-weight: bold;
+        background-color: #006699;
+    }
+    .tabledark{
+        width: 960px;
+    }
+    .tabledark tr td{
+        padding: 4px;
+        border: 1px solid #cccccc;
+    }
+</style>
 <div class="control-group">
-  <h3>Seleccion de Proveedores</h3>
+<h3>Seleccion de Proveedores Trabajos Externos y Trabajos Especiales</h3>
+<table class="tabledark">
+    <tr class="titulocuadro">
+        <td>Trabajo</td>
+        <td>Cantidad</td>
+        <td>Precio</td>
+        <td>Proveedor 1</td>
+        <td>Proveedor 2</td>
+    </tr>
+    <?php $uno=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('uno',$datos->id); ?>
+    <?php $dos=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('dos',$datos->id); ?>
+    <?php $tres=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('tres',$datos->id); ?>
+    <?php $pfolia1=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('folia1',$datos->id); ?>
+    <?php $pfolia2=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('folia2',$datos->id); ?>
+    <?php $pfolia3=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('folia3',$datos->id); ?>
+    <?php $pcffolia1=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('cffolia1',$datos->id); ?>
+    <?php $pcffolia2=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('cffolia2',$datos->id); ?>
+    <?php $pcffolia3=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('cffolia3',$datos->id); ?>
+    <?php $pcuno1=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('cuno1',$datos->id); ?>
+    <?php $pcuno2=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('cuno2',$datos->id); ?>
+    <?php $pcfcuno1=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('cfcuno1',$datos->id); ?>
+    <?php $pcfcuno2=$this->cotizaciones_model->getOrdenesProveedoresPorNombre('cfcuno2',$datos->id); ?>
+    
+    <?php if($acabado_4!=""){ ?>
+    <tr>
+        <td><?php echo $acabado_4;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $acabado_4Array->costo_compra;  ?></td>
+        <td><input type="radio" name="uno" <?php if($uno->proveedor==$acabado_4Array->nombre_proveedor1){echo "checked";} ?> value="<?php echo $acabado_4Array->nombre_proveedor1;  ?>"><?php echo $acabado_4Array->nombre_proveedor1;  ?></td>
+        <td><input type="radio" name="uno" <?php if($uno->proveedor==$acabado_4Array->nombre_proveedor2){echo "checked";} ?> value="<?php echo $acabado_4Array->nombre_proveedor2;  ?>"><?php echo $acabado_4Array->nombre_proveedor2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if($acabado_5!=""){ ?>
+    <tr>
+        <td><?php echo $acabado_5;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $acabado_5Array->costo_compra;  ?></td>
+        <td><input type="radio" name="dos"  <?php if($dos->proveedor==$acabado_5Array->nombre_proveedor1){echo "checked";} ?> value="<?php echo $acabado_5Array->nombre_proveedor1;  ?>"><?php echo $acabado_5Array->nombre_proveedor1;  ?></td>
+        <td><input type="radio" name="dos"  <?php if($dos->proveedor==$acabado_5Array->nombre_proveedor2){echo "checked";} ?> value="<?php echo $acabado_5Array->nombre_proveedor2;  ?>"><?php echo $acabado_5Array->nombre_proveedor2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if($acabado_6!=""){ ?>
+    <tr>
+        <td><?php echo $acabado_6;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $acabado_6Array->costo_compra;  ?></td>
+        <td><input type="radio" name="tres"  <?php if($tres->proveedor==$acabado_6Array->nombre_proveedor1){echo "checked";} ?>  value="<?php echo $acabado_6Array->nombre_proveedor1;  ?>"><?php echo $acabado_6Array->nombre_proveedor1;  ?></td>
+        <td><input type="radio" name="tres"  <?php if($tres->proveedor==$acabado_6Array->nombre_proveedor2){echo "checked";} ?>  value="<?php echo $acabado_6Array->nombre_proveedor2;  ?>"><?php echo $acabado_6Array->nombre_proveedor2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if(sizeof($folia1)>0){ ?>
+    <tr>
+        <td><?php echo $folia1->caracteristicas;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $folia1->costo_compra;  ?></td>
+        <td><input type="radio" name="folia1" <?php if($pfolia1->proveedor==$folia1->proveedor_nombre_1){echo "checked";} ?>  value="<?php echo $folia1->proveedor_nombre_1;  ?>"><?php echo $folia1->proveedor_nombre_1;  ?></td>
+        <td><input type="radio" name="folia1" <?php if($pfolia1->proveedor==$folia1->proveedor_nombre_2){echo "checked";} ?> value="<?php echo $folia1->proveedor_nombre_2;  ?>"><?php echo $folia1->proveedor_nombre_2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if(sizeof($cffolia1)>0){ ?>
+    <tr>
+        <td><?php echo $cffolia1->caracteristicas;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $cffolia1->costo_compra;  ?></td>
+        <td><input type="radio" name="cffolia1" <?php if($pcffolia1->proveedor==$cffolia1->proveedor_nombre_1){echo "checked";} ?> value="<?php echo $cffolia1->proveedor_nombre_1;  ?>"><?php echo $cffolia1->proveedor_nombre_1;  ?></td>
+        <td><input type="radio" name="cffolia1" <?php if($pcffolia1->proveedor==$cffolia1->proveedor_nombre_2){echo "checked";} ?> value="<?php echo $cffolia1->proveedor_nombre_2;  ?>"><?php echo $cffolia1->proveedor_nombre_2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if(sizeof($folia2)>0){ ?>
+    <tr>
+        <td><?php echo $folia2->caracteristicas;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $folia2->costo_compra;  ?></td>
+        <td><input type="radio" name="folia2" <?php if($pfolia2->proveedor==$folia2->proveedor_nombre_1){echo "checked";} ?> value="<?php echo $folia2->proveedor_nombre_1;  ?>"><?php echo $folia2->proveedor_nombre_1;  ?></td>
+        <td><input type="radio" name="folia2" <?php if($pfolia2->proveedor==$folia2->proveedor_nombre_2){echo "checked";} ?> value="<?php echo $folia2->proveedor_nombre_2;  ?>"><?php echo $folia2->proveedor_nombre_2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if(sizeof($cffolia2)>0){ ?>
+    <tr>
+        <td><?php echo $cffolia2->caracteristicas;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $cffolia2->costo_compra;  ?></td>
+        <td><input type="radio" name="cffolia2" <?php if($pcffolia2->proveedor==$cffolia2->proveedor_nombre_1){echo "checked";} ?> value="<?php echo $cffolia2->proveedor_nombre_1;  ?>"><?php echo $cffolia2->proveedor_nombre_1;  ?></td>
+        <td><input type="radio" name="cffolia2" <?php if($pcffolia2->proveedor==$cffolia2->proveedor_nombre_2){echo "checked";} ?> value="<?php echo $cffolia2->proveedor_nombre_2;  ?>"><?php echo $cffolia2->proveedor_nombre_2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if(sizeof($folia3)>0){ ?>
+    <tr>
+        <td><?php echo $folia3->caracteristicas;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $folia3->costo_compra;  ?></td>
+        <td><input type="radio" name="folia3" <?php if($pfolia3->proveedor==$folia3->proveedor_nombre_1){echo "checked";} ?> value="<?php echo $folia3->proveedor_nombre_1;  ?>"><?php echo $folia3->proveedor_nombre_1;  ?></td>
+        <td><input type="radio" name="folia3" <?php if($pfolia3->proveedor==$folia3->proveedor_nombre_2){echo "checked";} ?> value="<?php echo $folia3->proveedor_nombre_2;  ?>"><?php echo $folia3->proveedor_nombre_2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if(sizeof($cffolia3)>0){ ?>
+    <tr>
+        <td><?php echo $cffolia3->caracteristicas;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $cffolia3->costo_compra;  ?></td>
+        <td><input type="radio" name="cffolia3" <?php if($pcffolia3->proveedor==$folia3->proveedor_nombre_1){echo "checked";} ?> value="<?php echo $cffolia3->proveedor_nombre_1;  ?>"><?php echo $cffolia3->proveedor_nombre_1;  ?></td>
+        <td><input type="radio" name="cffolia3" <?php if($pcffolia3->proveedor==$folia3->proveedor_nombre_2){echo "checked";} ?> value="<?php echo $cffolia3->proveedor_nombre_2;  ?>"><?php echo $cffolia3->proveedor_nombre_2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if(sizeof($cuno1)>0){ ?>
+    <tr>
+        <td><?php echo $cuno1->caracteristicas;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $cuno1->costo_compra;  ?></td>
+        <td><input type="radio" name="cuno1" <?php if($pcuno1->proveedor==$cuno1->proveedor_nombre_1){echo "checked";} ?> value="<?php echo $cuno1->proveedor_nombre_1;  ?>"><?php echo $cuno1->proveedor_nombre_1;  ?></td>
+        <td><input type="radio" name="cuno1" <?php if($pcuno1->proveedor==$cuno1->proveedor_nombre_2){echo "checked";} ?> value="<?php echo $cuno1->proveedor_nombre_2;  ?>"><?php echo $cuno1->proveedor_nombre_2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if(sizeof($cfcuno1)>0){ ?>
+    <tr>
+        <td><?php echo $cfcuno1->caracteristicas;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $cfcuno1->costo_compra;  ?></td>
+        <td><input type="radio" name="cfcuno1" <?php if($pcfcuno1->proveedor==$cfcuno1->proveedor_nombre_1){echo "checked";} ?> value="<?php echo $cfcuno1->proveedor_nombre_1;  ?>"><?php echo $cfcuno1->proveedor_nombre_1;  ?></td>
+        <td><input type="radio" name="cfcuno1" <?php if($pcfcuno1->proveedor==$cfcuno1->proveedor_nombre_2){echo "checked";} ?> value="<?php echo $cfcuno1->proveedor_nombre_2;  ?>"><?php echo $cfcuno1->proveedor_nombre_2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if(sizeof($cuno2)>0){ ?>
+    <tr>
+        <td><?php echo $cuno2->caracteristicas;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $cuno2->costo_compra;  ?></td>
+        <td><input type="radio" name="cuno2" <?php if($pfolia2->proveedor==$folia2->proveedor_nombre_1){echo "checked";} ?> value="<?php echo $cuno2->proveedor_nombre_1;  ?>"><?php echo $cuno2->proveedor_nombre_1;  ?></td>
+        <td><input type="radio" name="cuno2" <?php if($pfolia2->proveedor==$folia2->proveedor_nombre_2){echo "checked";} ?> value="<?php echo $cuno2->proveedor_nombre_2;  ?>"><?php echo $cuno2->proveedor_nombre_2;  ?></td>
+    </tr>
+    <?php }  ?>
+    <?php if(sizeof($cfcuno2)>0){ ?>
+    <tr>
+        <td><?php echo $cfcuno2->caracteristicas;  ?></td>
+        <td><?php echo $datoscantidad1;  ?></td>
+        <td><?php echo $cfcuno2->costo_compra;  ?></td>
+        <td><input type="radio" name="cfcuno2" <?php if($pcfcuno2->proveedor==$cfcuno2->proveedor_nombre_1){echo "checked";} ?> value="<?php echo $cfcuno2->proveedor_nombre_1;  ?>"><?php echo $cfcuno2->proveedor_nombre_1;  ?></td>
+        <td><input type="radio" name="cfcuno2" <?php if($pcfcuno2->proveedor==$cfcuno2->proveedor_nombre_2){echo "checked";} ?> value="<?php echo $cfcuno2->proveedor_nombre_2;  ?>"><?php echo $cfcuno2->proveedor_nombre_2;  ?></td>
+    </tr>
+    <?php }  ?>
+</table>
+</div>
+<!--<div class="control-group">
+  <h3>Seleccion de Proveedores Trabajos Especiales</h3>
   <p>Seleccione los proveedores para los trabajos especiales.</p>  
   <div class="row col-sm-4" style="float:left; width: 300px; border: 1px solid #CCCCCC; margin-left: 50px;">
       <div style="border: 1px solid #CCCCCC;"><label><b>Trabajo</b></label></div>
@@ -430,16 +595,16 @@
     ?>
     <table>
         <tr><td><b>Trabajo</b></td></tr>
-        <tr><td><?php echo $prov->folia1->nfolia1 ?></td></tr>
-        <tr><td><?php echo $prov->cffolia1->mnfolia1 ?></td></tr>
-        <tr><td><?php echo $prov->folia2->nfolia2 ?></td></tr>
-        <tr><td><?php echo $prov->cffolia2->mnfolia2 ?></td></tr>
-        <tr><td><?php echo $prov->folia3->nfolia3 ?></td></tr>
-        <tr><td><?php echo $prov->cffolia3->mnfolia3 ?></td></tr>
-        <tr><td><?php echo $prov->cuno1->ncuno1 ?></td></tr>
-        <tr><td><?php echo $prov->cfcuno1->mncuno1 ?></td></tr>
-        <tr><td><?php echo $prov->cuno2->ncuno2 ?></td></tr>
-        <tr><td><?php echo $prov->cfcuno2->mncuno2 ?></td></tr>
+        <tr><td><?php //echo $prov->folia1->nfolia1 ?></td></tr>
+        <tr><td><?php //echo $prov->cffolia1->mnfolia1 ?></td></tr>
+        <tr><td><?php //echo $prov->folia2->nfolia2 ?></td></tr>
+        <tr><td><?php //echo $prov->cffolia2->mnfolia2 ?></td></tr>
+        <tr><td><?php //echo $prov->folia3->nfolia3 ?></td></tr>
+        <tr><td><?php //echo $prov->cffolia3->mnfolia3 ?></td></tr>
+        <tr><td><?php //echo $prov->cuno1->ncuno1 ?></td></tr>
+        <tr><td><?php //echo $prov->cfcuno1->mncuno1 ?></td></tr>
+        <tr><td><?php //echo $prov->cuno2->ncuno2 ?></td></tr>
+        <tr><td><?php //echo $prov->cfcuno2->mncuno2 ?></td></tr>
     </table>
 </div>
  <div class="control-group" style="float:left; width: 300px; border: 1px solid #CCCCCC; margin-left: 5px;">
@@ -450,22 +615,22 @@
     ?>
     <table>
         <tr><td><b>Proveedor Asignado</b></td></tr>
-        <tr><td>&nbsp;<?php echo $prov->folia1->pfolia1 ?></td></tr>
-        <tr><td>&nbsp;<?php echo $prov->cffolia1->mpfolia1 ?></td></tr>
-        <tr><td>&nbsp;<?php echo $prov->folia2->pfolia2 ?></td></tr>
-        <tr><td>&nbsp;<?php echo $prov->cffolia2->mpfolia2 ?></td></tr>
-        <tr><td>&nbsp;<?php echo $prov->folia3->pfolia3 ?></td></tr>
-        <tr><td>&nbsp;<?php echo $prov->cffolia3->mpfolia3 ?></td></tr>
-        <tr><td>&nbsp;<?php echo $prov->cuno1->pcuno1 ?></td></tr>
-        <tr><td>&nbsp;<?php echo $prov->cfcuno1->mpcuno1 ?></td></tr>
-        <tr><td>&nbsp;<?php echo $prov->cuno2->pcuno2 ?></td></tr>
-        <tr><td>&nbsp;<?php echo $prov->cfcuno2->mpcuno2 ?></td></tr>
+        <tr><td>&nbsp;<?php //echo $prov->folia1->pfolia1 ?></td></tr>
+        <tr><td>&nbsp;<?php //echo $prov->cffolia1->mpfolia1 ?></td></tr>
+        <tr><td>&nbsp;<?php //echo $prov->folia2->pfolia2 ?></td></tr>
+        <tr><td>&nbsp;<?php //echo $prov->cffolia2->mpfolia2 ?></td></tr>
+        <tr><td>&nbsp;<?php //echo $prov->folia3->pfolia3 ?></td></tr>
+        <tr><td>&nbsp;<?php //echo $prov->cffolia3->mpfolia3 ?></td></tr>
+        <tr><td>&nbsp;<?php //echo $prov->cuno1->pcuno1 ?></td></tr>
+        <tr><td>&nbsp;<?php //echo $prov->cfcuno1->mpcuno1 ?></td></tr>
+        <tr><td>&nbsp;<?php //echo $prov->cuno2->pcuno2 ?></td></tr>
+        <tr><td>&nbsp;<?php //echo $prov->cfcuno2->mpcuno2 ?></td></tr>
     </table>
 </div>
 </div>
 <br /><br /><br /><br /><br /><br />
 <br /><br /><br /><br /><br /><br />
-<br />
+<br />-->
 <!-- ------------------------------------------------------->
    <h3>Otros datos</h3>
 
@@ -838,6 +1003,19 @@ $('.ir-arriba').click(function(){
 //		}
 	});
         
-
+$("input[type=radio]").on('click',function(){
+    var datos = [];
+    var datosv;
+    var ruta='cotizaciones/ordenes_proveedores/';
+    var id = $('#nc').text();
+    $("input[type=radio]:checked").each(function(i){    
+    datos.push([$(this).attr('name'),$(this).val()]);
+    });    
+    
+    $.post(webroot+ruta,{ datos:datos,id:id },function(resp){
+        
+    });
+    console.log(datos);
+});
 </script>
 

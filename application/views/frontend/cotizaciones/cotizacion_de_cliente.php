@@ -25,6 +25,7 @@ if($datos->id_cliente==3000)
             $rut=$cli->rut;
             $telefono=$cli->telefono;
             $contacto=$this->clientes_model->geContactosClientePorIdUltimo($datos->id_cliente);
+            $nombre_contacto= $cli->contacto_cliente;
         }
  $cuerpo='<!doctype html>
 			<html> 
@@ -61,7 +62,7 @@ if($datos->id_cliente==3000)
 .container{
 padding: 20px 20px 20px 20px;
 width:1000px;
-height:1200px;
+height:1350px;
 margin:0 auto;
 background-color:#fff;
 }
@@ -279,6 +280,12 @@ document.getElementById("aclaratoria1").innerHTML = "";
             '.$cliente.'
         </td>
     </tr>'; 
+     if(sizeof($nombre_contacto!="")){
+     $cuerpo.='    <tr>
+        <td colspan="2">
+            ATENCION Sr(a): '.$nombre_contacto.'
+        </td>
+     </tr>'; }
     $cuerpo.='<tr>
         <td colspan="2">
              &nbsp;
@@ -319,7 +326,7 @@ document.getElementById("aclaratoria1").innerHTML = "";
         <td style="width: 300px;">
         DETALLE
         </td>
-        <td style="width: 150px;">
+        <td style="width: 150px; text-align:center">
         VALOR UNITARIO
         </td>
     </tr>';  
@@ -387,7 +394,7 @@ document.getElementById("aclaratoria1").innerHTML = "";
         <td style="width: 300px; font-size:18px;">
             '.$ing->producto.' <span id="colores">'.$colores.'</span>, '.$barniz.' <span id="placa">'.$materialidaduno->tipomaterial.'</span>'.$gramaje.' <span id="onda"></span><span id="liner"></span> '.$materialidad.', '.$reversoliner.''.$tamano.'
         </td>
-        <td style="width: 150px;">$
+        <td style="width: 150px; text-align:center">$
         '.number_format($hoja->valor_empresa,0,'','.').'
         </td>
     </tr>'; 
@@ -400,7 +407,7 @@ document.getElementById("aclaratoria1").innerHTML = "";
         <td style="width: 300px;">
             ""'.$ing->qproducto.'
         </td>
-        <td style="width: 150px;">
+        <td style="width: 150px; text-align:center">
         $ '.number_format($hoja->valor_empresa_2,0,'','.').'
         </td>
     </tr>';  
@@ -414,7 +421,7 @@ document.getElementById("aclaratoria1").innerHTML = "";
         <td style="width: 300px;">
             ""'.$ing->qproducto.'
         </td>
-        <td style="width: 150px;">
+        <td style="width: 150px; text-align:center">
         $ '.number_format($hoja->valor_empresa_3,0,'','.').'
         </td>
     </tr>'; 
@@ -428,7 +435,7 @@ document.getElementById("aclaratoria1").innerHTML = "";
         <td style="width: 300px;">
             '.$ing->producto.'
         </td>
-        <td style="width: 150px;">
+        <td style="width: 150px; text-align:center">
         $ '.number_format($hoja->valor_empresa_4,0,'','.').'
         </td>
     </tr>'; 
@@ -567,6 +574,11 @@ document.getElementById("aclaratoria1").innerHTML = "";
         </td>
     </tr>';   
   
+    if($datos->numero_molde=="21"){
+        $trazadomolde="Trazado: ".$datos->trazado;
+    }else{
+        $trazadomolde="Molde: ".$datos->numero_molde;
+    }
     $cuerpo.='    
 	<tr>
         <td>
@@ -576,7 +588,7 @@ document.getElementById("aclaratoria1").innerHTML = "";
         </td>
 		
         <td>
-        <strong>- Condición del Producto: '.$fotomecanica->condicion_del_producto.'</strong>
+        <strong>- Condición del Producto: '.$fotomecanica->condicion_del_producto.' ('.$trazadomolde.')</strong>
         </td>
     </tr>';   
   

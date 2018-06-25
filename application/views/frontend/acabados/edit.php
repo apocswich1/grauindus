@@ -8,7 +8,7 @@
       <li>Editar Acabados</li>
     </ol>
    <!-- /Migas -->
-	<div class="page-header"><h3>Editar Acabado</h3></div>
+	<div class="page-header"><h3>Editar Procesos</h3></div>
 	
     
     <div class="control-group">

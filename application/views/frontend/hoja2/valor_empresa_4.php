@@ -9,7 +9,7 @@
     <div class="control-group">
 		<label class="control-label" for="usuario">Valor Empresa</label>
 		<div class="controls">
-			<input type="text" name="valor_empresa" value="<?php echo $hoja->valor_empresa_4?>" onkeypress="return soloNumeros(event)" />
+			<input type="text" name="valor_empresa" value="<?php echo $hoja2->valor_empresa_4?>" onkeypress="return soloNumeros(event)" />
 		</div>
 	</div>
      <div class="control-group">

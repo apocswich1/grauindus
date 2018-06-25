@@ -343,7 +343,8 @@ class Moldes extends CI_Controller {
                                         $datos_archivo_historial=array
                                         (
                                             "id_moldes"=>$id,
-                                            "archivo"=>$datos->archivo,
+                                            //"archivo"=>$datos->archivo,
+                                            "archivo"=>$file_name,
                                             "fecha"=>date('Y-m-d'),                        
                                         );
                                         $this->moldes_model->insertar_historial($datos_archivo_historial);                                              
@@ -379,6 +380,8 @@ class Moldes extends CI_Controller {
                                 "placa2"=>$this->input->post("placa2",true),
                                 "onda2"=>$this->input->post("onda2",true),
                                 "liner2"=>$this->input->post("liner2",true),
+                                "fecha_creacion_molde"=>$this->input->post("fecha_creacion_molde",true),
+                                "observaciones"=>$this->input->post("observaciones",true),
                              );
                               
                             // print_r($data);//exit(); 
@@ -483,7 +486,7 @@ class Moldes extends CI_Controller {
                 $this->layout->setLayout('template_ajax');
                 $id=$this->input->post("valor1",true);
                 $datos=$this->moldes_model->getMoldesPorId($id);
-//                exit(print_r($datos));
+               // exit(print_r($datos));
                 $this->layout->view('detalle_ajax_cambio_molde',compact("datos","id"));
             }else
             {

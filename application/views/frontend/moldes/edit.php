@@ -34,7 +34,7 @@
 		</div>
 	</div>
     <?php }?>
-    <hr />		 
+    <hr />	
     <table>
         <tr>
             <td>
@@ -69,8 +69,12 @@
 	
 		</div>
 	</div> 
-    
-    
+    <div class="control-group">
+		<label class="control-label" for="usuario">Observaciones:</label>
+		<div class="controls">
+                    <textarea id="observaciones" name="observaciones" placeholder="Observaciones" ><?php echo $datos->observaciones; ?></textarea>
+		</div>
+	</div>
     <div class="control-group">
 		<label class="control-label" for="usuario">Número <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
@@ -377,14 +381,14 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
     <div class="control-group" id="producto">
 		<label class="control-label" for="usuario">Distancia cuchillo a cuchillo<strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php echo $datos->cuchillocuchillo; ?>" placeholder="0" onblur="cuchillo();" /> X <input type="text" name="tamano_cuchillo_2" style="width: 100px;" value="<?php echo $datos->cuchillocuchillo2 ?>" placeholder="0" onblur="cuchillo();" /> Cms. 
+                    <input type="text" id="tamanocuchillo1" name="tamano_cuchillo_1" style="width: 100px;"  value="<?php echo $datos->cuchillocuchillo; ?>" placeholder="0" onblur="cuchillo();" /> X <input type="text" id="tamanocuchillo2" name="tamano_cuchillo_2" style="width: 100px;" value="<?php echo $datos->cuchillocuchillo2 ?>" placeholder="0" onblur="cuchillo();" /> Cms. 
 		</div>
 	</div>
     
     <div class="control-group" id="producto">
 		<label class="control-label" for="usuario">Tamaño a imprimir Ancho por Largo (largo a cortar) <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" name="ancho_bobina" style="width: 100px;" value="<?php echo $datos->ancho_bobina?>" placeholder="Ancho" /> X <input type="text" name="largo_bobina" style="width: 100px;" value="<?php echo $datos->largo_bobina?>" placeholder="Largo" /> 
+                    <input type="text" id="anchobobina" name="ancho_bobina" style="width: 100px;" value="<?php echo $datos->ancho_bobina?>" placeholder="Ancho" /> X <input type="text" id="largobobina" name="largo_bobina" style="width: 100px;" value="<?php echo $datos->largo_bobina?>" placeholder="Largo" /> 
 		</div>
 	</div>
     
@@ -512,5 +516,20 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
         }
         
     });
+    
+    $("#largobobina").on("keyup",function(){
+        var a = $(this).val();
+        var tamano2 = $("#tamanocuchillo2").val();
+            if(parseInt(a) < parseInt(tamano2)){
+            if (!$("#etiquetaerror").length > 0 ) {
+            $(this).after("<label style='color:red' id='etiquetaerror'>No puede ser menor al tamaño de la cuchilla</label>");
+            }
+            }else{
+                $("#etiquetaerror").remove();
+            }    
+    });
 </script>
 </div>
+
+
+

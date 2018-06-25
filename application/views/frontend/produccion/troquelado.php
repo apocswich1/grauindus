@@ -192,7 +192,8 @@
                      <li>Total merma : <strong><?php  echo $hoja->total_merma; ?></strong></li>
                      <li>Piezas Adicionales: <strong><?php echo $ing->piezas_adicionales; ?></strong></li>  
                      <li>2da Pieza Adicional: <strong><?php echo $ing->piezas_adicionales2; ?></strong></li>  
-                     <li>3da Pieza Adicional: <strong><?php echo $ing->piezas_adicionales3; ?></strong></li>                      
+                     <li>3da Pieza Adicional: <strong><?php echo $ing->piezas_adicionales3; ?></strong></li> 
+                     <li>Observacion Molde : <?php if($molde->observaciones!=""){echo $molde->observaciones;}else{echo "Sin Observaciones";}?></li>
                 </ul>
             	</div>
 		<div class="controls"  style="margin-left: 0px;width:30%;float:left;">

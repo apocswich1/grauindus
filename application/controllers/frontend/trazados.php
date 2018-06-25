@@ -351,6 +351,7 @@ class Trazados extends CI_Controller {
             if(sizeof($datos)==0){show_404();}
             if ( $this->input->post() )
  		         {
+                //echo $this->input->post("tamano_caja",true);exit();
  		             if ( $this->form_validation->run('ad_molde') )
     			         {
     			              if(empty($_FILES["file"]["name"]))

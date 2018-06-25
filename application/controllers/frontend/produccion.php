@@ -992,9 +992,14 @@ class Produccion extends CI_Controller {
                             $comentario_rechazo           = '';
                             $fecha_rechazada_recepcion_OT = '';
                         }
+                    } elseif($this->input->post('recepcion_ot',true)=="Por Revisar") {
+                        $recepcion_ot_aprobado_fecha  = "0000-00-00";
+                        $comentario_rechazo           = "";
+                        $fecha_rechazada_recepcion_OT = "";
                     } else {
                         $recepcion_ot_aprobado_fecha="0000-00-00";
                     }
+
                             		 
 				   if($this->input->post('revision_trazado',true)=="Aprobada") {
                     if ($this->input->post('input_fecha_trazado_aprobado',true)=='0000-00-00') {
@@ -1374,6 +1379,53 @@ class Produccion extends CI_Controller {
                                "fecha_rechazada_recepcion_OT"=>'',
                             );  
                         }
+                    } elseif($this->input->post('recepcion_ot',true)=="Por Revisar") {
+                        $data=array
+                        (
+                           "id_usuario"=>$this->session->userdata('id'),
+                           "tipo"=>$this->input->post('tipo',true),
+                           "id_nodo"=>$this->input->post('id',true),
+                           
+                           "situacion"          =>$situacion,
+                           "fecha_pendiente"    =>$fecha_pendiente,
+                           "fecha_liberada"     =>$fecha_liberada,
+                           "fecha_activa"       =>$fecha_activa,
+                           "fecha_orden_cerrada"=>$fecha_orden_cerrada,
+                           "estado"             =>$this->input->post('estado',true),
+                           "fecha"              =>date("Y-m-d"),
+                           'quien'              =>$this->session->userdata('id'),
+                           'cuando'             =>date("Y-m-d"),
+                           "correcciones_fecha" =>date("Y-m-d"),
+                           "pdf_imagen"         =>$file_name,
+                           "correcciones_id_usuario"=>$this->session->userdata('id'),
+                           "peliculas_para_imprimir"=>$this->input->post('peliculas_para_imprimir',true),
+                           "comentario_fotomecanica"=>$this->input->post('comentario_fotomecanica',true),
+                           "recepcion_ot"           =>$this->input->post('recepcion_ot',true),
+                           "revision_trazado"       =>$this->input->post('revision_trazado',true),
+                           "recepcion_maqueta"      =>$this->input->post('recepcion_maqueta',true),
+                           "revision_imagen"        =>$this->input->post('revision_de_imagen',true),
+                           "montaje_digital"        =>$this->input->post('montaje_digital',true),
+                           "prueba_color"           =>$this->input->post('prueba_color',true),
+                           "arte_diseno"            =>$this->input->post('arte_diseno',true),
+                           "conf_sal_pel"           =>$this->input->post('conf_sal_pel',true),
+                           "sobre_desarrollo"       =>$this->input->post('sobre_desarrollo',true),
+                           "para_maquina"           =>$this->input->post('para_maquina',true),
+                           "correcciones"           =>$this->input->post('correcciones',true),
+                           "recepcion_ot_aprobado_fecha"=>$recepcion_ot_aprobado_fecha,
+                           "revision_trazado_fecha"=>$revision_trazado,
+                           "recepcion_maqueta_fecha"=>$fecha_recepcion_maqueta,
+
+                           "revision_de_imagen_fecha"=>$revision_de_imagen,
+                           "montaje_digital_fecha"=>$montaje_digital_fecha,
+                           "prueba_color_fecha"=>$prueba_color_fecha,
+                           "arte_diseno_fecha"=>$arte_diseno_fecha,
+                           "conf_sal_pel_fecha"=>$conf_sal_pel_fecha,
+                           "conf_sal_pel_desgajado"=>$this->input->post('conf_sal_pel_desgajado',true),
+                           "conf_sal_pel_desgajado_fecha"=>$conf_sal_pel_desgajado_fecha,
+                           "sobre_desarrollo_fecha"=>$sobre_desarrollo_fecha,
+                           "comentario_rechazo"=>'',
+                           "fecha_rechazada_recepcion_OT"=>'',
+                        );  
                     } else {
                         $data=array
                         (
@@ -1569,6 +1621,50 @@ class Produccion extends CI_Controller {
             {
                 if($this->form_validation->run('control_cartulina'))
                 {
+                    $total_kilos_restantes_parcial_1    =$this->input->post('total_kilos_restantes'             ,true);
+                    $numero_de_bobina                   =$this->input->post('numero_de_bobina'                  ,true);
+                    $numero_de_bobina2                  =$this->input->post('numero_de_bobina2'                 ,true);
+                    $numero_de_bobina3                  =$this->input->post('numero_de_bobina3'                 ,true);
+                    $total_de_bobinas                   =$this->input->post('total_de_bobinas'                  ,true);
+                    $quien_sabe_ubicacion_de_la_bobina  =$this->input->post('quien_sabe_ubicacion_de_la_bobina' ,true);
+                    $menu_bobina_pliego                 =$this->input->post('menu_bobina_pliego'                ,true);
+
+                    $existencia                                    =$this->input->post('existencia'                                   ,true);
+                    $Proveedor_CompraTotal                         =$this->input->post('Proveedor_CompraTotal'                        ,true); 
+                    $MaterialComprado_CompraTotal                  =$this->input->post('MaterialComprado_CompraTotal'                 ,true); 
+                    $Ancho_CompraTotal                             =$this->input->post('Ancho_CompraTotal'                            ,true); 
+                    $Kilos_CompraTotal                             =$this->input->post('Kilos_CompraTotal'                            ,true); 
+                    $FechaEstimada_CompraTotal                     =$this->input->post('FechaEstimada_CompraTotal'                    ,true); 
+                    $FechaRecepcion_CompraTotal                    =$this->input->post('FechaRecepcion_CompraTotal'                   ,true); 
+                    $Opciones_StockParcial                         =$this->input->post('Opciones_StockParcial'                        ,true); 
+                    $KilosEnStock_ComprarSaldo_StockParcial        =$this->input->post('KilosEnStock_ComprarSaldo_StockParcial'       ,true);
+                    $Proveedor_ComprarSaldo_StockParcial           =$this->input->post('Proveedor_ComprarSaldo_StockParcial'          ,true); 
+                    $MaterialComprado_ComprarSaldo_StockParcial    =$this->input->post('MaterialComprado_ComprarSaldo_StockParcial'   ,true); 
+                    $Ancho_ComprarSaldo_StockParcial               =$this->input->post('Ancho_ComprarSaldo_StockParcial'              ,true); 
+                    $Kilos_ComprarSaldo_StockParcial               =$this->input->post('Kilos_ComprarSaldo_StockParcial'              ,true); 
+                    $FechaEstimada_ComprarSaldo_StockParcial       =$this->input->post('FechaEstimada_ComprarSaldo_StockParcial'      ,true); 
+                    $FechaRecepcion_ComprarSaldo_StockParcial      =$this->input->post('FechaRecepcion_ComprarSaldo_StockParcial'     ,true); 
+                    $Proveedor_ComprarParcial                      =$this->input->post('Proveedor_ComprarParcial'                     ,true); 
+                    $MaterialComprado_ComprarParcial               =$this->input->post('MaterialComprado_ComprarParcial'              ,true); 
+                    $Ancho_ComprarParcial                          =$this->input->post('Ancho_ComprarParcial'                         ,true); 
+                    $Kilos_ComprarParcial                          =$this->input->post('Kilos_ComprarParcial'                         ,true); 
+                    $FechaEstimada_ComprarParcial                  =$this->input->post('FechaEstimada_ComprarParcial'                 ,true); 
+                    $FechaRecepcion_ComprarParcial                 =$this->input->post('FechaRecepcion_ComprarParcial'                ,true); 
+                    $Opciones_ComprarParcial                       =$this->input->post('Opciones_ComprarParcial'                      ,true); 
+                    $Proveedor_ComprarSaldo_ComprarParcial         =$this->input->post('Proveedor_ComprarSaldo_ComprarParcial'        ,true); 
+                    $MaterialComprado_ComprarSaldo_ComprarParcial  =$this->input->post('MaterialComprado_ComprarSaldo_ComprarParcial' ,true); 
+                    $Ancho_ComprarSaldo_ComprarParcial             =$this->input->post('Ancho_ComprarSaldo_ComprarParcial'            ,true); 
+                    $Kilos_ComprarSaldo_ComprarParcial             =$this->input->post('Kilos_ComprarSaldo_ComprarParcial'            ,true); 
+                    $FechaEstimada_ComprarSaldo_ComprarParcial     =$this->input->post('FechaEstimada_ComprarSaldo_ComprarParcial'    ,true); 
+                    $FechaRecepcion_ComprarSaldo_ComprarParcial    =$this->input->post('FechaRecepcion_ComprarSaldo_ComprarParcial'   ,true);
+                    $kilos_bobina_seleccionada2                    =$this->input->post('kilos_bobina_seleccionada2'                   ,true);
+                    $kilos_bobina_seleccionada3                    =$this->input->post('kilos_bobina_seleccionada3'                   ,true); 
+                    $total_kilos_ingresados                        =$this->input->post('total_kilos_ingresados'                       ,true);
+                    $ancho_seleccionado_de_bobina2                 =$this->input->post('ancho_seleccionado_de_bobina2'                ,true);
+                    $ancho_seleccionado_de_bobina3                 =$this->input->post('ancho_seleccionado_de_bobina3'                ,true);
+                    $total_metros_ingresados                       =$this->input->post('total_metros_ingresados'                      ,true);
+                    $hay_que_bobinar                              =$this->input->post('hay_que_bobinar'                              ,true);
+
                     if(sizeof($control_cartulina)==0)
                    {
                             $situacion='Pendiente';
@@ -1586,13 +1682,25 @@ class Produccion extends CI_Controller {
                             $fecha_liberada=date('Y-m-d H:i:s');
                             $fecha_activa='0000-00-00';
                             $fecha_orden_cerrada='0000-00-00';
+                            $input_restante='';
                         break;
                         case '0':
                             $situacion='Guardar';
                             $fecha_pendiente='0000-00-00';
-                            $fecha_liberada='0000-00-00';
                             $fecha_activa=date('Y-m-d H:i:s');
                             $fecha_orden_cerrada='0000-00-00';
+                            $input_restante=$this->input->post('input_restante',true);
+                            $fecha_liberada='0000-00-00';
+                            $fecha_liberada_parcial_2 ='';
+                            $fecha_liberada_parcial_3 ='';
+
+                            $total_kilos_ingresados_parcial_2   ='';
+                            $total_kilos_restantes_parcial_2    ='';
+                            $total_metros_restantes_parcial_2   ='';
+
+                            $total_kilos_ingresados_parcial_3   ='';
+                            $total_kilos_restantes_parcial_3    ='';
+                            $total_metros_restantes_parcial_3   ='';
                         break;
                         case '2':
                             $situacion='Activa';
@@ -1601,14 +1709,137 @@ class Produccion extends CI_Controller {
                             $fecha_activa=date('Y-m-d H:i:s');
                             $fecha_orden_cerrada='0000-00-00';
                         break;
-			case '3':
+                        case '3':
                             $situacion='Parcial';
                             $fecha_pendiente='0000-00-00';
-                            $fecha_liberada='0000-00-00';
-                            $fecha_activa=date('Y-m-d H:i:s');
+                            $fecha_liberada=date('Y-m-d H:i:s');
+                            $fecha_activa= '0000-00-00'; //date('Y-m-d H:i:s');
                             $fecha_orden_cerrada='0000-00-00';
+                            $input_restante=$this->input->post('input_restante',true);
+
+                            if ($this->input->post('fecha_liberada_parcial_1',true)==null || $this->input->post('fecha_liberada_parcial_1',true)=='0000-00-00 00:00:00') {
+                                $fecha_liberada           =date('Y-m-d H:i:s');
+                                $fecha_liberada_parcial_2 ='';
+                                $fecha_liberada_parcial_3 ='';
+
+
+                                $total_kilos_ingresados_parcial_1   =$this->input->post('total_kilos_ingresados',true);
+                                $total_kilos_restantes_parcial_1    =$this->input->post('total_kilos_restantes',true);
+                                $total_metros_restantes_parcial_1   =$this->input->post('total_metros_restantes',true);
+                                
+                                $total_kilos_ingresados_parcial_2   ='';
+                                $total_kilos_restantes_parcial_2    ='';
+                                $total_metros_restantes_parcial_2   ='';
+
+                                $total_kilos_ingresados_parcial_3   ='';
+                                $total_kilos_restantes_parcial_3    ='';
+                                $total_metros_restantes_parcial_3   ='';
+
+                            }elseif ($this->input->post('fecha_liberada_parcial_2',true)==null || $this->input->post('fecha_liberada_parcial_2',true)=='0000-00-00 00:00:00') {
+                                $fecha_liberada           =$this->input->post('fecha_liberada_parcial_1',true);
+                                $fecha_liberada_parcial_2 =date('Y-m-d H:i:s');
+                                $fecha_liberada_parcial_3 ='';
+
+                                $total_kilos_ingresados_parcial_1   =$this->input->post('total_kilos_ingresados_parcial_1',true);
+                                $total_kilos_restantes_parcial_1    =$this->input->post('total_kilos_restantes_parcial_1',true);
+                                $total_metros_restantes_parcial_1   =$this->input->post('total_metros_restantes_parcial_1',true);
+                                
+                                $total_kilos_ingresados_parcial_2   =$this->input->post('total_kilos_ingresados',true);
+                                $total_kilos_restantes_parcial_2    =$this->input->post('total_kilos_restantes',true);
+                                $total_metros_restantes_parcial_2   =$this->input->post('total_metros_restantes',true);
+
+                                $total_kilos_ingresados_parcial_3   ='';
+                                $total_kilos_restantes_parcial_3    ='';
+                                $total_metros_restantes_parcial_3   ='';
+
+                            }else{
+                                $fecha_liberada           =$this->input->post('fecha_liberada_parcial_1',true);
+                                $fecha_liberada_parcial_2 =$this->input->post('fecha_liberada_parcial_2',true);
+                                $fecha_liberada_parcial_3 =date('Y-m-d H:i:s');
+
+                                $total_kilos_ingresados_parcial_1   =$this->input->post('total_kilos_ingresados_parcial_1',true);
+                                $total_kilos_restantes_parcial_1    =$this->input->post('total_kilos_restantes_parcial_1',true);
+                                $total_metros_restantes_parcial_1   =$this->input->post('total_metros_restantes_parcial_1',true);
+                                
+                                $total_kilos_ingresados_parcial_2   =$this->input->post('total_kilos_ingresados_parcial_2',true);
+                                $total_kilos_restantes_parcial_2    =$this->input->post('total_kilos_restantes_parcial_2',true);
+                                $total_metros_restantes_parcial_2   =$this->input->post('total_metros_restantes_parcial_2',true);
+
+                                $total_kilos_ingresados_parcial_3   =$this->input->post('total_kilos_ingresados',true);
+                                $total_kilos_restantes_parcial_3    =$this->input->post('total_kilos_restantes' ,true);
+                                $total_metros_restantes_parcial_3   =$this->input->post('total_metros_restantes',true);
+                            }
                         break;
-                     }
+                        case '4':
+                            $situacion='Reversar';
+                            $fecha_pendiente='0000-00-00';
+                            $fecha_liberada='0000-00-00';
+                            $fecha_activa= '0000-00-00';
+                            $fecha_orden_cerrada='0000-00-00';
+                            $input_restante='';
+                            $fecha_liberada           ='';
+                            $fecha_liberada_parcial_2 ='';
+                            $fecha_liberada_parcial_3 ='';
+
+                            $numero_de_bobina='';
+                            $numero_de_bobina2='';
+                            $numero_de_bobina3='';
+                            $total_de_bobinas='';
+                            $quien_sabe_ubicacion_de_la_bobina='';
+
+                            $total_kilos_ingresados_parcial_1   ='';
+                            $total_kilos_restantes_parcial_1    ='';
+                            $total_metros_restantes_parcial_1   ='';
+                            
+                            $total_kilos_ingresados_parcial_2   ='';
+                            $total_kilos_restantes_parcial_2    ='';
+                            $total_metros_restantes_parcial_2   ='';
+
+                            $total_kilos_ingresados_parcial_3   ='';
+                            $total_kilos_restantes_parcial_3    ='';
+                            $total_metros_restantes_parcial_3   ='';
+                            $total_kilos_ingresados             ='';
+                            $ancho_seleccionado_de_bobina2      ='';
+                            $ancho_seleccionado_de_bobina3      ='';
+                            $total_metros_ingresados            ='';
+                            $hay_que_bobinar                    ='';
+
+                            $kilos_bobina_seleccionada2                    ='';
+                            $kilos_bobina_seleccionada3                    ='';
+
+                            $existencia                                    ='';
+                            $Proveedor_CompraTotal                         ='';
+                            $MaterialComprado_CompraTotal                  ='';
+                            $Ancho_CompraTotal                             ='';
+                            $Kilos_CompraTotal                             ='';
+                            $FechaEstimada_CompraTotal                     ='';
+                            $FechaRecepcion_CompraTotal                    ='';
+                            $Opciones_StockParcial                         ='';
+                            $Proveedor_ComprarSaldo_StockParcial           ='';
+                            $KilosEnStock_ComprarSaldo_StockParcial        ='';
+                            $MaterialComprado_ComprarSaldo_StockParcial    ='';
+                            $Ancho_ComprarSaldo_StockParcial               ='';
+                            $Kilos_ComprarSaldo_StockParcial               ='';
+                            $FechaEstimada_ComprarSaldo_StockParcial       ='';
+                            $FechaRecepcion_ComprarSaldo_StockParcial      ='';
+                            $Proveedor_ComprarParcial                      ='';
+                            $MaterialComprado_ComprarParcial               ='';
+                            $Ancho_ComprarParcial                          ='';
+                            $Kilos_ComprarParcial                          ='';
+                            $FechaEstimada_ComprarParcial                  ='';
+                            $FechaRecepcion_ComprarParcial                 ='';
+                            $Opciones_ComprarParcial                       ='';
+                            $Proveedor_ComprarSaldo_ComprarParcial         ='';
+                            $MaterialComprado_ComprarSaldo_ComprarParcial  ='';
+                            $Ancho_ComprarSaldo_ComprarParcial             ='';
+                            $Kilos_ComprarSaldo_ComprarParcial             ='';
+                            $FechaEstimada_ComprarSaldo_ComprarParcial     ='';
+                            $FechaRecepcion_ComprarSaldo_ComprarParcial    ='';
+                            $menu_bobina_pliego                            ='';
+                        break;
+                     }                    
+
+
                   // gramaje_seleccionado
   
                     if($this->input->post('gramaje',true) != $this->input->post('gramaje_seleccionado',true) or $ing->tamano_a_imprimir_1 != $this->input->post('ancho_seleccionado_de_bobina',true))
@@ -1628,6 +1859,119 @@ class Produccion extends CI_Controller {
                      
                     $invert2 = explode("-",$this->input->post('fecha_recepcionada',true));
                     $fecha_recepcionada = $invert[2]."-".$invert[1]."-".$invert[0]; 
+
+                    //Resetea los valores dependiendo del valor del select "existencia"
+                    
+
+                    if ($existencia == 'Hay stock total') {
+
+                        $Proveedor_CompraTotal                         =''; 
+                        $MaterialComprado_CompraTotal                  =''; 
+                        $Ancho_CompraTotal                             =''; 
+                        $Kilos_CompraTotal                             =''; 
+                        $FechaEstimada_CompraTotal                     =''; 
+                        $FechaRecepcion_CompraTotal                    =''; 
+
+                        $Opciones_StockParcial                         =''; 
+                        $KilosEnStock_ComprarSaldo_StockParcial        ='';
+                        $Proveedor_ComprarSaldo_StockParcial           =''; 
+                        $MaterialComprado_ComprarSaldo_StockParcial    =''; 
+                        $Ancho_ComprarSaldo_StockParcial               =''; 
+                        $Kilos_ComprarSaldo_StockParcial               =''; 
+                        $FechaEstimada_ComprarSaldo_StockParcial       =''; 
+                        $FechaRecepcion_ComprarSaldo_StockParcial      =''; 
+
+                        $Proveedor_ComprarParcial                      =''; 
+                        $MaterialComprado_ComprarParcial               =''; 
+                        $Ancho_ComprarParcial                          =''; 
+                        $Kilos_ComprarParcial                          =''; 
+                        $FechaEstimada_ComprarParcial                  =''; 
+                        $FechaRecepcion_ComprarParcial                 =''; 
+                        $Opciones_ComprarParcial                       =''; 
+                        $Proveedor_ComprarSaldo_ComprarParcial         =''; 
+                        $MaterialComprado_ComprarSaldo_ComprarParcial  =''; 
+                        $Ancho_ComprarSaldo_ComprarParcial             =''; 
+                        $Kilos_ComprarSaldo_ComprarParcial             =''; 
+                        $FechaEstimada_ComprarSaldo_ComprarParcial     =''; 
+                        $FechaRecepcion_ComprarSaldo_ComprarParcial    =''; 
+
+                    } elseif ($existencia == 'Comprar Total') {
+
+                        $Opciones_StockParcial                         =''; 
+                        $Proveedor_ComprarSaldo_StockParcial           =''; 
+                        $KilosEnStock_ComprarSaldo_StockParcial        ='';
+                        $MaterialComprado_ComprarSaldo_StockParcial    =''; 
+                        $Ancho_ComprarSaldo_StockParcial               ='';
+                        $Kilos_ComprarSaldo_StockParcial               ='';  
+                        $FechaEstimada_ComprarSaldo_StockParcial       =''; 
+                        $FechaRecepcion_ComprarSaldo_StockParcial      =''; 
+
+                        $Proveedor_ComprarParcial                      =''; 
+                        $MaterialComprado_ComprarParcial               =''; 
+                        $Ancho_ComprarParcial                          =''; 
+                        $Kilos_ComprarParcial                          =''; 
+                        $FechaEstimada_ComprarParcial                  =''; 
+                        $FechaRecepcion_ComprarParcial                 =''; 
+                        $Opciones_ComprarParcial                       =''; 
+                        $Proveedor_ComprarSaldo_ComprarParcial         =''; 
+                        $MaterialComprado_ComprarSaldo_ComprarParcial  =''; 
+                        $Ancho_ComprarSaldo_ComprarParcial             =''; 
+                        $Kilos_ComprarSaldo_ComprarParcial             =''; 
+                        $FechaEstimada_ComprarSaldo_ComprarParcial     =''; 
+                        $FechaRecepcion_ComprarSaldo_ComprarParcial    ='';
+
+                    } elseif ($existencia == 'Stock Parcial') {
+
+                        $Proveedor_CompraTotal                         =''; 
+                        $MaterialComprado_CompraTotal                  =''; 
+                        $Ancho_CompraTotal                             ='';
+                        $Kilos_CompraTotal                             =''; 
+                        $FechaEstimada_CompraTotal                     =''; 
+                        $FechaRecepcion_CompraTotal                    ='';
+
+                        $Proveedor_ComprarParcial                      =''; 
+                        $MaterialComprado_ComprarParcial               =''; 
+                        $Ancho_ComprarParcial                          ='';
+                        $Kilos_ComprarParcial                          ='';  
+                        $FechaEstimada_ComprarParcial                  =''; 
+                        $FechaRecepcion_ComprarParcial                 =''; 
+                        $Opciones_ComprarParcial                       =''; 
+                        $Proveedor_ComprarSaldo_ComprarParcial         =''; 
+                        $MaterialComprado_ComprarSaldo_ComprarParcial  =''; 
+                        $Ancho_ComprarSaldo_ComprarParcial             ='';
+                        $Kilos_ComprarSaldo_ComprarParcial             ='';  
+                        $FechaEstimada_ComprarSaldo_ComprarParcial     =''; 
+                        $FechaRecepcion_ComprarSaldo_ComprarParcial    ='';
+
+                    } elseif ($existencia == 'Comprar Parcial') {
+
+                        $Proveedor_CompraTotal                         =''; 
+                        $MaterialComprado_CompraTotal                  =''; 
+                        $Ancho_CompraTotal                             =''; 
+                        $Kilos_CompraTotal                             =''; 
+                        $FechaEstimada_CompraTotal                     =''; 
+                        $FechaRecepcion_CompraTotal                    =''; 
+
+                        $Opciones_StockParcial                         =''; 
+                        $Proveedor_ComprarSaldo_StockParcial           =''; 
+                        $KilosEnStock_ComprarSaldo_StockParcial        ='';
+                        $MaterialComprado_ComprarSaldo_StockParcial    =''; 
+                        $Ancho_ComprarSaldo_StockParcial               =''; 
+                        $Kilos_ComprarSaldo_StockParcial               =''; 
+                        $FechaEstimada_ComprarSaldo_StockParcial       =''; 
+                        $FechaRecepcion_ComprarSaldo_StockParcial      =''; 
+                        
+                    }
+
+                    if ($Opciones_ComprarParcial=='Se produce parcial') {
+                        $Proveedor_ComprarSaldo_ComprarParcial         =''; 
+                        $MaterialComprado_ComprarSaldo_ComprarParcial  =''; 
+                        $Ancho_ComprarSaldo_ComprarParcial             ='';
+                        $Kilos_ComprarSaldo_ComprarParcial             ='';  
+                        $FechaEstimada_ComprarSaldo_ComprarParcial     =''; 
+                        $FechaRecepcion_ComprarSaldo_ComprarParcial    ='';
+                    }
+
                     $data=array
                     (
                         "id_usuario"=>$this->session->userdata('id'),
@@ -1641,14 +1985,15 @@ class Produccion extends CI_Controller {
                         "ancho_de_bobina"=>$this->input->post('ancho_de_bobina',true),
                         "gramaje"=>$gramajeSeleccionado,
                         "total_pliegos"=>$this->input->post('total_pliegos',true),
-                        "total_kilos"=>$kilos1,
+                        "total_kilos"=>$this->input->post('total_kilos',true),//$kilos1,
                         "unidades_por_pliego"=>$this->input->post('unidades_por_pliego',true),
                         "descripcion_de_la_tapa"=>$this->input->post('descripcion_de_la_tapa',true),
                         "descripcion_de_la_tapa2"=>$this->input->post('descripcion_de_la_tapa2',true),
-                        "numero_de_bobina"=>$this->input->post('numero_de_bobina',true),
-                        "numero_de_bobina2"=>$this->input->post('numero_de_bobina2',true),
-                        "total_de_bobinas"=>$this->input->post('total_de_bobinas',true),
-                        "quien_sabe_ubicacion_de_la_bobina"=>$this->input->post('quien_sabe_ubicacion_de_la_bobina',true),
+                        "numero_de_bobina"=>$numero_de_bobina,
+                        "numero_de_bobina2"=>$numero_de_bobina2,
+                        "numero_de_bobina3"=>$numero_de_bobina3,
+                        "total_de_bobinas"=>$total_de_bobinas,
+                        "quien_sabe_ubicacion_de_la_bobina"=>$quien_sabe_ubicacion_de_la_bobina,
                         "estado"=>$this->input->post('estado',true),
                         "quien"=>$this->session->userdata('id'),
                         "cuando"=>date("Y-m-d"),
@@ -1666,7 +2011,7 @@ class Produccion extends CI_Controller {
                         "fecha_liberada"=>$fecha_liberada,
                         "fecha_activa"=>$fecha_activa,
                         "fecha_orden_cerrada"=>$fecha_orden_cerrada,
-                        "hay_que_bobinar"=>$this->input->post('hay_que_bobinar',true),
+                        "hay_que_bobinar"=>$hay_que_bobinar,
                         "total_kilos2"=>$this->input->post('total_kilos2',true),
                         "bobinar_ancho_cartulina1"=>$this->input->post('bobinar_ancho_cartulina1',true),                        
                         "bobinar_ancho_cartulina2"=>$this->input->post('bobinar_ancho_cartulina2',true),                        
@@ -1686,11 +2031,67 @@ class Produccion extends CI_Controller {
                         "segunda_bobinar"=>$this->input->post('segunda_bobinar',true), 
                         "tercera_bobinar"=>$this->input->post('tercera_bobinar',true), 
                         "cuarta_bobinar"=>$this->input->post('cuarta_bobinar',true), 
+
+                        //Raul Escalona
+                        "existencia"                                    =>$existencia,
+                        "Proveedor_CompraTotal"                         =>$Proveedor_CompraTotal,
+                        "MaterialComprado_CompraTotal"                  =>$MaterialComprado_CompraTotal,
+                        "Ancho_CompraTotal"                             =>$Ancho_CompraTotal,
+                        "Kilos_CompraTotal"                             =>$Kilos_CompraTotal,
+                        "FechaEstimada_CompraTotal"                     =>$FechaEstimada_CompraTotal,
+                        "FechaRecepcion_CompraTotal"                    =>$FechaRecepcion_CompraTotal,
+                        "Opciones_StockParcial"                         =>$Opciones_StockParcial,
+                        "KilosEnStock_ComprarSaldo_StockParcial"        =>$KilosEnStock_ComprarSaldo_StockParcial,
+                        "Proveedor_ComprarSaldo_StockParcial"           =>$Proveedor_ComprarSaldo_StockParcial,
+                        "MaterialComprado_ComprarSaldo_StockParcial"    =>$MaterialComprado_ComprarSaldo_StockParcial,
+                        "Ancho_ComprarSaldo_StockParcial"               =>$Ancho_ComprarSaldo_StockParcial,
+                        "Kilos_ComprarSaldo_StockParcial"               =>$Kilos_ComprarSaldo_StockParcial,
+                        "FechaEstimada_ComprarSaldo_StockParcial"       =>$FechaEstimada_ComprarSaldo_StockParcial,
+                        "FechaRecepcion_ComprarSaldo_StockParcial"      =>$FechaRecepcion_ComprarSaldo_StockParcial,
+                        "Proveedor_ComprarParcial"                      =>$Proveedor_ComprarParcial,
+                        "MaterialComprado_ComprarParcial"               =>$MaterialComprado_ComprarParcial,
+                        "Ancho_ComprarParcial"                          =>$Ancho_ComprarParcial,
+                        "Kilos_ComprarParcial"                          =>$Kilos_ComprarParcial,
+                        "FechaEstimada_ComprarParcial"                  =>$FechaEstimada_ComprarParcial,
+                        "FechaRecepcion_ComprarParcial"                 =>$FechaRecepcion_ComprarParcial,
+                        "Opciones_ComprarParcial"                       =>$Opciones_ComprarParcial,
+                        "Proveedor_ComprarSaldo_ComprarParcial"         =>$Proveedor_ComprarSaldo_ComprarParcial,
+                        "MaterialComprado_ComprarSaldo_ComprarParcial"  =>$MaterialComprado_ComprarSaldo_ComprarParcial, 
+                        "Ancho_ComprarSaldo_ComprarParcial"             =>$Ancho_ComprarSaldo_ComprarParcial,
+                        "Kilos_ComprarSaldo_ComprarParcial"             =>$Kilos_ComprarSaldo_ComprarParcial,
+                        "FechaEstimada_ComprarSaldo_ComprarParcial"     =>$FechaEstimada_ComprarSaldo_ComprarParcial,
+                        "FechaRecepcion_ComprarSaldo_ComprarParcial"    =>$FechaRecepcion_ComprarSaldo_ComprarParcial,
+                        
+                        "gramaje_seleccionado2"                         =>$this->input->post('gramaje_seleccionado2'                        ,true),
+                        "ancho_seleccionado_de_bobina2"                 =>$ancho_seleccionado_de_bobina2,
+                        "kilos_bobina_seleccionada2"                    =>$kilos_bobina_seleccionada2,
+                        "gramaje_seleccionado3"                         =>$this->input->post('gramaje_seleccionado3'                        ,true),
+                        "ancho_seleccionado_de_bobina3"                 =>$ancho_seleccionado_de_bobina3,
+                        "descripcion_de_la_tapa3"                       =>$this->input->post('descripcion_de_la_tapa3'                      ,true),
+                        "kilos_bobina_seleccionada3"                    =>$kilos_bobina_seleccionada3,
+                        "input_restante"                                =>$input_restante,
+                        "total_kilos_ingresados"                        =>$total_kilos_ingresados,
+                        //"total_kilos_restantes"                         =>$this->input->post('total_kilos_restantes'                      ,true),
+                        "fecha_liberada"                                =>$fecha_liberada,
+                        "fecha_liberada_parcial_2"                      =>$fecha_liberada_parcial_2,
+                        "fecha_liberada_parcial_3"                      =>$fecha_liberada_parcial_3,
+
+                        "total_kilos_ingresados"                        =>$total_kilos_ingresados_parcial_1,
+                        "total_kilos_restantes "                        =>$total_kilos_restantes_parcial_1,
+                        "total_metros_restantes"                        =>$total_metros_restantes_parcial_1,
+                        "total_kilos_ingresados_parcial_2"              =>$total_kilos_ingresados_parcial_2,
+                        "total_kilos_restantes_parcial_2 "              =>$total_kilos_restantes_parcial_2,
+                        "total_metros_restantes_parcial_2"              =>$total_metros_restantes_parcial_2,
+                        "total_kilos_ingresados_parcial_3"              =>$total_kilos_ingresados_parcial_3,
+                        "total_kilos_restantes_parcial_3 "              =>$total_kilos_restantes_parcial_3,
+                        "total_metros_restantes_parcial_3"              =>$total_metros_restantes_parcial_3,
+                        "menu_bobina_pliego"                            =>$menu_bobina_pliego,
+                        "total_metros_ingresados"                       =>$total_metros_ingresados
                         );
                     
                     $bobina = array(
                         "id_nodo"=>$this->input->post('id',true),
-                        "descripcion"=>$this->input->post('descripcion_de_la_tapa2',true),
+                        //"descripcion"=>$this->input->post('descripcion_de_la_tapa2',true),
                         "gramaje"=>$this->input->post('gramaje_seleccionado2',true),
                         "kilos"=>$this->input->post('kilos_bobina_seleccionada2',true),
                         "ancho"=>$this->input->post('ancho_seleccionado_de_bobina2',true),
@@ -1733,9 +2134,9 @@ class Produccion extends CI_Controller {
                         "total_kilos"=>$kilos1,
                         "unidades_por_pliego"=>$this->input->post('unidades_por_pliego',true),
                         "descripcion_de_la_tapa"=>$this->input->post('descripcion_de_la_tapa',true),
-                        "descripcion_de_la_tapa2"=>$this->input->post('descripcion_de_la_tapa2',true),
+                        //"descripcion_de_la_tapa2"=>$this->input->post('descripcion_de_la_tapa2',true),
                         "numero_de_bobina"=>$this->input->post('numero_de_bobina',true),
-                        "numero_de_bobina2"=>$this->input->post('numero_de_bobina2',true),
+                        //"numero_de_bobina2"=>$this->input->post('numero_de_bobina2',true),
                         "total_de_bobinas"=>$this->input->post('total_de_bobinas',true),
                         "quien_sabe_ubicacion_de_la_bobina"=>$this->input->post('quien_sabe_ubicacion_de_la_bobina',true),
                         "estado"=>$this->input->post('estado',true),
@@ -1757,18 +2158,18 @@ class Produccion extends CI_Controller {
                         "fecha_orden_cerrada"=>$fecha_orden_cerrada,
                         "hay_que_bobinar"=>$this->input->post('hay_que_bobinar',true),               
                         "total_kilos2"=>$this->input->post('total_kilos2',true),     
-                        "bobinar_ancho_cartulina1"=>$this->input->post('bobinar_ancho_cartulina1',true),                        
-                        "bobinar_ancho_cartulina2"=>$this->input->post('bobinar_ancho_cartulina2',true),                        
-                        "bobinar_ancho_cartulina3"=>$this->input->post('bobinar_ancho_cartulina3',true),      
-                        "kilos_bobina_seleccionada"=>$this->input->post('kilos_bobina_seleccionada',true),
-                        "total_metros"=>$this->input->post('total_metros',true), 
-                        "kilos_bobina_seleccionada"=>$this->input->post('kilos_bobina_seleccionada',true),                         
-                        "quien_compra"=>$this->input->post('quien_compra',true),
-                        "recepcionados"=>$this->input->post('recepcionados',true), 
-                        "fecha_recepcionada"=>$fecha_recepcionada,
-                        "segunda_bobinar"=>$this->input->post('segunda_bobinar',true), 
-                        "tercera_bobinar"=>$this->input->post('tercera_bobinar',true), 
-                        "cuarta_bobinar"=>$this->input->post('cuarta_bobinar',true), 
+                        //"bobinar_ancho_cartulina1"=>$this->input->post('bobinar_ancho_cartulina1',true),                        
+                        //"bobinar_ancho_cartulina2"=>$this->input->post('bobinar_ancho_cartulina2',true),                        
+                        //"bobinar_ancho_cartulina3"=>$this->input->post('bobinar_ancho_cartulina3',true),      
+                        //"kilos_bobina_seleccionada"=>$this->input->post('kilos_bobina_seleccionada',true),
+                        //"total_metros"=>$this->input->post('total_metros',true), 
+                        //"kilos_bobina_seleccionada"=>$this->input->post('kilos_bobina_seleccionada',true),                         
+                        //"quien_compra"=>$this->input->post('quien_compra',true),
+                        //"recepcionados"=>$this->input->post('recepcionados',true), 
+                        //"fecha_recepcionada"=>$fecha_recepcionada,
+                        //"segunda_bobinar"=>$this->input->post('segunda_bobinar',true), 
+                        //"tercera_bobinar"=>$this->input->post('tercera_bobinar',true), 
+                        //"cuarta_bobinar"=>$this->input->post('cuarta_bobinar',true), 
                     );
                     
                     $bobina = array(
@@ -9722,6 +10123,938 @@ class Produccion extends CI_Controller {
             redirect(base_url().'usuarios/login',  301);
         }
     }        
+
+    public function listado_control_cartulina_liberadas()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoControlCartulina();
+            $contador = 0;
+            $lineasPorHoja=10;
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">LISTADO CONTROL CARTULINA</p></h3>
+                        <h6><p class="text-center">LIBERADAS</p></h6>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td align="center"><b>OT</b></td>
+                                <td align="center"><b>Fecha OT</b></td>
+                                <td align="center"><b>Fecha Liberacion FOMECA</b></td>
+                                <td align="center"><b>Cliente</b></td>
+                                <td align="center"><b>Trabajo</b></td>
+                                <td align="center"><b>Repeticion</b></td>
+                                <td align="center"><b>CCAC1 Ancho</b></td>
+                                <td align="center"><b>CCAC2 Largo</b></td>
+                                <td align="center"><b>Cuchillo a Cuchillo</b></td>
+                                <td align="center"><b>Micro corrugado</b></td>
+                                <td align="center"><b>Tamaño a cortar</b></td>
+                                <td align="center"><b>Gramaje</b></td>
+                                <td align="center"><b>Merma</b></td>
+                                <td align="center"><b>Cant. Pliegos</b></td>
+                                <td align="center"><b>Total Kilos de la Orden</b></td>
+                                <td align="center"><b>Total Kilos Liberados</b></td>
+                                <td align="center"><b>Total Kilos a Cortar</b></td>
+                                <td align="center"><b>Estado</b></td>
+                            </tr>';
+             
+            foreach ($datos as $dato) {
+                            
+                            if ( ($dato->fecha_liberada_pcc!='' || $dato->fecha_liberada_pcc!='0000-00-00 00:00:00') && ($dato->situacion_pcc=='Parcial' || $dato->situacion_pcc=='Liberada')) {
+
+                                if ($dato->estado_pcc == 3) {
+                                    $estado_op= "Liberado Parcial";
+                                }
+                                if ($dato->estado_pcc == 1) {
+                                    $estado_op= "Liberado";
+                                }
+
+                                if ($dato->troquel_por_atras=="SI") {
+                                    $troquel_por_atras= "Por atrás, margen izquierdo, retiro";
+                                }elseif($dato->troquel_por_atras=="NO"){
+                                    $troquel_por_atras='Por adelante, margen derecho, tiro';
+                                }else{
+                                    $troquel_por_atras='Por definir';
+                                }
+
+                                if($dato->cantidad_de_cajas==$dato->cantidad_1){
+                                    $merma = $dato->total_merma;
+                                }elseif($dato->cantidad_de_cajas==$dato->cantidad_2){
+                                    $merma = $dato->total_merma2;
+                                }elseif($dato->cantidad_de_cajas==$dato->cantidad_3){
+                                    $merma = $dato->total_merma3;
+                                }elseif($dato->cantidad_de_cajas==$dato->cantidad_4){
+                                    $merma = $dato->total_merma3;
+                                }
+
+                                $cant_pliegos=((($dato->cantidad_de_cajas)/($dato->unidades_por_pliego))+$merma);
+
+                                if ($dato->total_kilos_restantes==null) {
+                                    $total_kilos_restantes=$cant_pliegos;
+                                }else{
+                                    $total_kilos_restantes=$dato->total_kilos_restantes;
+                                }
+
+                                if ($dato->total_kilos_ingresados==null) {
+                                    $total_kilos_ingresados=0;
+                                }else{
+                                    $total_kilos_ingresados=$dato->total_kilos_ingresados;
+                                }
+
+                                $total_kilos_a_cortar=$dato->total_kilos-$total_kilos_ingresados;
+                                $total_kilos_orden=round(($dato->placa_kilo*$dato->tamano_a_imprimir_1*$dato->tamano_a_imprimir_2*$dato->gramaje)/10000000);
+                                if ($total_kilos_a_cortar==0) {
+                                    $total_kilos_a_cortar=round(($dato->placa_kilo*$dato->tamano_a_imprimir_1*$dato->tamano_a_imprimir_2*$dato->gramaje)/10000000);
+                                }
+
+                                $cuerpo .='<tr>
+                                    <td align="center">'.$dato->ot.'</td>
+                                    <td align="center">'.$dato->fecha.'</td>
+                                    <td align="center">'.$dato->fecha_liberada.'</td>
+                                    <td align="center">'.$dato->razon_social.'</td>
+                                    <td align="center">'.$dato->producto.'</td>
+                                    <td align="center">'.$dato->condicion_del_producto.'</td>
+                                    <td align="center">'.$dato->ccac_1.' Mms</td>
+                                    <td align="center">'.$dato->ccac_2.' Mms</td>
+                                    <td align="center">'.$dato->tamano_cuchillo_1.' X '.$dato->tamano_cuchillo_2.' Cms</td>
+                                    <td align="center">'.$dato->materialidad_datos_tecnicos.'</td>
+                                    <td align="center">'.$dato->tamano_a_imprimir_1.' X '.$dato->tamano_a_imprimir_2.' Cms</td>
+                                    <td align="center">'.$dato->gramaje.'</td>
+                                    <td align="center">'.$merma.'</td>
+                                    <td align="center">'.$cant_pliegos.'</td>
+                                    <td align="center">'.$total_kilos_orden.'</td>
+                                    <td align="center">'.$total_kilos_ingresados.'</td>
+                                    <td align="center">'.$total_kilos_a_cortar.'</td>
+                                    <td align="center">'.$estado_op.'</td>
+                                </tr>';
+                                
+                                $contador = $contador+1;
+
+                                if ($contador==$lineasPorHoja) {
+                                    
+                                    $cuerpo .= "</table>
+                                
+                                    <br><table style='page-break-after:always;'></table><br>
+                                    <table border='1' width='100%'>
+
+                                        <tr>
+                                            <td align='center'><b>OT</b></td>
+                                            <td align='center'><b>Fecha OT</b></td>
+                                            <td align='center'><b>Fecha Liberacion FOMECA</b></td>
+                                            <td align='center'><b>Cliente</b></td>
+                                            <td align='center'><b>Trabajo</b></td>
+                                            <td align='center'><b>Repeticion</b></td>
+                                            <td align='center'><b>CCAC1 Ancho</b></td>
+                                            <td align='center'><b>CCAC2 Largo</b></td>
+                                            <td align='center'><b>Cuchillo a Cuchillo</b></td>
+                                            <td align='center'><b>Micro corrugado</b></td>
+                                            <td align='center'><b>Tamaño a cortar</b></td>
+                                            <td align='center'><b>Gramaje</b></td>
+                                            <td align='center'><b>Merma</b></td>
+                                            <td align='center'><b>Cant. Pliegos</b></td>
+                                            <td align='center'><b>Total Kilos de la Orden</b></td>
+                                            <td align='center'><b>Total Kilos Liberados</b></td>
+                                            <td align='center'><b>Total Kilos a Cortar</b></td>
+                                            <td align='center'><b>Estado</b></td>
+                                        </tr>";
+                                        $contador=0;
+                                        $lineasPorHoja=12;
+                                        
+                                } 
+                            }
+                            
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+            $this->mpdf->SetDisplayMode('fullpage');
+            $this->mpdf->AddPage('L');
+            $css1 = file_get_contents('public/frontend/css/despacho.css');
+            $css2 = file_get_contents('bootstrap/bootstrap.css');
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+            $this->mpdf->WriteHTML($cuerpo);
+            $this->mpdf->Output();
+            
+            
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    } 
+
+    public function listado_control_cartulina_por_liberar()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoControlCartulina();
+            $contador = 0;
+            $lineasPorHoja=6;
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">LISTADO CONTROL CARTULINA</p></h3>
+                        <h6><p class="text-center">POR LIBERAR</p></h6>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td align="center"><b>OT</b></td>
+                                <td align="center"><b>Fecha OT</b></td>
+                                <td align="center"><b>Fecha Liberacion FOMECA</b></td>
+                                <td align="center"><b>Cliente</b></td>
+                                <td align="center"><b>Trabajo</b></td>
+                                <td align="center"><b>Repeticion</b></td>
+                                <td align="center"><b>CCAC1 Ancho</b></td>
+                                <td align="center"><b>CCAC2 Largo</b></td>
+                                <td align="center"><b>Cuchillo a Cuchillo</b></td>
+                                <td align="center"><b>Micro corrugado</b></td>
+                                <td align="center"><b>Tamaño a cortar</b></td>
+                                <td align="center"><b>Gramaje</b></td>
+                                <td align="center"><b>Merma</b></td>
+                                <td align="center"><b>Cant. Pliegos</b></td>
+                                <td align="center"><b>Total Kilos de la Orden</b></td>
+                                <td align="center"><b>Total Kilos Liberados</b></td>
+                                <td align="center"><b>Total Kilos a Cortar</b></td>
+                                <td align="center"><b>Estado</b></td>
+                            </tr>';
+             
+            foreach ($datos as $dato) {
+                            
+                            if ($dato->situacion_pcc=='Parcial' || $dato->situacion_pcc=='Guardar' || $dato->situacion=='Liberada') {
+
+                                if ($dato->estado_pcc == 3) {
+                                    $estado_op= "Liberado Parcial";
+                                }
+                                if ($dato->estado_pcc == 0) {
+                                    $estado_op= "Pendiente";
+                                }
+
+                                if ($dato->situacion == 'Liberada' && $dato->situacion_pcc==null) {
+                                    $estado_op= "Activa";
+                                }
+
+                                if ($dato->troquel_por_atras=="SI") {
+                                    $troquel_por_atras= "Por atrás, margen izquierdo, retiro";
+                                }elseif($dato->troquel_por_atras=="NO"){
+                                    $troquel_por_atras='Por adelante, margen derecho, tiro';
+                                }else{
+                                    $troquel_por_atras='Por definir';
+                                }
+
+                                if($dato->cantidad_de_cajas==$dato->cantidad_1){
+                                    $merma = $dato->total_merma;
+                                }elseif($dato->cantidad_de_cajas==$dato->cantidad_2){
+                                    $merma = $dato->total_merma2;
+                                }elseif($dato->cantidad_de_cajas==$dato->cantidad_3){
+                                    $merma = $dato->total_merma3;
+                                }elseif($dato->cantidad_de_cajas==$dato->cantidad_4){
+                                    $merma = $dato->total_merma3;
+                                }
+
+                              
+                                $cant_pliegos=((($dato->cantidad_de_cajas)/($dato->unidades_por_pliego))+$merma);
+
+                                if ($dato->total_kilos_restantes==null) {
+                                    $total_kilos_restantes=$cant_pliegos;
+                                }else{
+                                    $total_kilos_restantes=$dato->total_kilos_restantes;
+                                }
+
+                                if ($dato->total_kilos_ingresados==null) {
+                                    $total_kilos_ingresados=0;
+                                }else{
+                                    $total_kilos_ingresados=$dato->total_kilos_ingresados;
+                                }
+
+                                $total_kilos_a_cortar=$dato->total_kilos-$total_kilos_ingresados;
+                                $total_kilos_orden=round(($dato->placa_kilo*$dato->tamano_a_imprimir_1*$dato->tamano_a_imprimir_2*$dato->gramaje)/10000000);
+                                if ($total_kilos_a_cortar==0) {
+                                    $total_kilos_a_cortar=round(($dato->placa_kilo*$dato->tamano_a_imprimir_1*$dato->tamano_a_imprimir_2*$dato->gramaje)/10000000);
+                                }
+                                $cuerpo .='<tr>
+                                    <td align="center">'.$dato->ot.'</td>
+                                    <td align="center">'.$dato->fecha.'</td>
+                                    <td align="center">'.$dato->fecha_liberada.'</td>
+                                    <td align="center">'.$dato->razon_social.'</td>
+                                    <td align="center">'.$dato->producto.'</td>
+                                    <td align="center">'.$dato->condicion_del_producto.'</td>
+                                    <td align="center">'.$dato->ccac_1.' Mms</td>
+                                    <td align="center">'.$dato->ccac_2.' Mms</td>
+                                    <td align="center">'.$dato->tamano_cuchillo_1.' X '.$dato->tamano_cuchillo_2.' Cms</td>
+                                    <td align="center">'.$dato->materialidad_datos_tecnicos.'</td>
+                                    <td align="center">'.$dato->tamano_a_imprimir_1.' X '.$dato->tamano_a_imprimir_2.' Cms</td>
+                                    <td align="center">'.$dato->gramaje.'</td>
+                                    <td align="center">'.$merma.'</td>
+                                    <td align="center">'.$cant_pliegos.'</td>
+                                    <td align="center">'.$total_kilos_orden.'</td>
+                                    <td align="center">'.$total_kilos_ingresados.'</td>
+                                    <td align="center">'.$total_kilos_a_cortar.'</td>
+                                    <td align="center">'.$estado_op.'</td>
+                                </tr>';
+                                
+                                $contador = $contador+1;
+
+                                if ($contador==$lineasPorHoja) {
+                                    
+                                    $cuerpo .= "</table>
+                                
+                                    <br><table style='page-break-after:always;'></table><br><br><br><br><br><br><br><br><br><br><br>
+                                    <table border='1' width='100%'>
+
+                                        <tr>
+                                            <td align='center'><b>OT</b></td>
+                                            <td align='center'><b>Fecha OT</b></td>
+                                            <td align='center'><b>Fecha Liberacion FOMECA</b></td>
+                                            <td align='center'><b>Cliente</b></td>
+                                            <td align='center'><b>Trabajo</b></td>
+                                            <td align='center'><b>Repeticion</b></td>
+                                            <td align='center'><b>CCAC1 Ancho</b></td>
+                                            <td align='center'><b>CCAC2 Largo</b></td>
+                                            <td align='center'><b>Cuchillo a Cuchillo</b></td>
+                                            <td align='center'><b>Micro corrugado</b></td>
+                                            <td align='center'><b>Tamaño a cortar</b></td>
+                                            <td align='center'><b>Gramaje</b></td>
+                                            <td align='center'><b>Merma</b></td>
+                                            <td align='center'><b>Cant. Pliegos</b></td>
+                                            <td align='center'><b>Total Kilos de la Orden</b></td>
+                                            <td align='center'><b>Total Kilos Liberados</b></td>
+                                            <td align='center'><b>Total Kilos a Cortar</b></td>
+                                            <td align='center'><b>Estado</b></td>
+                                        </tr>";
+                                        $contador=0;
+                                        $lineasPorHoja=7;
+                                        
+                                } 
+                            }
+                            
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+            $this->mpdf->SetDisplayMode('fullpage');
+            $this->mpdf->AddPage('L');
+            $css1 = file_get_contents('public/frontend/css/despacho.css');
+            $css2 = file_get_contents('bootstrap/bootstrap.css');
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+            $this->mpdf->WriteHTML($cuerpo);
+            $this->mpdf->Output();
+            
+            
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    } 
+
+    public function listado_control_cartulina_mercaderia_comprada()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoControlCartulina();
+            $contador = 0;
+            $lineasPorHoja=6;
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">LISTADO CONTROL CARTULINA</p></h3>
+                        <h6><p class="text-center">MERCADERIA YA COMPRADA POR LLEGAR</p></h6>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td align="center"><b>OT</b></td>
+                                <td align="center"><b>Fecha OT</b></td>
+                                <td align="center"><b>Fecha Liberacion FOMECA</b></td>
+                                <td align="center"><b>Cliente</b></td>
+                                <td align="center"><b>Trabajo</b></td>
+                                <td align="center"><b>Repeticion</b></td>
+                                <td align="center"><b>CCAC1 Ancho</b></td>
+                                <td align="center"><b>CCAC2 Largo</b></td>
+                                <td align="center"><b>Cuchillo a Cuchillo</b></td>
+                                <td align="center"><b>Micro corrugado</b></td>
+                                <td align="center"><b>Tamaño a cortar</b></td>
+                                <td align="center"><b>Gramaje</b></td>
+                                <td align="center"><b>Merma</b></td>
+                                <td align="center"><b>Cant. Pliegos</b></td>
+                                <td align="center"><b>Total Kilos de la Orden</b></td>
+                                <td align="center"><b>Total Kilos en Stock</b></td>
+                                <td align="center"><b>Total Kilos Comprados</b></td>
+                                <td align="center"><b>Proveedor</b></td>
+                                <td align="center"><b>Saldo para completar la orden</b></td>
+                                <td align="center"><b>Fecha de recepcion estimada</b></td>
+                                <td align="center"><b>Estado</b></td>
+                            </tr>';
+                            $contador_dato = 0;
+            foreach ($datos as $dato) {
+                            
+                            if ($dato->existencia!= 'Hay stock total' && ($dato->FechaEstimada_CompraTotal!='0000-00-00' || $dato->FechaEstimada_ComprarSaldo_StockParcial!='0000-00-00' || ($dato->FechaEstimada_ComprarParcial!='0000-00-00' && $dato->Opciones_ComprarParcial != 'Comprar saldo total') || ($dato->FechaEstimada_ComprarSaldo_ComprarParcial!='0000-00-00' && $dato->Opciones_ComprarParcial=='Comprar saldo total')) && ($dato->FechaRecepcion_CompraTotal=='0000-00-00' && $dato->FechaRecepcion_ComprarSaldo_StockParcial=='0000-00-00' && ($dato->FechaRecepcion_ComprarParcial=='0000-00-00' && $dato->Opciones_ComprarParcial != 'Comprar saldo total') || ($dato->FechaRecepcion_ComprarSaldo_ComprarParcial=='0000-00-00' && $dato->Opciones_ComprarParcial == 'Comprar saldo total'))) {
+                                $contador_dato = $contador_dato+1;
+                                if ($dato->estado_pcc == 3) {
+                                    $estado_op= "Liberado Parcial";
+                                }
+                                if ($dato->estado_pcc == 0) {
+                                    $estado_op= "Pendiente";
+                                }
+
+                                if ($dato->situacion == 'Liberada' && $dato->situacion_pcc==null) {
+                                    $estado_op= "Activa";
+                                }
+
+                                if ($dato->troquel_por_atras=="SI") {
+                                    $troquel_por_atras= "Por atrás, margen izquierdo, retiro";
+                                }elseif($dato->troquel_por_atras=="NO"){
+                                    $troquel_por_atras='Por adelante, margen derecho, tiro';
+                                }else{
+                                    $troquel_por_atras='Por definir';
+                                }
+
+                                if($dato->cantidad_de_cajas==$dato->cantidad_1){
+                                    $merma = $dato->total_merma;
+                                }elseif($dato->cantidad_de_cajas==$dato->cantidad_2){
+                                    $merma = $dato->total_merma2;
+                                }elseif($dato->cantidad_de_cajas==$dato->cantidad_3){
+                                    $merma = $dato->total_merma3;
+                                }elseif($dato->cantidad_de_cajas==$dato->cantidad_4){
+                                    $merma = $dato->total_merma3;
+                                }
+
+                              
+                                $cant_pliegos=((($dato->cantidad_de_cajas)/($dato->unidades_por_pliego))+$merma);
+
+                                if ($dato->total_kilos_restantes==null) {
+                                    $total_kilos_restantes=$cant_pliegos;
+                                }else{
+                                    $total_kilos_restantes=$dato->total_kilos_restantes;
+                                }
+
+                                if ($dato->total_kilos_ingresados==null) {
+                                    $total_kilos_ingresados=0;
+                                }else{
+                                    $total_kilos_ingresados=$dato->total_kilos_ingresados;
+                                }
+
+
+                                $total_kilos_a_cortar=$dato->total_kilos-$total_kilos_ingresados;
+                                $total_kilos_orden=round(($dato->placa_kilo*$dato->tamano_a_imprimir_1*$dato->tamano_a_imprimir_2*$dato->gramaje)/10000000);
+                                if ($total_kilos_a_cortar==0) {
+                                    $total_kilos_a_cortar=round(($dato->placa_kilo*$dato->tamano_a_imprimir_1*$dato->tamano_a_imprimir_2*$dato->gramaje)/10000000);
+                                }
+
+                                
+                                $estado_existencia=$dato->existencia;
+                                if ($dato->Opciones_ComprarParcial=='Comprar saldo total') {
+                                    $Opciones_ComprarParcial=$dato->Opciones_ComprarParcial;
+                                }else{
+                                    $Opciones_ComprarParcial='';
+                                }
+                                
+                                $Opciones_StockParcial=$dato->Opciones_StockParcial;
+                                
+                                // Si existencia = Comprar Total
+                                if ($dato->existencia=='Comprar Total') {
+                                    $kilos_comprados = $dato->Kilos_CompraTotal;
+                                    $FechaEstimada=$dato->FechaEstimada_CompraTotal;
+                                    $proves=$this->proveedores_model->getProveedores();
+                                    foreach($proves as $prove)
+                                    {
+                                        if($dato->Proveedor_CompraTotal==$prove->id){
+                                            $proveedor = $prove->nombre;
+                                        }
+                                    }
+                                }
+
+                                // Si existencia = Stock parcial && opciones = Comprar saldo
+                                if ($dato->existencia=='Stock Parcial' && $dato->Opciones_StockParcial=='Comprar Saldo') {
+                                    $kilos_comprados = $dato->Kilos_ComprarSaldo_StockParcial;
+                                    $FechaEstimada=$dato->FechaEstimada_ComprarSaldo_StockParcial;
+                                    $proves=$this->proveedores_model->getProveedores();
+                                    foreach($proves as $prove)
+                                    {
+                                        if($dato->Proveedor_ComprarSaldo_StockParcial==$prove->id){
+                                            $proveedor = $prove->nombre;
+                                        }
+                                    }
+                                }
+
+                                // Si existencia = Comprar parcial
+                                if ($dato->existencia=='Comprar Parcial') {
+                                    $kilos_comprados = $dato->Kilos_ComprarParcial;
+                                    $FechaEstimada=$dato->FechaEstimada_ComprarParcial;
+                                    $proves=$this->proveedores_model->getProveedores();
+                                    foreach($proves as $prove)
+                                    {
+                                        if($dato->Proveedor_ComprarParcial==$prove->id){
+                                            $proveedor = $prove->nombre;
+                                        }
+                                    }
+                                }
+
+                                // Si existencia = Comprar parcial y opciones_comprarParcial = comprar saldo total
+                                if ($Opciones_ComprarParcial=='Comprar saldo total') {
+                                    $kilos_comprados = $dato->Kilos_ComprarSaldo_ComprarParcial;
+                                    $FechaEstimada=$dato->FechaEstimada_ComprarSaldo_ComprarParcial;
+                                    $proves=$this->proveedores_model->getProveedores();
+                                    foreach($proves as $prove)
+                                    {
+                                        if($dato->Proveedor_ComprarSaldo_ComprarParcial==$prove->id){
+                                            $proveedor = $prove->nombre;
+                                        }
+                                    }
+                                }
+
+                                //Sumar kilos liberados
+                                $total_kilos_liberados = $dato->total_kilos_ingresados+$dato->total_kilos_ingresados_parcial_2+$dato->total_kilos_ingresados_parcial_3;
+ 
+                                $saldo_completar_orden = $total_kilos_orden-$kilos_comprados;
+
+                                $cuerpo .='<tr>
+                                    <td align="center">'.$dato->ot.'</td>
+                                    <td align="center">'.$dato->fecha.'</td>
+                                    <td align="center">'.$dato->fecha_liberada.'</td>
+                                    <td align="center">'.$dato->razon_social.'</td>
+                                    <td align="center">'.$dato->producto.'</td>
+                                    <td align="center">'.$dato->condicion_del_producto.'</td>
+                                    <td align="center">'.$dato->ccac_1.' Mms</td>
+                                    <td align="center">'.$dato->ccac_2.' Mms</td>
+                                    <td align="center">'.$dato->tamano_cuchillo_1.' X '.$dato->tamano_cuchillo_2.' Cms</td>
+                                    <td align="center">'.$dato->materialidad_datos_tecnicos.'</td>
+                                    <td align="center">'.$dato->tamano_a_imprimir_1.' X '.$dato->tamano_a_imprimir_2.' Cms</td>
+                                    <td align="center">'.$dato->gramaje.'</td>
+                                    <td align="center">'.$merma.'</td>
+                                    <td align="center">'.$cant_pliegos.'</td>
+                                    <td align="center">'.$total_kilos_orden.'</td>
+                                    <td align="center">'.$total_kilos_liberados.'</td>
+                                    <td align="center">'.$kilos_comprados.'</td>
+                                    <td align="center">'.$proveedor.'</td>
+                                    <td align="center">'.$saldo_completar_orden.'</td>
+                                    <td align="center">'.$FechaEstimada.'</td>
+                                    <td align="center">'.$estado_existencia.'<br><br>'.$Opciones_StockParcial.$Opciones_ComprarParcial.'</td>
+                                </tr>';
+                                
+                                $contador = $contador+1;
+
+                                if ($contador==$lineasPorHoja) {
+                                    
+                                    $cuerpo .= "</table>
+                                
+                                    <br><table style='page-break-after:always;'></table><br><br><br><br><br><br><br><br><br><br><br>
+                                    <table border='1' width='100%'>
+
+                                        <tr>
+                                            <td align='center'><b>OT</b></td>
+                                            <td align='center'><b>Fecha OT</b></td>
+                                            <td align='center'><b>Fecha Liberacion FOMECA</b></td>
+                                            <td align='center'><b>Cliente</b></td>
+                                            <td align='center'><b>Trabajo</b></td>
+                                            <td align='center'><b>Repeticion</b></td>
+                                            <td align='center'><b>CCAC1 Ancho</b></td>
+                                            <td align='center'><b>CCAC2 Largo</b></td>
+                                            <td align='center'><b>Cuchillo a Cuchillo</b></td>
+                                            <td align='center'><b>Micro corrugado</b></td>
+                                            <td align='center'><b>Tamaño a cortar</b></td>
+                                            <td align='center'><b>Gramaje</b></td>
+                                            <td align='center'><b>Merma</b></td>
+                                            <td align='center'><b>Cant. Pliegos</b></td>
+                                            <td align='center'><b>Total Kilos de la Orden</b></td>
+                                            <td align='center'><b>Total Kilos en Stock</b></td>
+                                            <td align='center'><b>Total Kilos Comprados</b></td>
+                                            <td align='center'><b>Proveedor</b></td>
+                                            <td align='center'><b>Saldo para completar la orden</b></td>
+                                            <td align='center'><b>Fecha de recepcion estimada</b></td>
+                                            <td align='center'><b>Estado</b></td>
+                                        </tr>";
+                                        $contador=0;
+                                        $lineasPorHoja=7;
+                                        
+                                } 
+                            }
+                            
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+            $this->mpdf->SetDisplayMode('fullpage');
+            $this->mpdf->AddPage('L');
+            $css1 = file_get_contents('public/frontend/css/despacho.css');
+            $css2 = file_get_contents('bootstrap/bootstrap.css');
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+            $this->mpdf->WriteHTML($cuerpo);
+            $this->mpdf->Output();
+            
+            
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    } 
+
+    public function listado_corte_cartulina_por_cortar()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoControlCartulina();
+            $contador = 0;
+            $lineasPorHoja=10;
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">LISTADO CORTE CARTULINA</p></h3>
+                        <h6><p class="text-center">POR CORTAR (ACTIVO)</p></h6>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td align="center"><b>OT</b></td>
+                                <td align="center"><b>Fecha OT</b></td>
+                                <td align="center"><b>Fecha Liberacion FOMECA</b></td>
+                                <td align="center"><b>Cliente</b></td>
+                                <td align="center"><b>Trabajo</b></td>
+                                <td align="center"><b>Desgaje Autom.</b></td>
+                                <td align="center"><b>Trazado Desgajado</b></td>
+                                <td align="center"><b>Pegado Autom.</b></td>
+                                <td align="center"><b>Molde Numero</b></td>
+                                <td align="center"><b>Repeticion</b></td>
+                                <td align="center"><b>Numero Trazado</b></td>
+                                <td align="center"><b>Numero Asignado</b></td>
+                                <td align="center"><b>Fecha confeccion maqueta</b></td>
+                                <td align="center"><b>CCAC1 Ancho</b></td>
+                                <td align="center"><b>CCAC2 Largo</b></td>
+                                <td align="center"><b>Cuchillo a Cuchillo</b></td>
+                                <td align="center"><b>Micro corrugado</b></td>
+                                <td align="center"><b>Tipo de Troquelado</b></td>
+                                <td align="center"><b>Fecha recepcion muestra</b></td>
+                                <td align="center"><b>Cant. Golpes</b></td>
+                                <td align="center"><b>Estado</b></td>
+                            </tr>';
+             
+            foreach ($datos as $dato) {
+                            
+                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto!='Nuevo' && ($dato->fecha_liberada=='' || $dato->fecha_liberada=='0000-00-00')) {
+
+                                if ($dato->estado == 1) {
+                                    $estado_op= "Activa";
+                                }
+                            
+                                $fecha_liberada='Sin liberar';
+
+                                if ($dato->desgajado_automatico==NULL) {
+                                    $desgajado_automatico='NO';
+                                }else{
+                                    $desgajado_automatico= $dato->desgajado_automatico;
+                                }
+
+                                if ($dato->desgajado_automatico==NULL || $dato->desgajado_automatico=='NO') {
+                                    $trazado_desgajado='NO';
+                                }elseif ($dato->desgajado_automatico=='SI'){
+                                    $trazado_desgajado=$dato->conf_sal_pel_desgajado;
+                                }
+
+                                if ($dato->es_una_maquina==NULL) {
+                                    $es_una_maquina='NO';
+                                }else{
+                                    $es_una_maquina= $dato->es_una_maquina;
+                                }
+
+                                if ($dato->troquel_por_atras=="SI") {
+                                    $troquel_por_atras= "Por atrás, margen izquierdo, retiro";
+                                }elseif($dato->troquel_por_atras=="NO"){
+                                    $troquel_por_atras='Por adelante, margen derecho, tiro';
+                                }else{
+                                    $troquel_por_atras='Por definir';
+                                }
+
+                                if ($dato->conf_sal_pel_fecha=='' || $dato->conf_sal_pel_fecha=='0000-00-00' || $dato->conf_sal_pel_fecha==null) {
+                                    $conf_sal_pel_fecha='SIN CONFECCION';
+                                }else{
+                                    $conf_sal_pel_fecha=$dato->conf_sal_pel_fecha;
+                                }
+
+                                if ($dato->recepcion_maqueta_fecha=='' || $dato->recepcion_maqueta_fecha=='0000-00-00' || $dato->recepcion_maqueta_fecha==null) {
+                                    $recepcion_maqueta_fecha='SIN RECEPCION';
+                                }else{
+                                    $recepcion_maqueta_fecha=$dato->recepcion_maqueta_fecha;
+                                }
+
+                                $cuerpo .='<tr>
+                                    <td align="center">'.$dato->ot.'</td>
+                                    <td align="center">'.$dato->fecha.'</td>
+                                    <td align="center">'.$fecha_liberada.'</td>
+                                    <td align="center">'.$dato->razon_social.'</td>
+                                    <td align="center">'.$dato->producto.'</td>
+                                    <td align="center">'.$desgajado_automatico.'</td>
+                                    <td align="center">'.$trazado_desgajado.'</td>
+                                    <td align="center">'.$es_una_maquina.'</td>
+                                    <td align="center">'.$dato->id_molde.'</td>
+                                    <td align="center">'.$dato->condicion_del_producto.'</td>
+                                    <td align="center">'.$dato->trazado.'</td>
+                                    <td align="center">'.$dato->mg_id.'</td>
+                                    <td align="center">'.$conf_sal_pel_fecha.'</td>
+                                    <td align="center">'.$dato->ccac_1.' Mms</td>
+                                    <td align="center">'.$dato->ccac_2.' Mms</td>
+                                    <td align="center">'.$dato->tamano_cuchillo_1.' X '.$dato->tamano_cuchillo_2.' Cms</td>
+                                    <td align="center">'.$dato->materialidad_datos_tecnicos.'</td>
+                                    <td align="center">'.$troquel_por_atras.'</td>
+                                    <td align="center">'.$recepcion_maqueta_fecha.'</td>
+                                    <td align="center">'.($dato->cantidad_de_cajas)/($dato->unidades_por_pliego).'</td>
+                                    <td align="center">'.$estado_op.'</td>
+                                </tr>';
+                                
+                                $contador = $contador+1;
+
+                                if ($contador==$lineasPorHoja) {
+                                    
+                                    $cuerpo .= "</table>
+                                
+                                    <br><table style='page-break-after:always;'></table><br>
+                                    <table border='1' width='100%'>
+
+                                        <tr>
+                                            <td align='center'><b>OT</b></td>
+                                            <td align='center'><b>Fecha OT</b></td>
+                                            <td align='center'><b>Fecha Liberacion FOMECA</b></td>
+                                            <td align='center'><b>Cliente</b></td>
+                                            <td align='center'><b>Trabajo</b></td>
+                                            <td align='center'><b>Desgaje Autom.</b></td>
+                                            <td align='center'><b>Trazado Desgajado</b></td>
+                                            <td align='center'><b>Pegado Autom.</b></td>
+                                            <td align='center'><b>Molde Numero</b></td>
+                                            <td align='center'><b>Repeticion</b></td>
+                                            <td align='center'><b>Numero Trazado</b></td>
+                                            <td align='center'><b>Numero Asignado</b></td>
+                                            <td align='center'><b>Fecha confeccion</b></td>
+                                            <td align='center'><b>CCAC1 Ancho</b></td>
+                                            <td align='center'><b>CCAC2 Largo</b></td>
+                                            <td align='center'><b>Cuchillo a Cuchillo</b></td>
+                                            <td align='center'><b>Micro corrugado</b></td>
+                                            <td align='center'><b>Tipo de Troquelado</b></td>
+                                            <td align='center'><b>Fecha recepcion muestra</b></td>
+                                            <td align='center'><b>Cant. Golpes</b></td>
+                                            <td align='center'><b>Estado</b></td>
+                                        </tr>";
+                                        $contador=0;
+                                        $lineasPorHoja=12;
+                                        
+                                } 
+                            }
+                            
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+            $this->mpdf->SetDisplayMode('fullpage');
+            $this->mpdf->AddPage('L');
+            $css1 = file_get_contents('public/frontend/css/despacho.css');
+            $css2 = file_get_contents('bootstrap/bootstrap.css');
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+            $this->mpdf->WriteHTML($cuerpo);
+            $this->mpdf->Output();
+            
+            
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    } 
+
+    public function listado_corte_cartulina_ya_cortado()
+    {
+        if($this->session->userdata('id'))
+        {
+            $datos=$this->orden_model->getListadoControlCartulina();
+            $contador = 0;
+            $lineasPorHoja=10;
+            $cuerpo=' <!DOCTYPE html>
+            <html>
+                        <head>
+                            <meta charset="utf-8" />
+                            <link type="text/css" rel="stylesheet" href="'.base_url().'bootstrap/despacho.css" />
+                        </head>
+                        <body>
+                        <h3><p class="text-center">LISTADO CORTE CARTULINA</p></h3>
+                        <h6><p class="text-center">YA CORTADO (LIBERADAS)</p></h6>
+                    <p class="text-right">Fecha: '.date('d-m-Y').'</p>
+
+                         <table border="1" width="100%">
+                            <tr>
+                                <td align="center"><b>OT</b></td>
+                                <td align="center"><b>Fecha OT</b></td>
+                                <td align="center"><b>Fecha Liberacion FOMECA</b></td>
+                                <td align="center"><b>Cliente</b></td>
+                                <td align="center"><b>Trabajo</b></td>
+                                <td align="center"><b>Desgaje Autom.</b></td>
+                                <td align="center"><b>Trazado Desgajado</b></td>
+                                <td align="center"><b>Pegado Autom.</b></td>
+                                <td align="center"><b>Molde Numero</b></td>
+                                <td align="center"><b>Repeticion</b></td>
+                                <td align="center"><b>Numero Trazado</b></td>
+                                <td align="center"><b>Numero Asignado</b></td>
+                                <td align="center"><b>Fecha confeccion maqueta</b></td>
+                                <td align="center"><b>CCAC1 Ancho</b></td>
+                                <td align="center"><b>CCAC2 Largo</b></td>
+                                <td align="center"><b>Cuchillo a Cuchillo</b></td>
+                                <td align="center"><b>Micro corrugado</b></td>
+                                <td align="center"><b>Tipo de Troquelado</b></td>
+                                <td align="center"><b>Fecha recepcion muestra</b></td>
+                                <td align="center"><b>Cant. Golpes</b></td>
+                                <td align="center"><b>Estado</b></td>
+                            </tr>';
+             
+            foreach ($datos as $dato) {
+                            
+                            if ($dato->hay_que_troquelar=='SI' && $dato->condicion_del_producto!='Nuevo' && ($dato->fecha_liberada=='' || $dato->fecha_liberada=='0000-00-00')) {
+
+                                if ($dato->estado == 1) {
+                                    $estado_op= "Activa";
+                                }
+                            
+                                $fecha_liberada='Sin liberar';
+
+                                if ($dato->desgajado_automatico==NULL) {
+                                    $desgajado_automatico='NO';
+                                }else{
+                                    $desgajado_automatico= $dato->desgajado_automatico;
+                                }
+
+                                if ($dato->desgajado_automatico==NULL || $dato->desgajado_automatico=='NO') {
+                                    $trazado_desgajado='NO';
+                                }elseif ($dato->desgajado_automatico=='SI'){
+                                    $trazado_desgajado=$dato->conf_sal_pel_desgajado;
+                                }
+
+                                if ($dato->es_una_maquina==NULL) {
+                                    $es_una_maquina='NO';
+                                }else{
+                                    $es_una_maquina= $dato->es_una_maquina;
+                                }
+
+                                if ($dato->troquel_por_atras=="SI") {
+                                    $troquel_por_atras= "Por atrás, margen izquierdo, retiro";
+                                }elseif($dato->troquel_por_atras=="NO"){
+                                    $troquel_por_atras='Por adelante, margen derecho, tiro';
+                                }else{
+                                    $troquel_por_atras='Por definir';
+                                }
+
+                                if ($dato->conf_sal_pel_fecha=='' || $dato->conf_sal_pel_fecha=='0000-00-00' || $dato->conf_sal_pel_fecha==null) {
+                                    $conf_sal_pel_fecha='SIN CONFECCION';
+                                }else{
+                                    $conf_sal_pel_fecha=$dato->conf_sal_pel_fecha;
+                                }
+
+                                if ($dato->recepcion_maqueta_fecha=='' || $dato->recepcion_maqueta_fecha=='0000-00-00' || $dato->recepcion_maqueta_fecha==null) {
+                                    $recepcion_maqueta_fecha='SIN RECEPCION';
+                                }else{
+                                    $recepcion_maqueta_fecha=$dato->recepcion_maqueta_fecha;
+                                }
+
+                                $cuerpo .='<tr>
+                                    <td align="center">'.$dato->ot.'</td>
+                                    <td align="center">'.$dato->fecha.'</td>
+                                    <td align="center">'.$fecha_liberada.'</td>
+                                    <td align="center">'.$dato->razon_social.'</td>
+                                    <td align="center">'.$dato->producto.'</td>
+                                    <td align="center">'.$desgajado_automatico.'</td>
+                                    <td align="center">'.$trazado_desgajado.'</td>
+                                    <td align="center">'.$es_una_maquina.'</td>
+                                    <td align="center">'.$dato->id_molde.'</td>
+                                    <td align="center">'.$dato->condicion_del_producto.'</td>
+                                    <td align="center">'.$dato->trazado.'</td>
+                                    <td align="center">'.$dato->mg_id.'</td>
+                                    <td align="center">'.$conf_sal_pel_fecha.'</td>
+                                    <td align="center">'.$dato->ccac_1.' Mms</td>
+                                    <td align="center">'.$dato->ccac_2.' Mms</td>
+                                    <td align="center">'.$dato->tamano_cuchillo_1.' X '.$dato->tamano_cuchillo_2.' Cms</td>
+                                    <td align="center">'.$dato->materialidad_datos_tecnicos.'</td>
+                                    <td align="center">'.$troquel_por_atras.'</td>
+                                    <td align="center">'.$recepcion_maqueta_fecha.'</td>
+                                    <td align="center">'.($dato->cantidad_de_cajas)/($dato->unidades_por_pliego).'</td>
+                                    <td align="center">'.$estado_op.'</td>
+                                </tr>';
+                                
+                                $contador = $contador+1;
+
+                                if ($contador==$lineasPorHoja) {
+                                    
+                                    $cuerpo .= "</table>
+                                
+                                    <br><table style='page-break-after:always;'></table><br>
+                                    <table border='1' width='100%'>
+
+                                        <tr>
+                                            <td align='center'><b>OT</b></td>
+                                            <td align='center'><b>Fecha OT</b></td>
+                                            <td align='center'><b>Fecha Liberacion FOMECA</b></td>
+                                            <td align='center'><b>Cliente</b></td>
+                                            <td align='center'><b>Trabajo</b></td>
+                                            <td align='center'><b>Desgaje Autom.</b></td>
+                                            <td align='center'><b>Trazado Desgajado</b></td>
+                                            <td align='center'><b>Pegado Autom.</b></td>
+                                            <td align='center'><b>Molde Numero</b></td>
+                                            <td align='center'><b>Repeticion</b></td>
+                                            <td align='center'><b>Numero Trazado</b></td>
+                                            <td align='center'><b>Numero Asignado</b></td>
+                                            <td align='center'><b>Fecha confeccion</b></td>
+                                            <td align='center'><b>CCAC1 Ancho</b></td>
+                                            <td align='center'><b>CCAC2 Largo</b></td>
+                                            <td align='center'><b>Cuchillo a Cuchillo</b></td>
+                                            <td align='center'><b>Micro corrugado</b></td>
+                                            <td align='center'><b>Tipo de Troquelado</b></td>
+                                            <td align='center'><b>Fecha recepcion muestra</b></td>
+                                            <td align='center'><b>Cant. Golpes</b></td>
+                                            <td align='center'><b>Estado</b></td>
+                                        </tr>";
+                                        $contador=0;
+                                        $lineasPorHoja=12;
+                                        
+                                } 
+                            }
+                            
+            }
+            $cuerpo .='</table></body>
+                      </html>';
+
+            $this->mpdf->SetDisplayMode('fullpage');
+            $this->mpdf->AddPage('L');
+            $css1 = file_get_contents('public/frontend/css/despacho.css');
+            $css2 = file_get_contents('bootstrap/bootstrap.css');
+            $this->mpdf->WriteHTML($css2,1);
+            $this->mpdf->WriteHTML($css1,1);
+            $this->mpdf->WriteHTML($cuerpo);
+            $this->mpdf->Output();
+            
+            
+            exit;
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    } 
 
     public function listado_programa_troquelado()
     {

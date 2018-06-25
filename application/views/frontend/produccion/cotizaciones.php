@@ -15,7 +15,10 @@
         <span style="color: #2fa4e7; font-size: 12px;"><B>Pendiente</B></span>->
         <span style="color: orange; font-size: 12px;"><B>Pendiente por Liberar</B> </span>->
         <span style="color: green; font-size: 12px;"><B>Liberado</B> </span>->
-        <span style="color: black; font-size: 12px;"><B>No corresponde</B> </span>        
+        <span style="color: DarkMagenta; font-size: 12px;"><B>Liberado Parcialmente</B> </span> ->
+        <span style="color: MediumSlateBlue ; font-size: 12px;"><B>Reversado</B> </span> <br> ->
+        <span style="color: black; font-size: 12px;"><B>No corresponde</B> </span>
+        
     </div>
     </div>
 </div>
@@ -204,6 +207,12 @@ if(sizeof($ult>0)){
                 if($control_cartulina->estado==0){ ?>
                 <a href="<?php echo base_url()?>produccion/control_cartulina/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Control Cartulina"><span style="font-size: 10px;color:blue; font-weight: bold;">Control Cartulina</span><i class="icon-film"></i></a><br />    
                     <?php
+                }elseif ($control_cartulina->estado==3){?>
+                <a href="<?php echo base_url()?>produccion/control_cartulina/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Control Cartulina"><span style="font-size: 10px;color:DarkMagenta; font-weight: bold;">Control Cartulina</span><i class="icon-film"></i></a><br />
+                  <?php  
+                }elseif ($control_cartulina->estado==4){?>
+                <a href="<?php echo base_url()?>produccion/control_cartulina/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Control Cartulina"><span style="font-size: 10px;color:MediumSlateBlue; font-weight: bold;">Control Cartulina</span><i class="icon-film"></i></a><br />
+                  <?php  
                 }else{?>
                 <a href="<?php echo base_url()?>produccion/control_cartulina/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Control Cartulina"><span style="font-size: 10px;color:green; font-weight: bold;">Control Cartulina</span><i class="icon-film"></i></a><br />
                   <?php  
@@ -372,9 +381,12 @@ if(sizeof($ult>0)){
             <?php 
             if(sizeof($corte_cartulina)==0)
             {
+                if ($control_cartulina->situacion=='Liberada' || $control_cartulina->situacion=='Parcial') { ?>
+                    <a href="<?php echo base_url()?>produccion/corte_cartulina/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Corte Cartulina"><span style="font-size: 10px;color:blue; font-weight: bold;">Corte Cartulina</span><i class="icon-film"></i></a><br />
+                <?php } else {
                 ?>
                <a href="<?php echo base_url()?>produccion/corte_cartulina/1/<?php echo $dato->id?>/<?php echo $pagina?>/<?php echo $not->id_ot?>" title="Corte Cartulina"><span style="font-size: 10px;color:red; font-weight: bold;">Corte Cartulina</span><i class="icon-film"></i></a><br />
-                <?php
+                <?php }
             }else
             {
                 ?>
@@ -593,7 +605,7 @@ if(sizeof($ult>0)){
            
   <?php if ($fotomecanica->pdf_imagen!=""){ ?>
   <!--?php if ($fotomecanica2->colores > 0){ ?-->  
-        <a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Cliente" title="PDF imagen a imprimir"></a>
+        <a href='<?php echo base_url().$this->config->item('direccion_pdf').$fotomecanica->pdf_imagen?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF imagen a imprimir" title="PDF imagen a imprimir"></a>
             <?php } else { ?>    
         <!-- img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No se Imprime el PDF" title="No se Imprime el PDF"-->        
             <?php } ?>                <br />
@@ -613,7 +625,7 @@ if(sizeof($ult>0)){
         <img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de Orden de Compra" title="No existe PDF de Orden de Compra">
             <?php } ?>  
             <?php if ($orden->id_cotizacion!=""){ ?>
-        <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $orden->id_cotizacion?>/<?php echo $orden->id?>" target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="Hoja de Costos" title="Hoja de Costos"></i></a>
+        <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $orden->id_cotizacion?>/<?php echo $orden->id?>" target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="Hoja de Costos" title="Hoja de Costos"></i></a>
             <?php } else { ?>    
         <img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe la hoja de costos" title="No existe la hoja de costos">
             <?php } ?>                           
@@ -729,5 +741,8 @@ $(document).ready(function() {
         $("#datatable").DataTable({
             
         });
+
+        $('div.dataTables_filter input').focus()
+        
 });
 </script>

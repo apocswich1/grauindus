@@ -9,19 +9,15 @@
     <div class="control-group">
 		<label class="control-label" for="usuario">Vendedores</label>
 		<div class="controls">
-			<select name="id_vendedor">
-                            <?php
-                            foreach ($vendedores as $value) {
-                                ?>
-                                <option value="<?php echo $value->id ?>" <?php if ($datos->id_vendedor == $value->id) {
-                                echo 'selected="selected"';
-                            } ?>><?php echo $value->nombre ?></option>
-                                <?php
-                            }
-                            ?>
-                
-                
-            </select>
+			<select id="Vendedor" name="id_vendedor" style="width: 250px">
+        <option value="" selected="selected">Seleccione</option>
+        <option value="">Listado General</option>
+        <?php 
+        $vendedores = $this->usuarios_model->getVendedores();
+        foreach ($vendedores as $value) { 
+        echo "<option value='$value->id'>$value->nombre</option>";
+         } ?>
+    </select>
             <?php //echo $datos->impresion_colores ?>
 		</div>
 	</div>
@@ -35,7 +31,7 @@
       <div class="control-group">
 		<div class="form-actions">
          <input type="hidden" name="id" value="<?php echo $id?>" />
-         <input type="hidden" name="url" value="<?php echo base_url()."cotizaciones/hoja_de_costos/".$id."/".$pagina;?>" />
+         <input type="hidden" name="url" value="<?php echo base_url()."cotizaciones/hoja_de_costos_propia/".$id."/".$pagina;?>" />
 			<input type="submit" value="Guardar" class="btn btn-default" />
 		   
 		</div>

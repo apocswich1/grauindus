@@ -599,9 +599,9 @@ $config = array(
              array('field' => 'gramaje','label' => 'Proveedor 2','rules' => 'required|trim|xss_clean'),
              array('field' => 'unidades_por_pliego','label' => 'Unidades por Pliego','rules' => 'required|trim|xss_clean'),
              array('field' => 'descripcion_de_la_tapa','label' => 'Descripción de la Tapa','rules' => 'required|trim|xss_clean'),
-             array('field' => 'numero_de_bobina','label' => 'Número de Bobina','rules' => 'required|trim|xss_clean'),
+             //array('field' => 'numero_de_bobina','label' => 'Número de Bobina','rules' => 'required|trim|xss_clean'),
              array('field' => 'total_de_bobinas','label' => 'Total de Bobinas','rules' => 'required|trim|xss_clean'),
-             array('field' => 'quien_sabe_ubicacion_de_la_bobina','label' => 'Quién sabe ubicación de la Bobina','rules' => 'required|trim|xss_clean|validaSelect'),
+             //array('field' => 'quien_sabe_ubicacion_de_la_bobina','label' => 'Quién sabe ubicación de la Bobina','rules' => 'required|trim|xss_clean|validaSelect'),
             ),
       /**
 	 * control_papel
