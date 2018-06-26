@@ -103,7 +103,7 @@
     <tr>
         <td><?php echo $dato->id?></td>
         <td><?php echo fecha($dato->fecha)?></td>
-        <td><?php echo $cliente?><br /><?php echo $nombre_cliente ?><br /><?php echo "Colores: ".$ing->colores?><br /><?php echo "Molde: ".$dato->numero_molde?></td>
+        <td><?php echo $cliente?><br /><?php echo $nombre_cliente ?><br /><?php echo "Colores: ".$ing->colores?><br /><?php if($dato->numero_molde==21){echo "Trazado: ".$dato->trazado;}else{echo "Molde: ".$dato->numero_molde;}?></td>
         <td><?php if(sizeof($ing)>=1 || sizeof($fotomecanica)>=1){
             echo $ing->producto;
             echo "<br />";

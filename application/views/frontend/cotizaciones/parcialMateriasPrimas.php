@@ -810,7 +810,7 @@ if ($fotomecanica->estan_los_moldes == 'NO LLEVA') {
 } else {
     $totalDesgajado4 = $ing->piezas_totales_en_el_pliego * $variableDesgajado->precio * 1.5 * $placa4[1];
 }
-
+//echo $variablePegado->precio; exit();
 //formula calculo del pegado
 function calculo_pegado($datos,$presupuesto,$cantidad,$variablePegado,$hoja){
      if(sizeof($hoja)==0) { 
@@ -1076,58 +1076,58 @@ $lacado2 = lacado($fotomecanica,$datos->cantidad_2,$ing->unidades_por_pliego);
 $lacado3 = lacado($fotomecanica,$datos->cantidad_3,$ing->unidades_por_pliego);
 $lacado4 = lacado($fotomecanica,$datos->cantidad_4,$ing->unidades_por_pliego);
 //***************************Calculo Pegado 1****************************//
-if ($pegado1['totalPegado'] > 150000 && $pegado1['totalPegado'] <= 235000) {
-    $pegado_1 = 150000;
-} else {
-    if ($pegado1['totalPegado'] < 150000) {
-        $pegado_1 = $pegado1['totalPegado'];
-    } else {
-        if ($pegado1['totalPegado'] > 235000) {
-            $pegado1['totalPegado'] = $datos->cantidad_1 * $pegado1['pegado_migrado'] * 1.45;
-            $pegado_1 = $datos->cantidad_1 * $pegado1['pegado_migrado'] * 1.45;
-
-        }
-    }
-}
+//if ($pegado1['totalPegado'] > 150000 && $pegado1['totalPegado'] <= 235000) {
+//    $pegado_1 = 150000;
+//} else {
+//    if ($pegado1['totalPegado'] < 150000) {
+//        $pegado_1 = $pegado1['totalPegado'];
+//    } else {
+//        if ($pegado1['totalPegado'] > 235000) {
+//            $pegado1['totalPegado'] = $datos->cantidad_1 * $pegado1['pegado_migrado'] * 1.45;
+//            $pegado_1 = $datos->cantidad_1 * $pegado1['pegado_migrado'] * 1.45;
+//
+//        }
+//    }
+//}
 //***************************Calculo Pegado 2****************************//
-if ($pegado2['totalPegado'] > 150000 && $pegado2['totalPegado'] <= 235000) {
-    $pegado_2 = 150000;
-} else {
-    if ($pegado2['totalPegado'] < 150000) {
-        $pegado_2 = $pegado2['totalPegado'];
-    } else {
-        if ($pegado2['totalPegado'] > 235000) {
-            $pegado2['totalPegado'] = $datos->cantidad_2 * $pegado2['pegado_migrado'] * 1.45;
-            $pegado_2 = $datos->cantidad_2 * $pegado2['pegado_migrado'] * 1.45;
-        }
-    }
-}
+//if ($pegado2['totalPegado'] > 150000 && $pegado2['totalPegado'] <= 235000) {
+//    $pegado_2 = 150000;
+//} else {
+//    if ($pegado2['totalPegado'] < 150000) {
+//        $pegado_2 = $pegado2['totalPegado'];
+//    } else {
+//        if ($pegado2['totalPegado'] > 235000) {
+//            $pegado2['totalPegado'] = $datos->cantidad_2 * $pegado2['pegado_migrado'] * 1.45;
+//            $pegado_2 = $datos->cantidad_2 * $pegado2['pegado_migrado'] * 1.45;
+//        }
+//    }
+//}
 //***************************Calculo Pegado 3****************************//
-if ($pegado3['totalPegado'] > 150000 && $pegado3['totalPegado'] <= 235000) {
-    $pegado_3 = 150000;
-} else {
-    if ($pegado3['totalPegado'] < 150000) {
-        $pegado_3 = $pegado3['totalPegado'];
-    } else {
-        if ($pegado3['totalPegado'] > 235000) {
-            $pegado3['totalPegado'] = $datos->cantidad_3 * $pegado3['pegado_migrado'] * 1.45;
-            $pegado_3 = $datos->cantidad_3 * $pegado3['pegado_migrado'] * 1.45;
-        }
-    }
-}
+//if ($pegado3['totalPegado'] > 150000 && $pegado3['totalPegado'] <= 235000) {
+//    $pegado_3 = 150000;
+//} else {
+//    if ($pegado3['totalPegado'] < 150000) {
+//        $pegado_3 = $pegado3['totalPegado'];
+//    } else {
+//        if ($pegado3['totalPegado'] > 235000) {
+//            $pegado3['totalPegado'] = $datos->cantidad_3 * $pegado3['pegado_migrado'] * 1.45;
+//            $pegado_3 = $datos->cantidad_3 * $pegado3['pegado_migrado'] * 1.45;
+//        }
+//    }
+//}
 //***************************Calculo Pegado 4****************************//
-if ($pegado4['totalPegado'] > 150000 && $pegado4['totalPegado'] <= 235000) {
-    $pegado_4 = 150000;
-} else {
-    if ($pegado4['totalPegado'] < 150000) {
-        $pegado_4 = $pegado4['totalPegado'];
-    } else {
-        if ($pegado4['totalPegado'] > 235000) {
-            $pegado4['totalPegado'] = $datos->cantidad_4 * $pegado4['pegado_migrado'] * 1.45;
-            $pegado_4 = $datos->cantidad_4 * $pegado4['pegado_migrado'] * 1.45;
-        }
-    }
-}
+//if ($pegado4['totalPegado'] > 150000 && $pegado4['totalPegado'] <= 235000) {
+//    $pegado_4 = 150000;
+//} else {
+//    if ($pegado4['totalPegado'] < 150000) {
+//        $pegado_4 = $pegado4['totalPegado'];
+//    } else {
+//        if ($pegado4['totalPegado'] > 235000) {
+//            $pegado4['totalPegado'] = $datos->cantidad_4 * $pegado4['pegado_migrado'] * 1.45;
+//            $pegado_4 = $datos->cantidad_4 * $pegado4['pegado_migrado'] * 1.45;
+//        }
+//    }
+//}
 
 $externos_produccion = $externos_produccion_ac1 + $externos_produccion_p1;
 $externos_produccion2 = $externos_produccion_ac2 + $externos_produccion_p2;

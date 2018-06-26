@@ -36,6 +36,48 @@ if ( $this->session->flashdata('ControllerMessage') != '' ) : ?>
 	</thead>
 	<tbody>
     <?php
+        function cantidades_disponibles($c1 = "",$c2 = "",$c3 = "",$c4 = "",$c5 = "",$c6 = "",$c7 = "",$c8 = "",$c9 = "",$c10 = ""){
+          $array = array();
+          if($c1!="" && $c1!=0){
+              array_push($array, $c1);
+          }
+          if($c2!="" && $c2!=0){
+              array_push($array, $c2);
+          }
+          if($c3!="" && $c3!=0){
+              array_push($array, $c3);
+          }
+          if($c4!="" && $c4!=0){
+              array_push($array, $c4);
+          }
+          if($c5!="" && $c5!=0){
+              array_push($array, $c5);
+          }
+          if($c6!="" && $c6!=0){
+              array_push($array, $c6);
+          }
+          if($c7!="" && $c7!=0){
+              array_push($array, $c7);
+          }
+          if($c8!="" && $c8!=0){
+              array_push($array, $c8);
+          }
+          if($c9!="" && $c9!=0){
+              array_push($array, $c9);
+          }
+          if($c10!="" && $c10!=0){
+              array_push($array, $c10);
+          }
+          $esigual = count(array_unique($array))===1;
+          if(var_dump($esigual)===true){
+              $cantidad = $c1;
+          }else{
+              $cantidad = "";
+          }
+          
+          return $cantidad;
+        }
+        
     function nombre_producto($id){
        // $nombre = $this->cotizaciones_model->getCotizacionPorId($id);
         return $nombre->producto;
@@ -63,6 +105,9 @@ if ( $this->session->flashdata('ControllerMessage') != '' ) : ?>
         $infhoja9=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($dato->idc_09);
         $infoc10 = $this->cotizaciones_model->getCotizacionPorId($dato->idc_10);
         $infhoja10=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($dato->idc_10);
+        
+        $cantidad_disponible1 = cantidades_disponibles($infoc->cantidad_1,$infoc2->cantidad_1,$infoc3->cantidad_1,$infoc4->cantidad_1,$infoc5->cantidad_1,$infoc6->cantidad_1,$infoc7->cantidad_1,$infoc8->cantidad_1,$infoc9->cantidad_1,$infoc10->cantidad_1);
+        //$cantidad_disponible1 = cantidades_disponibles(1000,1000);
     ?>
 			<td><?php echo $dato->id?></td>
                         <td><a><?php echo $dato->grupo?></a></td>

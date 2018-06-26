@@ -284,9 +284,9 @@ $maquina="Máquina Roland 800";
                         <b>Estado del Producto:</b> <span style="font-size: 16px; color:#000; background-color: #4db562" class="label"><?php echo $fotomecanica->condicion_del_producto  ?></span>
                         <br /><br />
                         <?php if($fotomecanica->numero_molde==21){ ?>
-                        <b>Numero de Trazado:</b> <span style="font-size: 16px; color:#000; background-color: #4db562" class="label"><?php echo $datos->trazado ?></span>
+                        <b>Numero de Trazado:</b><a href="../../../trazados/edit/<?php echo $datos->trazado;?>/0"><span style="font-size: 16px; color:#000; background-color: #4db562" class="label"><?php echo $datos->trazado ?></span></a>
                         <?php }else{ ?>
-                        <b>Numero de Molde:</b> <span style="font-size: 16px; color:#000; background-color: #4db562" class="label"><?php echo $fotomecanica->numero_molde ?></span>
+                        <b>Numero de Molde:</b><a href="../../../moldes/edit/<?php echo $fotomecanica->numero_molde;?>/0"> <span style="font-size: 16px; color:#000; background-color: #4db562" class="label"><?php echo $fotomecanica->numero_molde ?></span></a>
                         <?php } ?>
                         
                     </td>
