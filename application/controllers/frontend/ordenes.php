@@ -272,6 +272,8 @@ class Ordenes extends CI_Controller {
                             
                             $this->db->where('id', $trazados->numero);
                             $this->db->update("trazados",$arraytrazado); 
+                            
+                            
                             //-----------------------------------------------------------
                     }elseif($this->input->post("estan_los_moldes",true)=='NO LLEVA')
                     {
@@ -281,6 +283,11 @@ class Ordenes extends CI_Controller {
                     if($this->input->post("estan_los_moldes",true)=='SI')
                     { 
 			$tieneMolde='MOLDE GENERICO';
+                        $id_molde=$this->input->post("molde",true);                        
+                    }
+                    if($this->input->post("estan_los_moldes",true)=='NO')
+                    { 
+			$tieneMolde='NO';
                         $id_molde=$this->input->post("molde",true);                        
                     }
                     if($this->input->post("estan_los_moldes",true)=='MOLDE GENERICO')

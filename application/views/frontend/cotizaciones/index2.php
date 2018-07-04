@@ -5,9 +5,7 @@
 <div class="alert alert-success"><?php echo $this->session->flashdata('ControllerMessage'); ?></div>
 <?php endif; ?>
 <div class="page-header"><h3>Solicitud de Cotizaciones ( <?php echo $cuantos?> en total)</h3>
-<button type="button" class="btn btn-primary">
-  Notifications <span class="badge badge-light">4</span>
-</button>
+
     <div id="messages"></div>
 </div>
 
@@ -402,9 +400,11 @@
 		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$trazadosing->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Revisión Ingenieria" title="PDF Revisión Ingenieria"></a>
             <?php }else{ ?>
                 <a href='<?php echo base_url().$this->config->item('direccion_pdf').$moldes2->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Revisión Ingenieria" title="PDF Revisión Ingenieria"></a>
-            <?php } } else { ?>    
+            <?php } } else { if($trazadosing->archivo!=""){ ?>
+            <a href='<?php echo base_url().$this->config->item('direccion_pdf').$trazadosing->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Revisión Ingenieria" title="PDF Revisión Ingenieria"></a>
+            <?php } else {?>
 		<img src="<?php echo base_url()."public/backend/img/"?>close_16.png" alt="No existe PDF de  Revisión Ingenieria" title="No existe PDF de  Revisión Ingenieria">
-            <?php } ?>                <br />
+            <?php } } ?>                <br />
             <?php if ($orden->archivo!=""){ ?>
 		<a href='<?php echo base_url().$this->config->item('direccion_pdf').$orden->archivo ?>' target="_blank"><img src="<?php echo base_url()."public/backend/img/"?>pdf.png" alt="PDF Orden de Compra" title="PDF Orden de Compra"></i></a>
             <?php } else { ?>    

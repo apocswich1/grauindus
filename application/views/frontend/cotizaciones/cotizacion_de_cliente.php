@@ -352,7 +352,7 @@ document.getElementById("aclaratoria1").innerHTML = "";
     
     $materialidad = $fotomecanica->materialidad_datos_tecnicos;
     $tipodematerial=$this->materiales_model->getMaterialesNombreTipo($fotomecanica->id_mat_placa1);   
-    $materialidaduno=$this->materiales_model->getMaterialesReversoPorNombre($fotomecanica->id_mat_placa1);   
+    $materialidaduno=$this->materiales_model->getMaterialesReversoPorId($fotomecanica->id_mat_placa1);   
     $reversoliner=$this->materiales_model->getMaterialesReversoPorId($fotomecanica->id_mat_liner3);   
     //echo $fotomecanica->materialidad_1."-".$fotomecanica->materialidad_2."-".$fotomecanica->materialidad_3;
     //echo $materialidaduno->tipomaterial; exit();

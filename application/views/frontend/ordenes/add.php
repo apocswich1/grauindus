@@ -744,13 +744,14 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
                         }
                     } 
                     if($fotomecanica->estan_los_moldes=="NO" && $datos->condicion_del_producto=="Repetición Sin Cambios"){$estan_los_moldes= 'SI';} 
+                    if($fotomecanica->estan_los_moldes=="NO" && $datos->condicion_del_producto=="Repetición Con Cambios"){$estan_los_moldes= 'NO';} 
                     if($fotomecanica->estan_los_moldes=="SI" && $datos->numero_molde=="1"){$estan_los_moldes= 'SI';} 
 //                    if($fotomecanica->estan_los_moldes=="NO" and $datos->condicion_del_producto=="Producto Genérico"){$estan_los_moldes= 'SI';} 
                     if($fotomecanica->estan_los_moldes=="NUEVO"){$estan_los_moldes= 'NUEVO';}                     
                     if($fotomecanica->estan_los_moldes=="NO LLEVA"){$estan_los_moldes= 'NO LLEVA';}                     
                     if($fotomecanica->estan_los_moldes=="MOLDE GENERICO"){$estan_los_moldes= 'MOLDE GENERICO';}                     
                     if($fotomecanica->estan_los_moldes=="CLIENTE LO APORTA"){$estan_los_moldes= 'CLIENTE LO APORTA';}      
-                    if($fotomecanica->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE"){$estan_los_moldes= 'MOLDE REGISTRADOS DEL CLIENTE';}      
+                    if($fotomecanica->estan_los_moldes=="MOLDE REGISTRADOS DEL CLIENTE"){$estan_los_moldes= 'MOLDE REGISTRADOS DEL CLIENTE';} 
 //                  ?>
 	                <input type="text" style="width: 600px;" name="estan_los_moldes" value="<?php  echo $estan_los_moldes?>"  readonly="true"/><strong>Código Molde <ins><a href="<?php echo base_url();?>moldes/edit/<?php echo $ordenDeCompra->id_molde?>"><?php echo $ordenDeCompra->id_molde?></a></ins>					
                         <input type="hidden" name="molde" value="<?php echo $ordenDeCompra->id_molde?>" readonly="true"/>					

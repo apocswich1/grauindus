@@ -61,7 +61,7 @@
     
     foreach($datos as $dato)
     {
-        
+           $busqueda=$this->cotizaciones_model->getCotizacionEnRojo($dato->id);
            $archivo_cliente=$this->cotizaciones_model->getArchivoClientePorCotizacion($dato->id);
         if($dato->id_cliente==3000)
         {
@@ -124,6 +124,9 @@
                     . "Nro Ot: ".$orden->id."</label>";
             }
             }
+            if(sizeof($busqueda)>0){if($busqueda->estado==1){echo "<br /><label style='background-color:red; color:white; font-weight:bold;'>La cotizacion ya pertenece al sistema rojo</label>";}else{
+                if($busqueda->estado==3 || $busqueda->estado==4){echo "<br /><label style='background-color:red; color:white; font-weight:bold;'>La cotizacion se encuentra en ordenes cerradas en el sistema rojo</label>";}
+            }} 
         }else{
             echo $dato->producto;
             echo "<br />";
@@ -140,6 +143,9 @@
             echo "Cant 4: ".$dato->cantidad_4." Precio: ".number_format($hoja->valor_empresa_4,0,"",".");
             echo "<br />";}
             }
+            if(sizeof($busqueda)>0){if($busqueda->estado==1){echo "<br /><label style='background-color:red; color:white; font-weight:bold;'>La cotizacion ya pertenece al sistema rojo</label>";}else{
+                if($busqueda->estado==3 || $busqueda->estado==4){echo "<br /><label style='background-color:red; color:white; font-weight:bold;'>La cotizacion se encuentra en ordenes cerradas en el sistema rojo</label>";}
+            }} 
         }?>
         </td>
         <td><?php
