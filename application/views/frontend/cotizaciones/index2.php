@@ -9,8 +9,6 @@
     <div id="messages"></div>
 </div>
 
-
-
 <div class="control-group">
 		<label class="control-label" for="usuario">Cliente</label>
 		<div class="controls">

@@ -3178,7 +3178,6 @@ $cuerpo2.='<table class="tabla">';
 	{
 	if($this->session->userdata('id'))
         {
- 
         if(!$id){show_404();}
         $datos=$this->cotizaciones_model->getCotizacionPorId($id);
         $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
@@ -3193,11 +3192,8 @@ $cuerpo2.='<table class="tabla">';
         else $forma_pago=$this->clientes_model->getFormasPagoPorNombre($datos->forma_pago);
         $orden=$this->orden_model->getOrdenesPorCotizacion($id);
 
-		
-            if(sizeof($hoja)==0)
+	    if(sizeof($hoja)==0)
             {
-          
-                
                 if($this->input->post("pegado",true) == '')
                 {
                         $pegado= '30';
@@ -3205,7 +3201,6 @@ $cuerpo2.='<table class="tabla">';
 
                         $pegado= $this->input->post("pegado",true);
                 }
-          
             if ($this->input->post("id",true)!='')
             {        
                     $data=array
@@ -3222,28 +3217,17 @@ $cuerpo2.='<table class="tabla">';
                         "valor_acabado_2"=>'0',
                         "valor_acabado_3"=>'0',
                     );
-                    
-                    
-
                 }
-              
-          
             }
             else
             {
-        
-
-               $data=array
+           $data=array
                 (
                     "valor_empresa"=>$this->input->post("valor_empresa",true),
                     "valor_empresa_2"=>$this->input->post("valor_empresa2",true),
                     "valor_extra"=>$this->input->post("valor_extra",true),                        
                 );
-                   
-
             }
-       	
-        //print_r($orden);exit;
         if(sizeof($datos)==0){show_404();}
         $this->layout->setLayout('template_ajax');
         $this->layout->view('cotizacion_de_cliente',compact('datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden'));  
@@ -3252,6 +3236,70 @@ $cuerpo2.='<table class="tabla">';
             redirect(base_url().'usuarios/login',  301);
         }
 	}
+    public function cotizacion_de_grupo($id=null,$c1=null,$c2=null,$c3=null,$c4=null)
+	{
+	if($this->session->userdata('id'))
+        {
+        if(!$id){show_404();}
+        $datos=$this->cotizaciones_model->getCotizacionPorId($id);
+        $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
+        $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+        $cotizacionPresupuesto=$this->cotizaciones_model->getCotizacionCotizacionPrespuestoPorIdCotizacion($id);
+        $user=$this->usuarios_model->getUsuariosPorId($datos->id_usuario);
+        $vendedor=$this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
+        $cli=$this->clientes_model->getClientePorId($datos->id_cliente);
+        $presupuesto=$this->cotizaciones_model->getCotizacionCotizacionPrespuestoPorIdCotizacion($id);
+        $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
+        $grupo = $this->grupos_model->getGruposPorId($id);
+        if (is_numeric($datos->forma_pago)) $forma_pago=$this->clientes_model->getFormasPagoPorId($datos->forma_pago); 
+        else $forma_pago=$this->clientes_model->getFormasPagoPorNombre($datos->forma_pago);
+        $orden=$this->orden_model->getOrdenesPorCotizacion($id);
+
+	    if(sizeof($hoja)==0)
+            {
+                if($this->input->post("pegado",true) == '')
+                {
+                        $pegado= '30';
+                }else{
+
+                        $pegado= $this->input->post("pegado",true);
+                }
+            if ($this->input->post("id",true)!='')
+            {        
+                    $data=array
+                    (
+                        "id_usuario"=>$this->session->userdata('id'),
+                        "id_cotizacion"=>$this->input->post("id",true),
+                        "valor_empresa"=>$this->input->post("valor_empresa",true),
+                        "pegado"=>$this->input->post("pegado",true),
+                        "valor_extra"=>$this->input->post("valor_extra",true),                        
+                        "costo_adicional"=>'0',
+                        "dias_de_entrega"=>'20',
+                        "margen"=>'15',
+                        "valor_acabado_1"=>'0',
+                        "valor_acabado_2"=>'0',
+                        "valor_acabado_3"=>'0',
+                    );
+                }
+            }
+            else
+            {
+           $data=array
+                (
+                    "valor_empresa"=>$this->input->post("valor_empresa",true),
+                    "valor_empresa_2"=>$this->input->post("valor_empresa2",true),
+                    "valor_extra"=>$this->input->post("valor_extra",true),                        
+                );
+            }
+        if(sizeof($datos)==0){show_404();}
+        $this->layout->setLayout('template_ajax');
+        $this->layout->view('cotizacion_de_grupo',compact('datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden'));  
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+	}
+        
     public function hoja_de_costos($id=null,$pagina=null)
 	{
 	if($this->session->userdata('id'))

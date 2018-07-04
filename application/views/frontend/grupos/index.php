@@ -36,20 +36,15 @@ if ( $this->session->flashdata('ControllerMessage') != '' ) : ?>
 	</thead>
 	<tbody>
     <?php
-        function cantidades_disp($c1 = "",$c2 = "",$c3 = "",$c4 = "",$c5 = "",$c6 = "",$c7 = "",$c8 = "",$c9 = "",$c10 = ""){
-          $array = array();
-          if($c1!="" && $c1!=0){
-              array_push($array, $c1);
-          } 
-          if($c1!="" && $c1!=0){
-              array_push($array, $c1);
-          } 
-          if($c1!="" && $c1!=0){
-              array_push($array, $c1);
-          } 
-          if($c1!="" && $c1!=0){
-              array_push($array, $c1);
-          }
+        function array_orden($arrayo){
+           $arraydis = array();
+           $arrayres = array();
+           array_push($arraydis, $arrayo->cantidad_1);
+           array_push($arraydis, $arrayo->cantidad_2);
+           array_push($arraydis, $arrayo->cantidad_3);
+           array_push($arraydis, $arrayo->cantidad_4);
+           sort($arraydis);
+           return $arraydis;
         }
         function cantidades_disponibles($c1 = "",$c2 = "",$c3 = "",$c4 = "",$c5 = "",$c6 = "",$c7 = "",$c8 = "",$c9 = "",$c10 = ""){
           $array = array();
@@ -123,10 +118,24 @@ if ( $this->session->flashdata('ControllerMessage') != '' ) : ?>
         $infoc10 = $this->cotizaciones_model->getCotizacionPorId($dato->idc_10);
         $infhoja10=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($dato->idc_10);
         
-        $cantidad_disponible1 = cantidades_disponibles($infoc->cantidad_1,$infoc2->cantidad_1,$infoc3->cantidad_1,$infoc4->cantidad_1,$infoc5->cantidad_1,$infoc6->cantidad_1,$infoc7->cantidad_1,$infoc8->cantidad_1,$infoc9->cantidad_1,$infoc10->cantidad_1);
-        $cantidad_disponible2 = cantidades_disponibles($infoc->cantidad_2,$infoc2->cantidad_2,$infoc3->cantidad_2,$infoc4->cantidad_2,$infoc5->cantidad_2,$infoc6->cantidad_2,$infoc7->cantidad_2,$infoc8->cantidad_2,$infoc9->cantidad_2,$infoc10->cantidad_2);
-        $cantidad_disponible3 = cantidades_disponibles($infoc->cantidad_3,$infoc2->cantidad_3,$infoc3->cantidad_3,$infoc4->cantidad_3,$infoc5->cantidad_3,$infoc6->cantidad_3,$infoc7->cantidad_3,$infoc8->cantidad_3,$infoc9->cantidad_3,$infoc10->cantidad_3);
-        $cantidad_disponible4 = cantidades_disponibles($infoc->cantidad_4,$infoc2->cantidad_4,$infoc3->cantidad_4,$infoc4->cantidad_4,$infoc5->cantidad_4,$infoc6->cantidad_4,$infoc7->cantidad_4,$infoc8->cantidad_4,$infoc9->cantidad_4,$infoc10->cantidad_4);
+        //cantidades_disp($infoc,$infoc2,$infoc3,$infoc4,$infoc5,$infoc6,$infoc7,$infoc8,$infoc9,$infoc10);
+       
+        $a= array_orden($infoc);
+        $b= array_orden($infoc2);
+        $c= array_orden($infoc3);
+        $d= array_orden($infoc4);
+        $e= array_orden($infoc5);
+        $f= array_orden($infoc6);
+        $g= array_orden($infoc7);
+        $h= array_orden($infoc8);
+        $i= array_orden($infoc9);
+        $j= array_orden($infoc10);
+        
+        
+        $cantidad_disponible1 = cantidades_disponibles($a[0],$b[0],$c[0],$d[0],$e[0],$f[0],$g[0],$h[0],$i[0],$j[0]);
+        $cantidad_disponible2 = cantidades_disponibles($a[1],$b[1],$c[1],$d[1],$e[1],$f[1],$g[1],$h[1],$i[1],$j[1]);
+        $cantidad_disponible3 = cantidades_disponibles($a[2],$b[2],$c[2],$d[2],$e[2],$f[2],$g[2],$h[2],$i[2],$j[2]);
+        $cantidad_disponible4 = cantidades_disponibles($a[3],$b[3],$c[3],$d[3],$e[3],$f[3],$g[3],$h[3],$i[3],$j[3]);
    
     ?>
         <input id="disponibles<?php echo $dato->id?>" type="hidden" name="disponibles" value="<?php echo $cantidad_disponible1.",".$cantidad_disponible2.",".$cantidad_disponible3.",".$cantidad_disponible4?>"/>
@@ -219,6 +228,11 @@ $(".detalle").on('click',function(){
 });
 
 $(".recotizarGrupo").on("click",function(){
+    $("input[name=cantidad1]").prop('checked',false);
+    $("input[name=cantidad2]").prop('checked',false);
+    $("input[name=cantidad3]").prop('checked',false);
+    $("input[name=cantidad4]").prop('checked',false);
+    
     var texto = $(this).parents('tr').find('a').eq(0).html();
     var grupo = $(this).parents('tr').find('td').eq(0).html();
     var str = $("#disponibles"+grupo).val();
@@ -250,6 +264,7 @@ $(".recotizarGrupo").on("click",function(){
         $("#divc4").show();
     }
     
+    $("input[name=ngrupo]").val(grupo);
     $("input[name=cantidad1]").val(c1);
     $("input[name=cantidad2]").val(c2);
     $("input[name=cantidad3]").val(c3);
@@ -259,7 +274,6 @@ $(".recotizarGrupo").on("click",function(){
     $("#span3").text('Cantidad 3: '+c3);
     $("#span4").text('Cantidad 4: '+c4);
 });
-
 </script>
 <!-- The Modal -->
 <div class="modal" id="myModal2" style="display: none">
@@ -268,13 +282,14 @@ $(".recotizarGrupo").on("click",function(){
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Recotizar Conjunto</h4>
+        <h4 class="modal-title">Cotizar Conjunto</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
           <b id="nombreGrupo"></b><br /><br />
+          <input type="hidden" name="ngrupo" value="" id="ngrupo"/>
           <div><h4 class="modal-title">Cantidades Disponibles</h4></div>
           <div id="divc1"><span id="span1">Cantidad 1: 1000</span>&nbsp;&nbsp;<input type="checkbox" name="cantidad1" value="" /></div>
           <div id="divc2"><span id="span2">Cantidad 2: 2000</span>&nbsp;&nbsp;<input type="checkbox" name="cantidad2" value="" /></div>
@@ -284,10 +299,56 @@ $(".recotizarGrupo").on("click",function(){
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">Recotizar</button>
+          <button id="btncotizar" type="button" class="btn btn-success" data-dismiss="modal">Cotizar</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
 
     </div>
   </div>
 </div>
+<script>
+$("#btncotizar").on("click",function(){
+    
+    var a = $("input[name=cantidad1]").val();
+    var b = $("input[name=cantidad2]").val();
+    var c = $("input[name=cantidad3]").val();
+    var d = $("input[name=cantidad4]").val();
+    var grupo = $("input[name=ngrupo]").val();
+    var cantidadesSeleccionadas = new Array();
+     var c1, c2, c3, c4;
+    $('input[type=checkbox]:checked').each(function() {
+        cantidadesSeleccionadas.push($(this).val());
+    });
+    cantidadesSeleccionadas.str
+    if(cantidadesSeleccionadas.length>0)
+    {
+        if(cantidadesSeleccionadas.length==1 || cantidadesSeleccionadas.length>1){
+            c1 = cantidadesSeleccionadas[0];
+        }else{
+            c1 = "0";
+        }
+        if(cantidadesSeleccionadas.length>1){
+            c2 = cantidadesSeleccionadas[1];
+        }else{
+            c2 = "0";
+        }
+        if(cantidadesSeleccionadas.length>2){
+            c3 = cantidadesSeleccionadas[2];
+        }else{
+            c3 = 0;
+        }
+        if(cantidadesSeleccionadas.length>3){
+            c4 = cantidadesSeleccionadas[3];
+        }else{
+            c4 = 0;
+        }
+    }else{
+        alert("Debe cotizar al menos una cantidad");
+        return false;
+    }
+   
+    var ruta='cotizaciones/cotizacion_de_grupo/';
+    window.location=webroot+ruta+grupo+'/'+c1+'/'+c2+'/'+c3+'/'+c4;
+  
+});
+</script>

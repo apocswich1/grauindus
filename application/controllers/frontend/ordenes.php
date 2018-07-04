@@ -1554,12 +1554,15 @@ class Ordenes extends CI_Controller {
                         <td class="celda_40">TRANSPORTE :<span class="borde">'.$reiraCliente.'</span></td>
                         <td class="celda_20">&nbsp;</td>
                         <td class="celda_40">FORMA DE PAGO <span class="borde">';
-                        if(is_numeric($datos->forma_pago)) {     
+                        if(is_numeric($datos->forma_pago) && $datos->forma_pago!=0){     
                             $formas=$this->clientes_model->getFormasPagoPorId($datos->forma_pago);
-                            $cuerpo.=$formas->forma_pago;
+                            $cuerpo.=$formas->forma_pago.'</span></td>';
                         }
-                        else 
-                            $cuerpo.=$datos->forma_pago.'</span></td>';
+                        else {
+                        $formas = $this->clientes_model->getFormasPagoPorIdCliente($datos->id_cliente);    
+                        //$cuerpo.='CHEQUE A 60 DIAS</span></td>';
+                        $cuerpo.=$formas->forma_pago.'</span></td>';
+                        }
                     $cuerpo.='</tr>
                 </table>
                 <!--separador 10-->

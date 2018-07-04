@@ -61,7 +61,7 @@ class grupos_model extends CI_Model{
      public function getGruposPorId($id)
     {
         $query=$this->db
-        ->select("id,grupo")
+        ->select("*")
         ->from("grupos")
         ->where(array("id"=>$id))
         ->get();
