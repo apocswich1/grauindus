@@ -18,6 +18,13 @@ class grupos_model extends CI_Model{
         return true;
         
     }
+     public function insertarCotizacionesGrupales($data=array())
+    {
+        $this->db->insert("cotizaciones_grupales",$data);
+       // echo $this->db->last_query();
+        return true;
+    }
+    
     public function update($data=array(),$id)
     {
          $this->db->where('id', $id);
@@ -68,6 +75,16 @@ class grupos_model extends CI_Model{
       //  echo $this->db->last_query();exit;
         return $query->row(); 
     }
+     public function getCotizacionesGruposPorId($id,$grupo)
+    {
+        $query=$this->db
+        ->select("*")
+        ->from("cotizaciones_grupales")
+        ->where(array("id_cot"=>$id,"id_grupo"=>$grupo))
+        ->get();
+       // echo $this->db->last_query();exit;
+        return $query->row(); 
+    }
 	  public function getGruposPorId2($id)
     {
         $query=$this->db
@@ -98,6 +115,13 @@ class grupos_model extends CI_Model{
     {
          $this->db->where('id', $id);
          $this->db->update("grupos",$data);
+        return true;
+    }
+    public function updateCotizacionesGrupales($data=array(),$id ,$grupo)
+    {
+         $this->db->where(array('id_cot'=>$id,'id_grupo'=>$grupo));
+         $this->db->update("cotizaciones_grupales",$data);
+        // echo $this->db->last_query();
         return true;
     }
     public function deleteGrupos($id)

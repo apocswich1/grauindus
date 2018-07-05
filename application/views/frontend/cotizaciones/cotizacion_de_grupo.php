@@ -1,4 +1,5 @@
 <?php
+//print_r($grupo);exit();
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -350,6 +351,10 @@ document.getElementById("aclaratoria1").innerHTML = "";
             $gramaje=" ".intval(preg_replace('/[^0-9]+/', '', $fotomecanica->materialidad_1), 10)." gramos,";
     }
     
+    if($grupo->idc_01!="" || $grupo->idc_01!=0){
+        
+    }
+    
     $materialidad = $fotomecanica->materialidad_datos_tecnicos;
     $tipodematerial=$this->materiales_model->getMaterialesNombreTipo($fotomecanica->id_mat_placa1);   
     $materialidaduno=$this->materiales_model->getMaterialesReversoPorId($fotomecanica->id_mat_placa1);   
@@ -392,7 +397,7 @@ document.getElementById("aclaratoria1").innerHTML = "";
             '.number_format($datos->cantidad_1,0,'','.').'
         </td>
         <td style="width: 300px; font-size:18px;">
-            '.$ing->producto.' <span id="colores">'.$colores.'</span>, '.$barniz.' <span id="placa">'.$materialidaduno->tipomaterial.'</span>'.$gramaje.' <span id="onda"></span><span id="liner"></span> '.$materialidad.', '.$reversoliner.''.$tamano.'
+            '.$grupo->grupo.' <span id="colores">'.$composicion.'</span>
         </td>
         <td style="width: 150px; text-align:center">$
         '.number_format($hoja->valor_empresa,0,'','.').'

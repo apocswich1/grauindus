@@ -95,6 +95,14 @@ if ( $this->session->flashdata('ControllerMessage') != '' ) : ?>
         return $nombre->producto;
     }
     
+    function unidades_valor($x,$y){
+        if($x==1 || $x==0 || $x=="" || $y==0){
+       return "0";
+        }else{
+       return number_format($x/$y,0,'','.');     
+        }
+    }
+    
     foreach($datos as $dato)
     {
         $infoc = $this->cotizaciones_model->getCotizacionPorId($dato->idc_01);
@@ -136,7 +144,7 @@ if ( $this->session->flashdata('ControllerMessage') != '' ) : ?>
         $cantidad_disponible2 = cantidades_disponibles($a[1],$b[1],$c[1],$d[1],$e[1],$f[1],$g[1],$h[1],$i[1],$j[1]);
         $cantidad_disponible3 = cantidades_disponibles($a[2],$b[2],$c[2],$d[2],$e[2],$f[2],$g[2],$h[2],$i[2],$j[2]);
         $cantidad_disponible4 = cantidades_disponibles($a[3],$b[3],$c[3],$d[3],$e[3],$f[3],$g[3],$h[3],$i[3],$j[3]);
-   
+        
     ?>
         <input id="disponibles<?php echo $dato->id?>" type="hidden" name="disponibles" value="<?php echo $cantidad_disponible1.",".$cantidad_disponible2.",".$cantidad_disponible3.",".$cantidad_disponible4?>"/>
 			<td><?php echo $dato->id?></td>
@@ -144,24 +152,37 @@ if ( $this->session->flashdata('ControllerMessage') != '' ) : ?>
                         <td><?php echo "<ul>"?>
                         <?php if($dato->idc_01 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_01); echo "<li><a target='_blank' href='cotizaciones/search_cot/".$dato->idc_01."'>".$dato->idc_01.' - '.$nombre->producto; } ?><?php if($dato->idc_01 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_01); if($nombre->estan_los_moldes=="NO" && ($nombre->existe_trazado=="NO" || $nombre->existe_trazado=="")){echo "<a> - Por Definir</a>";}else if($nombre->estan_los_moldes=="NO" && $nombre->existe_trazado=="SI"){echo "<a href='../trabajo/trazados/edit/".$nombre->trazado."/0'>- Trazado:".$nombre->trazado."</a>"; $trazado = $this->trazados_model->getTrazadosPorId($nombre->trazado); echo "<a>.$trazado->estatus.</a>";}else if($nombre->estan_los_moldes=="MOLDE GENERICO"){echo "<a href='../trabajo/moldes/edit/".$nombre->numero_molde."/0'>- Molde:".$nombre->numero_molde."</a>"; $molde = $this->moldes_model->getMoldesPorId($nombre->numero_molde); echo "<a>.$molde->tipo.</a>";} } ?>
                         <?php if($dato->idc_01 != ""){echo "<br />Cantidad 1:".$infoc->cantidad_1." P: ".$infhoja->valor_empresa." | Cantidad 2:".$infoc->cantidad_2." P: ".$infhoja->valor_empresa_2." | Cantidad 3:".$infoc->cantidad_3." P: ".$infhoja->valor_empresa_3." | Cantidad 4:".$infoc->cantidad_4." P: ".$infhoja->valor_empresa_4;} ?>
+                        <?php if($dato->idc_01 != ""){$registro =$this->grupos_model->getCotizacionesGruposPorId($dato->idc_01,$dato->id);} $c1=unidades_valor($infoc->cantidad_1, $registro->unidades);$c2=unidades_valor($infoc->cantidad_2, $registro->unidades);$c3=unidades_valor($infoc->cantidad_3, $registro->unidades);$c4=unidades_valor($infoc->cantidad_4, $registro->unidades);?>
+                        <?php if($dato->idc_01 != ""){ echo "<br />Unidades por producto:<a id='und1'></a><a id='vuno' undgrupo='".$dato->id."' cot='".$dato->idc_01."' href='#' class='' title='Modificar Unidades' data-toggle='modal' data-target='#myModal3' data-toggle='modal' data-target='#myModal3'><img style='padding-left:7px; width:10px' src='".base_url()."public/frontend/images/005-dibujar.png' /></a> | Corresponde a: <a id='vuno1'>$c1 | $c2 | $c3 | $c4</a>";} ?>
                         <?php if($dato->idc_02 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_02); echo "<li><a target='_blank' href='cotizaciones/search_cot/".$dato->idc_02."'>".$dato->idc_02.' - '.$nombre->producto; } ?><?php if($dato->idc_02 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_02); if($nombre->estan_los_moldes=="NO" && ($nombre->existe_trazado=="NO" || $nombre->existe_trazado=="")){echo "<a> - Por Definir</a>";}else if($nombre->estan_los_moldes=="NO" && $nombre->existe_trazado=="SI"){echo "<a href='../trabajo/trazados/edit/".$nombre->trazado."/0'>- Trazado:".$nombre->trazado."</a>"; $trazado = $this->trazados_model->getTrazadosPorId($nombre->trazado); echo "<a>.$trazado->estatus.</a>";}else if($nombre->estan_los_moldes=="MOLDE GENERICO"){echo "<a href='../trabajo/moldes/edit/".$nombre->numero_molde."/0'>- Molde:".$nombre->numero_molde."</a>"; $molde = $this->moldes_model->getMoldesPorId($nombre->numero_molde); echo "<a>.$molde->tipo.</a>";} } ?>
                         <?php if($dato->idc_02 != ""){echo "<br />Cantidad 1:".$infoc2->cantidad_1." P: ".$infhoja2->valor_empresa." | Cantidad 2:".$infoc2->cantidad_2." P: ".$infhoja2->valor_empresa_2." | Cantidad 3:".$infoc2->cantidad_3." P: ".$infhoja2->valor_empresa_3." | Cantidad 4:".$infoc2->cantidad_4." P: ".$infhoja2->valor_empresa_4;} ?>
+                        <?php if($dato->idc_02 != ""){$registro =$this->grupos_model->getCotizacionesGruposPorId($dato->idc_02,$dato->id);} $c1=unidades_valor($infoc2->cantidad_1, $registro->unidades);$c2=unidades_valor($infoc2->cantidad_2, $registro->unidades);$c3=unidades_valor($infoc2->cantidad_3, $registro->unidades);$c4=unidades_valor($infoc2->cantidad_4, $registro->unidades);?>
+                        <?php if($dato->idc_02 != ""){ echo "<br />Unidades por producto:<a id='und2'></a><a id='vdos'  undgrupo='".$dato->id."' cot='".$dato->idc_02."' href='#' class='' title='Modificar Unidades' data-toggle='modal' data-target='#myModal3'><img style='padding-left:7px; width:10px' src='".base_url()."public/frontend/images/005-dibujar.png' /></a> | Corresponde a: <a id='vdos2'>$c1 | $c2 | $c3 | $c4</a>";} ?>
                         <?php if($dato->idc_03 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_03); echo "<li><a target='_blank' href='cotizaciones/search_cot/".$dato->idc_03."'>".$dato->idc_03.' - '.$nombre->producto; } ?><?php if($dato->idc_03 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_03); if($nombre->estan_los_moldes=="NO" && ($nombre->existe_trazado=="NO" || $nombre->existe_trazado=="")){echo "<a> - Por Definir</a>";}else if($nombre->estan_los_moldes=="NO" && $nombre->existe_trazado=="SI"){echo "<a href='../trabajo/trazados/edit/".$nombre->trazado."/0'>- Trazado:".$nombre->trazado."</a>"; $trazado = $this->trazados_model->getTrazadosPorId($nombre->trazado); echo "<a>.$trazado->estatus.</a>";}else if($nombre->estan_los_moldes=="MOLDE GENERICO"){echo "<a href='../trabajo/moldes/edit/".$nombre->numero_molde."/0'>- Molde:".$nombre->numero_molde."</a>"; $molde = $this->moldes_model->getMoldesPorId($nombre->numero_molde); echo "<a>.$molde->tipo.</a>";} } ?>
                         <?php if($dato->idc_03 != ""){echo "<br />Cantidad 1:".$infoc3->cantidad_1." P: ".$infhoja3->valor_empresa." | Cantidad 2:".$infoc3->cantidad_2." P: ".$infhoja3->valor_empresa_2." | Cantidad 3:".$infoc3->cantidad_3." P: ".$infhoja3->valor_empresa_3." | Cantidad 4:".$infoc3->cantidad_4." P: ".$infhoja3->valor_empresa_4;} ?>
+                        <?php if($dato->idc_03 != ""){$registro =$this->grupos_model->getCotizacionesGruposPorId($dato->idc_03,$dato->id);} $c1=unidades_valor($infoc3->cantidad_1, $registro->unidades);$c2=unidades_valor($infoc3->cantidad_2, $registro->unidades);$c3=unidades_valor($infoc3->cantidad_3, $registro->unidades);$c4=unidades_valor($infoc3->cantidad_4, $registro->unidades);?>
+                        <?php if($dato->idc_03 != ""){ echo "<br />Unidades por producto:<a id='und3'></a><a id='vtres' undgrupo='".$dato->id."' cot='".$dato->idc_03."' href='#' class='' title='Modificar Unidades' data-toggle='modal' data-target='#myModal3'><img style='padding-left:7px; width:10px' src='".base_url()."public/frontend/images/005-dibujar.png' /></a> | Corresponde a: <a id='vtres3'>$c1 | $c2 | $c3 | $c4</a>";} ?>
                         <?php if($dato->idc_04 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_04); echo "<li><a target='_blank' href='cotizaciones/search_cot/".$dato->idc_04."'>".$dato->idc_04.' - '.$nombre->producto; } ?><?php if($dato->idc_04 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_04); if($nombre->estan_los_moldes=="NO" && ($nombre->existe_trazado=="NO" || $nombre->existe_trazado=="")){echo "<a> - Por Definir</a>";}else if($nombre->estan_los_moldes=="NO" && $nombre->existe_trazado=="SI"){echo "<a href='../trabajo/trazados/edit/".$nombre->trazado."/0'>- Trazado:".$nombre->trazado."</a>"; $trazado = $this->trazados_model->getTrazadosPorId($nombre->trazado); echo "<a>.$trazado->estatus.</a>";}else if($nombre->estan_los_moldes=="MOLDE GENERICO"){echo "<a href='../trabajo/moldes/edit/".$nombre->numero_molde."/0'>- Molde:".$nombre->numero_molde."</a>"; $molde = $this->moldes_model->getMoldesPorId($nombre->numero_molde); echo "<a>.$molde->tipo.</a>";} } ?>
                         <?php if($dato->idc_04 != ""){echo "<br />Cantidad 1:".$infoc4->cantidad_1." P: ".$infhoja4->valor_empresa." | Cantidad 2:".$infoc4->cantidad_2." P: ".$infhoja4->valor_empresa_2." | Cantidad 3:".$infoc4->cantidad_3." P: ".$infhoja4->valor_empresa_3." | Cantidad 4:".$infoc4->cantidad_4." P: ".$infhoja4->valor_empresa_4;} ?>
+                        <?php if($dato->idc_04 != ""){ echo "<br />Unidades por producto:<a id='und4'></a><a id='vcuatro' undgrupo='".$dato->id."' cot='".$dato->idc_04."' href='#' class='' title='Modificar Unidades' data-toggle='modal' data-target='#myModal3'><img style='padding-left:7px; width:10px' src='".base_url()."public/frontend/images/005-dibujar.png' /></a> | Corresponde a: <a id='vcuatro4'>$c1 | $c2 | $c3 | $c4</a>";} ?>
                         <?php if($dato->idc_05 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_05); echo "<li><a target='_blank' href='cotizaciones/search_cot/".$dato->idc_05."'>".$dato->idc_05.' - '.$nombre->producto; } ?><?php if($dato->idc_05 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_05); if($nombre->estan_los_moldes=="NO" && ($nombre->existe_trazado=="NO" || $nombre->existe_trazado=="")){echo "<a> - Por Definir</a>";}else if($nombre->estan_los_moldes=="NO" && $nombre->existe_trazado=="SI"){echo "<a href='../trabajo/trazados/edit/".$nombre->trazado."/0'>- Trazado:".$nombre->trazado."</a>"; $trazado = $this->trazados_model->getTrazadosPorId($nombre->trazado); echo "<a>.$trazado->estatus.</a>";}else if($nombre->estan_los_moldes=="MOLDE GENERICO"){echo "<a href='../trabajo/moldes/edit/".$nombre->numero_molde."/0'>- Molde:".$nombre->numero_molde."</a>"; $molde = $this->moldes_model->getMoldesPorId($nombre->numero_molde); echo "<a>.$molde->tipo.</a>";} } ?>
                         <?php if($dato->idc_05 != ""){echo "<br />Cantidad 1:".$infoc5->cantidad_1." P: ".$infhoja5->valor_empresa." | Cantidad 2:".$infoc5->cantidad_2." P: ".$infhoja5->valor_empresa_2." | Cantidad 3:".$infoc5->cantidad_3." P: ".$infhoja5->valor_empresa_3." | Cantidad 4:".$infoc5->cantidad_4." P: ".$infhoja5->valor_empresa_4;} ?>
+                        <?php if($dato->idc_05 != ""){ echo "<br />Unidades por producto:<a id='und5'></a><a id='vcinco' undgrupo='".$dato->id."' cot='".$dato->idc_05."' href='#' class='' title='Modificar Unidades' data-toggle='modal' data-target='#myModal3'><img style='padding-left:7px; width:10px' src='".base_url()."public/frontend/images/005-dibujar.png' /></a> | Corresponde a: <a id='vcinco5'>$c1 | $c2 | $c3 | $c4</a>";} ?>
                         <?php if($dato->idc_06 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_06); echo "<li><a target='_blank' href='cotizaciones/search_cot/".$dato->idc_06."'>".$dato->idc_06.' - '.$nombre->producto; } ?><?php if($dato->idc_06 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_06); if($nombre->estan_los_moldes=="NO" && ($nombre->existe_trazado=="NO" || $nombre->existe_trazado=="")){echo "<a> - Por Definir</a>";}else if($nombre->estan_los_moldes=="NO" && $nombre->existe_trazado=="SI"){echo "<a href='../trabajo/trazados/edit/".$nombre->trazado."/0'>- Trazado:".$nombre->trazado."</a>"; $trazado = $this->trazados_model->getTrazadosPorId($nombre->trazado); echo "<a>.$trazado->estatus.</a>";}else if($nombre->estan_los_moldes=="MOLDE GENERICO"){echo "<a href='../trabajo/moldes/edit/".$nombre->numero_molde."/0'>- Molde:".$nombre->numero_molde."</a>"; $molde = $this->moldes_model->getMoldesPorId($nombre->numero_molde); echo "<a>.$molde->tipo.</a>";} } ?>
                         <?php if($dato->idc_06 != ""){echo "<br />Cantidad 1:".$infoc6->cantidad_1." P: ".$infhoja6->valor_empresa." | Cantidad 2:".$infoc6->cantidad_2." P: ".$infhoja6->valor_empresa_2." | Cantidad 3:".$infoc6->cantidad_3." P: ".$infhoja6->valor_empresa_3." | Cantidad 4:".$infoc6->cantidad_4." P: ".$infhoja6->valor_empresa_4;} ?>
+                        <?php if($dato->idc_06 != ""){ echo "<br />Unidades por producto:<a id='und6'></a><a id='vseis' undgrupo='".$dato->id."' cot='".$dato->idc_06."' href='#' class='' title='Modificar Unidades' data-toggle='modal' data-target='#myModal3'><img style='padding-left:7px; width:10px' src='".base_url()."public/frontend/images/005-dibujar.png' /></a> | Corresponde a: <a id='vseis6'>$c1 | $c2 | $c3 | $c4</a>";} ?>
                         <?php if($dato->idc_07 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_07); echo "<li><a target='_blank' href='cotizaciones/search_cot/".$dato->idc_07."'>".$dato->idc_07.' - '.$nombre->producto; } ?><?php if($dato->idc_07 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_07); if($nombre->estan_los_moldes=="NO" && ($nombre->existe_trazado=="NO" || $nombre->existe_trazado=="")){echo "<a> - Por Definir</a>";}else if($nombre->estan_los_moldes=="NO" && $nombre->existe_trazado=="SI"){echo "<a href='../trabajo/trazados/edit/".$nombre->trazado."/0'>- Trazado:".$nombre->trazado."</a>"; $trazado = $this->trazados_model->getTrazadosPorId($nombre->trazado); echo "<a>.$trazado->estatus.</a>";}else if($nombre->estan_los_moldes=="MOLDE GENERICO"){echo "<a href='../trabajo/moldes/edit/".$nombre->numero_molde."/0'>- Molde:".$nombre->numero_molde."</a>"; $molde = $this->moldes_model->getMoldesPorId($nombre->numero_molde); echo "<a>.$molde->tipo.</a>";} } ?>
                         <?php if($dato->idc_07 != ""){echo "<br />Cantidad 1:".$infoc7->cantidad_1." P: ".$infhoja7->valor_empresa." | Cantidad 2:".$infoc7->cantidad_2." P: ".$infhoja7->valor_empresa_2." | Cantidad 3:".$infoc7->cantidad_3." P: ".$infhoja7->valor_empresa_3." | Cantidad 4:".$infoc7->cantidad_4." P: ".$infhoja7->valor_empresa_4;} ?>
+                        <?php if($dato->idc_07 != ""){ echo "<br />Unidades por producto:<a id='und7'></a><a id='vsiete' undgrupo='".$dato->id."' cot='".$dato->idc_07."' href='#' class='' title='Modificar Unidades' data-toggle='modal' data-target='#myModal3'><img style='padding-left:7px; width:10px' src='".base_url()."public/frontend/images/005-dibujar.png' /></a> | Corresponde a: <a id='siete7'>$c1 | $c2 | $c3 | $c4</a>";} ?>
                         <?php if($dato->idc_08 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_08); echo "<li><a target='_blank' href='cotizaciones/search_cot/".$dato->idc_08."'>".$dato->idc_08.' - '.$nombre->producto; } ?><?php if($dato->idc_08 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_08); if($nombre->estan_los_moldes=="NO" && ($nombre->existe_trazado=="NO" || $nombre->existe_trazado=="")){echo "<a> - Por Definir</a>";}else if($nombre->estan_los_moldes=="NO" && $nombre->existe_trazado=="SI"){echo "<a href='../trabajo/trazados/edit/".$nombre->trazado."/0'>- Trazado:".$nombre->trazado."</a>"; $trazado = $this->trazados_model->getTrazadosPorId($nombre->trazado); echo "<a>.$trazado->estatus.</a>";}else if($nombre->estan_los_moldes=="MOLDE GENERICO"){echo "<a href='../trabajo/moldes/edit/".$nombre->numero_molde."/0'>- Molde:".$nombre->numero_molde."</a>"; $molde = $this->moldes_model->getMoldesPorId($nombre->numero_molde); echo "<a>.$molde->tipo.</a>";} } ?>
                         <?php if($dato->idc_08 != ""){echo "<br />Cantidad 1:".$infoc8->cantidad_1." P: ".$infhoja8->valor_empresa." | Cantidad 2:".$infoc8->cantidad_2." P: ".$infhoja8->valor_empresa_2." | Cantidad 3:".$infoc8->cantidad_3." P: ".$infhoja8->valor_empresa_3." | Cantidad 4:".$infoc8->cantidad_4." P: ".$infhoja8->valor_empresa_4;} ?>
+                        <?php if($dato->idc_08 != ""){ echo "<br />Unidades por producto:<a id='und8'></a><a id='vocho' undgrupo='".$dato->id."' cot='".$dato->idc_08."' href='#' class='' title='Modificar Unidades' data-toggle='modal' data-target='#myModal3'><img style='padding-left:7px; width:10px' src='".base_url()."public/frontend/images/005-dibujar.png' /></a> | Corresponde a: <a id='vocho8'>$c1 | $c2 | $c3 | $c4</a>";} ?>
                         <?php if($dato->idc_09 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_09); echo "<li><a target='_blank' href='cotizaciones/search_cot/".$dato->idc_09."'>".$dato->idc_09.' - '.$nombre->producto; } ?><?php if($dato->idc_09 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_09); if($nombre->estan_los_moldes=="NO" && ($nombre->existe_trazado=="NO" || $nombre->existe_trazado=="")){echo "<a> - Por Definir</a>";}else if($nombre->estan_los_moldes=="NO" && $nombre->existe_trazado=="SI"){echo "<a href='../trabajo/trazados/edit/".$nombre->trazado."/0'>- Trazado:".$nombre->trazado."</a>"; $trazado = $this->trazados_model->getTrazadosPorId($nombre->trazado); echo "<a>.$trazado->estatus.</a>";}else if($nombre->estan_los_moldes=="MOLDE GENERICO"){echo "<a href='../trabajo/moldes/edit/".$nombre->numero_molde."/0'>- Molde:".$nombre->numero_molde."</a>"; $molde = $this->moldes_model->getMoldesPorId($nombre->numero_molde); echo "<a>.$molde->tipo.</a>";} } ?>
                         <?php if($dato->idc_09 != ""){echo "<br />Cantidad 1:".$infoc9->cantidad_1." P: ".$infhoja9->valor_empresa." | Cantidad 2:".$infoc9->cantidad_2." P: ".$infhoja9->valor_empresa_2." | Cantidad 3:".$infoc9->cantidad_3." P: ".$infhoja9->valor_empresa_3." | Cantidad 4:".$infoc9->cantidad_4." P: ".$infhoja9->valor_empresa_4;} ?>
+                        <?php if($dato->idc_09 != ""){ echo "<br />Unidades por producto:<a id='und9'></a><a id='vnueve' undgrupo='".$dato->id."' cot='".$dato->idc_09."' href='#' class='' title='Modificar Unidades' data-toggle='modal' data-target='#myModal3'><img style='padding-left:7px; width:10px' src='".base_url()."public/frontend/images/005-dibujar.png' /></a> | Corresponde a: <a id='vnueve9'>$c1 | $c2 | $c3 | $c4</a>";} ?>
                         <?php if($dato->idc_10 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_10); echo "<li><a target='_blank' href='cotizaciones/search_cot/".$dato->idc_10."'>".$dato->idc_10.' - '.$nombre->producto; } ?><?php if($dato->idc_10 != ""){ $nombre = $this->cotizaciones_model->getCotizacionPorId($dato->idc_10); if($nombre->estan_los_moldes=="NO" && ($nombre->existe_trazado=="NO" || $nombre->existe_trazado=="")){echo "<a> - Por Definir</a>";}else if($nombre->estan_los_moldes=="NO" && $nombre->existe_trazado=="SI"){echo "<a href='../trabajo/trazados/edit/".$nombre->trazado."/0'>- Trazado:".$nombre->trazado."</a>"; $trazado = $this->trazados_model->getTrazadosPorId($nombre->trazado); echo "<a>.$trazado->estatus.</a>";}else if($nombre->estan_los_moldes=="MOLDE GENERICO"){echo "<a href='../trabajo/moldes/edit/".$nombre->numero_molde."/0'>- Molde:".$nombre->numero_molde."</a>"; $molde = $this->moldes_model->getMoldesPorId($nombre->numero_molde); echo "<a>.$molde->tipo.</a>";} } ?>
                         <?php if($dato->idc_10 != ""){echo "<br />Cantidad 1:".$infoc10->cantidad_1." P: ".$infhoja10->valor_empresa." | Cantidad 2:".$infoc10->cantidad_2." P: ".$infhoja10->valor_empresa_2." | Cantidad 3:".$infoc10->cantidad_3." P: ".$infhoja10->valor_empresa_3." | Cantidad 4:".$infoc10->cantidad_4." P: ".$infhoja10->valor_empresa_4;} ?>
+                        <?php if($dato->idc_10 != ""){ echo "<br />Unidades por producto:<a id='und10'></a><a id='vdiez' undgrupo='".$dato->id."' cot='".$dato->idc_10."' href='#' class='' title='Modificar Unidades' data-toggle='modal' data-target='#myModal3'><img style='padding-left:7px; width:10px' src='".base_url()."public/frontend/images/005-dibujar.png' /></a> | Corresponde a: <a id='vdiez10'>$c1 | $c2 | $c3 | $c4</a>";} ?>
                         <?php echo "</ul>"?></td>
                         <td><a class="detalle" style="text-decoration: none" data-toggle="modal" data-target="#myModal" id="<?php echo $dato->id ?>">Detalle</a></td>
                         <td><?php echo $dato->fecha_creacion?></td>
@@ -203,6 +224,39 @@ if ( $this->session->flashdata('ControllerMessage') != '' ) : ?>
     <?php echo form_close() ?> 
     </div>
 
+  </div>
+</div>
+            <!-- Modal 2-->
+    <div id="myModal3" class="modal fade" role="dialog" style="width: 300px">
+    <div class="modal-dialog" id="mimodal3">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <?php echo form_open_multipart(null, array('class' => 'form-horizontal','name'=>'form','id'=>'form')); ?>      
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Unidades por producto</h4>
+      </div>
+      <div class="modal-body">
+          <div class="container">
+            <div class="row" id="undrows">
+            </div>                                
+            <div class="row" style="text-align: center; padding-bottom: 15px;">
+                <label>Unidades: </label>
+                  <input type="text" id="id_und" name="id_und" value=""/>    
+                  <input type="hidden" id="ruta" name="ruta" value=""/>    
+                  <input type="hidden" id="undgrupo" name="undgrupo" value=""/>    
+                  <input type="hidden" id="undcoti" name="undcoti" value=""/>    
+                  <input type="hidden" id="valorhref" name="valorhref" value=""/>    
+                  <input type="hidden" id="valorhref2" name="valorhref2" value=""/>    
+            </div>            
+          </div>
+       </div>
+      <div class="modal-footer">
+          <button id="guardarund" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    <?php echo form_close() ?> 
+    </div>
   </div>
 </div>
     </tbody>
@@ -274,6 +328,60 @@ $(".recotizarGrupo").on("click",function(){
     $("#span3").text('Cantidad 3: '+c3);
     $("#span4").text('Cantidad 4: '+c4);
 });
+
+$("a").on('click',function(){
+    var id = $(this).prop('id');
+    var ruta;
+    var cotizacion = $(this).attr('cot');
+    var undgrupo = $(this).attr('undgrupo');
+    if(id == "vuno"){
+        ruta = webroot+'cotizaciones/cambiar_unidades/';
+    }
+    if(id == "vdos"){
+        ruta = webroot+'cotizaciones/cambiar_unidades/';
+    }
+    if(id == "vtres"){
+        ruta = webroot+'cotizaciones/cambiar_unidades/';
+    }
+    if(id == "vcuatro"){
+        ruta = webroot+'cotizaciones/cambiar_unidades/';
+    }
+    if(id == "vcinco"){
+        ruta = webroot+'cotizaciones/cambiar_unidades/';
+    }
+    if(id == "vseis"){
+        ruta = webroot+'cotizaciones/cambiar_unidades/';
+    }
+    if(id == "vsiete"){
+        ruta = webroot+'cotizaciones/cambiar_unidades/';
+    }
+    if(id == "vocho"){
+        ruta = webroot+'cotizaciones/cambiar_unidades/';
+    }
+    if(id == "vnueve"){
+        ruta = webroot+'cotizaciones/cambiar_unidades/';
+    }
+    if(id == "vdiez"){
+        ruta = webroot+'cotizaciones/cambiar_unidades/10';
+    }
+    //alert(undgrupo);
+    $("#ruta").val(ruta);
+    $("#undgrupo").val(undgrupo);
+    $("#undcoti").val(cotizacion);
+    $("#valorhref").val(id);
+});
+
+$("#guardarund").on('click',function(){
+    var ruta = $("#ruta").val();
+    var grupo = $("#undgrupo").val();
+    var cotizacion = $("#undcoti").val();
+    var unidad = $("#id_und").val();
+    var valor = $("#valorhref").val();
+    $.post(ruta,{unidad:unidad,ruta:ruta,grupo:grupo,cotizacion:cotizacion},function(data){
+        $("#"+valor).text(unidad);
+        $("#"+valor).text(unidad);
+    });
+});
 </script>
 <!-- The Modal -->
 <div class="modal" id="myModal2" style="display: none">
@@ -306,6 +414,17 @@ $(".recotizarGrupo").on("click",function(){
     </div>
   </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url()?>public/backend/fancybox/jquery.fancybox.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+        	$(".fancybox").fancybox({
+        		openEffect	: 'none',
+        		closeEffect	: 'none'
+        	});
+            
+        });
+</script>
 <script>
 $("#btncotizar").on("click",function(){
     
@@ -319,7 +438,7 @@ $("#btncotizar").on("click",function(){
     $('input[type=checkbox]:checked').each(function() {
         cantidadesSeleccionadas.push($(this).val());
     });
-    cantidadesSeleccionadas.str
+    
     if(cantidadesSeleccionadas.length>0)
     {
         if(cantidadesSeleccionadas.length==1 || cantidadesSeleccionadas.length>1){
@@ -335,12 +454,12 @@ $("#btncotizar").on("click",function(){
         if(cantidadesSeleccionadas.length>2){
             c3 = cantidadesSeleccionadas[2];
         }else{
-            c3 = 0;
+            c3 = "0";
         }
         if(cantidadesSeleccionadas.length>3){
             c4 = cantidadesSeleccionadas[3];
         }else{
-            c4 = 0;
+            c4 = "0";
         }
     }else{
         alert("Debe cotizar al menos una cantidad");
@@ -351,4 +470,5 @@ $("#btncotizar").on("click",function(){
     window.location=webroot+ruta+grupo+'/'+c1+'/'+c2+'/'+c3+'/'+c4;
   
 });
+
 </script>

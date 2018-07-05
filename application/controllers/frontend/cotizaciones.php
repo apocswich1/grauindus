@@ -3236,6 +3236,58 @@ $cuerpo2.='<table class="tabla">';
             redirect(base_url().'usuarios/login',  301);
         }
 	}
+    public function cambiar_unidades($id = null)
+	{
+	if($this->session->userdata('id'))
+        {
+        
+        $datos=$this->cotizaciones_model->getCotizacionPorId($id);
+        $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
+        $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+        $cotizacionPresupuesto=$this->cotizaciones_model->getCotizacionCotizacionPrespuestoPorIdCotizacion($id);
+        $user=$this->usuarios_model->getUsuariosPorId($datos->id_usuario);
+        $vendedor=$this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
+        $cli=$this->clientes_model->getClientePorId($datos->id_cliente);
+        $presupuesto=$this->cotizaciones_model->getCotizacionCotizacionPrespuestoPorIdCotizacion($id);
+        $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
+        if (is_numeric($datos->forma_pago)) $forma_pago=$this->clientes_model->getFormasPagoPorId($datos->forma_pago); 
+        else $forma_pago=$this->clientes_model->getFormasPagoPorNombre($datos->forma_pago);
+        $orden=$this->orden_model->getOrdenesPorCotizacion($id);
+        
+        $grupo = $this->input->post('grupo',true);
+        $cotizacion = $this->input->post('cotizacion',true);
+        $unidad = $this->input->post('unidad',true);
+        
+        $existeregistro =$this->grupos_model->getCotizacionesGruposPorId($cotizacion,$grupo);
+        
+	    if(sizeof($existeregistro)>0)
+            {
+                $data = array(
+                    'unidades'=>$unidad,
+                    'fecha'=>date('Y-m-d'),
+                );
+                //print_r($data);
+                $this->grupos_model->updateCotizacionesGrupales($data,$cotizacion ,$grupo);
+            }
+            else
+            {
+                $data = array(
+                    'id_grupo'=>$grupo,
+                    'id_cot'=>$cotizacion,
+                    'unidades'=>$unidad,
+                    'fecha'=>date('Y-m-d'),
+                );
+                $this->grupos_model->insertarCotizacionesGrupales($data);
+               // print_r($data);
+            }
+        
+        //$this->session->set_flashdata('css',"success");
+        //redirect(base_url().'grupos/index',  301);
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+	}
     public function cotizacion_de_grupo($id=null,$c1=null,$c2=null,$c3=null,$c4=null)
 	{
 	if($this->session->userdata('id'))
@@ -3293,7 +3345,7 @@ $cuerpo2.='<table class="tabla">';
             }
         if(sizeof($datos)==0){show_404();}
         $this->layout->setLayout('template_ajax');
-        $this->layout->view('cotizacion_de_grupo',compact('datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden'));  
+        $this->layout->view('cotizacion_de_grupo',compact('grupo','datos','ing','fotomecanica','cotizacionPresupuesto','user','vendedor','cli','presupuesto','forma_pago','id','pagina','hoja','orden'));  
         }else
         {
             redirect(base_url().'usuarios/login',  301);
