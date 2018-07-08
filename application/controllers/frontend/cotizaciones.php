@@ -10360,6 +10360,7 @@ $cuerpo2.='<table class="tabla">';
                             "id_mat_onda2"=>$this->input->post("materialidad_2",true),
                             "id_mat_liner3"=>$this->input->post("materialidad_3",true),
                             "desgajado_automatico"=>$this->input->post("desgajado_automatico",true),
+                            "pinza"=>$this->input->post("pinza",true),
                             );
                        //exit(print_r($data));
                         

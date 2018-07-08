@@ -144,6 +144,7 @@ function calculo_ccac_minimo(){
   $("#etiquetaimp").html("<h4>Imagen Impresion "+imp+"</h4>")  
   $("#etiquetaccacmin").html("<h4 style='color:green'>Distancia CCAC Min: "+variable_textoccac+" mm</h4>")  
   $("#alertaccacmin").html("<h4 style='color:red'>"+msg+"</h4>")  
+  $("#pinza").val(variable_textoccac);
   
 }
 

@@ -274,7 +274,7 @@
                      <li>Total merma : <strong><?php  echo $hoja->total_merma; ?></strong></li>
                 </ul>                
             	</div>
-
+ancho de la cartulina menos ccac1
 		<div class="controls"  style="margin-left: 0px;width:30%;float:left;">
                 <ul>
                      <li>Cantidad a imprimir : <strong><?php echo $hoja->placa_kilo; ?></strong></li>                     
@@ -282,9 +282,9 @@
                      <li>Distancia Cuchillo a Cuchillo : <strong><?php echo $ing->tamano_cuchillo_1; ?> X <?php echo $ing->tamano_cuchillo_2;  ?> Cms</strong></li>        
                      <li>Metros de Cuchillo : <strong><?php echo $ing->metros_de_cuchillo;  ?> Cms</strong></li>        
                      <li>Descripción de la placa : <strong><?php echo $materialidad_1->nombre?></strong></li>
-
                      <li>CCAC1 : <strong><?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?> Mms</strong></li>
                      <li>CCAC2 : <strong><?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10) ?> Mms</strong></li>                     
+                     <li>Pinza : <strong><?php if($ing->pinza==""){echo $ing->tamano_a_imprimir_1 - (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10)." Mms | Ex."; }else{ echo $ing->pinza. "Mms";} ?> </strong></li>                     
                 </ul>
             	</div>  
     </div>

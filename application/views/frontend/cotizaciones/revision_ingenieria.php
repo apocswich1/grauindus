@@ -1781,6 +1781,7 @@ th {
                    <li id="etiquetaccacmin"></li>
                    <li id="alertaccacmin"></li>
                </ul>
+                   <input type="hidden" id="pinza" name="pinza" style="width: 100px;" value="" /> 
            </td>
        </tr>
    </table>

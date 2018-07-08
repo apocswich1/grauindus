@@ -1076,58 +1076,58 @@ $lacado2 = lacado($fotomecanica,$datos->cantidad_2,$ing->unidades_por_pliego);
 $lacado3 = lacado($fotomecanica,$datos->cantidad_3,$ing->unidades_por_pliego);
 $lacado4 = lacado($fotomecanica,$datos->cantidad_4,$ing->unidades_por_pliego);
 //***************************Calculo Pegado 1****************************//
-//if ($pegado1['totalPegado'] > 150000 && $pegado1['totalPegado'] <= 235000) {
-//    $pegado_1 = 150000;
-//} else {
-//    if ($pegado1['totalPegado'] < 150000) {
-//        $pegado_1 = $pegado1['totalPegado'];
-//    } else {
-//        if ($pegado1['totalPegado'] > 235000) {
-//            $pegado1['totalPegado'] = $datos->cantidad_1 * $pegado1['pegado_migrado'] * 1.45;
-//            $pegado_1 = $datos->cantidad_1 * $pegado1['pegado_migrado'] * 1.45;
-//
-//        }
-//    }
-//}
+if ($pegado1['totalPegado'] > 150000 && $pegado1['totalPegado'] <= 235000) {
+    $pegado_1v = 150000;
+} else {
+    if ($pegado1['totalPegado'] < 150000) {
+        $pegado_1v = $pegado1['totalPegado'];
+    } else {
+        if ($pegado1['totalPegado'] > 235000) {
+            $pegado1['totalPegado'] = $datos->cantidad_1 * $pegado1['pegado_migrado'] * 1.45;
+            $pegado_1v = $datos->cantidad_1 * $pegado1['pegado_migrado'] * 1.45;
+
+        }
+    }
+}
 //***************************Calculo Pegado 2****************************//
-//if ($pegado2['totalPegado'] > 150000 && $pegado2['totalPegado'] <= 235000) {
-//    $pegado_2 = 150000;
-//} else {
-//    if ($pegado2['totalPegado'] < 150000) {
-//        $pegado_2 = $pegado2['totalPegado'];
-//    } else {
-//        if ($pegado2['totalPegado'] > 235000) {
-//            $pegado2['totalPegado'] = $datos->cantidad_2 * $pegado2['pegado_migrado'] * 1.45;
-//            $pegado_2 = $datos->cantidad_2 * $pegado2['pegado_migrado'] * 1.45;
-//        }
-//    }
-//}
+if ($pegado2['totalPegado'] > 150000 && $pegado2['totalPegado'] <= 235000) {
+    $pegado_2v = 150000;
+} else {
+    if ($pegado2['totalPegado'] < 150000) {
+        $pegado_2v = $pegado2['totalPegado'];
+    } else {
+        if ($pegado2['totalPegado'] > 235000) {
+            $pegado2['totalPegado'] = $datos->cantidad_2 * $pegado2['pegado_migrado'] * 1.45;
+            $pegado_2v = $datos->cantidad_2 * $pegado2['pegado_migrado'] * 1.45;
+        }
+    }
+}
 //***************************Calculo Pegado 3****************************//
-//if ($pegado3['totalPegado'] > 150000 && $pegado3['totalPegado'] <= 235000) {
-//    $pegado_3 = 150000;
-//} else {
-//    if ($pegado3['totalPegado'] < 150000) {
-//        $pegado_3 = $pegado3['totalPegado'];
-//    } else {
-//        if ($pegado3['totalPegado'] > 235000) {
-//            $pegado3['totalPegado'] = $datos->cantidad_3 * $pegado3['pegado_migrado'] * 1.45;
-//            $pegado_3 = $datos->cantidad_3 * $pegado3['pegado_migrado'] * 1.45;
-//        }
-//    }
-//}
+if ($pegado3['totalPegado'] > 150000 && $pegado3['totalPegado'] <= 235000) {
+    $pegado_3v = 150000;
+} else {
+    if ($pegado3['totalPegado'] < 150000) {
+        $pegado_3v = $pegado3['totalPegado'];
+    } else {
+        if ($pegado3['totalPegado'] > 235000) {
+            $pegado3['totalPegado'] = $datos->cantidad_3 * $pegado3['pegado_migrado'] * 1.45;
+            $pegado_3v = $datos->cantidad_3 * $pegado3['pegado_migrado'] * 1.45;
+        }
+    }
+}
 //***************************Calculo Pegado 4****************************//
-//if ($pegado4['totalPegado'] > 150000 && $pegado4['totalPegado'] <= 235000) {
-//    $pegado_4 = 150000;
-//} else {
-//    if ($pegado4['totalPegado'] < 150000) {
-//        $pegado_4 = $pegado4['totalPegado'];
-//    } else {
-//        if ($pegado4['totalPegado'] > 235000) {
-//            $pegado4['totalPegado'] = $datos->cantidad_4 * $pegado4['pegado_migrado'] * 1.45;
-//            $pegado_4 = $datos->cantidad_4 * $pegado4['pegado_migrado'] * 1.45;
-//        }
-//    }
-//}
+if ($pegado4['totalPegado'] > 150000 && $pegado4['totalPegado'] <= 235000) {
+    $pegado_4v = 150000;
+} else {
+    if ($pegado4['totalPegado'] < 150000) {
+        $pegado_4v = $pegado4['totalPegado'];
+    } else {
+        if ($pegado4['totalPegado'] > 235000) {
+            $pegado4['totalPegado'] = $datos->cantidad_4 * $pegado4['pegado_migrado'] * 1.45;
+            $pegado_4v = $datos->cantidad_4 * $pegado4['pegado_migrado'] * 1.45;
+        }
+    }
+}
 
 $externos_produccion = $externos_produccion_ac1 + $externos_produccion_p1;
 $externos_produccion2 = $externos_produccion_ac2 + $externos_produccion_p2;
@@ -1136,13 +1136,13 @@ $externos_produccion4 = $externos_produccion_ac4 + $externos_produccion_p4;
 //echo $pegado_1;
 //exit();
 //******************************Total Produccion Cantidad 1**********************//
-$totalProduccion=$lacado1+$complemento+$onda['valorCorte']+$totalEmplacado+$totalMontajeMolde+$totalTroquelado+$pegado_1+$des[0]+$tiraje+$moldeTroquel+$totalDesgajado+$externos_produccion+$otrosCaucho + $TotalPiezasAdicionales + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
+$totalProduccion=$lacado1+$complemento+$onda['valorCorte']+$totalEmplacado+$totalMontajeMolde+$totalTroquelado+$pegado_1v+$des[0]+$tiraje+$moldeTroquel+$totalDesgajado+$externos_produccion+$otrosCaucho + $TotalPiezasAdicionales + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
 //******************************Total Produccion Cantidad 2**********************//
-$totalProduccion2=$lacado2+$complemento2+$onda2['valorCorte']+$totalEmplacado2+$totalMontajeMolde+$totalTroquelado2+$pegado_2+$des2[0]+$tiraje2+$moldeTroquel+$totalDesgajado2+$externos_produccion2+$otrosCaucho + $TotalPiezasAdicionales2 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
+$totalProduccion2=$lacado2+$complemento2+$onda2['valorCorte']+$totalEmplacado2+$totalMontajeMolde+$totalTroquelado2+$pegado_2v+$des2[0]+$tiraje2+$moldeTroquel+$totalDesgajado2+$externos_produccion2+$otrosCaucho + $TotalPiezasAdicionales2 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
 //******************************Total Produccion Cantidad 2**********************//
-$totalProduccion3=$lacado3+$complemento3+$onda3['valorCorte']+$totalEmplacado3+$totalMontajeMolde+$totalTroquelado3+$pegado_3+$des3[0]+$tiraje3+$moldeTroquel+$totalDesgajado3+$externos_produccion3+$otrosCaucho + $TotalPiezasAdicionales3 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
+$totalProduccion3=$lacado3+$complemento3+$onda3['valorCorte']+$totalEmplacado3+$totalMontajeMolde+$totalTroquelado3+$pegado_3v+$des3[0]+$tiraje3+$moldeTroquel+$totalDesgajado3+$externos_produccion3+$otrosCaucho + $TotalPiezasAdicionales3 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
 //******************************Total Produccion Cantidad 2**********************//
-$totalProduccion4=$lacado4+$complemento4+$onda4['valorCorte']+$totalEmplacado4+$totalMontajeMolde+$totalTroquelado4+$pegado_4+$des4[0]+$tiraje4+$moldeTroquel+$totalDesgajado4+$externos_produccion4+$otrosCaucho + $TotalPiezasAdicionales4 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
+$totalProduccion4=$lacado4+$complemento4+$onda4['valorCorte']+$totalEmplacado4+$totalMontajeMolde+$totalTroquelado4+$pegado_4v+$des4[0]+$tiraje4+$moldeTroquel+$totalDesgajado4+$externos_produccion4+$otrosCaucho + $TotalPiezasAdicionales4 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
 //******************************Total costo venta valor1**********************//
 if($fotomecanica->materialidad_datos_tecnicos == 'Cartulina-cartulina')
 {
