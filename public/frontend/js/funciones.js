@@ -1062,6 +1062,9 @@ function guardarFormularioAdd2(valor)
 {
   //  alert(valor);
     var form=document.form;
+    var t1 = document.getElementById('tamano_1').value;
+    var t2 = document.getElementById('tamano_2').value;
+    
     form.estado.value=valor;
     if(valor=='2')
     {
@@ -1078,6 +1081,11 @@ function guardarFormularioAdd2(valor)
         return false;
     }
     
+    if(t1==="" || t1===0 && t2==="" || t2===0){
+        alert("Debe tener un tamaño valido para la cartulina");
+        return false;
+    }
+    
     if(valor=='3')
     {
         form.estado.value=valor;
@@ -1090,11 +1098,13 @@ function guardarFormularioAdd2(valor)
     var materialidad2 = document.getElementById('mate2').value;
     var materialidad3 = document.getElementById('mate3').value;
     
+    var t1 = document.getElementById('tamano_1').value;
+    var t2 = document.getElementById('tamano_2').value;
     
-//    alert($('#cp').val());
-//    alert($('#nm').val());
-   // alert(materialidad+'-'+materialidad1+'-'+materialidad2+'-'+materialidad3);
-    
+    if(t1==="" || t1===0 && t2==="" || t2===0){
+        alert("Debe tener un tamaño valido para la cartulina");
+        return false;
+    }
     
     if(ing_lleva_barniz==""){
             alert("Debe indicar si lleva barniz");

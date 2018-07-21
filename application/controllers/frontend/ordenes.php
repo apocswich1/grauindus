@@ -112,10 +112,7 @@ class Ordenes extends CI_Controller {
 	{
             $codigoNuevo= "001";
 	} 
-	//echo sizeof($orden);
-	//echo "-------".$this->input->post("estado",true);
-	//echo $codigoNuevo;        exit();
-//	echo sizeof($cuentaProductos2);
+
         if($this->input->post())
         {
 //        echo $this->input->post("lleva_troquel",true);
@@ -129,10 +126,9 @@ class Ordenes extends CI_Controller {
                    $fecha_20_dias=sumarDiasFecha(date("Y-m-d"),20); 
                 }
 
-                if(sizeof($orden)==0) //No existe op creada
+                if(sizeof($orden)==0) 
                 {
-//                    echo $this->input->post("estado",true)."-";
-//        echo $this->input->post("cantidad_pedida",true); exit();
+//                  
                     $datoscliente = str_pad($datos->id_cliente, 4, "0", STR_PAD_LEFT);
                     if($datos->producto_id==0)
                     {//echo "AAA";exit();  
@@ -170,11 +166,9 @@ class Ordenes extends CI_Controller {
                 { 
                     $producto_id=$datos->producto_id;
                 }        
-                
-                //echo $this->input->post("estan_los_moldes",true);exit();
+
                     if($this->input->post("estan_los_moldes",true)=='NO')
                     {
-//                        echo "bb".$this->input->post("estan_los_moldes",true);   
 			//Guardar Molde Nuevos
                         $trazados = $this->trazados_model->getTrazadosPorId($datos->trazado);
                         //print_r($trazados);
@@ -199,6 +193,7 @@ class Ordenes extends CI_Controller {
                             default:
                                 break;
                         }  
+                        //echo "bb".$this->input->post("estan_los_moldes",true);   exit();    
                         $array=array
                             (
                               "nombre"=>$this->input->post("nombre_molde",true),
@@ -245,9 +240,6 @@ class Ordenes extends CI_Controller {
 //                              "tipo"=>"Normal",
 //                              "archivo"=>$trazados->archivo,                              
 //                            );
-//                            echo "<pre>";
-//                        print_r($array); exit();
-//                            echo "</pre>";
                             $id_molde=$this->moldes_model->insertar($array);
                             $array2=array
                             (
@@ -255,6 +247,10 @@ class Ordenes extends CI_Controller {
                             );
                             $this->db->where('id', $id_molde);
                             $this->db->update("moldes_grau",$array2); 
+//                            echo $id_molde;
+//                            echo "<pre>";
+//                        print_r($array); exit();
+//                            echo "</pre>";
                             $tieneMolde='SI';  
                             //Actualizar Molde en ing
                             $arrayIng=array
@@ -262,8 +258,24 @@ class Ordenes extends CI_Controller {
                                 "numero_molde"=>$id_molde,
                                 "nombre_molde"=>$this->input->post("nombre_molde",true),
                             );
+                            $arrayCot=array
+                            (
+                                "numero_molde"=>$id_molde,
+                                //"estan_los_moldes"=>$tieneMolde;
+                            );
+                            $arrayCotOc=array
+                            (
+                                "id_molde"=>$id_molde,
+                                "tiene_molde"=>$tieneMolde
+                            );
                             $this->db->where('id_cotizacion', $id);
                             $this->db->update("cotizacion_ingenieria",$arrayIng); 
+                            
+                            $this->db->where('id_cotizacion', $id);
+                            $this->db->update("cotizaciones_orden_de_compra",$arrayCotOc); 
+                            
+                            $this->db->where('id', $id);
+                            $this->db->update("cotizaciones",$arrayCot); 
                             
                             $arraytrazado=array
                             (
@@ -273,40 +285,38 @@ class Ordenes extends CI_Controller {
                             $this->db->where('id', $trazados->numero);
                             $this->db->update("trazados",$arraytrazado); 
                             
-                            
+//                     quitada del codigo porque sobre escribe lo de arriba       elseif($this->input->post("estan_los_moldes",true)=='NO')
+//                    { 
+//			$tieneMolde='NO';
+//                        $id_molde=$this->input->post("molde",true);                        
+//                    }
                             //-----------------------------------------------------------
                     }elseif($this->input->post("estan_los_moldes",true)=='NO LLEVA')
                     {
                         $id_molde='1';
                         $tieneMolde='NO LLEVA';
-                    }
-                    if($this->input->post("estan_los_moldes",true)=='SI')
+                    }elseif($this->input->post("estan_los_moldes",true)=='SI')
                     { 
 			$tieneMolde='MOLDE GENERICO';
                         $id_molde=$this->input->post("molde",true);                        
-                    }
-                    if($this->input->post("estan_los_moldes",true)=='NO')
-                    { 
-			$tieneMolde='NO';
-                        $id_molde=$this->input->post("molde",true);                        
-                    }
-                    if($this->input->post("estan_los_moldes",true)=='MOLDE GENERICO')
+                    }elseif($this->input->post("estan_los_moldes",true)=='MOLDE GENERICO')
                     { 
 			$tieneMolde='MOLDE GENERICO';
                         $id_molde=$this->input->post("molde",true);                        
-                    }
-                    if($this->input->post("estan_los_moldes",true)=='CLIENTE LO APORTA')
+                    }elseif($this->input->post("estan_los_moldes",true)=='CLIENTE LO APORTA')
                     { 
 			$tieneMolde='CLIENTE LO APORTA';
                         $id_molde='2';
-                    }                    
-                    if($this->input->post("estan_los_moldes",true)=='MOLDE REGISTRADOS DEL CLIENTE')
+                    }elseif($this->input->post("estan_los_moldes",true)=='MOLDE REGISTRADOS DEL CLIENTE')
                     { 
 			$tieneMolde='MOLDE REGISTRADOS DEL CLIENTE';
                         $id_molde=$this->input->post("molde",true);                        
                     }   
                     
-                   
+                 //  echo $this->input->post("estan_los_moldes",true);
+                   //                            echo "<pre>";
+//                        print_r($array); exit();
+//   
                     //inserto el registro OP
                     if($datos->producto_id==0) //Producto No existe
                     {  
@@ -336,7 +346,7 @@ class Ordenes extends CI_Controller {
                             "glosa"=>$this->input->post('glosa',true),
                             "fecha_20_dias"=>$fecha_20_dias,
 			);
-                     //   print_r($data);exit();
+                    //    print_r($data);exit();
                     }
                     else
                     { //Producto Existe
@@ -368,7 +378,7 @@ class Ordenes extends CI_Controller {
                             "fecha_20_dias"=>$fecha_20_dias,
                         );  
                       }
-                 //  exit(print_r($data));
+                  // exit(print_r($data));
                     $this->db->insert("orden_de_produccion",$data);
                     // actualizo la forma de pago del cliente
                     $data_cliente=array

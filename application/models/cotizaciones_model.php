@@ -1237,7 +1237,7 @@ class cotizaciones_model extends CI_Model{
                 ->from("cotizaciones_orden_de_compra")
                 ->where(array("id_cotizacion"=>$id))
                 ->get();
-                //echo $this->db->last_query()."<br>";exit();
+           //     echo $this->db->last_query()."<br>";exit();
                 return $query->row();		
     }
    

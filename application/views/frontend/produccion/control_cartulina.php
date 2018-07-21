@@ -285,6 +285,7 @@ ancho de la cartulina menos ccac1
                      <li>CCAC1 : <strong><?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?> Mms</strong></li>
                      <li>CCAC2 : <strong><?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10) ?> Mms</strong></li>                     
                      <li>Pinza : <strong><?php if($ing->pinza==""){echo $ing->tamano_a_imprimir_1 - (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10)." Mms | Ex."; }else{ echo $ing->pinza. "Mms";} ?> </strong></li>                     
+                     <?php if($datos->trazado!="" && $datos->trazado!=0){ echo "<li>Trazado : <strong>".$datos->trazado."</strong></li>";} ?>
                 </ul>
             	</div>  
     </div>

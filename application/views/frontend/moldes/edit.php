@@ -34,11 +34,19 @@
 		</div>
 	</div>
     <?php }?>
+    
     <hr />	
     <table>
         <tr>
-            <td>
-                
+     <td>
+    <?php if($datos->id_trazado!="" || $datos->id_trazado!=0){ ?>
+    <div class="control-group">
+		<label class="control-label" for="usuario">Número Trazado Usado:</label>
+		<div class="controls">
+			<input type="text" id="titulo" name="numero_trazado_usado" value="<?php echo $datos->id_trazado?>" placeholder="Número" readonly="true" />
+		</div>
+    </div>
+    <?php }?>
      <div class="control-group">
 		<label class="control-label" for="usuario">Tipo</label>
 		<div class="controls">

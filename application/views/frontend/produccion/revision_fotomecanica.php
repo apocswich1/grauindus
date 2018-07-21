@@ -189,7 +189,8 @@
                      <li>Descripción de la placa : <strong><?php echo $materialidad_1->nombre?></strong></li>
                      <li>Gramaje de la placa : <strong><?php echo $materialidad_1->gramaje?></strong></li>
                      <li>CCAC1 : <strong><?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?> Mms</strong></li>
-                     <li>CCAC2 : <strong><?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10) ?> Mms</strong></li>                     
+                     <li>CCAC2 : <strong><?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10) ?> Mms</strong></li> 
+                     <?php if($datos->trazado!="" && $datos->trazado!=0){ echo "<li>Trazado : <strong>".$datos->trazado."</strong></li>";} ?>
                 </ul>
             	</div>                     
             </div>
