@@ -67,7 +67,7 @@
        $historial_archivos=$this->moldes_model->getHistorialArchivosMoldes($dato->id);
 
        
-       if($dato->fecha_creacion_molde=="" && $dato->id_trazado!=""){$trazado_involucrado="<br>USO TRAZADO: <a href='".base_url()."trazados/edit/".$dato->id_trazado."' style='color:#000000'>".$dato->id_trazado."</a>"; $estilo ='background-color:orange; color:white;';}else{$trazado_involucrado=""; $estilo ='color:#000;';}
+       if(($dato->fecha_creacion_molde=="" || $dato->fecha_creacion_molde=="0000-00-00" || is_null($dato->fecha_creacion_molde)) && $dato->id_trazado!=""){$trazado_involucrado="<br>USO TRAZADO: <a href='".base_url()."trazados/edit/".$dato->id_trazado."' style='color:#000000'>".$dato->id_trazado."</a>"; $estilo ='background-color:orange; color:white;';}else{$trazado_involucrado=""; $estilo ='color:#000;';}
     ?>
             <tr>
             <td><?php echo $dato->numero?></td>

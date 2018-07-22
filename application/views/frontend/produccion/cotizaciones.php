@@ -357,7 +357,7 @@ if(sizeof($ult>0)){
                         $colorConfeccionMolde='green';
                     break;
                     case '0':
-                        $colorConfeccionMolde='red';
+                        $colorConfeccionMolde='blue';
                     break;
                     case '2':
                         $colorConfeccionMolde='red';

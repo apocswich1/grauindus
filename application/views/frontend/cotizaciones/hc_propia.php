@@ -385,7 +385,7 @@ $maquina="Máquina Roland 800";
                     <td style="width: 15%"><b>Unidad / Pliego:</b></td>
                     <td style="width: 10%"><?php echo $unidad_pliego ?></td>
                     <td style="width: 15%"><b>Colores: </b></td>
-                    <td style="width: 20%"><?php echo $colores ?></td>
+                    <td style="width: 20%"><?php echo $colores ?><a href='<?php echo base_url()."hoja$next/colores_fotomecanica/$id/$pagina"; ?>' class='fancybox fancybox.ajax' title="Modificar colores"><img style="padding-left:7px; width:18px" src="<?php echo base_url();?>public/frontend/images/005-dibujar.png" /></a></td>
                 </tr>
                 <tr>
                     <td style="width: 10%"><b>Piezas Totales en Pliego<br />(Para Desgajado )</b></td>

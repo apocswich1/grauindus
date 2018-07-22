@@ -3842,7 +3842,9 @@ class Produccion extends CI_Controller {
                     {
                         $this->db->update('produccion_confeccion_molde_troquel', $data, array('tipo' => $this->input->post('tipo',true),'id_nodo'=>$this->input->post('id',true)));
                        
-                    }    
+                    }
+                    
+                    //exit();
                     $cuchillocuchillo=$this->input->post('cuchillocuchillo',true);
                     $cuchillocuchillo2=$this->input->post('cuchillocuchillo2',true);
                     if(empty($cuchillocuchillo) and empty($cuchillocuchillo2))
@@ -3855,6 +3857,13 @@ class Produccion extends CI_Controller {
                         $this->db->where('id', $this->input->post('id_molde',true));
                         $this->db->update("moldes_grau",$arrayMolde);
                     }
+                        $arrayMoldeFabricacion=array
+                        (
+                            'fabricacion'=>"Fabricado",
+                            'fecha_creacion_molde'=>date('Y-m-d'),
+                        );
+                        $this->db->where('id', $this->input->post('id_molde',true));
+                        $this->db->update("moldes_grau",$arrayMoldeFabricacion);
                     switch($tipo)
                     {
                         case '1':

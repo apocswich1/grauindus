@@ -225,6 +225,7 @@ class Ordenes extends CI_Controller {
                               "placa2"=>$trazados->placa2,                              
                               "onda2"=>$trazados->onda2,                              
                               "liner2"=>$trazados->liner2,                              
+                              "fabricacion"=>"Por fabricar",                              
                             );
 //                            $array=array
 //                            (
@@ -255,6 +256,7 @@ class Ordenes extends CI_Controller {
                             //Actualizar Molde en ing
                             $arrayIng=array
                             (
+                                "id_molde"=>$id_molde,
                                 "numero_molde"=>$id_molde,
                                 "nombre_molde"=>$this->input->post("nombre_molde",true),
                             );
@@ -340,7 +342,8 @@ class Ordenes extends CI_Controller {
                             "producto_id"=>$producto_id,
                             "id_molde"=>$id_molde,
                             "nombre_molde"=>$this->input->post("nombre_molde",true),
-                            "estan_los_moldes"=>$this->input->post("estan_los_moldes",true),
+                            //"estan_los_moldes"=>$this->input->post("estan_los_moldes",true),
+                            "estan_los_moldes"=>$tieneMolde,
                             'quien'=>$this->session->userdata('id'),
                             'cuando'=>date("Y-m-d"),
                             "glosa"=>$this->input->post('glosa',true),

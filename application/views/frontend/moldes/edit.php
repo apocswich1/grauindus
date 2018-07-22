@@ -17,6 +17,12 @@
       <li><a href="<?php echo base_url()?>">Home &gt;&gt;</a></li>
       <li><a href="<?php echo base_url()?>moldes/index/<?php echo $pagina?>">Moldes &gt;&gt;</a></li>
       <li>Editar Molde</li>
+      <li><div style="width: 100px"></div></li>
+      <li>
+          <?php if($datos->fabricacion!="" && ($dato->fecha_creacion_molde=="" || $dato->fecha_creacion_molde=="0000-00-00" || is_null($dato->fecha_creacion_molde))){ ?>
+          <span style="padding: 5px; background-color: orange; color:#ffffff;">Estado de Fabricacion: <?php echo $datos->fabricacion; ?></span>
+          <?php } ?>
+      </li>
     </ol>
    <!-- /Migas -->
 	<div class="page-header"><h3>Editar Molde</h3></div>
@@ -407,9 +413,9 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
 		</div>
 	</div>
     <div class="control-group" id="producto">
-        <label class="control-label" for="usuario">Fecha Creación de Molde <strong style="color: red;">(*)</strong></label>
+        <label class="control-label" for="usuario">Fecha Fabricación de Molde <strong style="color: red;">(*)</strong></label>
         <div class="controls">
-            <input type="date" name="fecha_creacion_molde" value="<?php  echo $datos->fecha_creacion_molde ?>" /><?php  if($datos->archivo==""){echo " <span style='color:green'>Molde por Fabricar</span>";} ?>
+            <input readonly="readonly" type="date" name="fecha_creacion_molde" value="<?php  echo $datos->fecha_creacion_molde ?>" /><?php  if($datos->archivo==""){echo " <span style='color:green'>Molde por Fabricar</span>";} ?>
         </div>
     </div>    
       

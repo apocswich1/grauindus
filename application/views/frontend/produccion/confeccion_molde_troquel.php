@@ -125,7 +125,7 @@
                             <li>Fecha Confección películas Fotomecánica : <strong><?php echo fecha($fotomecanica->confeccion_de_peliculas_fecha);?></strong></li>
                             <li>Cantidad de golpes : <strong><?php echo number_format($hoja->placa_kilo,0,'','.');?></strong></li>
                             <li>Total metros de cuchillo a usar : <strong><?php echo $ing->metros_de_cuchillo;?></strong></li>
-                            <li>Numero de molde : <strong><?php echo $ing->id_molde;?></strong></li>
+                            <li>Numero de molde : <strong><?php echo $ing->numero_molde;?></strong></li>
             	</div>  
             <?php
         break;
@@ -395,7 +395,7 @@
 		<label class="control-label" for="usuario">Existe PDF Ingeniería </label>
 		<div class="controls">
 			<?php
-                    if(!empty($ing->archivo))
+                    if(!empty($molde->archivo))
                     {
                         ?>
                         <input type="text" name="existe_pdf_ingenieria" value="SI" readonly="true" />

@@ -1269,7 +1269,7 @@ class Hoja2 extends CI_Controller {
         $this->db->where('id_cotizacion', $this->input->post('id',true));
         $this->db->update("cotizacion_fotomecanica_cambios",$data);
         }else{    
-        $this->db->insert("cotizacion_fotomecanica_cambios",$datos);
+        $this->db->insert("cotizacion_fotomecanica_cambios",$fotomecanica);
          $data=array
             (
                 "colores"=>$this->input->post("colores",true),
