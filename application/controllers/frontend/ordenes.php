@@ -539,11 +539,7 @@ class Ordenes extends CI_Controller {
                        $id_molde=$this->input->post("molde",true);
                         $tieneMolde='SI';
                     }
-//                    if($this->input->post("estan_los_moldes",true)=='NO')
-//                    {
-//                        $id_molde=$this->input->post("molde",true); 
-//                        $tieneMolde='NO';  
-//                    }
+
                     if($this->input->post("estan_los_moldes",true)=='NO LLEVA')
                     {
                         $id_molde='1';

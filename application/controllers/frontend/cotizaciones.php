@@ -10232,6 +10232,8 @@ $cuerpo2.='<table class="tabla">';
                             $ccac1=$this->input->post('ccac_2',true);
                         }
                         
+                        echo $this->input->post('tamano_1',true)."<br>";
+                        echo $this->input->post('tamano_2',true);//exit();
                         $data=array
                         (
                             "id_usuario"=>$this->session->userdata('id'),
