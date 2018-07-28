@@ -123,6 +123,18 @@
             echo "<label style='background-color:green; color:white; font-weight:bold;'>Reversada en fecha: ".fecha($dato->fecha_rev)."<br />"
                     . "Nro Ot: ".$orden->id."</label>";
             }
+            }else{
+                echo "Cant 1: ".$dato->cantidad_1." Precio: ".number_format($hoja->valor_empresa,0,"",".");
+            echo "<br />";
+            if($dato->cantidad_2!=1 && $dato->cantidad_2!=0){
+            echo "Cant 2: ".$dato->cantidad_2." Precio: ".number_format($hoja->valor_empresa_2,0,"",".");
+            echo "<br />";}
+            if($dato->cantidad_3!=1 && $dato->cantidad_3!=0){
+            echo "Cant 3: ".$dato->cantidad_3." Precio: ".number_format($hoja->valor_empresa_3,0,"",".");
+            echo "<br />";}
+            if($dato->cantidad_4!=1 && $dato->cantidad_4!=0){
+            echo "Cant 4: ".$dato->cantidad_4." Precio: ".number_format($hoja->valor_empresa_4,0,"",".");
+            echo "<br />";}
             }
             if(sizeof($busqueda)>0){if($busqueda->estado==1){echo "<br /><label style='background-color:red; color:white; font-weight:bold;'>La cotizacion ya pertenece al sistema rojo</label>";}else{
                 if($busqueda->estado==3 || $busqueda->estado==4){echo "<br /><label style='background-color:red; color:white; font-weight:bold;'>La cotizacion se encuentra en ordenes cerradas en el sistema rojo</label>";}
@@ -132,6 +144,18 @@
             echo "<br />";
             if(sizeof($hoja)>0){
             echo "Cant 1: ".$dato->cantidad_1." Precio: ".number_format($hoja->valor_empresa,0,"",".");
+            echo "<br />";
+            if($dato->cantidad_2!=1 && $dato->cantidad_2!=0){
+            echo "Cant 2: ".$dato->cantidad_2." Precio: ".number_format($hoja->valor_empresa_2,0,"",".");
+            echo "<br />";}
+            if($dato->cantidad_3!=1 && $dato->cantidad_3!=0){
+            echo "Cant 3: ".$dato->cantidad_3." Precio: ".number_format($hoja->valor_empresa_3,0,"",".");
+            echo "<br />";}
+            if($dato->cantidad_4!=1 && $dato->cantidad_4!=0){
+            echo "Cant 4: ".$dato->cantidad_4." Precio: ".number_format($hoja->valor_empresa_4,0,"",".");
+            echo "<br />";}
+            }else{
+                echo "Cant 1: ".$dato->cantidad_1." Precio: ".number_format($hoja->valor_empresa,0,"",".");
             echo "<br />";
             if($dato->cantidad_2!=1 && $dato->cantidad_2!=0){
             echo "Cant 2: ".$dato->cantidad_2." Precio: ".number_format($hoja->valor_empresa_2,0,"",".");

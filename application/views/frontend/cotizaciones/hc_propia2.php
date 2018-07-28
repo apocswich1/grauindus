@@ -1117,7 +1117,7 @@ $maquina="Máquina Roland 800";
                                 <tr>
                                     <td style="width: 50%">Pegado (Minimo 1)</td>
                                     <td style="width: 25%"><?php if(sizeof($hoja)==0){ echo $pegado1['pegado_migrado']; }else{ if($hoja->pegado=="" || $hoja->pegado=="0" || $hoja->pegado==null ){echo $pegado1['pegado_migrado'];}else{ echo $hoja->pegado; }} ?></td>
-                                    <td style="width: 25%"><?php if($pegado1['totalPegado']>150000 && $pegado1['totalPegado']<=235000){
+                                    <td style="width: 25%"><?php /*if($pegado1['totalPegado']>150000 && $pegado1['totalPegado']<=235000){
                                                                     $pegado_1 = 150000; 
                                                                     echo number_format(150000,0,'','.');
                                                                  }else{
@@ -1131,7 +1131,7 @@ $maquina="Máquina Roland 800";
                                                                            echo number_format($pegado1['totalPegado'],0,'','.');
                                                                         }
                                                                     }
-                                                            }?>
+                                                            }*/echo number_format($pegado1['totalPegado']);?>
                                                     <?php if ($datos->pegado_migrado==null){?> <strong> (Pegado de Cotizacion = 0 )</strong><?php } ?><a href='<?php echo base_url()."hoja$next/pegado/$id/$pagina"; ?>' class='fancybox fancybox.ajax' title="Modificar Pegado"><img style="padding-left:7px; width:18px" src="<?php echo base_url();?>public/frontend/images/005-dibujar.png" /></a></td>
                                 </tr>
                                 <tr>

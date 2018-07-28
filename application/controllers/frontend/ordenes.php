@@ -115,6 +115,8 @@ class Ordenes extends CI_Controller {
 
         if($this->input->post())
         {
+//            echo $this->input->post("estado",true);
+//         echo $this->input->post("estan_los_moldes",true);exit();
 //        echo $this->input->post("lleva_troquel",true);
 //        echo $this->input->post("estan_los_moldes",true);
 //       // echo $this->input->post("id_molde",true);
@@ -166,7 +168,6 @@ class Ordenes extends CI_Controller {
                 { 
                     $producto_id=$datos->producto_id;
                 }        
-
                     if($this->input->post("estan_los_moldes",true)=='NO')
                     {
 			//Guardar Molde Nuevos
@@ -406,16 +407,143 @@ class Ordenes extends CI_Controller {
                     }
                   //  echo $this->input->post("estan_los_moldes",true);exit();
 //                    $producto_id=$this->input->post("producto_id",true);
+                   if($this->input->post("estan_los_moldes",true)=='NO')
+                    {
+			//Guardar Molde Nuevos
+                        $trazados = $this->trazados_model->getTrazadosPorId($datos->trazado);
+                        //print_r($trazados);
+                        switch ($ing->materialidad_datos_tecnicos) {
+                            case 'Microcorrugado':
+                                $materialidad1 = 1;
+
+                                break;
+                            case 'Corrugado':
+                                $materialidad1 = 2;
+
+                                break;
+                            case 'Cartulina-cartulina':
+                                $materialidad1 = 3;
+
+                                break;
+                            case 'Solo Cartulina':
+                                $materialidad1 = 4;
+
+                                break;
+
+                            default:
+                                break;
+                        }  
+                        //echo "bb".$this->input->post("estan_los_moldes",true);   exit();    
+                        $array=array
+                            (
+                              "nombre"=>$trazados->nombre,
+                              "tamano_caja"=>$ing->medidas_de_la_caja.'X'.$ing->medidas_de_la_caja2.'X'.$ing->medidas_de_la_caja3.'X'.$ing->medidas_de_la_caja4,
+                              "cuchillocuchillo"=>$ing->tamano_cuchillo_1,
+                              "cuchillocuchillo2"=>$ing->tamano_cuchillo_2,                              
+                              "ancho_bobina"=>$ing->tamano_a_imprimir_1,
+                              "largo_bobina"=>$ing->tamano_a_imprimir_2,
+                              "fecha"=>date('Y-m-d'),
+                              "fecha_creacion"=>date('Y-m-d'),
+                              "nombrecliente"=>$datos->id_cliente,
+                              "tipo"=>$trazados->tipo,
+                              "archivo"=>$trazados->archivo,                              
+                              "estado"=>$trazados->estado,                              
+                              "id_trazado"=>$trazados->numero,                              
+                              "unidades_productos_completos"=>$ing->unidades_por_pliego,                              
+                              "piezas_totales"=>$ing->piezas_totales_en_el_pliego,                              
+                              "cuchillocuchillo"=>$ing->tamano_cuchillo_1,                              
+                              "cuchillocuchillo2"=>$ing->tamano_cuchillo_2,                              
+                              "medidas_de_las_cajas"=>$ing->medidas_de_la_caja,                              
+                              "medidas_de_las_cajas_2"=>$ing->medidas_de_la_caja_2,                              
+                              "medidas_de_las_cajas_3"=>$ing->medidas_de_la_caja_3,                              
+                              "medidas_de_las_cajas_4"=>$ing->medidas_de_la_caja_4,                              
+                              "materialidad_opcion1"=>$materialidad1,                              
+                              "materialidad_opcion2"=>$trazados->materialidad_opcion2,                              
+                              "placa1"=>$ing->id_mat_placa1,                              
+                              "onda1"=>$ing->id_mat_onda2,                              
+                              "liner1"=>$ing->id_mat_liner3,                              
+                              "placa2"=>$trazados->placa2,                              
+                              "onda2"=>$trazados->onda2,                              
+                              "liner2"=>$trazados->liner2,                              
+                              "fabricacion"=>"Por fabricar",                              
+                            );
+//                            $array=array
+//                            (
+//                              "nombre"=>$this->input->post("nombre_molde",true),
+//                              "tamano_caja"=>$ing->medidas_de_la_caja.'X'.$ing->medidas_de_la_caja2.'X'.$ing->medidas_de_la_caja3.'X'.$ing->medidas_de_la_caja4,
+//                              "cuchillocuchillo"=>$ing->tamano_cuchillo_1,
+//                              "cuchillocuchillo2"=>$ing->tamano_cuchillo_2,                              
+//                              "ancho_bobina"=>$ing->tamano_a_imprimir_1,
+//                              "largo_bobina"=>$ing->tamano_a_imprimir_2,
+//                              "fecha"=>date('Y-m-d'),
+//                              "fecha_creacion"=>date('Y-m-d'),
+//                              "nombrecliente"=>$datos->id_cliente,
+//                              "tipo"=>"Normal",
+//                              "archivo"=>$trazados->archivo,                              
+//                            );
+                            $id_molde=$this->moldes_model->insertar($array);
+                            $array2=array
+                            (
+                                "numero"=>$id_molde,
+                            );
+                            $this->db->where('id', $id_molde);
+                            $this->db->update("moldes_grau",$array2); 
+//                            echo $id_molde;
+//                            echo "<pre>";
+//                        print_r($array); exit();
+//                            echo "</pre>";
+                            $tieneMolde='SI';  
+                            //Actualizar Molde en ing
+                            $arrayIng=array
+                            (
+                                "id_molde"=>$id_molde,
+                                "numero_molde"=>$id_molde,
+                                "nombre_molde"=>$trazados->nombre,
+                            );
+                            $arrayCot=array
+                            (
+                                "numero_molde"=>$id_molde,
+                                //"estan_los_moldes"=>$tieneMolde;
+                            );
+                            $arrayCotOc=array
+                            (
+                                "id_molde"=>$id_molde,
+                                "tiene_molde"=>$tieneMolde
+                            );
+                            $this->db->where('id_cotizacion', $id);
+                            $this->db->update("cotizacion_ingenieria",$arrayIng); 
+                            
+                            $this->db->where('id_cotizacion', $id);
+                            $this->db->update("cotizaciones_orden_de_compra",$arrayCotOc); 
+                            
+                            $this->db->where('id', $id);
+                            $this->db->update("cotizaciones",$arrayCot); 
+                            
+                            $arraytrazado=array
+                            (
+                                "estatus"=>$this->input->post("estatus_trazado",true),
+                            );
+                            
+                            $this->db->where('id', $trazados->numero);
+                            $this->db->update("trazados",$arraytrazado); 
+                            
+//                     quitada del codigo porque sobre escribe lo de arriba       elseif($this->input->post("estan_los_moldes",true)=='NO')
+//                    { 
+//			$tieneMolde='NO';
+//                        $id_molde=$this->input->post("molde",true);                        
+//                    }
+                            //-----------------------------------------------------------
+                    }
                    if($this->input->post("estan_los_moldes",true)=='SI')
                     {
                        $id_molde=$this->input->post("molde",true);
                         $tieneMolde='SI';
                     }
-                    if($this->input->post("estan_los_moldes",true)=='NO')
-                    {
-                        $id_molde=$this->input->post("molde",true); 
-                        $tieneMolde='NO';  
-                    }
+//                    if($this->input->post("estan_los_moldes",true)=='NO')
+//                    {
+//                        $id_molde=$this->input->post("molde",true); 
+//                        $tieneMolde='NO';  
+//                    }
                     if($this->input->post("estan_los_moldes",true)=='NO LLEVA')
                     {
                         $id_molde='1';
@@ -438,6 +566,13 @@ class Ordenes extends CI_Controller {
                     }        
                     //echo $this->input->post("estan_los_moldes",true);
 //                     echo $id_molde; exit();
+                    
+                    if($this->input->post("nombre_molde",true) == ""){
+                        $nombre_molde = $trazados->nombre;
+                    }else{
+                        $nombre_molde = $this->input->post("nombre_molde",true);
+                    }
+                    
                     $data=array
                     (
                         "valor"=>$this->input->post("valor",true),
@@ -455,7 +590,7 @@ class Ordenes extends CI_Controller {
                         //"producto_id"=>$producto_id,
                         "producto_id"=>$this->input->post("producto_id",true),
                         "id_molde"=>$id_molde,
-                        "nombre_molde"=>$this->input->post("nombre_molde",true),
+                        "nombre_molde"=>$nombre_molde,
                         "estan_los_moldes"=>$this->input->post("estan_los_moldes",true),
                         'quien'=>$this->session->userdata('id'),
                         'cuando'=>date("Y-m-d"),

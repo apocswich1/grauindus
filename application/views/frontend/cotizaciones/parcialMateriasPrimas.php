@@ -827,7 +827,20 @@ function calculo_pegado($datos,$presupuesto,$cantidad,$variablePegado,$hoja){
         }
     }
     $totalPegado = $cantidad * $pegado_migrado * $variablePegado->precio;
-
+    
+    if($totalPegado>150000 && $totalPegado<=235000){
+        $totalPegado = 150000; 
+     }else{
+        if($totalPegado<150000){
+            $totalPegado = $totalPegado; 
+        }else{
+            if($totalPegado >235000){
+               $totalPegado=$cantidad*$pegado_migrado*1.45;
+            }
+        }
+    }
+    
+    
     return array('pegado_migrado'=>$pegado_migrado,'totalPegado'=>$totalPegado);
 }
 $pegado1 = calculo_pegado($datos,$presupuesto,$datos->cantidad_1,$variablePegado,$hoja);
@@ -1136,13 +1149,14 @@ $externos_produccion4 = $externos_produccion_ac4 + $externos_produccion_p4;
 //echo $pegado_1;
 //exit();
 //******************************Total Produccion Cantidad 1**********************//
-$totalProduccion=$lacado1+$complemento+$onda['valorCorte']+$totalEmplacado+$totalMontajeMolde+$totalTroquelado+$pegado_1v+$des[0]+$tiraje+$moldeTroquel+$totalDesgajado+$externos_produccion+$otrosCaucho + $TotalPiezasAdicionales + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
+//$totalProduccion=$lacado1+$complemento+$onda['valorCorte']+$totalEmplacado+$totalMontajeMolde+$totalTroquelado+$pegado_1v+$des[0]+$tiraje+$moldeTroquel+$totalDesgajado+$externos_produccion+$otrosCaucho + $TotalPiezasAdicionales + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
+$totalProduccion=$lacado1+$complemento+$onda['valorCorte']+$totalEmplacado+$totalMontajeMolde+$totalTroquelado+$pegado1['totalPegado']+$des[0]+$tiraje+$moldeTroquel+$totalDesgajado+$externos_produccion+$otrosCaucho + $TotalPiezasAdicionales + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
 //******************************Total Produccion Cantidad 2**********************//
-$totalProduccion2=$lacado2+$complemento2+$onda2['valorCorte']+$totalEmplacado2+$totalMontajeMolde+$totalTroquelado2+$pegado_2v+$des2[0]+$tiraje2+$moldeTroquel+$totalDesgajado2+$externos_produccion2+$otrosCaucho + $TotalPiezasAdicionales2 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
+$totalProduccion2=$lacado2+$complemento2+$onda2['valorCorte']+$totalEmplacado2+$totalMontajeMolde+$totalTroquelado2+$pegado2['totalPegado']+$des2[0]+$tiraje2+$moldeTroquel+$totalDesgajado2+$externos_produccion2+$otrosCaucho + $TotalPiezasAdicionales2 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
 //******************************Total Produccion Cantidad 2**********************//
-$totalProduccion3=$lacado3+$complemento3+$onda3['valorCorte']+$totalEmplacado3+$totalMontajeMolde+$totalTroquelado3+$pegado_3v+$des3[0]+$tiraje3+$moldeTroquel+$totalDesgajado3+$externos_produccion3+$otrosCaucho + $TotalPiezasAdicionales3 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
+$totalProduccion3=$lacado3+$complemento3+$onda3['valorCorte']+$totalEmplacado3+$totalMontajeMolde+$totalTroquelado3+$pegado3['totalPegado']+$des3[0]+$tiraje3+$moldeTroquel+$totalDesgajado3+$externos_produccion3+$otrosCaucho + $TotalPiezasAdicionales3 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
 //******************************Total Produccion Cantidad 2**********************//
-$totalProduccion4=$lacado4+$complemento4+$onda4['valorCorte']+$totalEmplacado4+$totalMontajeMolde+$totalTroquelado4+$pegado_4v+$des4[0]+$tiraje4+$moldeTroquel+$totalDesgajado4+$externos_produccion4+$otrosCaucho + $TotalPiezasAdicionales4 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
+$totalProduccion4=$lacado4+$complemento4+$onda4['valorCorte']+$totalEmplacado4+$totalMontajeMolde+$totalTroquelado4+$pegado4['totalPegado']+$des4[0]+$tiraje4+$moldeTroquel+$totalDesgajado4+$externos_produccion4+$otrosCaucho + $TotalPiezasAdicionales4 + $valor_extra + $valor_bv_maquina + $valor_acepeta_exce;
 //******************************Total costo venta valor1**********************//
 if($fotomecanica->materialidad_datos_tecnicos == 'Cartulina-cartulina')
 {
@@ -1263,25 +1277,47 @@ $totalValorUnitario2=($total2/($datoscantidad2));
 $totalValorUnitario3=($total3/($datoscantidad3));
 $totalValorUnitario4=($total4/($datoscantidad4));
 
+
+/***********calculo del margen*************************/
+function calculo_margen($hoja,$datos){
+    if (sizeof($hoja) == 0) {
+        if ($datos->margen_migrado != 0 || $datos->margen_migrado != null) {
+            $margen = $datos->margen_migrado;
+        } else {
+            $margen = "15";
+        }
+    } else {
+        if ($hoja->margen == null) {
+            $margen = '15';
+        } else {
+            $margen = $hoja->margen;
+        }
+    }
+    return $margen;
+}
+$margen = calculo_margen($hoja,$datos);
+
+
 /**********************calculo del valor final*********************/
-function calculo_valor_final($hoja,$totalValorUnitario){
-    if ($hoja->margen!="") {
-      $valorFinal=($totalValorUnitario/((100-$hoja->margen)/100));
-    }else{ 
-      if($datos->margen_migrado!=0 || $datos->margen_migrado!=null){
-        $valorFinal=($totalValorUnitario/((100-$datos->margen_migrado)/100));       
-      }else{
-        $valorFinal=($totalValorUnitario/((100-15)/100));
-      }
-  }
+function calculo_valor_final($hoja,$totalValorUnitario,$margen){
+    //if ($hoja->margen!="") {
+      //$valorFinal=($totalValorUnitario/((100-$hoja->margen)/100));
+    //}else{ 
+      //if($datos->margen_migrado!=0 || $datos->margen_migrado!=null){
+        //$valorFinal=($totalValorUnitario/((100-$datos->margen_migrado)/100));       
+        $valorFinal=($totalValorUnitario/((100-$margen)/100));       
+      //}else{
+       // $valorFinal=($totalValorUnitario/((100-15)/100));
+      //}
+  //}
 
     return array('valor_final'=>$valorFinal);
 }
 
-$valorFinal1 = calculo_valor_final($hoja,$totalValorUnitario1);
-$valorFinal2 = calculo_valor_final($hoja,$totalValorUnitario2);
-$valorFinal3 = calculo_valor_final($hoja,$totalValorUnitario3);
-$valorFinal4 = calculo_valor_final($hoja,$totalValorUnitario4);
+$valorFinal1 = calculo_valor_final($hoja,$totalValorUnitario1,$margen);
+$valorFinal2 = calculo_valor_final($hoja,$totalValorUnitario2,$margen);
+$valorFinal3 = calculo_valor_final($hoja,$totalValorUnitario3,$margen);
+$valorFinal4 = calculo_valor_final($hoja,$totalValorUnitario4,$margen);
 
 /*****************calculo valor financiado****************/
 $vcostoFinanciero=$this->variables_cotizador_model->getVariablesCotizadorPorId(33);
@@ -1363,24 +1399,7 @@ function calculo_dias_de_entrega($hoja){
 
 $dias_de_entrega=calculo_dias_de_entrega($hoja);
 
-/***********calculo del margen*************************/
-function calculo_margen($hoja,$datos){
-    if (sizeof($hoja) == 0) {
-        if ($datos->margen_migrado != 0 || $datos->margen_migrado != null) {
-            $margen = $datos->margen_migrado;
-        } else {
-            $margen = "15";
-        }
-    } else {
-        if ($hoja->margen == null) {
-            $margen = '15';
-        } else {
-            $margen = $hoja->margen;
-        }
-    }
-    return $margen;
-}
-$margen = calculo_margen($hoja,$datos);
+
 
 //calculos posteriores
 if (sizeof($hoja) >= 1) {

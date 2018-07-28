@@ -487,7 +487,7 @@ $maquina="Máquina Roland 800";
                                     <td style="width: 20%; height:5px"><h5><b>Cantidad Piezas:</b></h5></td>
                                     <td style="width: 15%"><h5><?php echo $datoscantidad1 ?></h5></td>
                                     <td style="width: 25%"><h5><b>Cantidad Pliegos:</b></h5></td>
-                                    <td style="width: 15%"><h5><?php echo $datoscantidad1 /$unidad_pliego ?></h5></td>
+                                    <td style="width: 15%"><h5><?php echo round($datoscantidad1 /$unidad_pliego) ?></h5></td>
                                 </tr><!--
                                 <tr>
                                     <td style="width: 20%; height:5px"><b>Color > 3</b></td>
@@ -1108,9 +1108,9 @@ $maquina="Máquina Roland 800";
                                     <td style="width: 25%"><?php echo number_format($totalDesgajado,0,'','.')?></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 50%">Pegado (Minimo 1)</td>
+                                    <td style="width: 50%">Pegado (Minimo 1)<?php //my code is here  ?></td>
                                     <td style="width: 25%"><?php if(sizeof($hoja)==0){ echo $pegado1['pegado_migrado']; }else{ if($hoja->pegado=="" || $hoja->pegado=="0" || $hoja->pegado==null ){echo $pegado1['pegado_migrado'];}else{ echo $hoja->pegado; }} ?></td>
-                                    <td style="width: 25%"><?php if($pegado1['totalPegado']>150000 && $pegado1['totalPegado']<=235000){
+                                    <td style="width: 25%"><?php /*if($pegado1['totalPegado']>150000 && $pegado1['totalPegado']<=235000){
                                                                     $pegado_1 = 150000; 
                                                                     echo number_format(150000,0,'','.');
                                                                  }else{
@@ -1124,7 +1124,7 @@ $maquina="Máquina Roland 800";
                                                                            echo number_format($pegado1['totalPegado'],0,'','.');
                                                                         }
                                                                     }
-                                                            }?>
+                                                            }*/ echo number_format($pegado1['totalPegado']);?>
                                                     <?php if ($datos->pegado_migrado==null){?> <strong> (Pegado de Cotizacion = 0 )</strong><?php } ?><a href='<?php echo base_url()."hoja$next/pegado/$id/$pagina"; ?>' class='fancybox fancybox.ajax' title="Modificar Pegado"><img style="padding-left:7px; width:18px" src="<?php echo base_url();?>public/frontend/images/005-dibujar.png" /></a></td>
                                 </tr>
                                 <tr>
