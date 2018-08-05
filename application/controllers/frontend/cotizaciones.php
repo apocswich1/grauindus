@@ -10526,10 +10526,17 @@ $cuerpo2.='<table class="tabla">';
                                 $trazado=$this->input->post("trazados",true);
                                 $existe_trazado=$this->input->post("existe_trazado",true);
                             }else{
+                                if($estanlosmoldes=="MOLDE GENERICO" && $datos->trazado!="" && $datos->trazado!=NULL && $datos->numero_molde == $numeroMolde){
+                                $trazado=$datos->trazado;
+                                $existe_trazado=$datos->existe_trazado;    
+                                }else{    
                                 $trazado="";
                                 $existe_trazado="";
+                                }
                             }
-                            
+                           /* echo "numero molde:".$numeroMolde;
+                            echo "trazado:".$trazado;
+                            echo "****".$estanlosmoldes."****"; exit();*/
                          
                             $data_cotizacion=array
                             (

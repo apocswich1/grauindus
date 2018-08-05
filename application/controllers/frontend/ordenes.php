@@ -1601,7 +1601,9 @@ class Ordenes extends CI_Controller {
                 //print_r($datos);exit();
                 if($ing->estan_los_moldes=="NO" && $datos->trazado > 0){
                     $estan_los_moldes = "$nombre_molde->numero Molde por fabricar";
-                    //$nombremolde="Molde por Fabricar";
+                    $nombremolde=$nombre_molde->nombre;
+                }else if($ing->estan_los_moldes=="MOLDE GENERICO" && $datos->trazado > 0){
+                    $estan_los_moldes = "$nombre_molde->numero Molde por fabricar";
                     $nombremolde=$nombre_molde->nombre;
                 }else if($ing->estan_los_moldes=="NO" && $orden->estan_los_moldes=="NO LLEVA"){
                     $estan_los_moldes = "NO LLEVA";

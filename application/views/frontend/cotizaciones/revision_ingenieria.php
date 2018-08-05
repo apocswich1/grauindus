@@ -821,7 +821,7 @@ th {
     display: none;
 }
 </style>
-<?php include 'valida_trazado_molde.php'; ?>
+<?php  include 'valida_trazado_molde.php'; ?>
 <div class="modal-body">
     <div class="container-fluid">
         <tabla>
