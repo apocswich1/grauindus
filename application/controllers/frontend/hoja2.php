@@ -1291,6 +1291,65 @@ class Hoja2 extends CI_Controller {
         }
         $this->layout->view('colores_fotomecanica',compact('id','pagina','fotomecanica'));  
     }
+    
+    public function colores_cambia_fotomecanica($id=null,$pagina=null)
+    {
+        if(!$id){show_404();}
+        $datos=$this->cotizaciones_model->getCotizacionPorId($id);
+        $datos2=$this->cotizaciones_model->getCotizacion2PorId($id);
+        $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+        $fotomecanica2=$this->cotizaciones_model->getCotizacionFotomecanica2PorIdCotizacion($id);
+        $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
+        $hoja2=$this->cotizaciones_model->getHojaDeCostos2PorIdCotizacion($id);
+        $ing2=$this->cotizaciones_model->getCotizacionIngenieria2PorIdCotizacion($id);
+        $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
+        
+        if($this->input->post())
+        {
+           // echo sizeof($fotomecanica2);exit();
+            if(sizeof($datos2)==0){
+               $this->db->insert("cotizaciones_cambios",$datos); 
+            }
+             if(sizeof($hoja2)==0){
+               $this->db->insert("hoja_de_costos_cambios",$hoja); 
+            }
+            if(sizeof($fotomecanica2)==0){
+               $this->db->insert("cotizacion_fotomecanica_cambios",$fotomecanica);  
+            }
+            if(sizeof($ing2)==0){
+               $this->db->insert("cotizacion_ingenieria_cambios",$ing); 
+            }
+             if(sizeof($datos2)>0){
+                $data=array
+            (
+                "numero_color_modificado"=>$this->input->post("colores",true),
+            );
+        $this->db->where('id_cotizacion', $this->input->post('id',true));
+        $this->db->update("cotizacion_fotomecanica_cambios",$data);
+        }else{    
+        $this->db->insert("cotizacion_fotomecanica_cambios",$fotomecanica);
+         $data=array
+            (
+                "numero_color_modificado"=>$this->input->post("colores",true),
+            );
+        $this->db->where('id', $this->input->post('id',true));
+        $this->db->update("cotizacion_fotomecanica_cambios",$data);
+        }
+            $data2=array
+            (
+                "id_cotizacion"=>$this->input->post("id",true),
+                "seccion"=>"numero_color_modificado -> Fotomecánica",
+                "glosa"=>$this->input->post("glosa",true),
+                "quien"=>$this->session->userdata('id'),
+                "cuando"=>date("Y-m-d"),
+            );
+            $this->db->insert("hoja_de_costos",$data2);
+             $this->session->set_flashdata('ControllerMessage', 'Se ha modificado el registro exitosamente.');
+             redirect($this->input->post("url",true),  301);
+        }
+        $this->layout->view('colores_cambia_fotomecanica',compact('id','pagina','fotomecanica'));  
+    }
+
      public function cambio_vendedor($id=null,$pagina=null)
     {
         if(!$id){show_404();}

@@ -50,6 +50,7 @@ $tapa = $materialidad_1->nombre;
 $ondas = $materialidad_2->nombre;
 $liner = $materialidad_3->nombre;
 $colores = $fotomecanica->colores;
+$colores_modificados = $fotomecanica->numero_color_modificado;
 $reverso_tapa = $materialidad_1->reverso;
 $reverso_onda = $materialidad_2->reverso;
 $reverso_liner = $materialidad_3->reverso;
@@ -392,8 +393,13 @@ $maquina="Máquina Roland 800";
                     <td style="width: 20%"><?php echo $piezas_totales ?></td>
                     <td style="width: 15%"><b>Terminacion:</b></td>
                     <td style="width: 10%"><?php echo $terminacion ?></td>
+                    <?php if($fotomecanica->condicion_del_producto=="Repetición Con Cambios" || $fotomecanica->condicion_del_producto=="Repeticion Con Cambios"){ ?>
+                    <td style="width: 15%"><b>Colores Cambia:</b></td>
+                    <td style="width: 20%"><?php echo $colores_modificados ?><a href='<?php echo base_url()."hoja$next/colores_cambia_fotomecanica/$id/$pagina"; ?>' class='fancybox fancybox.ajax' title="Modificar colores"><img style="padding-left:7px; width:18px" src="<?php echo base_url();?>public/frontend/images/005-dibujar.png" /></a></td>
+                    <?php }else{ ?>
                     <td style="width: 15%"><b></b></td>
                     <td style="width: 20%"></td>
+                    <?php } ?>
                 </tr>
             </table>
         </div>
@@ -1245,7 +1251,7 @@ $maquina="Máquina Roland 800";
         </div>
         <!------------------------Fin de Datos Tecnicos produccion-------------------------------------------->
         <!------------------------tabla patron de mermas cantidad 1-------------------------------------------->
-        <div style="height: 480px">
+        <div style="height: 500px">
             <table class="table table-condensed">
                 <tr>
                     <td class="" style="width: 50%">

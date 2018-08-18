@@ -193,6 +193,10 @@
             echo "<label style='background-color:green; color:white; font-weight:bold;'>Reversada en fecha: ".fecha($dato->fecha_rev)."<br />"
                     . "Nro Ot: ".$orden->id."</label>";
             }
+            $cerrada=$this->cotizaciones_model->getCotizacionEnRojo($dato->id);
+            if(sizeof($cerrada)>0 && ($cerrada->estado==3 || $cerrada->estado==4)){
+            echo "<label style='background-color:red; color:white; font-weight:bold; text-align:center;'>Orden Cerrada</label>";
+            }
             }
         }else{
             echo $dato->producto;
@@ -209,6 +213,10 @@
             if($dato->cantidad_4!=1 && $dato->cantidad_4!=0){
             echo "Cant 4: ".$dato->cantidad_4." Precio: ".number_format($hoja->valor_empresa_4,0,"",".");
             echo "<br />";}
+            }
+            $cerrada=$this->cotizaciones_model->getCotizacionEnRojo($dato->id);
+            if(sizeof($cerrada)>0 && ($cerrada->estado==3 || $cerrada->estado==4)){
+            echo "<label style='background-color:red; color:white; font-weight:bold; text-align:center;'>Orden Cerrada</label>";
             }
         }?></td>
         <td style="text-align: right; width: 160px;">

@@ -30,7 +30,7 @@
     <br /><br />
 <!-- Buscador -->
     <div class="pull-right">
-	<?php echo form_open(base_url()."cotizaciones/search", array('class' => 'form-search pull-right')); ?>
+	<?php echo form_open(base_url()."cotizaciones/search_cliente", array('class' => 'form-search pull-right')); ?>
 		<input type="text" class="input-medium search-query" name="buscar" placeholder="Buscar" />
 		<button type="submit" class="btn">Buscar</button>
 		
@@ -257,7 +257,7 @@
             }else
             {
                 ?>
-                <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos/<?php echo $dato->id?>" title="Hoja de Costos" target="_blank"><i class="icon-file"></i></a>
+                <a href="<?php echo base_url()?>cotizaciones/hoja_de_costos_propia/<?php echo $dato->id?>" title="Hoja de Costos" target="_blank"><i class="icon-file"></i></a>
                 <?php
             }
             ?>

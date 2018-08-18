@@ -670,10 +670,14 @@ if ($fotomecanica->condicion_del_producto == 'Repetición Con Cambios') { //
     $coloresArte = 0;
     $coloresPlanchaMetal = $fotomecanica->colores + $barniz;
     $coloresCopiado = $fotomecanica->colores;
-    $coloresPeliculas = 0;
-    $coloresMontaje = 0;
+    $coloresPeliculas = $barniz + $fotomecanica->numero_color_modificado;
+    $coloresMontaje = $fotomecanica->numero_color_modificado;
     $cantidadArte = 0;
-    $cantidadPeliculas = 0;
+    if($fotomecanica->numero_color_modificado=="" || $fotomecanica->numero_color_modificado==0){
+        $cantidadPeliculas = $ing->tamano_a_imprimir_1 * $ing->tamano_a_imprimir_2 * $fotomecanica->colores * $peliculasVariable->precio;
+    }else{
+        $cantidadPeliculas = $ing->tamano_a_imprimir_1 * $ing->tamano_a_imprimir_2 * $fotomecanica->numero_color_modificado * $peliculasVariable->precio;
+    }
 }
 if ($fotomecanica->condicion_del_producto == 'Producto Genérico') { //
     $coloresArte = 0;

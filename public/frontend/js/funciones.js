@@ -4702,6 +4702,38 @@ function cortes_de_bobina_Onda()
  
  $(document).ready(function(){
  
+    $("#tamano_1").on("keyup",function(){
+        var a = $(this).val();
+        var largo = $("#tamano_2").val();
+        var tamano1 = $("#tamano_cuchillo_1").val();
+        $.post(webroot+"cotizaciones/medidas",{ancho:a,largo:largo},function(resp)
+        {
+        var myObj = $.parseJSON(resp);
+        a = myObj[0];
+        largo = myObj[1];
+        $("#tamano_1").val(a);
+        $("#tamano_2").val(largo);
+        });
+            $("#ccac_1").val((parseInt(a)-parseInt(tamano1))*10);    
+    });
+    
+    $("#tamano_2").on("keyup",function(){
+        var a = $(this).val();
+        var ancho = $("#tamano_1").val();
+        var tamano2 = $("#tamano_cuchillo_2").val();
+
+        $.post(webroot+"cotizaciones/medidas",{ancho:ancho,largo:a},function(resp)
+        {
+        var myObj = $.parseJSON(resp);
+        a = myObj[1];
+        ancho = myObj[0];
+        $("#tamano_1").val(ancho);
+        $("#tamano_2").val(a);
+        });
+            
+            $("#ccac_2").val((parseInt(a)-parseInt(tamano2))*10);    
+    });      
+
 $('select[name=trazados]').on('change',()=>{
     var texto = $("select[name=trazados] option:selected").text(); 
     let cond = $('select[name=condicion_del_producto]').val();

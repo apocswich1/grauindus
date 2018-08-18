@@ -16,7 +16,37 @@ class Cotizaciones extends CI_Controller {
     
        
     
-	public function obtenerclientes()
+	public function medidas()
+	{
+        $a = $_POST['ancho'];
+        $b = $_POST['largo'];
+		
+$medidas = array(
+        [60,60],[60,70],[60,80],[60,90],[60,100],    
+        [70,60],[70,70],[70,80],[70,90],[70,100],    
+        [80,60],[80,70],[80,80],[80,90],[80,100],    
+        [90,60],[90,70],[90,80],[90,90],[90,100],    
+        [100,60],[100,70],[100,80],[100,90],[100,100],    
+);
+
+
+function filtro($medidas,$a,$b){
+foreach ($medidas as $value) {
+    if($a==$b || $b==$value[1]){
+        $b +=1;
+        break;
+    }
+    //echo $value[0]."-".$value[1]."<br>";
+}
+    return $md = array($a,$b);
+}
+
+    $med = filtro($medidas,$a,$b);
+
+     echo json_encode($med);
+	}
+    
+    public function obtenerclientes()
 	{
 		$datos=$this->clientes_model->getClientesAll();	
 		//var_dump($datos);
@@ -2314,6 +2344,92 @@ class Cotizaciones extends CI_Controller {
                 )
             ); 
            $this->layout->view('index2',compact('datos','cuantos','pagina','busqueda')); 
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+        
+	}
+     public function search_cliente($valor=null)
+	{
+        if($this->session->userdata('id'))
+        {
+          
+            if($this->uri->segment(3))
+            {
+                $pagina=$this->uri->segment(3); 
+            }else
+            {
+               $pagina=0;
+            }
+            $porpagina=10;
+            if ( $this->input->post() )
+             {  
+                $this->session->set_userdata('valor', $this->input->post('buscar',true));
+                $buscar= $this->session->userdata('valor');
+                
+             }else
+             {
+                $buscar= $this->session->userdata('valor');
+             }              
+			
+                if($this->session->userdata('perfil')!= 2)
+                {
+                //echo $buscar;exit();
+                        $datos=$this->cotizaciones_model->getCotizaconSearchPaginacion($pagina,$porpagina,"limit",$buscar);		 
+                        $cuantos=$this->cotizaciones_model->getCotizaconSearchPaginacion($pagina,$porpagina,"cuantos",$buscar);
+//                                exit($datos."-".$cuantos);
+                }
+			 $busqueda=$this->cotizaciones_model->getCotizacionEnRojo($buscar); 
+//			if($this->session->userdata('perfil')== 2)
+//			{
+//				$datos=$this->cotizaciones_model->getCotizacionesPorVendedorPaginacion($pagina,$porpagina,"limit");		 
+//				$cuantos=$this->cotizaciones_model->getCotizacionesPorVendedorPaginacion($pagina,$porpagina,"cuantos");
+//			}
+
+			
+        $config['base_url'] = base_url().'cotizaciones/search';
+            $config['total_rows'] = $cuantos;
+            $config['per_page'] = $porpagina;
+            $config['uri_segment'] = '3';
+            $config['num_links'] = '4';
+            $config['first_link'] = 'Primero';
+            $config['next_link'] = 'Siguiente';
+            $config['prev_link'] = 'Anterior';
+            $config['last_link'] = 'Ultimo';
+            $config['full_tag_open'] = '<ul class="pagination">';
+            $config['full_tag_close'] = '</ul>';
+            $config['first_tag_open'] = '<li>';
+            $config['first_tag_close'] = '</li>';
+            $config['last_tag_open'] = '<li>';
+            $config['last_tag_close'] = '</li>';
+            $config['next_tag_open'] = '<li>';
+            $config['next_tag_close'] = '</li>';
+            $config['prev_tag_open'] = '<li>';
+            $config['prev_tag_close'] = '</li>';
+            $config['cur_tag_open'] = '<li><a><b>';
+            $config['cur_tag_close'] = '</b></a></li>';
+            $config['num_tag_open'] = '<li>';
+            $config['num_tag_close'] = '</li>';
+            $this->pagination->initialize($config);
+             
+            $this->layout->css
+            (
+                array
+                (
+                    base_url()."public/backend/fancybox/jquery.fancybox.css",
+                     base_url()."public/frontend/css/prism.css",
+                    base_url()."public/frontend/css/chosen.css",
+                )
+            );
+            $this->layout->js
+            (
+                array
+                (
+                    base_url()."public/backend/fancybox/jquery.fancybox.js"
+                )
+            ); 
+            $this->layout->view('clientes',compact('datos','cuantos','pagina','busqueda'));
         }else
         {
             redirect(base_url().'usuarios/login',  301);
@@ -9956,6 +10072,7 @@ $cuerpo2.='<table class="tabla">';
         }
     
             }
+    
     public function revision_ingenieria($id=null,$pagina=null)
     {
             
@@ -9977,14 +10094,15 @@ $cuerpo2.='<table class="tabla">';
             {                       
                 if($this->input->post("nm",true)!=11 && $this->input->post("nm",true)!=12 && $this->input->post("nm",true)!=13 && $this->input->post("nm",true)!=14 && $this->input->post("nm",true)!=15 && $this->input->post("nm",true)!=21){
                 if($datos->numero_molde!=$this->input->post("nm",true) && $datos->condicion_del_producto=='Nuevo'){
-                    $condicion_del_producto='Repetición Con Cambios';                    
+                    $condicion_del_producto='Repetición Con Cambios';                                        
                 }else{
-                    $condicion_del_producto=$datos->condicion_del_producto;
+                    //$condicion_del_producto=$datos->condicion_del_producto;
+                    $condicion_del_producto='Repetición Con Cambios';
                     
                 }}else{
                 $condicion_del_producto=$datos->condicion_del_producto;
                 }
-
+                //echo $condicion_del_producto;exit();
                 $arreglo_archivo_cliente=$this->cotizaciones_model->getCampoArchivoClientePorId($id);
                 $archivo_a_borrar_trazado=$ing->archivo;
                 $archivo_a_borrar_cliente=$arreglo_archivo_cliente->archivo;

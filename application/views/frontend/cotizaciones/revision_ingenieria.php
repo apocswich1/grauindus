@@ -1752,14 +1752,14 @@ th {
                    </div>
                </div>
                <div class="control-group" id="lacortar">
-                   <label class="control-label" for="usuario">Largo a Cortar x Tamaño a Cortar<strong style="color: red;">(*)</strong></label>
+                   <label class="control-label" for="usuario">Ancho a Cortar x Largo a Cortar<strong style="color: red;">(*)</strong></label>
                    <div class="controls">
                        <input id="tamano_1" type="text" name="tamano_1" style="width: 100px;"  value="<?php echo $tamano_1 ?>" placeholder="0" onkeypress="return soloNumerosConPuntos(event),calculo_ccac_minimo();" /> X 
                        <input id="tamano_2" type="text" name="tamano_2" style="width: 100px;" value="<?php echo $tamano_2 ?>" placeholder="0" onkeypress="return soloNumerosConPuntos(event),calculo_ccac_minimo();" /> Cms. 
                    </div>
                </div>
                <div class="control-group" id="lacortar2" style="display:none">
-                   <label class="control-label" for="usuario">Largo a Cortar x Tamaño a Cortar2<strong style="color: red;">(*)</strong></label>
+                   <label class="control-label" for="usuario">Ancho a Cortar x Largo a Cortar2<strong style="color: red;">(*)</strong></label>
                    <div class="controls">
                        <input id="tamano_1" type="text" name="tamano_1" style="width: 100px;"  value="<?php echo $tamano_1 ?>" placeholder="0" /> X 
                        <input id="tamano_2" type="text" name="tamano_2" style="width: 100px;" value="<?php echo $tamano_2 ?>" placeholder="0" /> Cms. 
@@ -3108,14 +3108,26 @@ th {
                     <input type="hidden" name="estado" />
                     <input id="guardar" type="button" value="Guardar" class="btn btn-success" onclick="guardarFormularioAdd2(0);"/>
                     <input id="liberar" type="button" value="Liberar" class="btn <?php if($ing->estado==1){echo 'btn-warning';}?>"  data-toggle="modal" data-target="" onclick="guardarFormularioAdd2(1);" />
-                </div></div>
-            <?php }else{ ?>
+                </div>
+            </div>
+            <?php }else{ $cerrada=$this->cotizaciones_model->getCotizacionEnRojo($id); ?>
+            <?php if(sizeof($cerrada)>0 && ($cerrada->estado==3 || $cerrada->estado==4)){ ?>
+                <div class="control-group">
+                <div class="form-actions">
+                    <input type="hidden" name="id" value="<?php echo $id?>" />
+                    <input type="hidden" name="pagina" value="<?php echo $pagina?>" />
+                    <input type="hidden" name="estado" />
+                    <input id="guardar" type="button" value="Guardar" class="btn btn-success" onclick="guardarFormularioAdd2(0);"/>
+                    <input id="liberar" type="button" value="Liberar" class="btn <?php if($ing->estado==1){echo 'btn-warning';}?>"  data-toggle="modal" data-target="" onclick="guardarFormularioAdd2(1);" />
+                </div>
+            </div>
+            <?php  }else{ ?>
         <div class="control-group">
             <div class="form-actions">
                 <strong>NO SE PUEDE GRABAR PORQUE YA FUE ECHA LA ORDEN DE COMPRA</strong>
             </div>
         </div>    
-       <?php } } ?>
+       <?php } } } ?>
     <?php
 	 //Usuario 
     }
@@ -3361,5 +3373,7 @@ switch (x) {
         }
       }
      }
+
+      
 </script>
 <script type = 'text/javascript' src = "<?php echo base_url(); ?>js/fnc_reving.js"></script>

@@ -400,9 +400,15 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
 	</div>
     
     <div class="control-group" id="producto">
-		<label class="control-label" for="usuario">Tamaño a imprimir Ancho por Largo (largo a cortar) <strong style="color: red;">(*)</strong></label>
+		<label class="control-label" for="usuario">Tamaño a imprimir Ancho por Largo a cortar<strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-                    <input type="text" id="anchobobina" name="ancho_bobina" style="width: 100px;" value="<?php echo $datos->ancho_bobina?>" placeholder="Ancho" /> X <input type="text" id="largobobina" name="largo_bobina" style="width: 100px;" value="<?php echo $datos->largo_bobina?>" placeholder="Largo" /> 
+                    <input type="text" id="anchobobina" name="ancho_bobina" style="width: 100px;" value="<?php echo $datos->ancho_bobina; ?>" placeholder="Ancho" /> X <input type="text" id="largobobina" name="largo_bobina" style="width: 100px;" value="<?php echo $datos->largo_bobina?>" placeholder="Largo" /> 
+		</div>
+	</div>
+    <div class="control-group" id="distancia">
+		<label class="control-label" for="usuario">Distancia ccac</label>
+		<div class="controls">
+                    <input type="text" readonly id="ccac_1" name="ccac_1" style="width: 100px;" value="<?php if(sizeof($datos)>0){ echo ($datos->ancho_bobina-$datos->cuchillocuchillo)*10; }?>" placeholder="ccac 1" /> X <input type="text" id="ccac_2" readonly name="ccac_2" style="width: 100px;" value="<?php if(sizeof($datos)>0){ echo ($datos->largo_bobina-$datos->cuchillocuchillo2)*10; }?>" placeholder="ccac 2" /> 
 		</div>
 	</div>
     
@@ -542,6 +548,52 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
                 $("#etiquetaerror").remove();
             }    
     });
+   
+    $("#tamanocuchillo1").on("keyup",function(){
+        var tamano1 = $(this).val();
+        var a = $("#anchobobina").val();
+            $("#ccac_1").val((parseInt(a)-parseInt(tamano1))*10);    
+    });
+
+    $("#tamanocuchillo2").on("keyup",function(){
+        var tamano2 = $(this).val();
+        var a = $("#largobobina").val();
+            $("#ccac_2").val((parseInt(a)-parseInt(tamano2))*10);    
+    });
+    
+    $("#anchobobina").on("keyup",function(){
+        var a = $(this).val();
+        var tamano1 = $("#tamanocuchillo1").val();
+        var largo = $("#largobobina").val();
+        $.post(webroot+"cotizaciones/medidas",{ancho:a,largo:largo},function(resp)
+        {
+        var myObj = $.parseJSON(resp);
+        a = myObj[1];
+        ancho = myObj[0];
+        $("#anchobobina").val(ancho);
+        $("#largobobina").val(a);
+        });
+            $("#ccac_1").val((parseInt(a)-parseInt(tamano1))*10);    
+    });
+    
+    $("#largobobina").on("keyup",function(){
+        var a = $(this).val();
+        var ancho = $("#anchobobina").val();
+        var tamano2 = $("#tamanocuchillo2").val();
+
+        $.post(webroot+"cotizaciones/medidas",{ancho:ancho,largo:a},function(resp)
+        {
+        var myObj = $.parseJSON(resp);
+        a = myObj[1];
+        ancho = myObj[0];
+        $("#anchobobina").val(ancho);
+        $("#largobobina").val(a);
+        });
+            
+            $("#ccac_2").val((parseInt(a)-parseInt(tamano2))*10);    
+    });
+
+
 </script>
 </div>
 

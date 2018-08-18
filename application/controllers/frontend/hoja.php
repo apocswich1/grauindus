@@ -972,6 +972,35 @@ class Hoja extends CI_Controller {
         }
         $this->layout->view('colores_fotomecanica',compact('id','pagina','fotomecanica'));  
     }
+    
+    public function colores_cambia_fotomecanica($id=null,$pagina=null)
+    {
+        if(!$id){show_404();}
+        $datos=$this->cotizaciones_model->getCotizacionPorId($id);
+        $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+        if($this->input->post())
+        {
+             $data=array
+            (
+                "numero_color_modificado"=>$this->input->post("colores",true),
+            );
+            $this->db->where('id_cotizacion', $this->input->post('id',true));
+            $this->db->update("cotizacion_fotomecanica",$data);
+            $data2=array
+            (
+                "id_cotizacion"=>$this->input->post("id",true),
+                "seccion"=>"numero_colores_modificado -> Fotomecánica",
+                "glosa"=>$this->input->post("glosa",true),
+                "quien"=>$this->session->userdata('id'),
+                "cuando"=>date("Y-m-d"),
+            );
+            $this->db->insert("hoja_de_costos",$data2);
+             $this->session->set_flashdata('ControllerMessage', 'Se ha modificado el registro exitosamente.');
+             redirect($this->input->post("url",true),  301);
+        }
+        $this->layout->view('colores_cambia_fotomecanica',compact('id','pagina','fotomecanica'));  
+    }
+
      public function cambio_vendedor($id=null,$pagina=null)
     {
         if(!$id){show_404();}
