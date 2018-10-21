@@ -252,7 +252,7 @@ function getField($campo,$datos,$ing)
             <?php } ?>
             <li>Cotización número : <?php echo $id ?></li>
             <!--<li>Condicion de Producto : <?php //echo $datos->condicion_del_producto." <a data-toggle='modal' data-target='#cambiar_condicion' class='fancybox fancybox.ajax'><img width='25px' src='".base_url()."public/frontend/images/edit.png' class='img_16' /></a>" ?></li>-->
-            <li>Condicion de Producto : <?php echo $datos->condicion_del_producto; ?></li>
+            <li>Condicion de Producto : <span id="cdproducto"><?php echo $datos->condicion_del_producto; ?></span></li>
             <li>Fecha : <?php echo fecha($datos->fecha) ?></li>
             <li>Vendedor : <?php echo $vendedor->nombre ?></li>
             <?php if($datos->trazado!=""){ ?>
@@ -1068,7 +1068,7 @@ th {
    <div class="control-group">
         <label class="control-label" for="usuario">Tiene Algun Color Modificado<strong style="color: red;">(*)</strong></label>
         <div class="controls">
-            <select name="tiene_color_modificado_ing">
+            <select id="tiene_color_modificado_ing" name="tiene_color_modificado_ing">
             <option value="" <?php echo set_value_select($ing,'tiene_color_modificado_ing',$ing->tiene_color_modificado,'');?>>Seleccione</option>
             <option value="NO" <?php echo set_value_select($ing,'tiene_color_modificado_ing',$ing->tiene_color_modificado,'NO');?>>NO</option>
             <option value="SI" <?php echo set_value_select($ing,'tiene_color_modificado_ing',$ing->tiene_color_modificado,'SI');?>>SI</option>
@@ -1078,7 +1078,7 @@ th {
     <div class="control-group" <?php if($ing->tiene_color_modificado<>'SI'){echo 'hidden=true'; }?> id="numero_color_modificado_ing">
         <label class="control-label" for="usuario">Numero de Colores<strong style="color: red;">(*)</strong></label>
         <div class="controls">
-            <select name="numero_color_modificado_ing">
+            <select id="numero_color_modificado_ing" name="numero_color_modificado_ing">
              <?php if (sizeof($ing)>0)  { ?>
             <option value="" <?php if($ing->numero_color_modificado==""){echo "selected='selected'";} ?>>Seleccione</option>
             <option value="1" <?php if($ing->numero_color_modificado=="1"){echo "selected='selected'";} ?>>1</option>
@@ -1105,7 +1105,7 @@ th {
                 <div class="control-group">
         <label class="control-label" for="usuario">Tiene Algun Color Modificado<strong style="color: red;">(*)</strong></label>
         <div class="controls">
-            <select name="tiene_color_modificado_ing">
+            <select id="tiene_color_modificado_ing" name="tiene_color_modificado_ing">
             <option value="" <?php echo set_value_select($datos,'tiene_color_modificado_ing',$datos->tiene_color_modificado,'');?>>Seleccione</option>
             <option value="NO" <?php echo set_value_select($datos,'tiene_color_modificado_ing',$datos->tiene_color_modificado,'NO');?>>NO</option>
             <option value="SI" <?php echo set_value_select($datos,'tiene_color_modificado_ing',$datos->tiene_color_modificado,'SI');?>>SI</option>
@@ -1115,7 +1115,7 @@ th {
     <div class="control-group" <?php if($datos->tiene_color_modificado<>'SI'){echo 'hidden=true'; }?> id="numero_color_modificado_ing">
         <label class="control-label" for="usuario">Numero de Colores<strong style="color: red;">(*)</strong></label>
         <div class="controls">
-            <select name="numero_color_modificado_ing">
+            <select id="numero_color_modificado_ing" name="numero_color_modificado_ing">
              <?php if (sizeof($datos)>0)  { ?>
             <option value="" <?php if($datos->numero_color_modificado==""){echo "selected='selected'";} ?>>Seleccione</option>
             <option value="1" <?php if($datos->numero_color_modificado=="1"){echo "selected='selected'";} ?>>1</option>
@@ -1160,21 +1160,21 @@ th {
                      </div>
              </div>   
    <!--Codigo agregado por ehndz (hay que imprimir contra la fibra)-->
-           <div class="control-group">
+        <!--   <div class="control-group">
                      <label class="control-label" for="usuario">Hay que Imprimir Contra la Fibra</label>
                      <div class="controls">
                         <select class="" id="imprimir_contra_la_fibra" name="imprimir_contra_la_fibra" onchange="return calculo_ccac_minimo();" style="width: 150px;" >
                         <option value="">Seleccione......</option>  
-                        <?php if (sizeof($ing)>0)  { ?>
-                            <option value="SI" <?php if($ing->imprimir_contra_la_fibra=="SI"){echo 'selected="selected"';}?>>Sí</option>
-                            <option value="NO" <?php if($ing->imprimir_contra_la_fibra=="NO"){echo 'selected="selected"';}?>>No</option>
-                        <?php } else { ?>
-                            <option value="SI" <?php if(isset($_POST["imprimir_contra_la_fibra"]) and $_POST["imprimir_contra_la_fibra"]=='SI'){echo 'selected="selected"';}?>>Sí</option> 
-                            <option value="NO" <?php if(isset($_POST["imprimir_contra_la_fibra"]) and $_POST["imprimir_contra_la_fibra"]=='NO'){echo 'selected="selected"';}?>>No</option>
-                        <?php }  ?>                               
+                        <?php // if (sizeof($ing)>0)  { ?>
+                            <option value="SI" <?php // if($ing->imprimir_contra_la_fibra=="SI"){echo 'selected="selected"';}?>>Sí</option>
+                            <option value="NO" <?php // if($ing->imprimir_contra_la_fibra=="NO"){echo 'selected="selected"';}?>>No</option>
+                        <?php //} else { ?>
+                            <option value="SI" <?php // if(isset($_POST["imprimir_contra_la_fibra"]) and $_POST["imprimir_contra_la_fibra"]=='SI'){echo 'selected="selected"';}?>>Sí</option> 
+                            <option value="NO" <?php // if(isset($_POST["imprimir_contra_la_fibra"]) and $_POST["imprimir_contra_la_fibra"]=='NO'){echo 'selected="selected"';}?>>No</option>
+                        <?php //}  ?>                               
                         </select> 	
                      </div>
-             </div>   
+             </div>   -->
    <!--********************combos de barniz - agregado pot ehndz**********************-->
      <?php if($cotizacion->lleva_barniz != '' && $ing->ing_lleva_barniz == ''){?>
          <div class="control-group">
@@ -1468,13 +1468,13 @@ th {
                         <select name="troquel_por_atras" style="width: 260px;" onchange="llevafondo2(this.value);">
                         <option value="">Seleccione......</option>
                         <?php if (sizeof($ing)>0){ ?>
-                            <option value="SI" <?php if($ing->troquel_por_atras=="SI"){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option>
-                            <option value="NO" <?php if($ing->troquel_por_atras=="NO"){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
+                            <option value="SI" <?php if($ing->troquel_por_atras=="SI"){echo 'selected="selected"';}?>>Por detrás, margen izquierdo, gato retiro</option>
+                            <option value="NO" <?php if($ing->troquel_por_atras=="NO"){echo 'selected="selected"';}?>>Por delante, margen derecho, gato tiro</option>
                             <option value="" <?php if($ing->troquel_por_atras==""){echo 'selected="selected"';}?>>Por definir</option>
                             <option value="NO LLEVA" <?php if($ing->troquel_por_atras=="NO LLEVA"){echo 'selected="selected"';}?>>No lleva</option>
                         <?php } else { ?>
-                            <option value="SI" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='SI'){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, retiro</option> 
-                            <option value="NO" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='NO'){echo 'selected="selected"';}?>>Por adelante, margen derecho, tiro</option>
+                            <option value="SI" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='SI'){echo 'selected="selected"';}?>>Por atrás, margen izquierdo, gato retiro</option> 
+                            <option value="NO" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='NO'){echo 'selected="selected"';}?>>Por adelante, margen derecho, gato tiro</option>
                             <option value="" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]==''){echo 'selected="selected"';}?>>Por definir</option>
                             <option value="NO LLEVA" <?php if(isset($_POST["troquel_por_atras"]) && $_POST["troquel_por_atras"]=='NO LLEVA'){echo 'selected="selected"';}?>>No lleva</option>
                         <?php }  ?>                                                    
@@ -1741,6 +1741,21 @@ th {
    <table border='0' class="tablita table-no-bordered">
        <tr>
            <td>
+               <div class="control-group" style="<?php if($ing->estan_los_moldes=="NO LLEVA"){echo "display:none";}?>">
+                   <label class="control-label" for="usuario" id="rango_gramaje"></label>    
+               </div>
+               <div class="control-group">
+                <label class="control-label" for="usuario">Rango de Gramaje</label>
+		        <div class="controls">
+				<select name="rango_gramajes" id="rango_gramajes">
+                <option value="">-- Seleccione --</option>
+                <option value="1" <?php if($moldes2->rango_gramaje == 1){ echo "selected='true'"; } ?>>Entre 190 y 250</option>
+                <option value="2" <?php if($moldes2->rango_gramaje == 2){ echo "selected='true'"; } ?>>Entre 251 y 325</option>
+                <option value="3" <?php if($moldes2->rango_gramaje == 3){ echo "selected='true'"; } ?>>Entre 326 y Mayores</option>
+                </select>
+		        </div>
+	            </div>
+                <input type="hidden" id="gh" name="gh" value="<?php echo $moldes2->rango_gramaje; ?>"/>
                <div class="control-group" id="distancia_en_molde"  style="<?php if($ing->estan_los_moldes=="NO LLEVA"){echo "display:none";}?>">
                    <label class="control-label" for="usuario">Distancia en molde:<strong style="color: red;">(*<?php echo $distancia; ?>) Molde Nro: <?php echo $moldes2->id  ?> </strong></label>    
                </div>
@@ -1775,7 +1790,8 @@ th {
                </td>
                <td  style="<?php if($ing->estan_los_moldes=="NO LLEVA"){echo "display:none";}?>"><h3 id="msgccac"></h3>
                <ul id='rccac' style="list-style: none">
-                   <li id='etiquetaicf'></li>
+                   <!-- <li id='etiquetaicf'></li> -->
+                   <li id='etiquetacontralafibra'></li>
                    <li id="etiquetatfn"></li>
                    <li id="etiquetaimp"></li>
                    <li id="etiquetaccacmin"></li>
@@ -3159,7 +3175,18 @@ th {
         //document.form.cliente.focus();
         }
     );
-   
+
+  
+  $("#rango_gramajes").on("change",function(){
+     if($("#gh").val()<$(this).val()){
+         alert("Si desea modificar el gramaje, debe modificar el largo de la cartulina en la edicion del molde");
+         $("select[name=rango_gramajes").val($("#gh").val());
+     } 
+  });
+  
+  if(parseInt($("#tamano_1").val()) > parseInt($("#tamano_2").val())){
+      $('#etiquetacontralafibra').html('<label style="background-color:blue; color:#fff; font-size:weight; text-align:center"><h4 style="color:#fff">Impresion contra la fibra</h4></label>');
+  } 
     
 </script>
 <script type="text/javascript">
@@ -3305,7 +3332,26 @@ switch (x) {
                 $("#tamano_2").val(myObj.largo_bobina);
                 $("#ccac_1").val((myObj.ancho_bobina-myObj.cuchillocuchillo)*10);
                 $("#ccac_2").val((myObj.largo_bobina-myObj.cuchillocuchillo2)*10);
+                if(myObj.rango_gramaje!=""){
+                    if(myObj.rango_gramaje=="1"){
+                        $rango_gramaje = "Rango de Gramaje: Entre 190 y 250";
+                    }
+                    if(myObj.rango_gramaje=="2"){
+                        $rango_gramaje = "Rango de Gramaje: Entre 251 y 325";
+                    }
+                    if(myObj.rango_gramaje=="3"){
+                        $rango_gramaje = "Rango de Gramaje: Entre 326 y Mayores";
+                    }
+                    $("#rango_gramaje").text($rango_gramaje);
+                }
+                
                 $("input[name=nombre_molde]").val(myObj.nombre);
+                //alert($("#tamano_1").val()+'...'+$("#tamano_2").val());
+                if(parseInt($("#tamano_1").val()) > parseInt($("#tamano_2").val())){
+                $('#etiquetacontralafibra').html('<label style="background-color:blue; color:#fff; font-size:weight; text-align:center"><h4 style="color:#fff">Impresion contra la fibra</h4></label>');
+                }else{
+                $('#etiquetacontralafibra').html('');    
+                }
                 
         });   
     });
@@ -3313,7 +3359,7 @@ switch (x) {
        
     $("#fn").html('<h4>FONDO NEGRO '+fn+' '+fnv+'</h4>');
     $("#im").html('<h4>IMG IMPRESION '+imv+'</h4>');
-    $("#pr").html('<h4>IMPRESION CONTRA LA FIBRA '+pr+prv+'</h4>');
+    //$("#pr").html('<h4>IMPRESION CONTRA LA FIBRA '+pr+prv+'</h4>');
     /*$("#ccacmin").html('<h4 style="color:green">Distancia '+ccacmin+'</h4>');*/
     $("#vccacminimo").val(vccacmin);
     $("select[name=hay_que_troquelar]").on('change',()=>{

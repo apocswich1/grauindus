@@ -172,6 +172,12 @@ function sumaGrameje()
                document.form.cucu2.value=myObj.cuchillocuchillo2;
                document.form.ccm1.value=myObj.cuchillocuchillo;
                document.form.ccm2.value=myObj.cuchillocuchillo2;
+               $("select[name=rango_gramajes]").val(myObj.rango_gramaje);
+               if(parseInt($("#tamano_1").val()) > parseInt($("#tamano_2").val())){
+                $('#etiquetacontralafibra').html('<label style="background-color:blue; color:#fff; font-size:weight; text-align:center"><h4 style="color:#fff">Impresion contra la fibra</h4></label>');
+                }else{
+                $('#etiquetacontralafibra').html('');    
+                }
            });
            return false;
            
@@ -1111,6 +1117,17 @@ function guardarFormularioAdd2(valor)
             return false;
     }
     
+    if(valor == 1 && document.getElementById('cdproducto').innerHTML=="Repetición Con Cambios"){
+        //var tienecolormodificado = document.getElementById('tiene_color_modificado_ing').value;
+        //var numerocolormodificado = document.getElementById('numero_color_modificado_ing').value;
+        var tienecolormodificado = $("#tiene_color_modificado_ing").val();
+        var numerocolormodificado = $("#numero_color_modificado_ing").val();
+        if((tienecolormodificado=="" || typeof tienecolormodificado=="undefined")){
+           // alert(numerocolormodificado);
+        alert("Debe guardar primero y luego indicar cuantos colores cambia para poder liberar por ser repeticion con cambios");
+        return false;
+    }}
+
     if(materialidad=="" || materialidad=="0"){
             alert("Debe completar la materialidad");
     }
@@ -1752,6 +1769,7 @@ function estanLosMoldesPropia(id)
         document.getElementById('lacortar2').style.display='none';
         document.getElementById('botones2').style.display='block';
         document.getElementById('botones').style.display='none';
+        document.getElementById('cdproducto').innerHTML='Nuevo';
     }
     else if(id=='NO LLEVA')
     {
@@ -1777,6 +1795,7 @@ function estanLosMoldesPropia(id)
         document.getElementById('lacortar2').style.display='block';
         document.getElementById('botones2').style.display='block';
         document.getElementById('botones').style.display='none';
+        document.getElementById('cdproducto').innerHTML='Nuevo';
     }
     else if (id=='MOLDE GENERICO')
     {
@@ -1796,6 +1815,7 @@ function estanLosMoldesPropia(id)
         document.getElementById('lacortar2').style.display='none';
         document.getElementById('botones').style.display='block';
         document.getElementById('botones2').style.display='none';
+        document.getElementById('cdproducto').innerHTML='Repetición Con Cambios';
     }
     else if (id=='SI')
     {
@@ -1816,6 +1836,7 @@ function estanLosMoldesPropia(id)
         document.getElementById('lacortar2').style.display='none';
         document.getElementById('botones').style.display='block';
         document.getElementById('botones2').style.display='none';
+        document.getElementById('cdproducto').innerHTML='Repetición Con Cambios';
     }
     else if (id=='MOLDE REGISTRADOS DEL CLIENTE')
     {

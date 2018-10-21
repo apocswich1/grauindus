@@ -126,7 +126,12 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
         <?php
      }
      ?>
-      
+      <div class="control-group">
+		<label class="control-label" for="usuario">Producto Generado en Base de Datos</label>
+		<div class="controls">
+            <input type="text" name="" value="<?php echo $codigo_generar ?>" />
+        </div>
+        </div>
      <?php
      $producto_existe="";
      if(sizeof($orden)==0)
@@ -432,7 +437,7 @@ $usuario=$this->usuarios_model->getUsuariosPorId($ing->quien);
         <div class="control-group">
 		<label class="control-label" for="usuario">Observaciones</label>
 		<div class="controls">
-			<input type="text" style="width: 600px;" id="titulo" name="observaciones" value="<?php echo $_POST['observaciones'] ?>" placeholder="Observaciones"/>
+			<input type="text" style="width: 600px;" id="titulo" name="observaciones" value="<?php if($orden->observaciones!=""){echo $orden->observaciones;}else{echo $_POST['observaciones'];} ?>" placeholder="Observaciones"/>
 		</div>
 	</div>
 	

@@ -1,6 +1,7 @@
 <?php
+
 if(sizeof($ing)>0){
-    if($ing->numero_molde!="" && $ing->numero_molde!=11 && $ing->numero_molde!=12 && $ing->numero_molde!=13 && $ing->numero_molde!=14 && $ing->numero_molde!=15 && $ing->numero_molde!=1){
+    if($ing->numero_molde!="" && $ing->numero_molde!=11 && $ing->numero_molde!=12 && $ing->numero_molde!=13 && $ing->numero_molde!=14 && $ing->numero_molde!=15 && $ing->numero_molde!=1 && $ing->numero_molde!=21){
     $etiquetamolde="SI";
     }else{
     if($ing->estan_los_moldes=="NO"){ $etiquetamolde="NO"; }
@@ -29,8 +30,8 @@ if(sizeof($ing)>0){
       <select name="select_estan_los_moldes" style="width: 300px;" onchange="estanLosMoldesPropia(this.value);">
         <option value="">Seleccione.....</option>
         <option value="SI" <?php if($ing->estan_los_moldes=="SI"){echo 'selected="selected"';}?>>SI</option>
-        <option value="NO" <?php if($ing->estan_los_moldes=="NO" && ($ing->numero_molde=="" || $ing->numero_molde=="1")){echo 'selected="selected"';}?>>NO (HAY QUE FABRICAR)</option>
-        <option value="MOLDE GENERICO" <?php if($ing->estan_los_moldes=="NO" && $ing->numero_molde!="" && $ing->numero_molde!=1){echo 'selected="selected"';}?>>MOLDE GENERICO</option>
+        <option value="NO" <?php if($ing->estan_los_moldes=="NO" && ($ing->numero_molde=="" || $ing->numero_molde=="1" || $ing->numero_molde=="21")){echo 'selected="selected"'; }?>>NO (HAY QUE FABRICAR)</option>
+        <option value="MOLDE GENERICO" <?php if($ing->estan_los_moldes=="NO" && $ing->numero_molde!="" && $ing->numero_molde!=1 && $ing->numero_molde!=21){echo 'selected="selected"';}?>>MOLDE GENERICO</option>
         <option value="NO LLEVA"<?php if($ing->estan_los_moldes=="NO LLEVA"){echo 'selected="selected"';}?>>NO LLEVA</option>
         <option value="CLIENTE LO APORTA" <?php if($ing->estan_los_moldes=="CLIENTE LO APORTA"){echo 'selected="selected"';}?>>CLIENTE LO APORTA</option>
         <option value="MOLDE GENERICO" <?php if($ing->estan_los_moldes=="MOLDE GENERICO"){echo 'selected="selected"';}?>>MOLDE GENERICO</option>
@@ -39,7 +40,7 @@ if(sizeof($ing)>0){
     </div>
     </div>
     <?php //echo $ing->numero_molde; //my code is here ?>
-<div class="control-group" id="div_estan_los_moldes_generico" <?php if($datos->estan_los_moldes=="NO" && $datos->numero_molde!="" && $datos->numero_molde!=1 && $datos->numero_molde!=11 && $datos->numero_molde!=12 && $datos->numero_molde!=13 && $datos->numero_molde!=14 && $datos->numero_molde!=15 ){ echo "style='display:block'"; }else{ echo "style='display:none'"; } ?>>
+<div class="control-group" id="div_estan_los_moldes_generico" <?php if($datos->estan_los_moldes=="NO" && $datos->numero_molde!="" && $datos->numero_molde!=1 && $datos->numero_molde!=11 && $datos->numero_molde!=12 && $datos->numero_molde!=13 && $datos->numero_molde!=14 && $datos->numero_molde!=15 && $datos->numero_molde!=21 ){ echo "style='display:block'"; }else{ echo "style='display:none'"; } ?>>
             <div class="controls">
                 <div id="molde_select">
                     <select name="molde_generico" class="chosen-select" id="molde_generico" style="width: 400px;" onchange="carga_ajax5('<?php echo base_url();?>moldes/detalle_ajax',this.value,'div_moldes');carga_ajax_cambio_molde('<?php echo base_url();?>moldes/detalle_ajax_cambio_molde',this.value,'div_moldes')";>

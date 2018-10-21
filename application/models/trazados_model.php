@@ -206,7 +206,7 @@ function __construct()
     {
 		//,nombrecliente,tamano_caja,cuchillocuchillo,abobina,lbobina,fecha
          $query=$this->db
-                ->select("m.*,ma.`nombre` AS mat1,ma.gramaje as gramaje1,mo.gramaje as gramaje2,ml.gramaje as gramaje3,mt.materiales_tipo AS matt1,mo.`nombre` AS mat2,mto.materiales_tipo AS matt2,ml.nombre AS mat3,mtl.materiales_tipo AS matt3,ma.precio as precio1,mo.precio as precio2,ml.precio as precio3,ma.reverso as reverso1,mo.reverso as reverso2,ml.reverso as reverso3,")
+                ->select("m.*,ma.`nombre` AS mat1,m.rango_gramaje,ma.gramaje as gramaje1,mo.gramaje as gramaje2,ml.gramaje as gramaje3,mt.materiales_tipo AS matt1,mo.`nombre` AS mat2,mto.materiales_tipo AS matt2,ml.nombre AS mat3,mtl.materiales_tipo AS matt3,ma.precio as precio1,mo.precio as precio2,ml.precio as precio3,ma.reverso as reverso1,mo.reverso as reverso2,ml.reverso as reverso3,")
                 ->from("trazados m")
                 ->join("clientes c","m.nombrecliente=c.id","inner")
                 ->join("materiales ma","ma.id=m.placa1","left")

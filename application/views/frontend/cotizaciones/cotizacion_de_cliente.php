@@ -43,7 +43,6 @@ if($datos->id_cliente==3000)
         <link type="text/css" rel="stylesheet" href="<?php echo base_url()?>public/backend/fancybox/jquery.fancybox.css" />
         <link type="text/css" rel="stylesheet" href="<?php echo base_url()?>public/frontend/css/prism.css" />
         <link type="text/css" rel="stylesheet" href="<?php echo base_url()?>public/frontend/css/chosen.css" />
-
         <script type="text/javascript" src="<?php echo base_url()?>public/backend/fancybox/jquery.fancybox.js"></script>
         <script type="text/javascript" src="http://localhost/trabajo/public/frontend/js/funciones.js"></script>
 <style type="text/css">
@@ -93,7 +92,7 @@ page[size="A4"][layout="portrait"] {
 border-shadows:10 10 10 10 5px 5px 5px 5px;
 background-color:#ffffff;
 position:fixed;
-height:450px;
+height:500px;
 width:260px;
 float:left;
 }
@@ -107,6 +106,12 @@ width:250px;
 }
 
         </style>
+
+<script>
+$(document).ready(function(){
+alert();
+});
+</script>
 <script>
 
 function llenartapa(x){
@@ -145,7 +150,9 @@ document.getElementById("aclaratoria1").innerHTML = "Nota: "+x;
 document.getElementById("aclaratoria1").innerHTML = "";
 }
 }
+
 </script>
+
             </head>
 			<body>
                         
@@ -247,12 +254,16 @@ document.getElementById("aclaratoria1").innerHTML = "";
                     }
     $cuerpo.='</select></td>
     </tr>
-    <tr>
+    <tr><form method="post" action="">
     <td>Aclaratoria: </td>
     </tr>
     <tr>
-    <td><textarea id="texto" onkeyup="aclaratoria(this.value)" onkeypress="aclaratoria(this.value)" value=""/></textarea>
+    <td><textarea id="texto" name="acl" onkeyup="aclaratoria(this.value)" onkeypress="aclaratoria(this.value)" value="';
+    $cuerpo.='"/>'.$datos->aclaratoria.'</textarea>
     </tr>
+    <tr>
+    <td><input type="submit" id="btnaclaratoria" value="guardar"/>
+    </tr></form>
     </table>
     </div>
     <div class="container" id="container">';
@@ -354,10 +365,7 @@ document.getElementById("aclaratoria1").innerHTML = "";
     $tipodematerial=$this->materiales_model->getMaterialesNombreTipo($fotomecanica->id_mat_placa1);   
     $materialidaduno=$this->materiales_model->getMaterialesReversoPorId($fotomecanica->id_mat_placa1);   
     $reversoliner=$this->materiales_model->getMaterialesReversoPorId($fotomecanica->id_mat_liner3);   
-    //echo $fotomecanica->materialidad_1."-".$fotomecanica->materialidad_2."-".$fotomecanica->materialidad_3;
-    //echo $materialidaduno->tipomaterial; exit();
-    //echo $fotomecanica->materialidad_3;
-    //print_r($reversoliner);exit();
+   
     if($reversoliner=="")
     $reversoliner=" ";   
     else
@@ -469,10 +477,7 @@ document.getElementById("aclaratoria1").innerHTML = "";
     $materialidad = $fotomecanica->materialidad_datos_tecnicos;
     $materialidaduno=$this->materiales_model->getMaterialesReversoPorNombre($fotomecanica->materialidad_1);   
     $reversoliner=$this->materiales_model->getMaterialesReversoPorNombre($fotomecanica->materialidad_3);   
-    //echo $fotomecanica->materialidad_1."-".$fotomecanica->materialidad_2."-".$fotomecanica->materialidad_3;
-    //echo $materialidaduno->tipomaterial; exit();
-    //echo $fotomecanica->materialidad_3;
-   // print_r($materialidaduno);exit();
+   
     if($reversoliner=="")
     $reversoliner=" ";   
     else
@@ -489,11 +494,6 @@ document.getElementById("aclaratoria1").innerHTML = "";
     $tamano3=$ing->medidas_de_la_caja_3;
     $tamano4=$ing->medidas_de_la_caja_4;
     
-//    if($tamano1 == "" || $tamano2 == "" || $tamano3 == "" || $tamano4 == ""){
-//        $tamano="";
-//    }else{
-//        $tamano=", Medidas ".$tamano1." x ".$tamano2." x ".$tamano3." x ".$tamano4." cms";
-//    }
     
     if(($tamano1 != 0) && ($tamano1 != "")){
         if($tamano4=="" || $tamano4 == 0){
@@ -514,13 +514,24 @@ document.getElementById("aclaratoria1").innerHTML = "";
                 </div>
         </td>
         </tr>'; 
-    $cuerpo.='<tr>
+    if($datos->aclaratoria!=""){
+        $cuerpo.='<tr>
+        <td colspan="3">
+            <div style="font-size:18px">
+                <span id="aclaratoria1">Nota: '.$datos->aclaratoria.'</span>
+                </div>
+        </td>
+        </tr>';
+    }else{
+        $cuerpo.='<tr>
         <td colspan="3">
             <div style="font-size:18px">
                 <span id="aclaratoria1"></span>
                 </div>
         </td>
-        </tr>'; 
+        </tr>';
+    }
+     
         $cuerpo.='</table>';
         $cuerpo.='<table class="tabla">';
      $cuerpo.='<tr>

@@ -72,7 +72,7 @@
                     <li>Descripción : <b><?php echo $datos->producto?></b></li>
                     <li>Fecha Orden de Compra : <strong><?php echo fecha($ordenDeCompra->fecha)?></strong></li>
                     <li>Fecha Orden de Producción : <strong><?php echo fecha($orden->fecha)?></strong></li>
-                    <li>Condición del Producto : <strong><?php echo $datos->condicion_del_producto?></strong></li>
+                    <li>Condición del Producto : <strong><?php echo $fotomecanica2->condicion_del_producto?><?php if($fotomecanica2->condicion_del_producto=="Nuevo"){echo " ( Molde por Fabricar )";}?></strong></li>
                     <?php if (!empty($molde->archivo)) {  ?>
                         <li>N° Molde : <?php echo $molde->nombre?>  <a href="<?php echo base_url().$this->config->item('direccion_pdf').$molde->archivo?>" target="_blank"><?php echo $orden->id_molde?></a> <button type="button" class="btn" data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo $fotomecanica2->numero_molde?> <i class="icon-search"></i></button><strong>(<?php echo $moldeNuevo?>)</strong></li>
                     <?php } else {    ?>
@@ -140,6 +140,10 @@
                            }
                         ?>
                     </li>
+                    <li><strong>Nro Molde: </strong><?php if($orden->id_molde!=""){echo $orden->id_molde;}else{echo "";}?></li>
+                    <li><strong>VB en Maquina: </strong><?php if($datos->vb_maquina=="SI"){echo "SI";}else{echo "NO";}?></li>
+                    <li><strong>Impresion contra la fibra: </strong><?php if($datos->vb_maquina=="SI"){echo "SI";}else{echo "NO";}?></li>
+                    <li><strong>Gato tiro o gato retiro?: </strong><?php if($ing->troquel_por_atras=="SI"){echo 'Por detrás, margen izquierdo, gato retiro';}else if($ing->troquel_por_atras=="NO"){echo 'Por delante, margen derecho, gato tiro';}else{echo 'Por delante, margen derecho, gato tiro';}?></li>
                 </ul>
             	</div>
 		<div class="controls"  style="margin-left: 0px;width:30%;float:left;">
@@ -167,7 +171,7 @@
                     <?php } ?>          
                      <li>Tamaño Pliego : <strong><?php echo $ing->tamano_a_imprimir_1; ?> X <?php echo $ing->tamano_a_imprimir_2;  ?> Cms</strong></li>
                      <li>Unidad Pliego: <strong><?php echo $ing->unidades_por_pliego; ?></strong></li>
-                     <li>Repetición: <strong><?php  if($datos->condicion_del_producto=='Nuevo') echo "NO"; else echo "SI"; ?></strong></li>
+                     <li>Repetición: <strong><?php  if($fotomecanica2->condicion_del_producto=='Nuevo') echo "NO"; else echo "SI"; ?></strong></li>
                      <li>Trazado : <strong><?php  if ($ing->archivo=="") { echo 'NO'; } else { echo 'SI'; }  ?></strong></li>
                      <li>Prueba de Color: <strong><?php echo $datos->impresion_hacer_cromalin; ?></strong></li>                     
                      <li>Montaje : <strong><?php echo $datos->montaje_pieza_especial; ?></strong></li>                     
@@ -182,15 +186,18 @@
                 <ul>
                      <li>Total Solicitada : <strong><?php  echo $ordenDeCompra->cantidad_de_cajas; ?></strong></li>
                      <li>Total Merma : <strong><?php  echo $hoja->total_merma; ?></strong></li>
-                     <li>Cantidad a Imprimir : <strong><?php echo $hoja->placa_kilo; ?></strong></li>
-                     <li>Gato : <strong><?php if($fotomecanica2->troquel_por_atras=='NO'){echo 'Derecho';}else{echo 'Izquierdo';} ?></strong></li>        
+                     <li>Cantidad a Imprimir : <strong><?php echo ($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego) + $hoja->total_merma; ?></strong></li>
+                     <!--<li>Gato : <strong><?php //if($fotomecanica2->troquel_por_atras=='NO'){echo 'Derecho';}else{echo 'Izquierdo';} ?></strong></li>        -->
                      <li>Distancia Cuchillo a Cuchillo : <strong><?php echo $ing->tamano_cuchillo_1; ?> X <?php echo $ing->tamano_cuchillo_2;  ?> Cms</strong></li>        
                      <li>Metros de Cuchillo : <strong><?php echo $ing->metros_de_cuchillo;  ?> Cms</strong></li>        
                      <li>Descripción de la placa : <strong><?php echo $materialidad_1->nombre?></strong></li>
                      <li>Gramaje de la placa : <strong><?php echo $materialidad_1->gramaje?></strong></li>
                      <li>CCAC1 : <strong><?php echo (($ing->tamano_a_imprimir_1-$ing->tamano_cuchillo_1)*10); ?> Mms</strong></li>
-                     <li>CCAC2 : <strong><?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10) ?> Mms</strong></li> 
+                     <li>CCAC2 : <strong><?php echo (($ing->tamano_a_imprimir_2-$ing->tamano_cuchillo_2)*10) ?> Mms</strong></li>
+                     <li>Lleva Fondo Negro : <strong><?php echo $ing->lleva_fondo_negro ?></strong></li> 
+                      
                      <?php if($datos->trazado!="" && $datos->trazado!=0){ echo "<li>Trazado : <strong>".$datos->trazado."</strong></li>";} ?>
+                     <?php if($molde->id_trazado!="" && $molde->id_trazado!=0){ echo "<li>Numero de Trazado : <strong>".$molde->id_trazado."</strong></li>";} ?>
                 </ul>
             	</div>                     
             </div>
@@ -298,10 +305,10 @@
         display: inline-block;
       }
     </style>   
+    <input type="hidden" value="<?php echo $fotomecanica2->condicion_del_producto; ?>" id="hcondicion">
     <div class="control-group">
     <label class="control-label" for="usuario">Recepcion OT</label>
-    <div class="controls">
-      
+    <div class="controls"> 
       <select name="recepcion_ot" id="recepcion_ot">
           <option value="">Seleccione</option>
           <option value="Por Revisar" <?php echo set_value_select($fotomecanica,'recepcion_ot',$fotomecanica->recepcion_ot  ,'Por Revisar');?>>Por Revisar</option>        
@@ -733,11 +740,57 @@
             $('#recepcion_ot').change(function() {                
                 if($('#recepcion_ot option:selected').val() != 'Aprobada') {
                   $('#div_fecha_recepcion_ot_aprobada').hide();
+
+                   if($('#hcondicion').val()=="Repetición Sin Cambios"){
+                    
+                    $("#div_fecha_revision_aprobada").hide();
+                    $("#div_fecha_recepcion_maqueta_aprobada").hide();
+                    $("#div_fecha_imagen_aprobada").hide();
+                    $("#div_fecha_montaje_aprobada").hide();
+                    $("#div_fecha_prueba_color_aprobada").hide();
+                    $("#div_fecha_arte_diseno_aprobada").hide();
+                    $("#div_fecha_conf_sal_pel_aprobada").hide();
+                    $("#div_fecha_conf_sal_pel_desgajado_aprobada").hide();
+                    $("#div_fecha_sobre_desarrollo_aprobada").hide();
+  
+                    $("#revision_trazado option[value='']").attr("selected",true);
+                    $("#recepcion_maqueta option[value='']").attr("selected",true);
+                    $("#revision_de_imagen option[value='']").attr("selected",true);
+                    $("#montaje_digital option[value='']").attr("selected",true);
+                    $("#prueba_color option[value='']").attr("selected",true);
+                    $("#arte_diseno option[value='']").attr("selected",true);
+                    $("#conf_sal_pel option[value='']").attr("selected",true);
+                    }
                 }else{
+                  
                   $("#div_fecha_recepcion_ot_aprobada").show().css("display", "inline-block");
+                  
+                  if($('#hcondicion').val()=="Repetición Sin Cambios"){
+                    
+                  $("#div_fecha_revision_aprobada").show().css("display", "inline-block");
+                  $("#div_fecha_recepcion_maqueta_aprobada").show().css("display", "inline-block");
+                  $("#div_fecha_imagen_aprobada").show().css("display", "inline-block");
+                  $("#div_fecha_montaje_aprobada").show().css("display", "inline-block");
+                  $("#div_fecha_prueba_color_aprobada").show().css("display", "inline-block");
+                  $("#div_fecha_arte_diseno_aprobada").show().css("display", "inline-block");
+                  $("#div_fecha_conf_sal_pel_aprobada").show().css("display", "inline-block");
+                  $("#div_fecha_conf_sal_pel_desgajado_aprobada").show().css("display", "inline-block");
+                  $("#div_fecha_sobre_desarrollo_aprobada").show().css("display", "inline-block");
+
+                  $("#revision_trazado option[value=Aprobada]").attr("selected",true);
+                  $("#recepcion_maqueta option[value='Recepcion Aprobada']").attr("selected",true);
+                  $("#revision_de_imagen option[value=Aprobado]").attr("selected",true);
+                  $("#montaje_digital option[value=Aprobado]").attr("selected",true);
+                  $("#prueba_color option[value=Aprobado]").attr("selected",true);
+                  $("#arte_diseno option[value=Aprobado]").attr("selected",true);
+                  $("#conf_sal_pel option[value=Entregado]").attr("selected",true);
+                  }
                 }
             });
            
+           function cambiartodos(){
+             alert();
+           }
 
             $('#revision_trazado').change(function() {                
                 if($('#revision_trazado option:selected').val() != 'Aprobada') {

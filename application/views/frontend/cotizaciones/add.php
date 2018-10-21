@@ -1944,6 +1944,16 @@ $(document).ready(function() {
         
     });
     
+
+    $("#condicion_del_producto").on("change",function(){
+        if($(this).val()==0){
+        $("select[name=select_estan_los_moldes]").find("option[value='MOLDE GENERICO']").prop("disabled",true);
+        $("select[name=select_estan_los_moldes]").find("option[value='SI']").prop("selected",true);
+        }else{
+            $("select[name=select_estan_los_moldes]").find("option[value='MOLDE GENERICO']").prop("disabled",false);
+        $("select[name=select_estan_los_moldes]").find("option[value='SI']").prop("selected",false);
+        }
+    });
    // alert($("select[name=cliente]").val());
     
     $("select[name=select_estan_los_moldes]").on("change",function(){

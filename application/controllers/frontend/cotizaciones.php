@@ -3295,6 +3295,17 @@ $cuerpo2.='<table class="tabla">';
 	if($this->session->userdata('id'))
         {
         if(!$id){show_404();}
+
+        //if(($this->input->post("acl",true))){
+            $this->input->post("acl",true)."<br >";
+            $id; 
+            $data = array(
+                'aclaratoria' => $this->input->post("acl",true),
+            );
+           // print_r($data);exit();
+            $this->db->where('id', $id);
+            $this->db->update("cotizaciones",$data);
+        //}
         $datos=$this->cotizaciones_model->getCotizacionPorId($id);
         $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
         $fotomecanica=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
@@ -3307,8 +3318,8 @@ $cuerpo2.='<table class="tabla">';
         if (is_numeric($datos->forma_pago)) $forma_pago=$this->clientes_model->getFormasPagoPorId($datos->forma_pago); 
         else $forma_pago=$this->clientes_model->getFormasPagoPorNombre($datos->forma_pago);
         $orden=$this->orden_model->getOrdenesPorCotizacion($id);
-
-	    if(sizeof($hoja)==0)
+        
+        if(sizeof($hoja)==0)
             {
                 if($this->input->post("pegado",true) == '')
                 {
@@ -10092,13 +10103,23 @@ $cuerpo2.='<table class="tabla">';
             
             if($this->input->post())
             {                       
+                echo $this->input->post("tamano_1",true);
                 if($this->input->post("nm",true)!=11 && $this->input->post("nm",true)!=12 && $this->input->post("nm",true)!=13 && $this->input->post("nm",true)!=14 && $this->input->post("nm",true)!=15 && $this->input->post("nm",true)!=21){
                 if($datos->numero_molde!=$this->input->post("nm",true) && $datos->condicion_del_producto=='Nuevo'){
                     $condicion_del_producto='Repetición Con Cambios';                                        
                 }else{
-                    //$condicion_del_producto=$datos->condicion_del_producto;
-                    $condicion_del_producto='Repetición Con Cambios';
-                    
+                    if(($ing->ing_lleva_barniz!=$this->input->post("ing_lleva_barniz",true)) || ($ing->ing_reserva_barniz!=$this->input->post("ing_reserva_barniz",true)) || ($ing->ing_cala_caucho!=$this->input->post("ing_cala_caucho",true)) || $this->input->post("tiene_color_modificado_ing",true)=="SI"){
+                        $condicion_del_producto='Repetición Con Cambios';
+                    }else{
+                        if($datos->condicion_del_producto=='Nuevo'){
+                            $condicion_del_producto=$datos->condicion_del_producto;    
+                        }else{
+                            $condicion_del_producto='Repetición Sin Cambios';
+                        }
+                        
+                        
+                    }
+                        
                 }}else{
                 $condicion_del_producto=$datos->condicion_del_producto;
                 }

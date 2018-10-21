@@ -267,6 +267,7 @@ class Moldes extends CI_Controller {
                                 "placa2"=>$this->input->post("placa2",true),
                                 "onda2"=>$this->input->post("onda2",true),
                                 "liner2"=>$this->input->post("liner2",true),
+                                "rango_gramaje"=>$this->input->post("rango_gramaje",true),
                              );
                               $this->db->insert("moldes_grau",$data);
                               $this->db->where('id', $this->db->insert_id());
@@ -382,6 +383,7 @@ class Moldes extends CI_Controller {
                                 "liner2"=>$this->input->post("liner2",true),
                                 "fecha_creacion_molde"=>$this->input->post("fecha_creacion_molde",true),
                                 "observaciones"=>$this->input->post("observaciones",true),
+                                "rango_gramaje"=>$this->input->post("rango_gramaje",true),
                              );
                               
                             // print_r($data);//exit(); 

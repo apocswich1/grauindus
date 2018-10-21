@@ -485,7 +485,17 @@ function getField($campo,$datos,$ing)
                 ?>
                
             </select>
-            <?php echo $datos->condicion_del_producto ?>
+            <?php echo $datos->condicion_del_producto; 
+            if(sizeof($fotomecanica)>0){
+                if($fotomecanica->numero_color_modificado>0){
+                    echo " - <b style='color:red'>Cambia: $fotomecanica->numero_color_modificado Colores</b>";
+                }
+            }else{
+                if($ing->numero_color_modificado>0){
+                    echo " - <b style='color:red'>Cambia: $ing->numero_color_modificado Colores</b>";
+                }
+            } 
+            ?>
 		</div>
 	</div>
     

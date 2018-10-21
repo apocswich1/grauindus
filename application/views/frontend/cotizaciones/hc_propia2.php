@@ -20,6 +20,7 @@ $comuna=$cli->comuna;
 $at=$cli->contacto;
 
 
+
 if ($datos->cantidad_1 == "" || $datos->cantidad_1 == 0) {
     $datoscantidad1 = 1;
 } else {
@@ -65,6 +66,11 @@ $acabado=$this->acabados_model->getAcabadosPorId($fotomecanica->acabado_impresio
 $tamano1=$ing->tamano_a_imprimir_1;
 $tamano2=$ing->tamano_a_imprimir_2;
 $tamano = $tamano1." X ".$tamano2." cm";
+if($fotomecanica->lleva_fondo_negro=="" || $fotomecanica->lleva_fondo_negro=="NO"){
+    $llevaFondoNegro = "NO";
+}else{
+    $llevaFondoNegro = "SI";
+}
 //Descripcion Trabajos externos*******************************************************************
 require('/parcialTrabajosEspeciales.php');
 require('/parcialMateriasPrimas.php');
@@ -1265,7 +1271,7 @@ $maquina="Máquina Roland 800";
                         <div style="height: 250px">
                             <table class="table table-condensed table-bordered" style="border-width: 2px">
                                 <tr>
-                                    <td colspan="9" class="titulo" style="width: 100%"><b>Tabla de Patrón de MERMAS Microonda TIPO E + Tapa por <?php echo $datos->cantidad_1; ?> = <?php echo ($datos->cantidad_1 / $ing->unidades_por_pliego); ?> Pliegos</b></td>
+                                    <td colspan="9" class="titulo" style="width: 100%"><b>Tabla de Patrón de MERMAS Microonda TIPO E + Tapa por <?php echo $datos->cantidad_1; ?> = <?php echo ($datos->cantidad_1 / $ing->unidades_por_pliego); ?> Pliegos</b><br />Lleva Fondo Negro: <?php echo $llevaFondoNegro; ?></td>
                                 </tr>
                                 <tr>
                                     <td style="width: 20%; height:5px"><b>Imprenta</b></td>
@@ -1377,7 +1383,7 @@ $maquina="Máquina Roland 800";
                         <div style="height: 250px">
                             <table class="table table-condensed table-bordered" style="border-width: 2px">
                                 <tr>
-                                    <td colspan="9" class="titulo" style="width: 100%"><b>Tabla de Patrón de MERMAS Microonda TIPO E + Tapa por <?php if($datos->cantidad_2=="" || $datos->cantidad_2==0 || $datos->cantidad_2==1){echo "0";}else{echo $datos->cantidad_2;} ?> = <?php if($datos->cantidad_2=="" || $datos->cantidad_2==0 || $datos->cantidad_2==1){echo "0";}else{echo $datos->cantidad_2 / $ing->unidades_por_pliego;} ?> Pliegos</b></td>
+                                    <td colspan="9" class="titulo" style="width: 100%"><b>Tabla de Patrón de MERMAS Microonda TIPO E + Tapa por <?php if($datos->cantidad_2=="" || $datos->cantidad_2==0 || $datos->cantidad_2==1){echo "0";}else{echo $datos->cantidad_2;} ?> = <?php if($datos->cantidad_2=="" || $datos->cantidad_2==0 || $datos->cantidad_2==1){echo "0";}else{echo $datos->cantidad_2 / $ing->unidades_por_pliego;} ?> Pliegos</b><br />Lleva Fondo Negro: <?php echo $llevaFondoNegro; ?></td>
                                 </tr>
                                 <tr>
                                     <td style="width: 20%; height:5px"><b>Imprenta</b></td>
@@ -1496,7 +1502,7 @@ $maquina="Máquina Roland 800";
                         <div style="height: 250px">
                             <table class="table table-condensed table-bordered" style="border-width: 2px">
                                 <tr>
-                                    <td colspan="9" class="titulo" style="width: 100%"><b>Tabla de Patrón de MERMAS Microonda TIPO E + Tapa por <?php if($datos->cantidad_3=="" || $datos->cantidad_3==0 || $datos->cantidad_3==1){echo "0";}else{echo $datos->cantidad_3;} ?> = <?php if($datos->cantidad_3=="" || $datos->cantidad_3==0|| $datos->cantidad_3==1){echo "0";}else{echo $datos->cantidad_3 / $ing->unidades_por_pliego;} ?> Pliegos</b></td>
+                                    <td colspan="9" class="titulo" style="width: 100%"><b>Tabla de Patrón de MERMAS Microonda TIPO E + Tapa por <?php if($datos->cantidad_3=="" || $datos->cantidad_3==0 || $datos->cantidad_3==1){echo "0";}else{echo $datos->cantidad_3;} ?> = <?php if($datos->cantidad_3=="" || $datos->cantidad_3==0|| $datos->cantidad_3==1){echo "0";}else{echo $datos->cantidad_3 / $ing->unidades_por_pliego;} ?> Pliegos</b><br />Lleva Fondo Negro: <?php echo $llevaFondoNegro; ?></td>
                                 </tr>
                                 <tr>
                                     <td style="width: 20%; height:5px"><b>Imprenta</b></td>
@@ -1608,7 +1614,7 @@ $maquina="Máquina Roland 800";
                         <div style="height: 250px">
                             <table class="table table-condensed table-bordered" style="border-width: 2px">
                                 <tr>
-                                    <td colspan="9" class="titulo" style="width: 100%"><b>Tabla de Patrón de MERMAS Microonda TIPO E + Tapa por <?php if($datos->cantidad_4=="" || $datos->cantidad_4==0 || $datos->cantidad_4==1){echo "0";}else{echo $datos->cantidad_4;} ?> = <?php if($datos->cantidad_4=="" || $datos->cantidad_4==0|| $datos->cantidad_4==1){echo "0";}else{echo $datos->cantidad_4 / $ing->unidades_por_pliego;} ?> Pliegos</b></td>
+                                    <td colspan="9" class="titulo" style="width: 100%"><b>Tabla de Patrón de MERMAS Microonda TIPO E + Tapa por <?php if($datos->cantidad_4=="" || $datos->cantidad_4==0 || $datos->cantidad_4==1){echo "0";}else{echo $datos->cantidad_4;} ?> = <?php if($datos->cantidad_4=="" || $datos->cantidad_4==0|| $datos->cantidad_4==1){echo "0";}else{echo $datos->cantidad_4 / $ing->unidades_por_pliego;} ?> Pliegos</b><br />Lleva Fondo Negro: <?php echo $llevaFondoNegro; ?></td>
                                 </tr>
                                 <tr>
                                     <td style="width: 20%; height:5px"><b>Imprenta</b></td>

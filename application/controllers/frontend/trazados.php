@@ -306,6 +306,7 @@ class Trazados extends CI_Controller {
                                 "estatus"=>$this->input->post("estatus",true),
                                 "colores"=>$this->input->post("colores",true),
                                 "estado"=>0,
+                                "rango_gramaje"=>$this->input->post("rango_gramaje",true),
                              );
                               $this->db->insert("trazados",$data);
                               $this->db->where('id', $this->db->insert_id());
@@ -421,6 +422,7 @@ class Trazados extends CI_Controller {
                                 "liner2"=>$this->input->post("liner2",true),
                                 "estatus"=>$this->input->post("estatus",true),
                                 "colores"=>$this->input->post("colores",true),
+                                "rango_gramaje"=>$this->input->post("rango_gramaje",true),
                              );
                               
                             // print_r($data);//exit(); 

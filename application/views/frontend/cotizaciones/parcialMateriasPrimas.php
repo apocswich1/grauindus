@@ -37,7 +37,7 @@ if (($anchomenor <= $ancho) && ($anchomayor <= $largo)) {
 }
 /***************Materias primas******************/
 //colores
-function colores($color,$vb,$ae,$maquina){
+function colores2($color,$vb,$ae,$maquina){
 if ($color > 3) {
     if ($maquina == "Máquina Roland 800") {
         if ($vb == 'SI' || $ae == 'NO') {
@@ -60,7 +60,7 @@ if ($color > 3) {
     if ($color == 0) {
         $color1 = 0;
         $color2 = 0;
-    } elseif ($color >= 1 and $color <= 3) {
+    } elseif ($color >= 1 && $color <= 3) {
         if ($maquina == "Máquina Roland 800") {
             $color1 = 400;
             $color2 = 0;
@@ -74,6 +74,36 @@ if ($color > 3) {
 
 return array($color1,$color2);
 }
+
+function colores($color,$vb,$ae,$maquina,$ing){
+    if($color==0 || $color==""){
+        $color1 = 0;
+        $color2 = 0;
+    }else{
+        if($ing->lleva_fondo_negro=="" || $ing->lleva_fondo_negro=="NO"){
+            if ($color >= 1 && $color < 2){
+                $color1 = 250;
+                $color2 = 0;
+            }elseif($color >= 2 && $color < 4){
+                $color1 = 300;
+                $color2 = 0;
+            }elseif($color > 3){
+                $color1 = 400;
+                $color2 = 0;
+            }
+        }else{
+            if ($color > 1 && $color < 4){
+                $color1 = 400;
+                $color2 = 0;
+            }elseif($color > 4){
+                $color1 = 500;
+                $color2 = 0;
+            }
+        }
+    }
+    
+    return array($color1,$color2);
+    }
 //************cantidades*****************************************
 function cantidad($cant,$unidades){
     $cantidad=$cant/$unidades;
@@ -104,20 +134,24 @@ function barniz($llevabarniz,$cantidad,$unidades){
         $cantidadBarniz = $cantidad - 1000;
         if ($cantidadBarniz < 1000) {
             if ($maquina == "Máquina Roland 800") {
-                $bar1 = 100;
+                //$bar1 = 100;
+                $bar1 = 20;
                 $bar2 = 0;
             } else {
-                $bar1 = 100;
+                //$bar1 = 100;
+                $bar1 = 20;
                 $bar2 = 0;
             }
         } else {
             $enteroBarniz = ($cantidad / $unidades);
             if ($enteroBarniz < 1000) {
-                $bar1 = 100;
+                $bar1 = 20;
+                //$bar1 = 100;
                 $bar2 = 0;
             } else {
                 $enteroBarniz = number_format((((($enteroBarniz / 1000) + 1) - 2) * 10), 0, '', '');
-                $bar1 = 100;
+                $bar1 = 20;
+                //$bar1 = 100;
                 $bar2 = number_format(((($cantidad/$unidades) - 1000) / 1000 * 1), 0, '', '');
             }
         }
@@ -375,7 +409,7 @@ $variableEmplacado=$this->variables_cotizador_model->getVariablesCotizadorPorId(
 $valorEmplacado =($variableEmplacado->precio*$tamano1*$tamano2)/10000;
 
 //calculo valores de colores cantidad 1,2,3,4
-$colores2 = colores($fotomecanica->colores,$datos->vb_maquina,$datos->acepta_excedentes,$maquina);
+$colores2 = colores($fotomecanica->colores,$datos->vb_maquina,$datos->acepta_excedentes,$maquina,$ing);
 //calculo valores de cant 1,2,3,4
 $cantidad1 = cantidad($datos->cantidad_1,$ing->unidades_por_pliego);
 $cantidad2 = cantidad($datos->cantidad_2,$ing->unidades_por_pliego);
@@ -689,6 +723,9 @@ if ($fotomecanica->condicion_del_producto == 'Producto Genérico') { //
 
 //variables peliculas
 if($fotomecanica->condicion_del_producto=='Repetición Sin Cambios'){
+$peliculasPI = 0;
+$cantidadPeliculas = 0;
+}elseif($fotomecanica->condicion_del_producto=='Repetición Con Cambios'){
 $peliculasPI = 0;
 $cantidadPeliculas = 0;
 }else{

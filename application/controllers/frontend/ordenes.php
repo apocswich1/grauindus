@@ -87,7 +87,8 @@ class Ordenes extends CI_Controller {
         $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
         $vendedor=$this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
 	$existeProducto=$this->productos_model->getProductosPorNombre($ing->producto);
-	$existeProducto2=$this->productos_model->getProductosPorNombre($datos->producto);
+    $existeProducto2=$this->productos_model->getProductosPorNombre($datos->producto);
+    $ordenProducto = $this->productos_model->getProductosPorId($orden->producto_id);
 	//$cuentaProductos=$this->orden_model->countOrdenesPorClientePorIdParaProductosNuevos($datos->id_cliente);
 	$cuentaProductos=$this->orden_model->countOrdenesPorClientePorIdParaProductosNuevos($datos->id_cliente);
 	$cuentaProductos2 = $cuentaProductos + 1;
@@ -96,7 +97,7 @@ class Ordenes extends CI_Controller {
         $usuarios=$this->usuarios_model->getUsuariosPorTipo(8);        
         //echo "<h1>El sistema esta en mantenimiento en esta etapa...</h1>";
         //echo "<h1>".strlen($cuentaProductos2)."</h1>";exit();
-        if(strlen($cuentaProductos2) == 2)
+    if(strlen($cuentaProductos2) == 2)
 	{
             $codigoNuevo= "0".$cuentaProductos2;
 	} 
@@ -111,7 +112,23 @@ class Ordenes extends CI_Controller {
 	if(strlen($cuentaProductos2) == 0)
 	{
             $codigoNuevo= "001";
-	} 
+    } 
+
+   // print_r($ordenProducto);
+    //echo $this->input->post("codigo_generar",true);
+    //echo $orden->producto_id;
+   // exit();
+    if($datos->producto_id==0)
+    {
+    $datoscliente = str_pad($datos->id_cliente, 4, "0", STR_PAD_LEFT);
+        if($ordenProducto->codigo!=""){
+            $codigo_generar = $ordenProducto->codigo;
+        }else{
+            $codigo_generar = $datoscliente."A".$codigoNuevo;
+        }
+    }else{
+    $codigo_generar=$datos->producto_id;
+    }
 
         if($this->input->post())
         {
@@ -139,7 +156,8 @@ class Ordenes extends CI_Controller {
                             $arreglo=array
                             (
                                     "id_cotizacion"=>$datos->id,
-                                    "codigo"=>$datoscliente."A".$codigoNuevo,
+                                    "codigo"=>$this->input->post("codigo_generar",true),
+                                    //"codigo"=>$datoscliente."A".$codigoNuevo,
                                     "nombre"=>$ing->producto,
                                     "tipo"=>"1",
                                     "cuando"=>date('Y-m-d'),
@@ -153,7 +171,8 @@ class Ordenes extends CI_Controller {
                         $arreglo=array
                             (
                                     "id_cotizacion"=>$datos->id,
-                                    "codigo"=>$datoscliente."A".$codigoNuevo,
+                                    "codigo"=>$this->input->post("codigo_generar",true),
+                                    //"codigo"=>$datoscliente."A".$codigoNuevo,
                                     "nombre"=>$ing->producto,
                                     "tipo"=>"1",
                                     "cuando"=>date('Y-m-d'),
@@ -349,6 +368,7 @@ class Ordenes extends CI_Controller {
                             'cuando'=>date("Y-m-d"),
                             "glosa"=>$this->input->post('glosa',true),
                             "fecha_20_dias"=>$fecha_20_dias,
+                            "observaciones"=>$this->input->post('observaciones',true),
 			);
                     //    print_r($data);exit();
                     }
@@ -652,7 +672,8 @@ class Ordenes extends CI_Controller {
                 $arreglo=array
 		(
                     "id_cotizacion"=>$datos->id,
-                    "codigo"=>$datoscliente."A".$codigoNuevo,
+                    "codigo"=>$this->input->post("codigo_generar",true),
+                    //"codigo"=>$datoscliente."A".$codigoNuevo,
                     "nombre"=>$ing->producto,
                     "tipo"=>"1",
 		);
@@ -734,7 +755,7 @@ class Ordenes extends CI_Controller {
         $proveedores=$this->proveedores_model->getProveedores();        
         $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);
         
-        $this->layout->view('add',compact("datos","id","pagina","impresionPresupuesto","orden","ordenDeCompra","ing","productos","hoja","fotomecanica","vendedor","codigoNuevo","existeProducto","existeProducto2","proveedores","orden_compra_piezas","empresa","usuarios","orden_de_compra")); 
+        $this->layout->view('add',compact("datos","id","pagina","impresionPresupuesto","orden","ordenDeCompra","ing","productos","hoja","fotomecanica","vendedor","codigoNuevo","existeProducto","existeProducto2","proveedores","orden_compra_piezas","empresa","usuarios","orden_de_compra","codigo_generar")); 
         }else
         {
             redirect(base_url().'usuarios/login',  301);
@@ -990,14 +1011,30 @@ class Ordenes extends CI_Controller {
                     <tr>
                         <td class="celda_25"><span class="borde"><strong>'.number_format($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego).'</strong></span></td>
                     </tr>';
-                    if($molde->observaciones!=""){
+                    if($datos->aclaratoria!=""){
+                        $cuerpo.='
+                        <tr>
+                            <td colspan="4" class="celda_15"><br /></td>
+                        </tr>    
+                        <tr>
+                            <td colspan="4" class="celda_15">ACLARATORIA EN PRESUPUESTO: '.$datos->aclaratoria.'</td>
+                        </tr>';}
+                    if($orden->observaciones!=""){
                     $cuerpo.='
                     <tr>
                         <td colspan="4" class="celda_15"><br /></td>
                     </tr>    
                     <tr>
-                        <td colspan="4" class="celda_15">OBSERVACIONES MOLDE: '.$molde->observaciones.'</td></td>
+                        <td colspan="4" class="celda_15">OBSERVACIONES EN EMISION DE ORDEN DE TRABAJO: '.$orden->observaciones.'</td>
                     </tr>';}
+                    if($molde->observaciones!=""){
+                        $cuerpo.='
+                        <tr>
+                            <td colspan="4" class="celda_15"><br /></td>
+                        </tr>    
+                        <tr>
+                            <td colspan="4" class="celda_15">OBSERVACIONES MOLDE: '.$molde->observaciones.'</td>
+                        </tr>';}
                 $cuerpo.='</table>
                 <!--separador 50-->
                     <div class="separador_50"></div>
@@ -1277,15 +1314,25 @@ class Ordenes extends CI_Controller {
                                     echo $merma;
                                     //exit();
                                 }
-                                
+                                //echo $merma;exit();
+                                $materialidad_1 = $this->materiales_model->getMaterialesPorId($fotomecanica->id_mat_placa1);
+                                $tapaGramaje=$materialidad_1->gramaje;
                                 $totalpliegos = ($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)+$merma;
                                 $kilosdelaonda=(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)+104;
+                                $valorPlacaKilo=($totalpliegos*$ing->tamano_a_imprimir_1*$ing->tamano_a_imprimir_2*$tapaGramaje)/10000000;
                                 $mermaonda=(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+104;
                                 $mermaliner=(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+104;
                                 $pliegosonda=($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)+(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+104;
                                 $pliegosliner=($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)+(($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego)*0.04)+104;
                                 $kiloonda = number_format((($ing->tamano_a_imprimir_1 * $ing->tamano_a_imprimir_2 * $monda->gramaje * $pliegosonda)/10000000)*1.37,0,"",".");
                                 $kiloliner = number_format((($ing->tamano_a_imprimir_1 * $ing->tamano_a_imprimir_2 * $monda->gramaje * $pliegosonda)/10000000),0,"",".");
+                                if($totalpliegos<$pliegosonda){
+                                    $pliegosonda = $totalpliegos;
+                                }
+                                
+                                if($totalpliegos<$pliegosliner){
+                                    $pliegosliner = $totalpliegos;
+                                }
                                 //echo $kilosdelaonda;exit();
                                // $kiloonda = number_format(($ing->tamano_a_imprimir_1 * $ing->tamano_a_imprimir_2 * $hoja->onda_kilo * $hoja->gramos_metro_cuadrado)/10000000,0,"",".");
 		 $cuerpo.='<br />
@@ -1309,7 +1356,7 @@ class Ordenes extends CI_Controller {
                          . '<td align="center">'.number_format($ordenDeCompra->cantidad_de_cajas/$ing->unidades_por_pliego,0,"",".").'</td>'
                          . '<td align="center">'.number_format($merma,0,"",".").'</td>'
                          . '<td align="center">'.number_format($totalpliegos,0,"",".").'</td>'
-                         . '<td align="center">'.$hoja->kilos_placa.'</td>
+                         . '<td align="center">'.number_format($valorPlacaKilo,0,"",".").'</td>
                 <tr>';
                 if($fotomecanica->materialidad_datos_tecnicos!=='Cartulina-cartulina' && $fotomecanica->materialidad_datos_tecnicos!=='Solo Cartulina'){
                 $cuerpo.='
@@ -1786,7 +1833,7 @@ class Ordenes extends CI_Controller {
                                     $kilosonda= ($ondakilo * $ing->tamano_a_imprimir_1  * $ing->tamano_a_imprimir_2 * $materialidad_1->gramaje) / 10000000;
                 $cuerpo.='
                     <tr>
-                        <td class="celda_35 izquierda">PLACA <span class="borde">'.$tapa->materiales_tipo.'</span></td>
+                        <td class="celda_35 izquierda">PLACA<span class="borde">'.$tapa->materiales_tipo.'</span></td>
                         <td class="celda_25 izquierda">'.$materialidad_1->reverso.'</td>
                         <td class="celda_25 izquierda">'.$materialidad_1->gramaje.'</td>
                         <td class="celda_25 izquierda">'.number_format($hoja->kilos_placa,0,'','.').'</td>

@@ -126,6 +126,19 @@
 	</div>
             </td>
             <td>
+            <div class="control-group">
+		<label id="optionRango" style="background-color: #0066cc; color: #fff; width: 500px;margin-left: 70px;
+padding-left: 70px;">Rango de gramaje de la cartulina para casos contra la fibra</label>
+        <label class="control-label" for="usuario">Rango</label>
+		<div class="controls">
+				<select name="rango_gramaje">
+                <option value="">-- Seleccione --</option>
+                <option value="1" <?php if($datos->rango_gramaje=="1"){echo 'selected="true"';}?>>Entre 190 y 250 (30mm min)</option>
+                <option value="2" <?php if($datos->rango_gramaje=="2"){echo 'selected="true"';}?>>Entre 251 y 325 (50mm min)</option>
+                <option value="3" <?php if($datos->rango_gramaje=="3"){echo 'selected="true"';}?>>Entre 326 y Mayores (100mm min)</option>
+            </select>
+		</div>
+	</div>
                  <div class="control-group">
         <label id="option1" style="background-color: #0066cc; color: #fff; width: 500px;margin-left: 70px;
 padding-left: 70px;">Materialidad Opcion Principal</label>
@@ -389,6 +402,12 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
     	</div>
             </td>
         </tr>
+        <tr>
+        <td>
+        <div class="control-group" id="">
+    		<label class="control-label" for="usuario" id="criterio" style="background-color:blue; color:#fff; font-weight:bold; text-align:center;"></label>
+        </div>
+    </tr>
     </table>
     
     
@@ -442,7 +461,7 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
             <input type="hidden" name="id" value="<?php echo $id?>" />
             <input type="hidden" name="pagina" value="<?php echo $pagina?>" />
             <input type="hidden" name="archivo" value="<?php echo $datos->archivo?>" />
-			<button type="submit" class="btn">Guardar</button>
+			<button id="submit" type="btn" class="btn">Guardar</button>
 		</div>
 	</div>
 </form>
@@ -469,6 +488,168 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
         document.form.nom.focus();
         }
     );
+
+     $('#submit').on('click',function(){
+        var rango = document.form.rango_gramaje.value;
+        if(rango==""){
+            alert("Debe ingresar el rango de gramaje de forma obligatoria");
+            return false;
+        }
+        document.form.submit();
+    });
+
+     $("#anchobobina").on("blur",function(){
+        var ancho = $(this).val();
+        var largo = $("#largobobina").val();
+        var rango_gramaje = $("select[name=rango_gramaje]").val();
+        //alert(rango_gramaje);
+        if(parseInt(ancho)>parseInt(largo)){
+            $("#criterio").text('Criterio Impresion Contra la Fibra');
+            if(rango_gramaje==""){
+                alert("Debe seleccionar un rango para el gramaje de la cartulina");
+                $("#anchobobina").val("");
+                $("#largobobina").val("");
+            }else{
+                if(rango_gramaje=="1"){
+                    var sum = parseInt((30*10)/100);
+                    var tc = parseInt($("#tamanocuchillo2").val());
+                    var total = sum+tc;
+                    if(total<100){
+                    $("#largobobina").val(total);
+                    $("#ccac_2").val((total-tc)*10);
+                    }else{
+                        alert("No se puede aplicar criterio porque medidas no se corresponden");
+                        $("#anchobobina").val("");
+                        $("#largobobina").val("");
+                        $("#ccac_1").val("");
+                        $("#aaca_2").val("");
+                    }
+                }
+                if(rango_gramaje=="2"){
+                    var sum = parseInt((50*10)/100);
+                    var tc = parseInt($("#tamanocuchillo2").val());
+                    var total = sum+tc;
+                    $("#largobobina").val(total);
+                    if(total<100){
+                    $("#largobobina").val(total);
+                    $("#ccac_2").val((total-tc)*10);
+                    }else{
+                        alert("No se puede aplicar criterio porque medidas no se corresponden");
+                        $("#anchobobina").val("");
+                        $("#largobobina").val("");
+                        $("#ccac_1").val("");
+                        $("#aaca_2").val("");
+                    }
+                }
+                if(rango_gramaje=="3"){
+                    var sum = parseInt((100*10)/100);
+                    var tc = $("#tamanocuchillo2").val();
+                    var total = sum+tc;
+                    $("#largobobina").val(total);
+                    if(total<100){
+                    $("#largobobina").val(total);
+                    $("#ccac_2").val((total-tc)*10);
+                    }else{
+                        alert("No se puede aplicar criterio porque medidas no se corresponden");
+                        $("#anchobobina").val("");
+                        $("#largobobina").val("");
+                        $("#ccac_1").val("");
+                        $("#aaca_2").val("");
+                    }
+                }
+            }        
+        }else{
+            $("#criterio").text('No Aplica Criterio');
+        }
+    });
+
+    $("#largobobina").on("blur",function(){
+        var largo = $(this).val();
+        var ancho = $("#anchobobina").val();
+        var rango_gramaje = $("select[name=rango_gramaje]").val();
+        //alert(ancho+"-"+largo);
+        if(parseInt(ancho)>parseInt(largo)){
+            $("#criterio").text('Criterio de Impresion Contra la Fibra');
+            if(rango_gramaje==""){
+                alert("Debe seleccionar un rango para el gramaje de la cartulina");
+                $("#anchobobina").val("");
+                $("#largobobina").val("");
+            }else{
+                if(rango_gramaje=="1"){
+                    var sum = parseInt((30*10)/100);
+                    var tc = parseInt($("#tamanocuchillo2").val());
+                    var total = sum+tc;
+                    var asig = $("#largobobina").val();
+                    var resto = parseInt($("#largobobina").val())-tc;
+                    
+                    if(total<100){
+                        if(resto>=3){
+                            $("#largobobina").val(asig);
+                            $("#ccac_2").val((asig-tc)*10);
+                        }else{
+                            $("#largobobina").val(total);
+                            $("#ccac_2").val((total-tc)*10);
+                        }
+                    }else{
+                        alert("No se puede aplicar criterio porque medidas no se corresponden");
+                        $("#anchobobina").val("");
+                        $("#largobobina").val("");
+                        $("#ccac_1").val("");
+                        $("#aaca_2").val("");
+                    }
+                }
+                if(rango_gramaje=="2"){
+                    var sum = parseInt((50*10)/100);
+                    var tc = parseInt($("#tamanocuchillo2").val());
+                    var total = sum+tc;
+                    var asig = $("#largobobina").val();
+                    var resto = parseInt($("#largobobina").val())-tc;
+                    
+                    if(total<100){
+                        if(resto>=5){
+                            $("#largobobina").val(asig);
+                            $("#ccac_2").val((asig-tc)*10);
+                        }else{
+                            $("#largobobina").val(total);
+                            $("#ccac_2").val((total-tc)*10);
+                        }
+                    }else{
+                        alert("No se puede aplicar criterio porque medidas no se corresponden");
+                        $("#anchobobina").val("");
+                        $("#largobobina").val("");
+                        $("#ccac_1").val("");
+                        $("#aaca_2").val("");
+                    }
+                }
+                if(rango_gramaje=="3"){
+                    var sum = parseInt((100*10)/100);
+                    var tc = $("#tamanocuchillo2").val();
+                    var total = sum+tc;
+                    var asig = $("#largobobina").val();
+                    var resto = parseInt($("#largobobina").val())-tc;
+                    
+                    if(total<100){
+                        if(resto>=10){
+                            $("#largobobina").val(asig);
+                            $("#ccac_2").val((asig-tc)*10);
+                        }else{
+                            $("#largobobina").val(total);
+                            $("#ccac_2").val((total-tc)*10);
+                        }
+                    }else{
+                        alert("No se puede aplicar criterio porque medidas no se corresponden");
+                        $("#anchobobina").val("");
+                        $("#largobobina").val("");
+                        $("#ccac_1").val("");
+                        $("#aaca_2").val("");
+                    }
+                }
+                
+            }
+        }else{
+            $("#criterio").text('No Aplica Criterio');
+        }
+    });
     
     function activar(x){
         if(x==1){
