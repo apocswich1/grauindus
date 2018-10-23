@@ -279,13 +279,13 @@ padding-left: 70px;">Materialidad Opcion Principal</label>
     <div class="control-group">
 		<label class="control-label" for="usuario">Uniades (Productos completos) por Pliego<strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" id="titulo" name="unidades_productos_completos" value="<?php echo $datos->unidades_productos_completos?>" placeholder="unidades (p/c) por pliego" />
+			<input type="text" id="titulo_unidades_productos_completos" name="unidades_productos_completos" value="<?php echo $datos->unidades_productos_completos?>" placeholder="unidades (p/c) por pliego" />
 		</div>
 	</div>
     <div class="control-group">
 		<label class="control-label" for="usuario">Piezas Totales en el Pliego para Desgajado<strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" id="titulo" name="piezas_totales" value="<?php echo $datos->piezas_totales?>" placeholder="piezas totales en el pliego" />
+			<input type="text" id="titulo_piezas_totales" name="piezas_totales" value="<?php echo $datos->piezas_totales?>" placeholder="piezas totales en el pliego" />
 		</div>
 	</div>
             </td>
@@ -491,6 +491,13 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
 
      $('#submit').on('click',function(){
         var rango = document.form.rango_gramaje.value;
+        var piezas = document.form.piezas_totales.value;
+        var unidades = document.form.unidades_productos_completos.value;
+        
+        if(parseInt(piezas)<parseInt(unidades)){
+            alert("Las piezas totales en el pliego no pueden ser menor a unidades por pliego");
+            return false;
+        }
         if(rango==""){
             alert("Debe ingresar el rango de gramaje de forma obligatoria");
             return false;

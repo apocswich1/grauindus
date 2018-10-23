@@ -490,6 +490,13 @@ padding-left: 70px;">Materialidad Opcion Secundaria</label>
 
     $('#submit').on('click',function(){
         var rango = document.form.rango_gramaje.value;
+        var piezas = document.form.piezas_totales.value;
+        var unidades = document.form.unidades_productos_completos.value;
+        
+        if(parseInt(piezas)<parseInt(unidades)){
+            alert("Las piezas totales en el pliego no pueden ser menor a unidades por pliego");
+            return false;
+        }
         if(rango==""){
             alert("Debe ingresar el rango de gramaje de forma obligatoria");
             return false;

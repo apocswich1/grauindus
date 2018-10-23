@@ -1035,6 +1035,13 @@ function guardarFormularioAdd3(valor)
   //  alert(valor);
     var form=document.form;
     var fot_lleva_barniz=document.form.fot_lleva_barniz.value;
+    var piezas = document.form.piezas_totales_en_el_pliego.value;
+    var unidades = document.form.unidades_por_pliego.value;
+        
+        if(parseInt(piezas)<parseInt(unidades)){
+            alert("Las piezas totales en el pliego no pueden ser menor a unidades por pliego");
+            return false;
+        }
     form.estado.value=valor;
     if(valor=='2')
     {
