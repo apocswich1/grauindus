@@ -12108,12 +12108,13 @@ $cuerpo2.='<table class="tabla">';
             unset($ing->id);
             $ing->id_cotizacion = $idnuevo;
             $ing->estado = 0;
+            if(sizeof($fotomecanica)>0){
             unset($fotomecanica->id);
             $fotomecanica->id_cotizacion = $idnuevo;
             $fotomecanica->estado = 0;    
             if(sizeof($produccion)>0){
             $fotomecanica->pdf_imagen_imprimir = $produccion->pdf_imagen;    
-            }
+            }}
                     //echo print_r($hoja);
             if(sizeof($hoja)){
             unset($hoja->id);
@@ -12139,7 +12140,8 @@ $cuerpo2.='<table class="tabla">';
             //Creacion de registros en ingenieria;
             $this->cotizaciones_model->insertarIngenieria($ing);
             //Creacion de registros en fotomecanica;
-            $this->cotizaciones_model->insertarFotomecanica($fotomecanica);
+            if(sizeof($fotomecanica)>0){
+            $this->cotizaciones_model->insertarFotomecanica($fotomecanica);}
             //Creacion de registros en hoja de costos;
                        
             echo "Se ha creado la cotizacion ". $idnuevo." con exito!!!";

@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array("usuarios_model","trazados_model","direccion_model","clientes_model","proveedores_model","materiales_model","cotizaciones_model","productos_asociados_model","insumos_model","monotapas_model","vendedores_model","unidades_de_compra_model","piezas_adicionales_model","orden_model","variables_cotizador_model","servicios_model","finanzas_model","unidades_de_venta_model","acabados_model","procesos_model","fast_track_model","maquinas_model","moldes_model","produccion_model","datos_tecnicos_model","adhesivos_model","productos_model","cotizaciones_relacion_model","procesosespeciales_model","procesos_especiales_model","unidades_de_uso_model","migracion_model","bobinas_model","grupos_model","despachos_model");
+$autoload['model'] = array("usuarios_model","trazados_model","direccion_model","clientes_model","proveedores_model","materiales_model","cotizaciones_model","productos_asociados_model","insumos_model","monotapas_model","vendedores_model","unidades_de_compra_model","piezas_adicionales_model","orden_model","variables_cotizador_model","servicios_model","finanzas_model","unidades_de_venta_model","acabados_model","procesos_model","fast_track_model","maquinas_model","moldes_model","produccion_model","datos_tecnicos_model","adhesivos_model","productos_model","cotizaciones_relacion_model","procesosespeciales_model","procesos_especiales_model","unidades_de_uso_model","migracion_model","bobinas_model","grupos_model","despachos_model","especiales_model");
 
 
 /* End of file autoload.php */

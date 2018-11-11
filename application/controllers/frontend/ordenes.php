@@ -967,6 +967,8 @@ class Ordenes extends CI_Controller {
                     $acepta_excedentes="Cantidad Exacta";
                     }
                 }
+                
+                if($datos->vb_maquina=="SI"){$vbm = "SI";}else{$vbm = "NO";}
                 if($ordenDeCompra->nota!=""){
                     $cuerpo.='<tr>
                         <td colspan="5" style="font-size:14px"><br><strong>NOTA: </strong>'.$ordenDeCompra->nota.'</td>
@@ -1002,7 +1004,8 @@ class Ordenes extends CI_Controller {
                         <td colspan="4" class="celda_15"><br /></td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="celda_15">CANTIDAD DE PLIEGOS</td><td colspan="3" class="celda_15"><br /></td>
+                        <td colspan="2" class="celda_15">CANTIDAD DE PLIEGOS</td><br /></td>
+                        <td colspan="2" class="celda_15">VB EN MAQUINA: '.$vbm.'</td><td colspan="3" class="celda_15"><br /></td>
                     </tr>';
                     $cuerpo.='
                     <tr>

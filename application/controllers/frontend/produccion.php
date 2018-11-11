@@ -896,6 +896,271 @@ class Produccion extends CI_Controller {
         }
     }
     
+    public function produccion_especiales()
+    {
+        
+         if($this->session->userdata('id'))
+        {
+            $arreglo = $this->input->post('data',true);
+            $data = explode(',', $arreglo);
+            $id = $data[3];
+            $permanente = $data[2];
+            $atributo = $data[0];
+            $valor = $data[1];
+            
+            if(!$id){show_404();}
+            
+            switch($tipo)
+                    {
+                        case '1':
+                            $datos=$this->cotizaciones_model->getCotizacionPorId($id);
+                        break;
+                         case '2':
+                            $datos=$this->fast_track_model->getFastTrackPorId($id);
+                        break;
+                    }      
+                    
+            $ordenDeCompra=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($id);
+            $orden=$this->orden_model->getOrdenesPorCotizacion($id);
+            $especiales=$this->especiales_model->getProduccionEspecialesPorId($id);
+            $fotomecanica=$this->produccion_model->getFotomecanicaPorTipo($tipo,$id);
+            $fotomecanica2=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+            $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
+            
+            /*materialidad*/
+            $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);            
+            $tapa = $this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_1);
+            $monda = $this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_2);
+            $mliner = $this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_3);            
+            $materialidad_1=$this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_1);
+            $materialidad_2=$this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_2);
+            $materialidad_3=$this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_3);            
+
+            
+            if($permanente=="NO"){
+            if($atributo=="vb_en_maquina"){
+            $datos = array(
+                "vb_en_maquina" => $valor,
+                "id_cotizacion" => $id
+            );
+            if(sizeof($especiales)>0){            
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("produccion_especiales",$datos);
+            }else{
+            $this->db->insert('produccion_especiales', $datos);    
+            }
+            }
+            if($atributo=="contra_la_fibra"){
+              $datos = array(
+                "contra_la_fibra" => $valor,
+                "id_cotizacion" => $id
+            );
+              if(sizeof($especiales)>0){            
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("produccion_especiales",$datos);
+            }else{
+            $this->db->insert('produccion_especiales', $datos);    
+            }
+            }
+            if($atributo=="condicion_del_producto"){
+                $datos = array(
+                "condicion_del_producto" => $valor,
+                "id_cotizacion" => $id
+            );
+                if(sizeof($especiales)>0){            
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("produccion_especiales",$datos);
+            }else{
+            $this->db->insert('produccion_especiales', $datos);    
+            }
+            }
+            if($atributo=="troquel_por_atras"){
+                $datos = array(
+                "troquel_por_atras" => $valor,
+                "id_cotizacion" => $id
+            );
+                if(sizeof($especiales)>0){            
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("produccion_especiales",$datos);
+            }else{
+            $this->db->insert('produccion_especiales', $datos);    
+            }
+            }
+            }else{
+            $this->especiales_model->delete($id);
+                
+            if($atributo=="vb_en_maquina"){
+            $datos = array(
+                "vb_en_maquina" => $valor,
+                "id_cotizacion" => $id
+            );    
+            $this->db->where('id', $id);
+            $this->db->update("cotizaciones",$datos);
+            }
+            if($atributo=="contra_la_fibra"){
+              $datos = array(
+                "imprimir_contra_la_fibra" => $valor,
+                "id_cotizacion" => $id  
+            );  
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("cotizacion_ingenieria",$datos);  
+            }
+            if($atributo=="condicion_del_producto"){
+                $datos = array(
+                "condicion_del_producto" => $valor,
+                "id_cotizacion" => $id    
+            );
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("cotizacion_fotomecanica",$datos);    
+            }
+            if($atributo=="troquel_por_atras"){
+                $datos = array(
+                "troquel_por_atras" => $valor,
+                "id_cotizacion" => $id
+            );
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("cotizacion_ingenieria",$datos);    
+            }
+            
+            redirect(base_url().'produccion/revision_fotomecanica/1/'.$id.'/0');
+            }
+            
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    }
+    
+    public function produccion_especiales_definitiva($atributo=null,$valor=null,$permanente=null,$id=null)
+    {
+        
+         if($this->session->userdata('id'))
+        {
+            /*$arreglo = $datos;
+            $data = explode(',', $arreglo);
+            $id = $data[3];
+            $permanente = $data[2];
+            $atributo = $data[0];
+            $valor = $data[1];
+            */
+            if(!$id){show_404();}
+            
+            switch($tipo)
+                    {
+                        case '1':
+                            $datos=$this->cotizaciones_model->getCotizacionPorId($id);
+                        break;
+                         case '2':
+                            $datos=$this->fast_track_model->getFastTrackPorId($id);
+                        break;
+                    }      
+                    
+            $ordenDeCompra=$this->cotizaciones_model->getOrdenDeCompraPorCotizacion($id);
+            $orden=$this->orden_model->getOrdenesPorCotizacion($id);
+            $especiales=$this->especiales_model->getProduccionEspecialesPorId($id);
+            $fotomecanica=$this->produccion_model->getFotomecanicaPorTipo($tipo,$id);
+            $fotomecanica2=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
+            $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
+            
+            /*materialidad*/
+            $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);            
+            $tapa = $this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_1);
+            $monda = $this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_2);
+            $mliner = $this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_3);            
+            $materialidad_1=$this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_1);
+            $materialidad_2=$this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_2);
+            $materialidad_3=$this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_3);            
+
+            
+            if($permanente=="NO"){
+            if($atributo=="vb_en_maquina"){
+            $datos = array(
+                "vb_en_maquina" => $valor,
+                "id_cotizacion" => $id
+            );
+            if(sizeof($especiales)>0){            
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("produccion_especiales",$datos);
+            }else{
+            $this->db->insert('produccion_especiales', $datos);    
+            }
+            }
+            if($atributo=="contra_la_fibra"){
+              $datos = array(
+                "contra_la_fibra" => $valor,
+                "id_cotizacion" => $id
+            );
+              if(sizeof($especiales)>0){            
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("produccion_especiales",$datos);
+            }else{
+            $this->db->insert('produccion_especiales', $datos);    
+            }
+            }
+            if($atributo=="condicion_del_producto"){
+                $datos = array(
+                "condicion_del_producto" => $valor,
+                "id_cotizacion" => $id
+            );
+                if(sizeof($especiales)>0){            
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("produccion_especiales",$datos);
+            }else{
+            $this->db->insert('produccion_especiales', $datos);    
+            }
+            }
+            if($atributo=="troquel_por_atras"){
+                $datos = array(
+                "troquel_por_atras" => $valor,
+                "id_cotizacion" => $id
+            );
+                if(sizeof($especiales)>0){            
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("produccion_especiales",$datos);
+            }else{
+            $this->db->insert('produccion_especiales', $datos);    
+            }
+            }
+            }else{
+            $this->especiales_model->delete($id);
+                
+            if($atributo=="vb_en_maquina"){
+            $datos = array(
+                "vb_maquina" => $valor,
+            );    
+            $this->db->where('id', $id);
+            $this->db->update("cotizaciones",$datos);
+            }
+            if($atributo=="contra_la_fibra"){
+              $datos = array(
+                "imprimir_contra_la_fibra" => $valor,
+            );  
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("cotizacion_ingenieria",$datos);  
+            }
+            if($atributo=="condicion_del_producto"){
+                $datos = array(
+                "condicion_del_producto" => $valor,
+            );
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("cotizacion_fotomecanica",$datos);    
+            }
+            if($atributo=="troquel_por_atras"){
+                $datos = array(
+                "troquel_por_atras" => $valor,
+            );
+            $this->db->where('id_cotizacion', $id);
+            $this->db->update("cotizacion_ingenieria",$datos);    
+            }
+            
+            redirect(base_url().'produccion/revision_fotomecanica/1/'.$id.'/0');
+            }
+            
+        }else
+        {
+            redirect(base_url().'usuarios/login',  301);
+        }
+    }
     
     public function revision_fotomecanica($tipo=null,$id=null,$pagina=null)
     {
@@ -917,7 +1182,7 @@ class Produccion extends CI_Controller {
             $fotomecanica=$this->produccion_model->getFotomecanicaPorTipo($tipo,$id);
             $fotomecanica2=$this->cotizaciones_model->getCotizacionFotomecanicaPorIdCotizacion($id);
             $ing=$this->cotizaciones_model->getCotizacionIngenieriaPorIdCotizacion($id);
-            
+            $especiales=$this->especiales_model->getProduccionEspecialesPorId($id);
             /*materialidad*/
             $hoja=$this->cotizaciones_model->getHojaDeCostosPorIdCotizacion($id);            
             $tapa = $this->materiales_model->getMaterialesPorNombre($fotomecanica2->materialidad_1);
@@ -941,7 +1206,7 @@ class Produccion extends CI_Controller {
             {                       
                     if($this->input->post('estado',true)=='1')
                     {
-                        if($this->input->post('envio_vb_maqueta',true)=='NO' or $this->input->post('envio_vb_color',true)=='NO' or $this->input->post('envio_vb_estructura',true)=='NO' and $this->input->post('entrega_a_fabricacion_a_linea_de_troquel',true)=='NO' or $this->input->post('confeccion_de_planchas',true)=='NO')
+                        if($this->input->post('envio_vb_maqueta',true)=='NO' || $this->input->post('envio_vb_color',true)=='NO' || $this->input->post('envio_vb_estructura',true)=='NO' and $this->input->post('entrega_a_fabricacion_a_linea_de_troquel',true)=='NO' || $this->input->post('confeccion_de_planchas',true)=='NO')
                         {
                             $this->session->set_flashdata('ControllerMessage', 'Para liberar deben estar en SI : VB Maqueta, VB Color, VB Estructura, Entrega a fabricación a línea de troquel y Confección de Planchas');
                             redirect(base_url().'produccion/revision_fotomecanica/'.$this->input->post('tipo',true)."/".$this->input->post('id',true)."/".$this->input->post('pagina',true),  301);    
@@ -1479,10 +1744,10 @@ class Produccion extends CI_Controller {
 //ALTER TABLE `p7000190_grau`.`produccion_fotomecanica` ADD COLUMN `comentario_rechazo` VARCHAR(1000) NULL  AFTER `sobre_desarrollo` ;            
             
 // echo '<pre>';
-// print_r($data);
+ //print_r($data);
 // exit();
 			//Rechazar
-		    if($this->input->post("estado",true)==2)  /// RECHAZAR
+            if($this->input->post("estado",true)==2)  /// RECHAZAR
             {
                     //////////////////////                
                     $vendedor = $this->usuarios_model->getUsuariosPorId($datos->id_vendedor);
@@ -1499,31 +1764,32 @@ class Produccion extends CI_Controller {
                     $this->email->message($html);
                     $this->email->send();
                     //////////////////////
-
+                    
                     $op = $this->orden_model->getOrdenesPorId($id);										
-
+                    //print_r($data);
+                    //exit();
 		            //ING cotizacion_ingenieria
-                    //$data2 = array("estado" => $this->input->post("estado", true),);  //2 RECHAZADO
+                    $data2 = array("estado" => $this->input->post("estado", true));  //2 RECHAZADO
                         $this->db->where('id_cotizacion', $this->input->post('id', true));
-                        $this->db->update("cotizacion_ingenieria", $data);
+                        $this->db->update("cotizacion_ingenieria", $data2);
 
                     //FOTO cotizacion_fotomecanica
-                    $data2 = array("estado" => $this->input->post("estado", true),);  //2 RECHAZADO
+                    $data2 = array("estado" => $this->input->post("estado", true));  //2 RECHAZADO
                         $this->db->where('id_cotizacion', $this->input->post('id', true));
                         $this->db->update("cotizacion_fotomecanica", $data2);
 
                     //HC = hoja_de_costos_datos
-                    $data3 = array("fecha" => '0000-00-00', );
+                    $data3 = array("fecha" => '0000-00-00' );
                         $this->db->where('id_cotizacion', $this->input->post('id', true));
                         $this->db->update("hoja_de_costos_datos", $data3);
 
                     //OC = cotizaciones_orden_de_compra
-                    $data4 = array("estado" => $this->input->post("estado", true), );
+                    $data4 = array("estado" => $this->input->post("estado", true));
                         $this->db->where('id_cotizacion', $this->input->post('id', true));
                         $this->db->update("cotizaciones_orden_de_compra", $data4);
 
                     //op = orden_de_produccion
-                    $data6 = array("estado" => $this->input->post("estado", true), );
+                    $data6 = array("estado" => $this->input->post("estado", true));
                         $this->db->where('id_cotizacion', $this->input->post("id", true));
                         $this->db->update("orden_de_produccion", $data6);
 
@@ -1531,7 +1797,7 @@ class Produccion extends CI_Controller {
 		            $data5 = array(
                         "estado" => $this->input->post("estado", true),
                         "situacion" => "Rechaza",
-                        "glosa" => $this->input->post("glosa", true), );
+                        "glosa" => $this->input->post("glosa", true));
 
                         $this->db->where('id_nodo', $this->input->post('id', true));
                         $this->db->update("produccion_fotomecanica", $data5);
@@ -1540,10 +1806,12 @@ class Produccion extends CI_Controller {
 
 
                     $arch=array('archivo'=>$file_name, );			
+            
                     if(sizeof($fotomecanica)==0){
                         $this->db->insert("produccion_fotomecanica",$data);
                     }else{
-                        $this->db->update('produccion_fotomecanica', $data, array('tipo' => $this->input->post('tipo',true),'id_nodo'=>$this->input->post('id',true)));                       
+                    $data = array('tipo' => $this->input->post('tipo',true),'id_nodo'=>$this->input->post('id',true));
+                        $this->db->update('produccion_fotomecanica', $data);                       
                     }    
 
                     $this->db->update("cotizacion_fotomecanica",$arch, array('id_cotizacion'=>$this->input->post('id',true)));
@@ -1564,7 +1832,7 @@ class Produccion extends CI_Controller {
              $this->layout->js(
                 array(base_url()."public/backend/js/bootstrap.file-input.js"));   
 
-            $this->layout->view('revision_fotomecanica',compact('datos','fotomecanica','tipo','id','pagina','ordenDeCompra','orden','fotomecanica2','ing','tapa','materialidad_1','hoja','monda','mliner','materialidad_2','materialidad_3')); 
+            $this->layout->view('revision_fotomecanica',compact('datos','fotomecanica','tipo','id','pagina','ordenDeCompra','orden','fotomecanica2','ing','tapa','materialidad_1','hoja','monda','mliner','materialidad_2','materialidad_3','especiales')); 
 
         }else
         {

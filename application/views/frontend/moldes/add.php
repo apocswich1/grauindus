@@ -12,7 +12,7 @@
 	
 <table style="width:1200px">
     <tr>
-        <td>
+        <td style="width:450px" >
           <div class="control-group">
 		<label class="control-label" for="usuario">Tipo</label>
 		<div class="controls">
@@ -26,7 +26,7 @@
 	<div class="control-group">
 		<label class="control-label" for="usuario">Nombre <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" id="titulo" name="nom" value="<?php echo set_value("nom")?>" placeholder="Nombre" />
+			<input style="width:450px" type="text" id="titulo" name="nom" value="<?php echo set_value("nom")?>" placeholder="Nombre" />
 		</div>
 	</div>
     

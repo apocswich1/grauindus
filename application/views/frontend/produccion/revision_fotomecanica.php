@@ -67,12 +67,41 @@
                 $cliente2=$this->clientes_model->getClientePorIdBasico($molde->nombrecliente2);
 
                 ?>
+                    <input type="hidden" id="id_cotizacion" name="id_cotizacion" value="<?php echo $ordenDeCompra->id_cotizacion; ?>"/>
                     <li>Cliente : <a href="<?php echo base_url()?>clientes/edit/<?php echo $cli->id; ?>/0" title="Revisión Ingeniería"><b><?php echo $cliente?></b></a></li>	                    
                     <li>Orden de Producción en Cotización: <a href="<?php echo base_url()?>ordenes/pdf_orden/<?php echo $ordenDeCompra->id_cotizacion; ?>/<?php echo $ordenDeCompra->id; ?>" title="Orden de Producción en Cotización" target="_blank"><b>N° OT<?php echo $ordenDeCompra->id; ?></b></a></li>
                     <li>Descripción : <b><?php echo $datos->producto?></b></li>
                     <li>Fecha Orden de Compra : <strong><?php echo fecha($ordenDeCompra->fecha)?></strong></li>
                     <li>Fecha Orden de Producción : <strong><?php echo fecha($orden->fecha)?></strong></li>
-                    <li>Condición del Producto : <strong><?php echo $fotomecanica2->condicion_del_producto?><?php if($fotomecanica2->condicion_del_producto=="Nuevo"){echo " ( Molde por Fabricar )";}?></strong></li>
+                    <!--<li>Condición del Producto : <strong><?php// echo $fotomecanica2->condicion_del_producto?><?php// if($fotomecanica2->condicion_del_producto=="Nuevo"){echo " ( Molde por Fabricar )";}?></strong></li>-->
+                    <?php 
+                    $condin="";
+                    $condic="";
+                    $condis="";
+                    if(sizeof($especiales>0)){
+                     if($especiales->condicion_del_producto=="Nuevo"){
+                        $condin="selected='selected'";
+                    }else if($especiales->condicion_del_producto=="Repetición Con Cambios"){
+                        $condic="selected='selected'";
+                    }else if($especiales->condicion_del_producto=="Repetición Sin Cambios"){
+                        $condis="selected='selected'";
+                    }   
+                    }else{
+                    if($fotomecanica2->condicion_del_producto=="Nuevo"){
+                        $condin="selected='selected'";
+                    }else if($fotomecanica2->condicion_del_producto=="Repetición Con Cambios"){
+                        $condic="selected='selected'";
+                    }else if($fotomecanica2->condicion_del_producto=="Repetición Sin Cambios"){
+                        $condis="selected='selected'";
+                    }}?>
+                    <li>Condición del Producto : 
+                        <select id="condicion_del_producto" name="condicion_del_producto">
+                            <option value="Nuevo" <?php echo $condin; ?>>Nuevo</option>
+                            <option value="Repetición Con Cambios" <?php echo $condic; ?>>Repetición Con Cambios</option>
+                            <option value="Repetición Sin Cambios" <?php echo $condis; ?>>Repetición Sin Cambios</option>
+                        </select>    
+                    <?php echo $fotomecanica2->condicion_del_producto?><?php if($fotomecanica2->condicion_del_producto=="Nuevo"){echo " ( Molde por Fabricar )";}?></strong></li>
+                    
                     <?php if (!empty($molde->archivo)) {  ?>
                         <li>N° Molde : <?php echo $molde->nombre?>  <a href="<?php echo base_url().$this->config->item('direccion_pdf').$molde->archivo?>" target="_blank"><?php echo $orden->id_molde?></a> <button type="button" class="btn" data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo $fotomecanica2->numero_molde?> <i class="icon-search"></i></button><strong>(<?php echo $moldeNuevo?>)</strong></li>
                     <?php } else {    ?>
@@ -141,9 +170,89 @@
                         ?>
                     </li>
                     <li><strong>Nro Molde: </strong><?php if($orden->id_molde!=""){echo $orden->id_molde;}else{echo "";}?></li>
-                    <li><strong>VB en Maquina: </strong><?php if($datos->vb_maquina=="SI"){echo "SI";}else{echo "NO";}?></li>
-                    <li><strong>Impresion contra la fibra: </strong><?php if($datos->vb_maquina=="SI"){echo "SI";}else{echo "NO";}?></li>
-                    <li><strong>Gato tiro o gato retiro?: </strong><?php if($ing->troquel_por_atras=="SI"){echo 'Por detrás, margen izquierdo, gato retiro';}else if($ing->troquel_por_atras=="NO"){echo 'Por delante, margen derecho, gato tiro';}else{echo 'Por delante, margen derecho, gato tiro';}?></li>
+                    <!--<li><strong>VB en Maquina: </strong><?php // if($datos->vb_maquina=="SI"){echo "SI";}else{echo "NO";}?></li>-->
+                    <?php 
+                    $vbs="";
+                    $vbn=""; 
+                    if(sizeof($especiales)>0){
+                     if($especiales->vb_en_maquina=="SI"){
+                        $vbs="selected='selected'";
+                    }else if($especiales->vb_en_maquina=="NO"){
+                        $vbn="selected='selected'";
+                    }else if($especiales->vb_en_maquina==""){
+                        $vbn="selected='selected'";
+                    }   
+                    }else{
+                    if($datos->vb_maquina=="SI"){
+                        $vbs="selected='selected'";
+                    }else if($datos->vb_maquina=="NO"){
+                        $vbn="selected='selected'";
+                    }else if($datos->vb_maquina==""){
+                        $vbn="selected='selected'";
+                    }}?>
+                    <li><strong>VB en Maquina: </strong> 
+                        <select id="vb_en_maquina" name="vb_en_maquina">
+                            <option value="SI" <?php echo $vbs; ?>>SI</option>
+                            <option value="NO" <?php echo $vbn; ?>>NO</option>
+                        </select>
+                    <?php 
+                    $impresions="";
+                    $impresionn="";
+                    if(sizeof($especiales)>0){
+                        if($especiales->contra_la_fibra=="SI"){
+                            $impresions="selected='selected'";
+                        }else if($especiales->contra_la_fibra=="NO"){
+                            $impresionn="selected='selected'";
+                        }else{
+                            $impresionn="selected='selected'";
+                        }
+                    }else{
+                    if($ing->imprimir_contra_la_fibra == "SI"){
+                        $impresions="selected='selected'";
+                    }else if($ing->imprimir_contra_la_fibra == "NO"){
+                        $impresionn="selected='selected'";
+                    }else{
+                        $impresionn="selected='selected'";
+                    if($ing->tamano_a_impimir_1>$ing->tamano_a_impimir_2){
+                        $impresions="selected='selected'";
+                    }else if($ing->tamano_a_impimir_1<$ing->tamano_a_impimir_2){
+                        $impresionn="selected='selected'";
+                    }else if($ing->tamano_a_impimir_1==$ing->tamano_a_impimir_2){
+                        $impresionn="selected='selected'";
+                    }}}
+                   // echo $impresionn.$ing->imprimir_contra_la_fibra;
+                    ?>
+                        
+                    <li><strong>Impresion contra la fibra :</strong> 
+                        <select id="contra_la_fibra" name="contra_la_fibra">
+                            <option value="SI" <?php echo $impresions; ?>>SI</option>
+                            <option value="NO" <?php echo $impresionn; ?>>NO</option>
+                        </select>
+                    <li><strong>Gato tiro o gato retiro?: </strong>
+                    <?php 
+                    $troquels="";
+                    $tronqueln="";
+                    if(sizeof($especiales)>0){
+                     if($especiales->troquel_por_atras=="SI"){
+                        $troquels="selected='selected'";
+                    }else if($especiales->troquel_por_atras=="NO"){
+                        $troqueln="selected='selected'";                        
+                    }else{
+                        $troqueln="selected='selected'";
+                    }   
+                    }else{
+                    if($ing->troquel_por_atras=="SI"){
+                        $troquels="selected='selected'";
+                    }else if($ing->troquel_por_atras=="NO"){
+                        $troqueln="selected='selected'";                        
+                    }else{
+                        $troqueln="selected='selected'";
+                    }}?>
+                    <select id="troquel_por_atras" name="troquel_por_atras">
+                            <option value="SI" <?php echo $troquels; ?>>Por detrás, margen izquierdo, gato retiro</option>
+                            <option value="NO" <?php echo $troqueln; ?>>Por delante, margen derecho, gato tiro</option>
+                    </select>
+                    </li>
                 </ul>
             	</div>
 		<div class="controls"  style="margin-left: 0px;width:30%;float:left;">
@@ -234,6 +343,21 @@
                         </div>
                        </div>       
                  </div>
+                </div>
+                
+                <div id="id01" class="modal fade bs-example-modal-lg2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="height: 150px; width: 500px">
+                 <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div style="margin-left: 100px;">
+                        <h3>Modificacion permanente?</h3>
+                        <form>
+                            <input id="btnsi" class="btn btn-success" type="button" name="btnsi" value="SI, permanente">
+                            <input id="btnno"  class="btn btn-info" type="button" name="btnno" value="NO, solo por esta orden">
+                            <input id="datatoda" type="hidden" name="datatoda" value="">
+                        </form>
+                       </div>       
+                 </div>
+                </div>
                 </div>
 
                 <hr />
@@ -866,6 +990,61 @@
         }
     );
     
+    
+    //nuevas modificaciones especiales
+    $('#condicion_del_producto').change(function() {
+        $('#id01').modal({
+        show: 'false'
+    }); 
+    $('#datatoda').val($(this).attr('name')+','+$(this).val()+',');
+    });
+    
+    $('#vb_en_maquina').change(function() {
+        $('#id01').modal({
+        show: 'false'
+    }); 
+    $('#datatoda').val($(this).attr('name')+','+$(this).val()+',');
+    });
+    
+    $('#troquel_por_atras').change(function() {
+        $('#id01').modal({
+        show: 'false'
+    }); 
+    $('#datatoda').val($(this).attr('name')+','+$(this).val()+',');
+    });
+    
+    $('#contra_la_fibra').change(function() {
+        $('#id01').modal({
+        show: 'false'
+    }); 
+    $('#datatoda').val($(this).attr('name')+','+$(this).val()+',');
+    });
+    
+    $('#btnsi').on('click',function() {
+        $('#id01').modal('hide');
+        let valor = $('#datatoda').val();
+        let id = $('#id_cotizacion').val();
+        valor = valor.split(",").join("/");
+        let arreglo = valor+'SI/'+id;
+        
+        var ruta = webroot + 'produccion/produccion_especiales_definitiva';
+        //$.post(ruta,{data : arreglo},function(datos){
+          //  alert("Valor modificado");
+        //});
+        window.location.href = ruta+"/"+arreglo;
+    });
+    
+    $('#btnno').on('click',function() {
+        $('#id01').modal('hide');
+        let valor = $('#datatoda').val();
+        let id = $('#id_cotizacion').val();
+        let arreglo = valor+'NO,'+id;
+        var ruta = webroot + 'produccion/produccion_especiales/';
+        $.post(ruta,{data : arreglo},function(datos){
+            alert("Valor modificado");
+        });
+    });
+    //fin de nuevas modificaciones especiales
     
 </script>
 </div>

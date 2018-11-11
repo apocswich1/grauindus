@@ -43,8 +43,8 @@
     
     <hr />	
     <table>
-        <tr>
-     <td>
+        <tr style="width: 900px;">
+     <td style="width: 700px;">
     <?php if($datos->id_trazado!="" || $datos->id_trazado!=0){ ?>
     <div class="control-group">
 		<label class="control-label" for="usuario">Número Trazado Usado:</label>
@@ -102,7 +102,7 @@
 	<div class="control-group">
 		<label class="control-label" for="usuario">Nombre <strong style="color: red;">(*)</strong></label>
 		<div class="controls">
-			<input type="text" id="titulo" name="nom" value="<?php echo $datos->nombre?>" placeholder="Nombre" />
+                    <input style="width:450px" type="text" id="titulo" name="nom" value="<?php echo $datos->nombre?>" placeholder="Nombre" />
 		</div>
 	</div>
     
